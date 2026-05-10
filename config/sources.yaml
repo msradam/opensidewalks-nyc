@@ -1,0 +1,171 @@
+# Declarative source manifest for the ariadne-nyc pipeline.
+# Each source has a stable ID, retrieval params, license info, and expected schema.
+# Stage 1 (acquire.py) reads this file and downloads raw data to data/raw/{source_id}/.
+
+sources:
+
+  osm_walk:
+    description: >
+      OpenStreetMap walking infrastructure for all five NYC boroughs, pulled via
+      OSMnx. Covers footways, crossings, paths, steps, and street edges where
+      pedestrian travel is permitted. Queried borough-by-borough to manage memory.
+    type: osmnx
+    license: ODbL-1.0
+    license_url: https://www.openstreetmap.org/copyright
+    retrieval:
+      method: osmnx
+      # Queried via borough boundary polygons from the nyc_boroughs source.
+      # Custom filter targets pedestrian-accessible highway types explicitly.
+      custom_filter: >
+        ["highway"~"footway|path|pedestrian|steps|residential|service|tertiary|
+        secondary|primary|cycleway|track|living_street"]["foot"!~"no"]["access"!~"no|private"]
+      retain_all: true
+      simplify: false
+    expected_geometry: LineString
+    output_format: graphml_per_borough
+
+  nyc_dot_ramps:
+    description: >
+      NYC DOT Pedestrian Ramp Locations. 217k+ point features recording the
+      location, geometry, and condition of pedestrian curb ramps citywide.
+      Survey data collected 2017–2020. These become Curb Point Nodes in the
+      OSW graph with barrier=kerb, kerb=lowered.
+    type: socrata
+    license: Public Domain (NYC Open Data)
+    license_url: https://data.cityofnewyork.us/Transportation/Pedestrian-Ramp-Locations/ufzp-rrqu
+    retrieval:
+      method: socrata
+      domain: data.cityofnewyork.us
+      dataset_id: ufzp-rrqu
+      page_size: 10000
+      geometry_field: the_geom
+    expected_geometry: Point
+    key_fields:
+      - cornerid       # unique corner identifier
+      - rampid         # unique ramp identifier
+      - borough        # numeric: 1=Manhattan, 2=Bronx, 3=Brooklyn, 4=Queens, 5=Staten Island
+      - stname1        # primary street
+      - stname2        # cross street
+
+  nyc_planimetric_sidewalks:
+    description: >
+      NYC Planimetric Database sidewalk polygons produced by the Office of
+      Technology and Innovation. Captured from aerial imagery. Used as
+      verification of OSM coverage and as a source for centerline derivation
+      where OSM has only sidewalk=* tags on street edges with no separate
+      sidewalk geometry.
+    type: socrata
+    license: Public Domain (NYC Open Data)
+    license_url: https://data.cityofnewyork.us/City-Government/NYC-Planimetric-Database-Sidewalk/52n9-sdep
+    retrieval:
+      method: socrata
+      domain: data.cityofnewyork.us
+      dataset_id: 52n9-sdep
+      page_size: 5000
+      geometry_field: the_geom
+    expected_geometry: Polygon
+    key_fields:
+      - source_id
+      - sub_code
+      - feat_code
+      - shape_leng
+      - shape_area
+
+  nyc_boroughs:
+    description: >
+      NYC borough boundary polygons from NYC Open Data. Used to (1) define the
+      OSW root metadata region field as a MultiPolygon, (2) tag every feature
+      with ext:borough, and (3) bound OSM queries per borough.
+    type: socrata
+    license: Public Domain (NYC Open Data)
+    license_url: https://data.cityofnewyork.us/City-Government/Borough-Boundaries/7t3b-ywvw
+    retrieval:
+      method: socrata
+      domain: data.cityofnewyork.us
+      dataset_id: 7t3b-ywvw
+      page_size: 10
+      geometry_field: the_geom
+      fallback_method: osmnx_geocode
+      fallback_queries:
+        - "Manhattan, New York City, New York, USA"
+        - "Brooklyn, New York City, New York, USA"
+        - "Queens, New York City, New York, USA"
+        - "Bronx County, New York, USA"
+        - "Staten Island, New York City, New York, USA"
+    expected_geometry: MultiPolygon
+    key_fields:
+      - boro_code
+      - boro_name
+      - shape_leng
+      - shape_area
+
+  dem_nyc:
+    description: >
+      NYC 2017 Topobathymetric LiDAR bare-earth DTM (1-foot native resolution) served
+      via NY State GIS ArcGIS ImageServer. Buildings removed, hydro-flattened.
+      Captured May 2017 by Quantum Spatial using Leica ALS80. Used to compute
+      edge incline (grade) for wheelchair routing and accessibility scoring.
+    type: arcgis_imageserver
+    license: Public Domain (New York State)
+    license_url: https://data.cityofnewyork.us/City-Government/Topobathymetric-LiDAR-Data-2017-/7sc8-jtbz
+    retrieval:
+      method: arcgis_exportimage
+      service_url: https://elevation.its.ny.gov/arcgis/rest/services/NYC_TopoBathymetric_2017_1_meter/ImageServer
+      native_resolution_m: 0.305
+      output_crs: EPSG:4326
+    expected_geometry: Raster
+
+  nyc_address_points:
+    description: >
+      NYC Address Points. ~900k geocoded address points covering all five boroughs.
+      Every addressed building entrance, keyed by house number, street name, borough,
+      and ZIP. Used by pipeline Stage 7 (build_address_index) to build the compact
+      Fuse.js offline address index (output/nyc-addresses.json). This supplements the
+      named-place POI index and enables routing to arbitrary street addresses such as
+      "85-26 123rd Street" (Queens block-house format) or "161 Amsterdam Avenue".
+    type: socrata
+    license: Public Domain (NYC Open Data)
+    license_url: https://data.cityofnewyork.us/City-Government/NYC-Address-Points/g6pj-hd8k
+    retrieval:
+      method: socrata
+      domain: data.cityofnewyork.us
+      dataset_id: g6pj-hd8k
+      page_size: 10000
+      geometry_field: the_geom
+    expected_geometry: Point
+    key_fields:
+      - HouseNumber     # e.g. "85-26" (Queens block-house format) or "161"
+      - StreetName      # e.g. "123 STREET" or "AMSTERDAM AVENUE"
+      - BoroughName     # "MANHATTAN" | "BRONX" | "BROOKLYN" | "QUEENS" | "STATEN ISLAND"
+      - ZipCode
+      - latitude
+      - longitude
+    pipeline_stage: 7
+    output: output/nyc-addresses.json
+
+  mta_ada_stations:
+    description: >
+      MTA subway station accessibility data. Lists stations with ADA-accessible
+      features (elevators, ramps). Used as sidecar data to annotate
+      transit-adjacent nodes in the pedestrian graph with ext:ada_accessible.
+      Not part of the pedestrian graph topology. Informational annotation only.
+    type: gtfs_static
+    license: Public Domain (MTA)
+    license_url: https://api.mta.info/
+    retrieval:
+      method: http_csv
+      # MTA publishes GTFS static feeds; stops.txt has wheelchair_boarding column.
+      # Primary: NYC Open Data subway stations with ADA column.
+      # Fallback: MTA GTFS static stops.txt
+      primary_url: https://data.cityofnewyork.us/resource/drh3-e2fd.json
+      primary_domain: data.cityofnewyork.us
+      primary_dataset_id: drh3-e2fd
+      fallback_url: http://web.mta.info/developers/data/nyct/subway/google_transit.zip
+      page_size: 10000
+      geometry_field: the_geom
+    expected_geometry: Point
+    key_fields:
+      - objectid
+      - name
+      - ada          # ADA accessibility flag
+      - ada_notes

@@ -1,0 +1,41 @@
+cff-version: 1.2.0
+title: "opensidewalks-nyc: An OpenSidewalks v0.3-conformant pedestrian graph of New York City"
+message: "If you use this dataset, please cite as below."
+type: dataset
+authors:
+  - family-names: Rahman
+    given-names: Adam Munawar
+    email: msrahmanadam@gmail.com
+repository-code: "https://github.com/msradam/opensidewalks-nyc"
+url: "https://github.com/msradam/opensidewalks-nyc"
+license: ODbL-1.0
+license-url: "https://opendatacommons.org/licenses/odbl/1-0/"
+version: "0.3.0-nyc.1"
+date-released: "2026-05-10"
+keywords:
+  - opensidewalks
+  - new york city
+  - pedestrian network
+  - accessibility
+  - wheelchair routing
+  - sidewalks
+  - graph
+  - geojson
+  - openstreetmap
+references:
+  - type: software
+    title: "OpenSidewalks Schema"
+    authors:
+      - name: "Taskar Center for Accessible Technology, University of Washington"
+    url: "https://sidewalks.washington.edu/"
+  - type: data
+    title: "OpenStreetMap"
+    authors:
+      - name: "OpenStreetMap contributors"
+    url: "https://www.openstreetmap.org"
+    license: ODbL-1.0
+  - type: data
+    title: "NYC DOT Pedestrian Ramp Locations (ufzp-rrqu)"
+    authors:
+      - name: "New York City Department of Transportation"
+    url: "https://data.cityofnewyork.us/Transportation/Pedestrian-Ramp-Locations/ufzp-rrqu"

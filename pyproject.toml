@@ -1,0 +1,34 @@
+[project]
+name = "opensidewalks-nyc"
+version = "0.3.0-nyc.1"
+description = "OpenSidewalks v0.3-conformant pedestrian network of New York City"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Adam Munawar Rahman", email = "msrahmanadam@gmail.com" }]
+keywords = ["opensidewalks", "nyc", "pedestrian", "accessibility", "routing", "graph", "geojson"]
+
+dependencies = [
+    "click>=8.1",
+    "geopandas>=1.0",
+    "shapely>=2.0",
+    "osmnx>=2.0",
+    "networkx>=3.4",
+    "pyogrio>=0.10",
+    "pyproj>=3.6",
+    "requests>=2.32",
+    "ijson>=3.3",
+    "tqdm>=4.66",
+    "pyyaml>=6.0",
+    "scipy>=1.13",
+]
+
+[project.optional-dependencies]
+notebook = ["jupyter", "matplotlib", "folium", "contextily"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["pipeline"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

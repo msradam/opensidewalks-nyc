@@ -1,0 +1,51 @@
+opensidewalks-nyc
+Copyright 2026 Adam Munawar Rahman
+
+This product is licensed as follows:
+  - Pipeline code, scripts, and notebooks: Apache License 2.0 (see LICENSE).
+  - Distributed graph data (GitHub Release assets): Open Database License v1.0
+    (ODbL-1.0), inherited from OpenStreetMap. See LICENSE-DATA.md.
+
+----------------------------------------------------------------------
+Source data attributions
+----------------------------------------------------------------------
+
+This dataset incorporates and is derived from the following public sources.
+All consumers must preserve these attributions per ODbL-1.0 §4.3.
+
+  - OpenStreetMap (https://www.openstreetmap.org)
+    © OpenStreetMap contributors, licensed ODbL-1.0.
+    Used as the topological scaffold (footways, crossings, road centerlines).
+
+  - NYC DOT Pedestrian Ramp Locations (dataset id: ufzp-rrqu)
+    https://data.cityofnewyork.us/Transportation/Pedestrian-Ramp-Locations/ufzp-rrqu
+    Public domain. Used for curb-ramp geometry, slopes, and condition.
+
+  - NYC Planimetric Database: Sidewalks (dataset id: vfx9-tbb6)
+    https://data.cityofnewyork.us/City-Government/Planimetrics/wt4d-p43d
+    Public domain. Used as a gap-fill source for sidewalk centerlines.
+
+  - NYC Borough Boundaries (dataset id: 7t3b-ywvw)
+    https://data.cityofnewyork.us/City-Government/Borough-Boundaries/7t3b-ywvw
+    Public domain. Used as region polygons.
+
+  - U.S. Geological Survey 3D Elevation Program (3DEP) 10 m DEM
+    https://www.usgs.gov/3d-elevation-program
+    Public domain. Used to derive node elevations and edge inclines.
+
+  - OpenSidewalks Schema v0.3
+    https://sidewalks.washington.edu/opensidewalks/0.3/schema.json
+    Developed by the Taskar Center for Accessible Technology, University of
+    Washington. The schema specifies the OSW feature types and properties to
+    which this dataset conforms.
+
+----------------------------------------------------------------------
+AI-assisted authoring disclosure
+----------------------------------------------------------------------
+
+Portions of the pipeline code, conversion scripts, and documentation in this
+repository were drafted with the assistance of large language models
+(Anthropic Claude). All AI-suggested changes were reviewed, edited, and
+accepted by a human author who takes responsibility for the resulting code,
+the methodology, and the dataset. AI tools were not used to generate or
+modify the source data itself.

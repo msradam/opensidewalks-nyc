@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.ipynb_checkpoints/
+
+# Build artifacts (regenerable, distributed via GH Releases)
+data/staged/
+data/clean/
+data/raw/
+output/
+*.fgb
+*.graphml
+*.bin
+
+# Large source/derived geojsons live in releases, not in tree
+data/*.geojson
+output/*.geojson
+*.geojson.gz
+
+# IDE / OS
+.DS_Store
+.vscode/
+.idea/
+
+# Release-asset staging
+release-assets/
+
+# Logs
+*.log

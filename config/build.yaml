@@ -1,0 +1,87 @@
+# Pipeline build parameters.
+# Stage logic reads this file for tunable thresholds and switches.
+
+pipeline_version: "0.1.0"
+
+# Target OpenSidewalks schema version
+osw_schema_version: "0.3"
+osw_schema_url: "https://raw.githubusercontent.com/OpenSidewalks/OpenSidewalks-Schema/main/opensidewalks.schema.json"
+osw_schema_local_cache: "data/raw/osw_schema_v0.3.json"
+
+# Stage 4 (assemble): snap tolerance for matching curb nodes to edge endpoints.
+# Curb point nodes within this distance of an edge endpoint are snapped to it.
+snap_tolerance_meters: 5.0
+
+# Stage 4 (assemble): merge tolerance for cross-source near-coincident endpoints.
+# Edge endpoints from different sources (OSM vs planimetric) within this distance
+# are unified under one node ID, ensuring the two subgraphs are topologically joined.
+endpoint_merge_tolerance_meters: 2.0
+
+# Stage 3 (schema_map): maximum gap between an OSM edge endpoint and a planimetric
+# sidewalk polygon boundary before we consider OSM coverage "sufficient" and skip
+# centerline derivation for that polygon.
+planimetric_coverage_threshold_meters: 10.0
+
+# Stage 3: minimum area (m²) for a planimetric sidewalk polygon to be used for
+# centerline derivation. Very small polygons are likely noise.
+planimetric_min_area_m2: 20.0
+
+# Stage 3: highway types from OSM that are treated as sidewalk edges
+osm_sidewalk_types:
+  - footway
+  - path
+  - pedestrian
+  - steps
+
+# Stage 3: highway types from OSM that are treated as street edges
+# (sidewalks parallel to these get ext:street_side tags)
+osm_street_types:
+  - residential
+  - service
+  - tertiary
+  - secondary
+  - primary
+  - living_street
+  - unclassified
+
+# Stage 1: DEM resolution for incline computation in metres.
+# Source: NYC 2017 1ft LiDAR (native 0.305m). Default 1m balances accuracy vs download size.
+# For city-wide runs the pixel count is capped at 8000×8000 regardless of this setting.
+dem_resolution_meters: 1
+
+# Stage 4: topology connectivity analysis
+# Components smaller than this node count are flagged as isolated fragments
+min_component_size_nodes: 3
+
+# Output formats to enable (stage 6)
+outputs:
+  geojson: true
+  graphml: true
+  routing_json: true
+
+# Socrata API token (optional but recommended for high-rate access).
+# Set via environment variable SOCRATA_APP_TOKEN rather than here.
+# If unset, anonymous access is used (rate-limited to ~1 req/sec).
+socrata_app_token_env: "SOCRATA_APP_TOKEN"
+
+# ---------------------------------------------------------------------------
+# Optional study area — scope the pipeline to a bounding box for rapid
+# iteration and validation before a full city build.
+# Remove or comment out this block to run city-wide.
+# Changing the bbox requires `python -m pipeline clean` first.
+# ---------------------------------------------------------------------------
+# study_area:
+#   name: "nyc_tandon"
+#   description: "NYU Tandon / MetroTech, Downtown Brooklyn"
+#   bbox:
+#     south: 40.688
+#     west:  -73.993
+#     north: 40.698
+#     east:  -73.977
+
+# Data directories
+dirs:
+  raw: "data/raw"
+  clean: "data/clean"
+  staged: "data/staged"
+  output: "output"
