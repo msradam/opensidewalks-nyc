@@ -1,39 +1,44 @@
 # opensidewalks-nyc
 
-**The first public OpenSidewalks v0.3–conformant pedestrian graph of New York City.**
+**An OpenSidewalks v0.3–conformant pedestrian graph of New York City.**
 
-A standards-conformant, fully attributed graph of NYC's pedestrian network — sidewalks, crossings, footways, steps, and curb ramps as first-class features — built by fusing OpenStreetMap, NYC DOT's curb ramp survey, and NYC Planimetric sidewalks. Sized for routing, accessibility analysis, and urban-planning research.
+A standards-conformant, fully attributed graph of NYC's pedestrian network — sidewalks, crossings, footways, steps, and curb ramps as first-class features — built from OpenStreetMap and the NYC DOT curb-ramp survey. Validated against the official OSW v0.3 spec (`python-osw-validation` 0.3.7, 100% pass) and end-to-end-tested with the OpenSidewalks community's reference routing engine, [Unweaver](https://github.com/nbolten/unweaver).
+
+See [`validators/QUALITY_REPORT.md`](validators/QUALITY_REPORT.md) for honest numbers on conformance, topology, coverage gaps, and routing tests.
 
 | | |
 |---|---|
-| **Spec** | [OpenSidewalks Schema v0.3](https://sidewalks.washington.edu/opensidewalks/0.3/schema.json) (Taskar Center for Accessible Technology, University of Washington) |
-| **Coverage** | All five NYC boroughs |
-| **Size** | ~1.17 M features (~643 k Point nodes, ~530 k LineString edges) |
-| **Releases** | [GitHub Releases](https://github.com/msradam/opensidewalks-nyc/releases) — canonical GeoJSON, FlatGeobuf, GraphML, per-borough splits |
+| **Spec** | [OpenSidewalks Schema v0.3](https://github.com/OpenSidewalks/OpenSidewalks-Schema) (Taskar Center for Accessible Technology, University of Washington) |
+| **Coverage** | All five NYC boroughs (Staten Island is its own subgraph; mainland-NYC giant component covers Manhattan / Brooklyn / Queens / Bronx) |
+| **Size** | 955,026 features (494,975 Point nodes, 460,051 LineString edges) |
+| **Releases** | [GitHub Releases](https://github.com/msradam/opensidewalks-nyc/releases) — canonical GeoJSON, FlatGeobuf, GraphML, OSW-validator-format ZIP, per-borough splits |
 | **Code license** | Apache-2.0 |
 | **Data license** | ODbL-1.0 (inherited from OpenStreetMap) — see [LICENSE-DATA.md](LICENSE-DATA.md) |
 
 ## Why this exists
 
-NYC has the densest pedestrian network in North America, and until now there has been no public, standards-conformant, routable graph of it. Three datasets had to be fused to get one:
+NYC has the densest pedestrian network in North America. Until now there has been no public, standards-conformant, routable graph of it. This artifact fuses two principal sources:
 
-- **OpenStreetMap** provides footways, crossings, and the topological scaffold — but tags most NYC sidewalks as attributes on street centerlines (`sidewalk=both`) rather than as first-class edges.
-- **NYC DOT's Pedestrian Ramp Locations** (`ufzp-rrqu`) records 217k+ surveyed curb ramps with geometric measurements (running slope, cross slope, condition, tactile paving) — but as disconnected points.
-- **NYC Planimetric Sidewalks** (`vfx9-tbb6`) gives accurate sidewalk polygons from aerial imagery — but as polygons, not graph edges.
+- **OpenStreetMap** provides footways, crossings, and the topological scaffold — including ~210k sidewalks, ~121k crossings, and ~184k pedestrian-passable street centerlines.
+- **NYC DOT's Pedestrian Ramp Locations** (`ufzp-rrqu`) contributes ~187k surveyed curb-ramp Point Nodes with measured geometry: running slope, cross slope, counter slope, ADA violation flags, condition, tactile paving, dimensions.
 
-The fusion is the artifact. Curb ramps become first-class OSW Curb Nodes, snapped to graph endpoints. Planimetric polygons gap-fill OSM where only `sidewalk=both` was present, via a Voronoi-skeleton centerline extraction. Every feature carries `ext:source`, `ext:source_timestamp`, and `ext:pipeline_version` for auditability.
+Each feature carries `ext:source`, `ext:source_timestamp`, and `ext:pipeline_version` for auditability. The artifact validates 100% against the OSW v0.3 schema (split-format, edges + nodes).
+
+A v0.3.1 will additionally fuse NYC Planimetric Sidewalks (`vfx9-tbb6`) for OSM-sparse areas — see the recommendations section in [`validators/QUALITY_REPORT.md`](validators/QUALITY_REPORT.md).
 
 ## What's in the graph
 
 Each feature in the canonical GeoJSON is one of:
 
-| OSW type | Example highway/footway | Count (approx) |
+| OSW type | Example highway/footway | Count |
 |---|---|---|
-| Sidewalk Edge | `highway=footway, footway=sidewalk` | 210k |
-| Crossing Edge | `highway=footway, footway=crossing` | 121k |
-| Footway Edge | `highway=footway/path/pedestrian/steps` | ~15k |
-| Street Edge | `highway=residential/service/primary/...` | ~184k |
-| Point Node | endpoints + curb ramps | 643k |
+| Sidewalk Edge | `highway=footway, footway=sidewalk` | 210,425 |
+| Crossing Edge | `highway=footway, footway=crossing` | 121,450 |
+| Footway / Steps Edge | `highway=footway/pedestrian/steps` (other) | 12,932 |
+| Street Edge | `highway=residential/service/primary/...` | 184,482 |
+| Point Node (graph-structural) | sidewalk endpoints | 307,605 |
+| Curb-ramp Point Node | `barrier=kerb`, with slope/condition props | 187,368 |
+| **Total features** |  | **955,026** |
 
 Edges carry: `_u_id`, `_v_id` (graph endpoints), `surface`, `incline`, `ext:running_slope_pct`, `ext:cross_slope_pct`, `ext:counter_slope_pct`, `ext:kerb`, `ext:tactile_paving`, `ext:ada_violations`, `crossing:markings`, `width`, `ext:lit`, `name`, `ext:borough`, `ext:osm_id`.
 

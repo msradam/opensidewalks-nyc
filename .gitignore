@@ -27,5 +27,15 @@ output/*.geojson
 # Release-asset staging
 release-assets/
 
+# Unweaver-derived artifacts (regenerable)
+unweaver-project/graph.gpkg
+unweaver-project/layers/*.geojson
+unweaver-project/regions.geojson
+
+# Validator findings + restored artifact (regenerable)
+validators/findings/
+validators/schema-cache/
+output/
+
 # Logs
 *.log
