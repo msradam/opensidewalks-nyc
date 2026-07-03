@@ -10,6 +10,7 @@ data/staged/
 data/clean/
 data/raw/
 output/
+cache/
 *.fgb
 *.graphml
 *.bin

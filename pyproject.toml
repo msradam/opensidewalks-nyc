@@ -1,6 +1,6 @@
 [project]
 name = "opensidewalks-nyc"
-version = "0.3.0-nyc.1"
+version = "0.3.1+nyc.1"
 description = "OpenSidewalks v0.3-conformant pedestrian network of New York City"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -18,6 +18,8 @@ dependencies = [
     "pyproj>=3.6",
     "requests>=2.32",
     "ijson>=3.3",
+    "jsonschema>=4.0",
+    "rasterio>=1.4",
     "tqdm>=4.66",
     "pyyaml>=6.0",
     "scipy>=1.13",

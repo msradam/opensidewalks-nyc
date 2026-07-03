@@ -15,7 +15,8 @@ OSWB binary format v2. All values little-endian:
   Nodes (10 bytes × node_count):
     lon:    f32   degrees
     lat:    f32   degrees
-    attrs:  u8    bit 0=kerb_lowered, bit 1=kerb_raised, bit 2=tactile_paving
+    attrs:  u8    bit 0=kerb_lowered, bit 1=kerb_raised,
+                  bit 2=tactile_paving (reserved; this writer never sets it)
     _pad:   u8
 
   Edges (18 bytes × edge_count):
@@ -218,7 +219,7 @@ def export_binary(osw_path: Path, output_path: Path) -> None:
         for nid in node_ids:
             lon, lat = node_coords[nid]
             kerb   = node_kerb.get(nid)
-            tactile = None  # tactile_paving stored on nodes but not in node_kerb dict
+            tactile = None  # tactile bit reserved, see format docstring
             attrs = _node_attrs(kerb, tactile)
             f.write(struct.pack("<ffBx", lon, lat, attrs))
 

@@ -39,9 +39,9 @@ def export_osw_geojson(fc: dict, output_dir: Path) -> Path:
 def export_graphml(fc: dict, output_dir: Path) -> Path:
     """Build a NetworkX DiGraph from OSW edges and export as GraphML.
 
-    Only pedestrian-traversable edges (sidewalks, crossings, footways) are
-    included in the routing graph. Street edges are included as a separate
-    attribute for reference. Nodes get coordinate attributes.
+    Every LineString edge is included (sidewalks, crossings, footways, and
+    streets); consumers filter by the highway/footway attributes. Each edge is
+    added in both directions. Nodes get coordinate attributes.
     """
     G = nx.DiGraph()
 
@@ -68,11 +68,11 @@ def export_graphml(fc: dict, output_dir: Path) -> Path:
             u_id = props.get("_u_id")
             v_id = props.get("_v_id")
             if u_id and v_id and fid:
-                # Compute length in metres using pyproj.
                 edge_attrs = {k: str(v) for k, v in props.items()
                               if k not in ("_id", "_u_id", "_v_id") and v is not None}
 
-                # Length from geometry if not already set. Haversine per segment.
+                # Length from geometry if not already set. Equirectangular
+                # approximation per segment (adequate at NYC latitudes).
                 if "length" not in props:
                     try:
                         import math
@@ -92,7 +92,8 @@ def export_graphml(fc: dict, output_dir: Path) -> Path:
                 # Pedestrian graph is undirected. Add reverse edge.
                 G.add_edge(v_id, u_id, edge_id=fid, **edge_attrs)
 
-    # Add coordinate attributes to nodes that exist as edges but weren't Point features.
+    # Fill coordinates for nodes first created by add_edge, where the Point
+    # feature appeared later in the file than the edge referencing it.
     for node in G.nodes():
         if "lon" not in G.nodes[node] and node in node_coords:
             lon, lat = node_coords[node]
@@ -192,7 +193,7 @@ def export_routing_json(fc: dict, output_dir: Path) -> Path:
             "description": (
                 "Routing-friendly export of the NYC OpenSidewalks pedestrian graph. "
                 "Use nodes dict + edges list to build a routing graph. "
-                "length_m is approximate (Haversine on edge coordinates). "
+                "length_m is approximate (equirectangular distance on edge coordinates). "
                 "Cost functions (surface roughness, incline penalty, etc.) are left "
                 "to the consumer."
             ),

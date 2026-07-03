@@ -1,4 +1,4 @@
-# Declarative source manifest for the ariadne-nyc pipeline.
+# Declarative source manifest for the opensidewalks-nyc pipeline.
 # Each source has a stable ID, retrieval params, license info, and expected schema.
 # Stage 1 (acquire.py) reads this file and downloads raw data to data/raw/{source_id}/.
 

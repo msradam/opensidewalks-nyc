@@ -24,10 +24,9 @@ import networkx as nx
 import numpy as np
 import pandas as pd
 from shapely.geometry import Point, mapping
-from shapely.ops import nearest_points
 
 from pipeline.utils.ids import node_id
-from pipeline.utils.provenance import get_git_sha, load_manifest
+from pipeline.utils.provenance import get_git_sha
 
 
 # ---------------------------------------------------------------------------
@@ -35,15 +34,11 @@ from pipeline.utils.provenance import get_git_sha, load_manifest
 # ---------------------------------------------------------------------------
 
 def _endpoint_coords(gdf: gpd.GeoDataFrame) -> list[tuple[float, float, str, str]]:
-    """Return (lon, lat, edge_id, endpoint_role) for all edge endpoints.
-
-    Uses vectorized shapely operations for speed on city-scale datasets.
-    """
+    """Return (lon, lat, edge_id, endpoint_role) for all edge endpoints."""
     valid = gdf[gdf.geometry.notna() & ~gdf.geometry.is_empty].copy()
     if valid.empty:
         return []
 
-    from shapely import get_coordinates
     pts = []
     for _, row in valid.iterrows():
         coords = list(row.geometry.coords)
@@ -202,6 +197,18 @@ def _merge_near_endpoints(all_edges: gpd.GeoDataFrame,
     result = all_edges.copy()
     result["_u_id"] = result["_u_id"].map(lambda x: remap.get(x, x) if pd.notna(x) else x)
     result["_v_id"] = result["_v_id"].map(lambda x: remap.get(x, x) if pd.notna(x) else x)
+
+    # Edges shorter than the tolerance collapse into 2-point self-loops whose
+    # geometry becomes zero-length (SFA-invalid) once endpoints snap to the
+    # node coordinate. Both endpoints are the same node, so they carry no
+    # connectivity; drop them. Self-loops with interior vertices stay valid.
+    collapsed = (result["_u_id"] == result["_v_id"]) & result.geometry.apply(
+        lambda g: g is not None and not g.is_empty and len(g.coords) == 2
+    )
+    if collapsed.any():
+        click.echo(f"    Dropped {int(collapsed.sum()):,} edges collapsed "
+                   f"to zero length by the merge")
+        result = result[~collapsed].copy()
     return result
 
 
@@ -345,12 +352,11 @@ def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
     Only street-type edges (highway != footway/steps) are excluded. Pedestrian
     edges all get incline so routing can model grade penalties.
     """
-    import math
-    import numpy as np
-    import rasterio
-    from pyproj import Transformer
-
     try:
+        import math
+        import numpy as np
+        import rasterio
+
         node_coords: dict[str, tuple[float, float]] = {}
         for _, row in all_nodes.iterrows():
             nid = row.get("_id")
@@ -390,6 +396,13 @@ def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
                         node_elevs[nid] = elev
 
         click.echo(f"    Elevations sampled: {len(node_elevs):,}/{len(node_coords):,} nodes")
+
+        # Mutates the caller's all_nodes: sampled elevations ship on the nodes
+        # as ext:elevation_m alongside the per-edge incline.
+        if node_elevs and "_id" in all_nodes.columns:
+            all_nodes["ext:elevation_m"] = all_nodes["_id"].map(
+                lambda nid: round(node_elevs[nid], 1) if nid in node_elevs else None
+            )
 
         def _length_m(geom) -> float:
             coords = list(geom.coords)
@@ -438,7 +451,6 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
     """Stage 4: snap nodes, assign IDs, build canonical FeatureCollection."""
     staged_dir    = repo_root / build_cfg["dirs"]["staged"]
     raw_dir       = repo_root / build_cfg["dirs"]["raw"]
-    manifest      = load_manifest(raw_dir)
     pipeline_version = build_cfg.get("pipeline_version", "unknown")
     git_sha       = get_git_sha()
 
@@ -487,8 +499,9 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
             click.echo(f"    Deduplicated {dropped} duplicate edges (borough boundary overlap)")
 
     # Snap curb nodes to edge endpoints.
-    # Use only pedestrian edges (sidewalks + footways) for snapping. Curb ramps
-    # sit where sidewalks meet road crossings, not on street centerlines.
+    # Use only pedestrian edges (sidewalks + crossings + footways) for snapping.
+    # Curb ramps sit where sidewalks meet road crossings, not on street
+    # centerlines.
     click.echo("\n  Snapping curb nodes to edge endpoints...")
     pedestrian_edges = gpd.GeoDataFrame(
         pd.concat([sidewalks, crossings, footways], ignore_index=True),
@@ -550,7 +563,10 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
     # silently discards DOT ramp data whenever an OSM node lands at the same point.
     if "_id" in all_nodes.columns:
         before = len(all_nodes)
-        curb_fields = {"barrier", "kerb", "tactile_paving"}
+        curb_fields = {"barrier", "kerb", "tactile_paving",
+                       "ext:ramp_id", "ext:corner_id", "ext:street_1", "ext:street_2",
+                       "ext:running_slope_pct", "ext:cross_slope_pct",
+                       "ext:counter_slope_pct"}
 
         def _merge_node_group(group: pd.DataFrame) -> pd.Series:
             # Start from the first row, then fill in curb fields from any row
@@ -567,7 +583,9 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
             all_nodes
             .groupby("_id", sort=False)
             .apply(_merge_node_group)
-            .reset_index(drop=True)
+            # pandas 3 excludes the grouping column from apply() groups, so _id
+            # only survives as the group index; a plain reset_index restores it.
+            .reset_index()
         )
         # Restore GeoDataFrame with correct geometry column.
         all_nodes = gpd.GeoDataFrame(all_nodes, geometry="geometry", crs="EPSG:4326")
@@ -616,11 +634,6 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
             row   = valid.iloc[i]
             props = {}
             for col in prop_cols:
-                # OSW schema has additionalProperties:false on every feature type
-                # with no extension mechanism. Ext:* provenance fields are captured
-                # at the root FeatureCollection level (dataSource, pipelineVersion).
-                if str(col).startswith("ext:"):
-                    continue
                 v = row[col]
                 if v is None:
                     continue

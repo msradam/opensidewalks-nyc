@@ -2,7 +2,6 @@
 
 Input:  data/clean/{source_id}.geojson
 Output: data/staged/{feature_type}.geojson
-        METHODOLOGY.md (updated in-place)
 
 Transformations:
   OSM edges → Sidewalk Edges, Crossing Edges, Footway Edges, Street Edges
@@ -45,6 +44,16 @@ SURFACE_ENUM = frozenset([
     "gravel", "paved", "paving_stones", "unpaved",
 ])
 
+_BOROUGH_CODES = {
+    "manhattan": "MN",
+    "brooklyn": "BK",
+    "queens": "QN",
+    "bronx": "BX",
+    "bronx_county": "BX",
+    "the_bronx": "BX",
+    "staten_island": "SI",
+}
+
 CROSSING_MARKINGS_ENUM = frozenset([
     "zebra", "zebra:double", "zebra:paired", "zebra:bicolour",
     "lines", "lines:paired", "lines:rainbow",
@@ -66,7 +75,7 @@ STREET_TYPES = frozenset([
 
 
 # ---------------------------------------------------------------------------
-# Helper: polygon centerline via Voronoi skeleton
+# Helper: polygon centerline via minimum rotated rectangle
 # ---------------------------------------------------------------------------
 
 def _polygon_centerline(polygon) -> LineString | None:
@@ -182,10 +191,10 @@ def _classify_osm_edge(row: pd.Series) -> str | None:
     Returns one of: 'sidewalk', 'crossing', 'footway', 'street', None.
 
     Note: OSMnx 2.0 does not include 'footway' or 'crossing' sub-tags in its
-    default useful_tags_way. When those columns are absent, all highway=footway
-    edges are classified as generic 'footway' rather than 'sidewalk'/'crossing'.
-    The acquire stage now configures OSMnx to preserve these tags on future runs.
-    For the current dataset, planimetric gap-fill provides proper sidewalk edges.
+    default useful_tags_way; acquire_osm extends useful_tags_way to preserve
+    them. When those columns are absent (downloads made without that setting),
+    all highway=footway edges fall back to generic 'footway' rather than
+    'sidewalk'/'crossing'.
     """
     highway = str(row.get("highway", "")).lower().split("|")[0].strip()
 
@@ -278,6 +287,10 @@ def _osm_edges_to_osw(edges_gdf: gpd.GeoDataFrame, pipeline_version: str,
             except ValueError:
                 pass
 
+        osmid = row.get("osmid")
+        if osmid is not None and str(osmid) not in ("nan", "None", ""):
+            props["ext:osm_id"] = str(osmid)
+
         if edge_type == "sidewalk":
             props["footway"] = "sidewalk"
             sidewalk_rows.append({**props, "geometry": geom})
@@ -344,7 +357,6 @@ def _ramps_to_curb_nodes(ramps_gdf: gpd.GeoDataFrame, pipeline_version: str,
             **prov,
         }
 
-        # Borough annotation.
         if "borough" in ramp:
             props["ext:borough"] = str(ramp["borough"])
 
@@ -363,6 +375,18 @@ def _ramps_to_curb_nodes(ramps_gdf: gpd.GeoDataFrame, pipeline_version: str,
             val = ramp.get(orig_key)
             if val and str(val) not in ("nan", "None", ""):
                 props[ext_key] = str(val)
+
+        # DOT survey slope measurements, in percent. 999.0 is the DOT
+        # sentinel for "unmeasurable" (see SCHEMA.md); omit rather than carry it.
+        for orig_key, ext_key in [("ramp_running_slope_total", "ext:running_slope_pct"),
+                                   ("ramp_cross_slope", "ext:cross_slope_pct"),
+                                   ("counter_slope", "ext:counter_slope_pct")]:
+            try:
+                slope = float(ramp.get(orig_key))
+            except (TypeError, ValueError):
+                continue
+            if slope != 999.0:
+                props[ext_key] = slope
 
         rows.append({**props, "geometry": geom})
 
@@ -387,8 +411,8 @@ def _planimetric_to_sidewalk_edges(
     Coverage check: if a planimetric polygon has an OSM sidewalk edge within
     `planimetric_coverage_threshold_meters`, it's already covered. Skip it.
 
-    For uncovered polygons, extract a centerline using the Voronoi skeleton
-    approach and emit it as a Sidewalk Edge.
+    For uncovered polygons, extract a centerline via the minimum rotated
+    rectangle and emit it as a Sidewalk Edge.
     """
     prov = provenance_fields("nyc_planimetric_sidewalks", manifest, pipeline_version)
     coverage_threshold = build_cfg.get("planimetric_coverage_threshold_meters", 10.0)
@@ -505,9 +529,6 @@ def _join_widths_from_planimetric(sidewalks: gpd.GeoDataFrame,
     """
     if len(plan_gdf) == 0 or len(sidewalks) == 0:
         return sidewalks
-    if "width" in sidewalks.columns:
-        # Already populated (e.g., gap-fill edges already have width).
-        pass
 
     plan_proj = plan_gdf.to_crs("EPSG:32618").copy()
     def _poly_width(p) -> float | None:
@@ -538,7 +559,12 @@ def _join_widths_from_planimetric(sidewalks: gpd.GeoDataFrame,
     width_map = joined.groupby("_orig_index")["_width_m"].first()
 
     sidewalks = sidewalks.copy()
-    sidewalks["width"] = sidewalks.index.map(width_map)
+    plan_widths = pd.Series(sidewalks.index.map(width_map), index=sidewalks.index)
+    if "width" in sidewalks.columns:
+        # OSM-surveyed widths win; planimetric only fills the gaps.
+        sidewalks["width"] = sidewalks["width"].fillna(plan_widths)
+    else:
+        sidewalks["width"] = plan_widths
     n_with_width = sidewalks["width"].notna().sum()
     click.echo(f"    Width assigned to {n_with_width:,}/{len(sidewalks):,} OSM sidewalk edges")
     return sidewalks
@@ -660,6 +686,17 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
         "streets":     streets,
         "curb_nodes":  curb_nodes,
     }
+
+    # Sources tag boroughs three ways (OSMnx region slugs, DOT display names,
+    # boro_name from the boundaries file); normalize all of them to the
+    # two-letter codes SCHEMA.md documents.
+    for gdf in outputs.values():
+        if "ext:borough" in gdf.columns:
+            gdf["ext:borough"] = gdf["ext:borough"].map(
+                lambda v: _BOROUGH_CODES.get(
+                    str(v).strip().lower().replace(" ", "_"), v
+                ) if pd.notna(v) else v
+            )
 
     click.echo()
     for name, gdf in outputs.items():

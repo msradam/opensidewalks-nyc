@@ -1,21 +1,14 @@
 #!/usr/bin/env python3
-"""
-Restructure data/nyc-addresses.json (raw OSM-tagged points, ~1.4M entries,
-~170 MB) into a compact street-keyed index for fast in-browser geocoding.
+"""Build a compact street-keyed address index from data/nyc-addresses.json.
 
-Why:
-  Fuse.js over 1.4M items takes seconds to construct and tens of MB of heap.
-  Real address queries are structured. "<housenum> <street>, <borough>" -
-  so we index by street and do O(log n) housenum lookup per street.
+Standalone helper, separate from the six-stage OSW build. Address queries are
+structured ("<housenum> <street>, <borough>"), so the ~1.4M raw OSM address
+points are grouped by normalized street name with housenums sorted for binary
+search, instead of one flat fuzzy-search list.
 
-Output: data/nyc-streets.json
-  [
-    ["adams street", "Brooklyn", [[123, 40.6951, -73.9890], [125, ...], ...]],
-    ["atlantic avenue", "Brooklyn", [...]],
-    ...
-  ]
-  Sorted by street key. Housenums sorted numerically. Coordinates rounded
-  to 6 decimal places (~0.1 m precision).
+Output: data/nyc-streets.json, entries of the form
+  ["adams street", "Brooklyn", [[123, 40.6951, -73.9890], ...]]
+sorted by street key, coordinates rounded to 6 decimal places.
 
 Usage:
   uv run python pipeline/sources/build_address_index.py

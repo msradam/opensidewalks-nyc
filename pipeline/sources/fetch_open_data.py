@@ -1,75 +1,17 @@
-"""
-NYC Open Data pipeline for Ariadne.
+"""Fetch NYC Open Data sidecar datasets.
 
-Fetches two files consumed by the web app:
+Standalone helper, separate from the six-stage OSW build. Fetches public
+resource locations (data/nyc-comfort.json), named places for geocoding
+(data/nyc-pois.json), OSM address points, and a run report
+(data/fetch_summary.json) from NYC Open Data, library APIs, and Overpass.
+The source registry below maps each source name to its fetch function.
 
-  data/nyc-comfort.json  . Public resource locations (Point GeoJSON)
-  data/nyc-pois.json        . Named places for fuzzy-match geocoding (flat JSON)
+Usage:
+    python pipeline/sources/fetch_open_data.py [--section comfort|pois]
+        [--sources a,b] [--dry-run] [--output-dir DIR]
 
-─────────────────────────────────────────────────────────────────────────────
-COMFORT RESOURCE SOURCES
-─────────────────────────────────────────────────────────────────────────────
-Source              Dataset ID    Approx.   Resource types
-─────────────────── ────────────  ────────  ──────────────────────────────────
-NYPL Refinery       (direct API)    ~91     cool_indoor warm_indoor quiet_indoor
-                                            wifi_power bathroom seating
-Brooklyn Pub Lib    (vendor JSON)   ~60     same as NYPL (best-effort; may 403)
-Queens Library      kh3d-xhq7        68     same as NYPL; has per-day hours
-NYCHA facilities    crns-fw6u       416     cool_indoor warm_indoor seating;
-                                            senior_center or community_center
-                                            depending on program_type
-DHS drop-in ctr     bmxf-3rd4         8     cool_indoor warm_indoor bathroom
-                                            seating shelter_24h (if 24h noted)
-Parks indoor pools  y5rm-wagw        13     pool_indoor cool_indoor warm_indoor
-                                            bathroom; amenities: showers
-Public restrooms    i7jb-7jku       975     bathroom; has hours_of_operation
-LinkNYC kiosks      n6c5-95xh     2,238     linknyc wifi_power; 24/7; live status
-Food pantries       ji82-xba5       560     food_pantry
-Senior centers      cqc8-am9x       312     senior_center cool_indoor warm_indoor
-                                            quiet_indoor seating; per-day hours
-Harm reduction      nk7g-qeep       506     harm_reduction; per-day hours
-NYC H+H hospitals   q6fj-vxf8        78     medical (+ cool/warm for acute care)
-Mental health       ji82-xba5     1,254     mental_health
-Community centers   ji82-xba5       201     community_center cool_indoor warm_indoor
-
-─────────────────────────────────────────────────────────────────────────────
-GEOCODER POI SOURCES
-─────────────────────────────────────────────────────────────────────────────
-Source              Method        Approx.   Description
-─────────────────── ────────────  ────────  ──────────────────────────────────
-OpenStreetMap       Overpass API  ~23,000   Named places, transit stations,
-                                            parks, amenities, buildings
-
-─────────────────────────────────────────────────────────────────────────────
-OUTPUTS
-─────────────────────────────────────────────────────────────────────────────
-  data/nyc-comfort.json   GeoJSON FeatureCollection, Point geometry,
-                             properties: id source name address resource_types
-                             amenities hours_today is_temporarily_closed borough
-
-  data/nyc-pois.json         JSON list, each item:
-                             {name, lat, lng, type, category}
-                             sorted by category priority for fuzzy-match ranking
-
-  data/fetch_summary.json    Machine-readable run report:
-                             timestamp, per-source counts, totals, errors
-
-─────────────────────────────────────────────────────────────────────────────
-USAGE
-─────────────────────────────────────────────────────────────────────────────
-  python fetch_open_data.py                       # fetch everything
-  python fetch_open_data.py --section comfort     # comfort resources only
-  python fetch_open_data.py --section pois        # geocoder POIs only
-  python fetch_open_data.py --sources linknyc,food_pantries  # specific sources
-  python fetch_open_data.py --dry-run             # print plan, no network calls
-  python fetch_open_data.py --output-dir /tmp/out # write to a different directory
-
-─────────────────────────────────────────────────────────────────────────────
-ATTRIBUTIONS
-─────────────────────────────────────────────────────────────────────────────
-  NYC Open Data (Socrata) . cityofnewyork.us open data portal, public domain
-  NYPL Refinery API       . data.nypl.org, CC BY 2.0
-  OpenStreetMap           . openstreetmap.org, ODbL 1.0
+Attributions: NYC Open Data (public domain), NYPL Refinery API (CC BY 2.0),
+OpenStreetMap (ODbL 1.0).
 """
 from __future__ import annotations
 
@@ -878,7 +820,7 @@ out center tags;
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Fetch NYC open data for Ariadne (comfort resources + geocoder POIs).",
+        description="Fetch NYC open data sidecars (comfort resources + geocoder POIs).",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="Sources: " + ", ".join(COMFORT_SOURCES),
     )

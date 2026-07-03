@@ -1,7 +1,11 @@
 """Restore the v0.2-targeted artifact into a v0.3-conformant, routable graph.
 
-This is a one-shot post-processor that fixes the structural issues identified
-by the validators/quality_audit.py audit:
+Historical: this one-shot post-processor produced the v0.3.0-nyc.1 release from
+a source FeatureCollection that is no longer available. The current path is
+`python -m pipeline build` followed by scripts/snap_endpoints.py.
+
+It fixes the structural issues identified by the validators/quality_audit.py
+audit:
 
   - Root metadata: $schema -> 0.3 canonical id, dataSource/dataTimestamp/
     pipelineVersion updated, region populated (best-effort from feature bbox).
@@ -19,12 +23,9 @@ Output:
   output/osw-split/                Split-by-type ZIP for python-osw-validation
   output/restore-report.json       What changed, with counts.
 
-Inputs are parameterised so this script is reproducible.
-
 Usage:
-    uv run --python ~/ariadne-nyc/.venv/bin/python \
-        scripts/restore_artifact.py \
-        --input  /Users/amsrahman/macadam-nyc/opensidewalks_nyc.geojson \
+    python scripts/restore_artifact.py \
+        --input  SOURCE.geojson \
         --output ./output/nyc-osw.geojson \
         --merge-tolerance-m 5.0
 """
@@ -348,6 +349,51 @@ def merge_nearby_nodes(points: list, lines: list, tol_m: float, report: dict):
 
 
 # ---------------------------------------------------------------------------
+# Snap edge endpoints to node coordinates
+# ---------------------------------------------------------------------------
+
+def snap_edge_endpoints_to_nodes(points: list, lines: list, report: dict):
+    """Make each edge's terminal vertices equal its _u_id/_v_id node coords.
+
+    python-osw-validation >= 0.4.0 checks that an edge's start/end coordinate
+    matches the coordinate of the node referenced by _u_id/_v_id. merge_nearby_nodes
+    moves a merged node to its cluster centroid without moving the incident edge
+    vertices, leaving sub-metre gaps that the check flags. Snap them here.
+    Idempotent: already-matching endpoints are left untouched.
+    """
+    node_coord = {}
+    for f in points:
+        p = f.get("properties") or {}
+        nid = p.get("_id")
+        c = (f.get("geometry") or {}).get("coordinates")
+        if nid and c and len(c) >= 2:
+            node_coord[nid] = [float(c[0]), float(c[1])]
+
+    snapped_u = snapped_v = degenerate = 0
+    for f in lines:
+        coords = (f.get("geometry") or {}).get("coordinates")
+        if not coords or len(coords) < 2:
+            continue
+        p = f.get("properties") or {}
+        cu = node_coord.get(p.get("_u_id"))
+        cv = node_coord.get(p.get("_v_id"))
+        if cu is not None and coords[0] != cu:
+            coords[0] = list(cu)
+            snapped_u += 1
+        if cv is not None and coords[-1] != cv:
+            coords[-1] = list(cv)
+            snapped_v += 1
+        if coords[0] == coords[-1]:
+            degenerate += 1
+    report["endpoints_snapped_u"] = snapped_u
+    report["endpoints_snapped_v"] = snapped_v
+    report["degenerate_after_snap"] = degenerate
+    print(f"[snap] endpoints snapped: u={snapped_u:,} v={snapped_v:,} "
+          f"degenerate={degenerate}")
+    return points, lines
+
+
+# ---------------------------------------------------------------------------
 # Enum canonicalization
 # ---------------------------------------------------------------------------
 
@@ -541,6 +587,9 @@ def main():
     lines = drop_self_loops(lines, report)
     lines = dedup_edges(lines, report)
     topology_quickcheck(points, lines, report, "topology_after_recln")
+
+    # Stage C.5: snap edge endpoints to (centroid-moved) node coordinates
+    points, lines = snap_edge_endpoints_to_nodes(points, lines, report)
 
     # Stage D: enums
     points, lines = canonicalize_enums(points, lines, report)

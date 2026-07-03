@@ -13,8 +13,9 @@ Validation is performed in two layers:
      d. Curb nodes are Points (not LineStrings).
      e. Edges are LineStrings (not Points).
 
-The OSWValidation project (github.com/OpenSidewalks/OSWValidation) is not
-published on PyPI; we implement equivalent validation using jsonschema directly.
+This stage is a fast structural pre-check, not the conformance gate. The
+official gate is `python-osw-validation` (PyPI), run against the split ZIP
+produced by scripts/snap_endpoints.py.
 """
 
 import json
@@ -363,13 +364,16 @@ def _write_validation_report(
 
     lines += [
         "",
-        "## Known V1 Limitations",
+        "## Known Limitations",
         "",
-        "- No incline/slope data (requires elevation DEM. V1.1 scope)",
-        "- No accessibility condition ratings (requires field survey data. V1.1 scope)",
-        "- No APS (Accessible Pedestrian Signal) data (V1.1 scope)",
+        "- Incline requires the LiDAR DEM tiles and the optional rasterio dependency;"
+        " absent either, edges carry no incline",
+        "- No accessibility condition ratings (requires field survey data)",
+        "- No APS (Accessible Pedestrian Signal) data",
         "- Planimetric gap-fill sidewalks have approximate centerlines only",
         "- Curb ramp snap tolerance is 5 m; some ramps may not be correctly associated",
+        "- This report is a structural pre-check; the conformance gate is"
+        " python-osw-validation against the split ZIP",
     ]
 
     report_path = output_dir / "validation_report.md"

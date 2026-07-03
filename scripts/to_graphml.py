@@ -77,8 +77,8 @@ def main(in_path: Path, out_path: Path) -> None:
                 n_edges += 1
 
     print(f"  nodes: {n_nodes:,} | edges: {n_edges:,} | skipped: {n_skipped:,}")
-    # Some edges may reference nodes that arrived later or weren't in the file;
-    # NetworkX auto-creates them as bare nodes. Backfill x/y where missing.
+    # Edges referencing a node with no Point feature in the file leave a bare
+    # auto-created node behind. Backfill x/y so GraphML attributes stay uniform.
     for nid, attrs in G.nodes(data=True):
         attrs.setdefault("x", 0.0)
         attrs.setdefault("y", 0.0)

@@ -57,9 +57,7 @@ def main():
     type=click.IntRange(1, 6),
     default=1,
     show_default=True,
-    help="Start from this stage number (assumes earlier stage artifacts exist). "
-         "For the address geocoding index, use pipeline/sources/fetch_open_data.py "
-         "and pipeline/sources/build_address_index.py instead.",
+    help="Start from this stage number (assumes earlier stage artifacts exist).",
 )
 def build(stage: int):
     """Run the full pipeline (or from a given stage onward)."""

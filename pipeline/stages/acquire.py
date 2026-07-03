@@ -9,7 +9,7 @@ All raw files are stored as-downloaded; no transformation happens here.
 OSM data is queried borough-by-borough via OSMnx to manage memory, saved as
 GraphML files (one per borough) plus a merged nodes/edges GeoJSON pair.
 
-Socrata sources are paginated via the Socrata REST API (sodapy or raw requests).
+Socrata sources are paginated via the Socrata REST API (raw requests).
 MTA ADA data falls back to GTFS stops.txt if the Open Data endpoint is missing.
 """
 
@@ -332,15 +332,15 @@ def acquire_mta_ada(source_cfg: dict, out_dir: Path, app_token: str | None,
     out_file  = out_dir / "mta_ada_stations.geojson"
 
     # Attempt 1: NYC Open Data subway stations dataset.
-    # drh3-e2fd (MTA Subway Entrances) returns 404/empty on the standard Socrata
-    # endpoint as of 2026. Go straight to GTFS fallback which is more reliable.
+    # drh3-e2fd (MTA Subway Entrances) has returned 404/empty on the standard
+    # Socrata endpoint since early 2026, so the GTFS fallback below is the
+    # usual path in practice.
     click.echo("  Acquiring MTA ADA station data (trying NYC Open Data first)...")
     try:
         primary_id = retrieval.get("primary_dataset_id", "drh3-e2fd")
         domain     = retrieval.get("primary_domain", "data.cityofnewyork.us")
         page_size  = retrieval.get("page_size", 10000)
         rows = _socrata_fetch_all(domain, primary_id, app_token, page_size)
-        # Only use the result if it actually returned rows with geometry.
         fc = _rows_to_geojson(rows, retrieval.get("geometry_field", "the_geom"))
         if len(fc["features"]) > 0:
             raw_bytes = json.dumps(fc, indent=2).encode()
@@ -464,8 +464,9 @@ def acquire_dem(out_dir: Path, manifest: dict, bbox: dict | None = None,
     """Download NYC 2017 1m bare-earth LiDAR DEM (NY State GIS ImageServer).
 
     Study area mode: single tile clipped to study bbox.
-    City-wide mode: one tile per borough (ImageServer caps at ~4000×4000 px;
-    tiling keeps effective resolution at 4-6m per borough vs ~12m for one tile).
+    City-wide mode: one tile per borough (requests are capped at _NYC_DEM_MAX_PX
+    per side; tiling keeps effective resolution at 4-6m per borough vs ~12m for
+    one tile).
 
     Returns list of downloaded tile paths (may be empty on total failure).
     Non-fatal. Missing tiles mean incline is absent for that area.
@@ -518,7 +519,7 @@ def acquire_dem(out_dir: Path, manifest: dict, bbox: dict | None = None,
              "east": bounds[2], "north": bounds[3]}
         try:
             import time as _time
-            _time.sleep(1)  # brief pause between borough requests
+            _time.sleep(1)  # rate-limit courtesy to the NY State ImageServer
             _fetch_dem_tile(b, boro, out_file, resolution_m)
             size_kb = out_file.stat().st_size // 1024
             ch = _sha256_file(out_file)
@@ -592,7 +593,7 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
     acquire_mta_ada(source_defs["mta_ada_stations"], mta_out_dir, app_token, manifest,
                     bbox=bbox)
 
-    # Source 6: USGS 3DEP DEM raster (non-fatal. Used for incline computation).
+    # Source 6: NYC 2017 LiDAR DEM raster (non-fatal. Used for incline computation).
     dem_out_dir = raw_dir / "dem_nyc"
     resolution_m = build_cfg.get("dem_resolution_meters", 10)
     acquire_dem(dem_out_dir, manifest, bbox=bbox, resolution_m=resolution_m)

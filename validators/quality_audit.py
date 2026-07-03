@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
-quality_audit.py — OpenSidewalks v0.3 conformance + data quality audit
-for the NYC artifact at /Users/amsrahman/macadam-nyc/opensidewalks_nyc.geojson.
+quality_audit.py: OpenSidewalks v0.3 conformance + data quality audit for the
+NYC artifact (defaults to output/nyc-osw.geojson; pass a path to override).
 
 The script streams the artifact (ijson) and runs:
 
@@ -14,15 +14,15 @@ The script streams the artifact (ijson) and runs:
   5. Provenance coverage: source, timestamp, pipeline-version fields.
   6. Coverage gaps: sidewalk/street ratio, crossings/intersection ratio,
      curb-ramp snapping rate, per-borough density.
-  7. METHODOLOGY-stated limitations: planimetric/Voronoi failures,
+  7. METHODOLOGY-stated limitations: planimetric centerline failures,
      bare-node injections, sentinel 999.0 leakage.
 
 Outputs:
   * stdout: a JSON summary blob.
   * validators/findings/*.csv: per-check flagged-feature lists.
 
-Usage (from /Users/amsrahman/opensidewalks-nyc/):
-    ~/ariadne-nyc/.venv/bin/python validators/quality_audit.py
+Usage (from the repo root):
+    python validators/quality_audit.py [ARTIFACT.geojson]
 """
 
 from __future__ import annotations
@@ -43,8 +43,8 @@ from pyproj import Transformer
 # ---------------------------------------------------------------------------
 # Paths
 # ---------------------------------------------------------------------------
-ROOT = Path("/Users/amsrahman/opensidewalks-nyc")
-ARTIFACT = Path("/Users/amsrahman/macadam-nyc/opensidewalks_nyc.geojson")
+ROOT = Path(__file__).resolve().parent.parent
+ARTIFACT = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "output" / "nyc-osw.geojson"
 SCHEMA_PATH = ROOT / "validators" / "schema-cache" / "opensidewalks.schema.json"
 FINDINGS = ROOT / "validators" / "findings"
 FINDINGS.mkdir(parents=True, exist_ok=True)
@@ -432,18 +432,18 @@ def main():
                     curb_node_ids.add(fid)
 
                 # slopes on ramps
-                rs = _to_float(props.get("ext:ramp_running_slope_pct"))
+                rs = _to_float(props.get("ext:running_slope_pct"))
                 if rs is not None:
                     if rs == 999.0:
                         sentinel_999 += 1
-                        w_sent.writerow([fid, "Point", "ext:ramp_running_slope_pct", rs])
+                        w_sent.writerow([fid, "Point", "ext:running_slope_pct", rs])
                     else:
                         running_slope_vals.append(rs)
-                cs = _to_float(props.get("ext:ramp_cross_slope_pct"))
+                cs = _to_float(props.get("ext:cross_slope_pct"))
                 if cs is not None:
                     if cs == 999.0:
                         sentinel_999 += 1
-                        w_sent.writerow([fid, "Point", "ext:ramp_cross_slope_pct", cs])
+                        w_sent.writerow([fid, "Point", "ext:cross_slope_pct", cs])
                     else:
                         cross_slope_vals.append(cs)
                 cnt_s = _to_float(props.get("ext:counter_slope_pct"))
