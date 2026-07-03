@@ -1,6 +1,6 @@
 # Methodology
 
-This document records every data source, transformation, and schema mapping decision in the ariadne-nyc pipeline. It is updated as the pipeline is built. Not written after the fact.
+This document records every data source, transformation, and schema mapping decision in the opensidewalks-nyc pipeline. It is updated as the pipeline evolves, not written after the fact.
 
 ---
 
@@ -63,13 +63,13 @@ OSM `crossing` tags are mapped to `crossing:markings`. Non-canonical values (e.g
 
 **Why Curb Nodes, not edge attributes:** The OpenSidewalks spec treats curb interfaces as first-class Point Nodes, not as attributes of the adjacent sidewalk or crossing edges. This enables routing engines to impose cost penalties at the transition point itself. Not on the entire edge.
 
-**Sentinel value handling:** The DOT dataset uses `999.0` to represent unmeasurable or missing measurements. These are replaced with `null` in Stage 2 (clean).
+**Sentinel value handling:** The DOT dataset uses `999.0` to represent unmeasurable or missing measurements. Stage 3 omits sentinel-valued measurements from the artifact rather than carrying them (the validator rejects null-valued `ext:*` tags, and 999 would poison any downstream statistics).
 
 **Stage 4 snapping:** In Stage 4, curb nodes are snapped to the nearest edge endpoint within 5 m. Ramp survey coordinates are not always exactly at the OSM edge endpoint. The snap step reconciles the ~meter-level discrepancy between survey coordinates and OSM node positions.
 
 ---
 
-### 3. NYC Planimetric Database: Sidewalks (`vfx9-tbb6`)
+### 3. NYC Planimetric Database: Sidewalks (`52n9-sdep`)
 
 **What it is:** Sidewalk polygon features produced by the NYC Office of Technology and Innovation from aerial imagery. The polygons represent the physical extent of sidewalk surfaces, not centerlines.
 
@@ -77,18 +77,13 @@ OSM `crossing` tags are mapped to `crossing:markings`. Non-canonical values (e.g
 
 **License:** Public Domain (NYC Open Data).
 
-**How it was transformed:** Used as a gap-fill source for OSM sidewalk coverage.
+**How it was transformed:** Two uses: sidewalk widths and gap-fill centerlines.
 
-The coverage check: for each planimetric polygon, check whether any existing OSM sidewalk edge is within 10 m of the polygon boundary. If covered, skip. If not covered (typically where OSM has only a `sidewalk=both` tag on the street centerline), extract a centerline from the polygon and emit it as a Sidewalk Edge.
+Widths: each OSM sidewalk edge whose centroid falls inside a planimetric polygon gets `width` = 2 × polygon area / perimeter (the mean width of an elongated strip). OSM-surveyed `width` tags take precedence; the planimetric estimate only fills gaps.
 
-**Centerline extraction method (Voronoi skeleton):** The `centerline` Python package was not used because recent versions require GDAL as a system dependency, which complicates reproducibility across environments. Instead, a custom Voronoi-based skeleton is implemented in `schema_map.py::_polygon_centerline()`:
+Gap-fill coverage check: for each planimetric polygon, check whether any existing OSM sidewalk edge is within 10 m of the polygon boundary. If covered, skip. If not covered (typically where OSM has only a `sidewalk=both` tag on the street centerline), extract a centerline from the polygon and emit it as a Sidewalk Edge.
 
-1. Densify the polygon boundary by interpolating points at ~0.5 m intervals (in EPSG:32618, UTM Zone 18N for metric accuracy).
-2. Compute a Voronoi diagram over the boundary points.
-3. Retain only Voronoi ridge line segments that lie strictly inside the polygon.
-4. Return the longest connected component as the centerline.
-
-This approach works well for elongated strip geometry (typical of sidewalk polygons). It fails for irregular or L-shaped polygons. Those failures are counted and reported, not silently dropped.
+**Centerline extraction method (minimum rotated rectangle):** Implemented in `schema_map.py::_polygon_centerline()`. Compute the polygon's minimum rotated rectangle and return the straight line connecting the midpoints of its two short sides. This is O(1) per polygon and fits the elongated strip geometry typical of sidewalk polygons. For irregular or L-shaped polygons the axis line is a coarse approximation; extraction failures are counted and reported, not silently dropped.
 
 **Known limitation:** Planimetric-derived sidewalk edges have approximate centerline geometry only. They may not connect cleanly to adjacent OSM nodes. The Stage 4 assemble step injects bare nodes at their endpoints to satisfy the OSW structural requirement that all `_u_id`/`_v_id` references resolve to Node features.
 
@@ -109,7 +104,19 @@ This approach works well for elongated strip geometry (typical of sidewalk polyg
 
 ---
 
-### 5. MTA ADA Station List
+### 5. NYC 2017 Topobathymetric LiDAR DTM
+
+**What it is:** A bare-earth digital terrain model of NYC captured by LiDAR in May 2017 (1-foot native resolution, buildings removed, hydro-flattened), served by the NY State GIS Program Office ArcGIS ImageServer.
+
+**Where it came from:** `elevation.its.ny.gov` ImageServer export, one GeoTIFF tile per borough. The ImageServer caps export dimensions, so tiles are downsampled from the native 1-foot grid to fit the per-request pixel limit.
+
+**License:** Public Domain (NY State).
+
+**How it was used:** Stage 4 samples the DTM at every node coordinate. Each node whose sample lands on valid data gets `ext:elevation_m`; each edge whose two endpoint elevations are both known gets `incline` = rise / run, clamped to the OSW range of ±1.0. Values outside that range are DEM noise on very short edges and are dropped rather than clamped into pseudo-plausibility.
+
+---
+
+### 6. MTA ADA Station List
 
 **What it is:** A list of ADA-accessible NYC subway stations with geographic coordinates. Used to annotate transit-adjacent pedestrian nodes, not as part of the pedestrian graph topology.
 
@@ -127,7 +134,7 @@ This approach works well for elongated strip geometry (typical of sidewalk polyg
 
 ### Stage 1: Acquire
 
-Downloads raw data from all five sources and records provenance (retrieval timestamp, content hash, row count) in `data/raw/manifest.json`. Caches by file existence. A content-hash cache-busting mechanism will be added in V1.1.
+Downloads raw data from all six sources and records provenance (retrieval timestamp, content hash, row count) in `data/raw/manifest.json`. Caches by file existence. A content-hash cache-busting mechanism will be added in V1.1.
 
 Borough boundaries are acquired first because OSM borough queries require the polygon bounds.
 
@@ -154,21 +161,29 @@ The most complex transformation is the planimetric gap-fill: deriving sidewalk c
 
 Builds the single canonical FeatureCollection from staged feature files:
 1. Snap CurbRamp nodes to edge endpoints within 5 m (reconciles survey/OSM positional discrepancy)
-2. Combine all nodes (OSM nodes + snapped curb nodes)
-3. Inject bare nodes for any edge endpoint not yet in the node set
-4. Deduplicate nodes by `_id`
-5. Write topology report (connected components, fragmentation)
-6. Serialize to `data/staged/nyc-osw-unvalidated.geojson`
+2. Merge near-coincident endpoints across sources within 2 m (cluster with a KD-tree, remap `_u_id`/`_v_id` to one canonical ID per cluster). Edges shorter than the tolerance collapse into zero-length self-loops during this merge and are dropped; they connect a node to itself and carry no connectivity.
+3. Combine all nodes (OSM nodes + snapped curb nodes)
+4. Inject bare nodes for any edge endpoint not yet in the node set
+5. Deduplicate nodes by `_id`, preserving curb-ramp annotations when a ramp and an OSM node share a location
+6. Compute per-edge `incline` by sampling the LiDAR DTM at node coordinates (rise over run, clamped to the OSW range of ±1.0)
+7. Write topology report (connected components, fragmentation)
+8. Serialize to `data/staged/nyc-osw-unvalidated.geojson`
 
 Root metadata (`$schema`, `dataSource`, `dataTimestamp`, `pipelineVersion`, `region`) is written here.
 
-### Stage 5: Validate
+### Stage 5: Validate (internal pre-check)
 
-Two-layer validation:
-1. **JSON Schema**. Validates every feature against the OSW v0.3 JSON Schema downloaded from `sidewalks.washington.edu`. Implemented using `jsonschema.Draft7Validator`.
-2. **Structural integrity**. Checks that are independent of the schema spec: unique `_id`, correct geometry types, all `_u_id`/`_v_id` references resolve, WGS-84 coordinate bounds.
+Two-layer internal check:
+1. **Structural integrity**, over every feature: unique `_id`, correct geometry types, all `_u_id`/`_v_id` references resolve, WGS-84 coordinate bounds.
+2. **JSON Schema**, over a 2,000-feature random sample against the OSW v0.3 JSON Schema, using `jsonschema.Draft7Validator`.
 
 Results are written to `output/validation_report.md`.
+
+This stage is a fast pre-check, not the conformance gate. The gate is the official `python-osw-validation` package run against the split ZIP after the endpoint snap (below); a release ships only when it returns `is_valid: True` with zero errors.
+
+### Post-build: endpoint snap
+
+`scripts/snap_endpoints.py` runs after the build. The Stage 4 endpoint merge remaps `_u_id`/`_v_id` without moving edge terminal vertices, which leaves sub-metre gaps between an edge's endpoints and its referenced node coordinates. `python-osw-validation` 0.4.0+ checks those coordinates exactly, so the snap moves every edge endpoint onto its node's coordinate, rewrites `output/nyc-osw.geojson` in place, and emits the split node/edge files plus `output/nyc-osw-osw-split.zip` for the validator.
 
 ### Stage 6: Export
 
@@ -191,7 +206,7 @@ The OSW spec explicitly models curb interfaces as Point Nodes rather than attrib
 
 ### Why crossings are structurally separated from sidewalks
 
-The OSW spec requires crossings to be modeled as separate Edge features that exist on the road surface, connecting curb nodes on opposite sides of the street. This separation (sidewalk → curb node → crossing edge → curb node → sidewalk) enables accessibility-aware routing to apply different cost functions to crossing vs. Sidewalk segments. A wheelchair user, a stroller pusher, and a sighted walker all have different costs for an unmarked crossing vs. A zebra crossing with a curb ramp vs. A traffic signal crossing with APS signals.
+The OSW spec requires crossings to be modeled as separate Edge features that exist on the road surface, connecting curb nodes on opposite sides of the street. This separation (sidewalk → curb node → crossing edge → curb node → sidewalk) enables accessibility-aware routing to apply different cost functions to crossing and sidewalk segments. A wheelchair user, a stroller pusher, and a sighted walker all have different costs for an unmarked crossing, a zebra crossing with a curb ramp, and a signalized crossing with APS.
 
 ### Handling OSM `sidewalk=both` on street centerlines
 
@@ -199,21 +214,20 @@ Where OSM has `sidewalk=both` or `sidewalk=left/right` tags on a street centerli
 
 ---
 
-## Known Limitations (V1)
+## Known Limitations
 
-1. **No incline/slope data.** The OSW schema supports `incline` on edges (% grade) but deriving it requires a DEM and spatial interpolation. V1.1 scope.
-2. **No APS (Accessible Pedestrian Signal) data.** APS signals at crossings are V1.1 scope (requires a separate NYC DOT dataset or field survey).
-3. **No sidewalk condition ratings.** The DOT ramp dataset has condition flags but there is no equivalent for sidewalk pavement quality citywide. V1.1 scope.
-4. **Planimetric centerlines are approximate.** The Voronoi skeleton method produces geometrically correct but not survey-accurate centerlines.
+1. **Incline is DEM-derived, not surveyed.** Short edges are noisier because sub-meter elevation error divides by a small run; values outside the OSW ±1.0 range are dropped as noise.
+2. **No APS (Accessible Pedestrian Signal) data.** Would require a separate NYC DOT dataset or field survey.
+3. **No sidewalk condition ratings.** The DOT ramp dataset has condition flags but there is no equivalent for sidewalk pavement quality citywide.
+4. **Planimetric centerlines are approximate.** The minimum-rotated-rectangle axis is geometrically valid but not survey-accurate, and is coarse for irregular polygons.
 5. **No live feeds.** The pipeline is a point-in-time snapshot. Rerun to refresh.
-6. **MTA ADA annotation not implemented.** The MTA ADA station index is acquired and staged but the spatial join to pedestrian nodes is not yet implemented. V1.1 scope.
+6. **MTA ADA annotation not implemented.** The MTA ADA station index is acquired and staged but the spatial join to pedestrian nodes is not implemented.
 
 ---
 
 ## Roadmap
 
 ### V1.1
-- Incline data from USGS 3DEP DEM
 - APS signal data from NYC DOT
 - MTA ADA station → pedestrian node annotation
 - Content-hash-based caching in Stage 1

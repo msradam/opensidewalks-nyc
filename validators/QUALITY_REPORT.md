@@ -1,213 +1,169 @@
-# Quality Report — opensidewalks-nyc v0.3.0-nyc.1
+# Quality Report: opensidewalks-nyc v0.3.1-nyc.1
 
-> Audit date: 2026-05-10. Artifact audited: `output/nyc-osw.geojson` produced by `scripts/restore_artifact.py` from the underlying source FeatureCollection. Schema audited against: **OSW v0.3** (commit `975b1e9` of `OpenSidewalks/OpenSidewalks-Schema`).
+> Audit date: 2026-07-03. Artifact audited: `output/nyc-osw.geojson`, built from scratch by `python -m pipeline build` plus the post-build endpoint snap (`scripts/snap_endpoints.py`). Schema target: **OSW v0.3** (`OpenSidewalks/OpenSidewalks-Schema`, latest tag `0.3`). Validator: **`python-osw-validation` 0.4.4** (latest release, 2026-07-01).
+>
+> The v0.3.0-nyc.1 report, which audited an artifact produced by a one-shot restoration script from a source file that no longer exists, is preserved in git history. This release replaces that path entirely: the pipeline now produces the conformant artifact from public sources.
 
 ## Headline verdict
 
-**The shipped artifact is provably OSW v0.3 conformant.** It passes the official validator (`python-osw-validation` 0.3.7) with zero errors across all 955,026 features. The graph is end-to-end-tested with the OpenSidewalks community's reference routing engine, **Unweaver**, and returns real pedestrian routes for both the distance and wheelchair profiles.
+**The artifact is OSW v0.3 conformant.** The official validator returns `is_valid: True` with zero errors across all 3,374,261 features (1,155,380 nodes, 2,218,881 edges), including the geometry-to-node coordinate check introduced in validator 0.4.0.
 
-It is **not perfect.** Coverage is uneven, the graph is fragmented (the largest connected component covers ~33% of nodes but spans the four mainland boroughs), and there are documented coverage gaps in Staten Island. The artifact is honestly labeled, fully reproducible from a single restore script, and shipped with this report so consumers know exactly what they're getting.
+It is **not perfect**. The pedestrian graph is fragmented (the largest component holds about 61% of pedestrian-graph nodes, spanning the four mainland boroughs; Staten Island is its own component), planimetric-derived geometry is approximate, and incline is DEM-derived rather than surveyed. Every known limitation is documented below.
 
-## How this artifact was produced
+## What changed since v0.3.0-nyc.1
 
-The dataset's pipeline (in `pipeline/`) was originally built to target OSW v0.2 in April 2026. An audit on 2026-05-10 found the v0.2 output had real structural issues: 11k self-loops, 2k duplicate-edge pairs, 0% per-feature provenance coverage, root metadata mislabeled as v0.2, and severe fragmentation. Rather than re-run the (unfixed) pipeline as-is, a one-shot post-processor (`scripts/restore_artifact.py`) was written that:
+| | v0.3.0-nyc.1 (restore script) | v0.3.1-nyc.1 (pipeline) |
+|---|---|---|
+| Features | 955,026 | 3,374,261 |
+| Edges | 460,051 | 2,218,881 |
+| Nodes | 494,975 | 1,155,380 |
+| Connected components | 107,604 | 11,807 |
+| Largest component | 159,506 nodes (32.6%) | 515,336 nodes (60.7% of pedestrian-graph nodes) |
+| Planimetric widths + gap-fill | absent | present |
+| Incline / elevation | present (USGS 10 m DEM) | present (NYC 2017 LiDAR DTM) |
+| Provenance | reconstructed heuristically post-hoc | native from acquisition |
+| Reproducible from public sources | no (source file gone) | yes |
 
-1. Sets root `$schema` to the OSW v0.3 canonical URL, populates `region`, `dataSource`, `dataTimestamp`, `pipelineVersion`.
-2. Drops self-loops (edges with `_u_id == _v_id`) and zero-length geometries.
-3. Deduplicates edges keyed by `(sorted(u, v), highway, footway)`.
-4. Aggressively merges nodes whose endpoints are within 5 metres in EPSG:32618 (UTM 18N) using kdtree pairs + union-find. Edge `_u_id`/`_v_id` references are rewritten to canonical cluster IDs.
-5. Re-runs the dedup/self-loop pass after merge (merging creates new ones).
-6. Canonicalizes `surface` and `crossing:markings` enums to the OSW canonical sets.
-7. Stamps `ext:source`, `ext:source_timestamp`, and `ext:pipeline_version` on every feature using best-effort heuristics (`ext:osm_id` → `osm_walk`; `barrier=kerb` → `nyc_dot_ramps`).
-
-The pipeline source is preserved in the repo for transparency and as the future basis for a v0.3.1 rebuild that addresses the topology issues at their source.
+The v0.3.0 report's "Recommendations for v0.3.1" asked for the endpoint merge to move into Stage 4, planimetric gap-fill to be re-included, provenance to be propagated at acquisition, and a full pipeline rebuild. This release does those.
 
 ## Schema conformance
 
 | Check | Result |
 |---|---|
-| Validator | `python-osw-validation` 0.3.7 |
-| Validator schema version | OSW v0.3 (split-format, edges + nodes) |
-| `$schema` value in artifact | `https://sidewalks.washington.edu/opensidewalks/0.3/schema.json` ✓ |
+| Validator | `python-osw-validation` 0.4.4 (current; bundles the OSW v0.3 schema) |
+| Input | `output/nyc-osw-osw-split.zip` (split `nyc.nodes.geojson` + `nyc.edges.geojson`) |
 | Validator output | **`is_valid: True, errors: 0`** |
-| Features validated | 955,026 (494,975 nodes + 460,051 edges) |
-| Required root keys | `$schema`, `type`, `features` — all present |
-| Optional root keys present | `dataSource`, `dataTimestamp`, `pipelineVersion`, `region` |
+| Geometry-to-node coordinate check (0.4.0+) | Pass: every edge terminal vertex equals its referenced node coordinate exactly |
+| `$schema` | `https://sidewalks.washington.edu/opensidewalks/0.3/schema.json` |
+| Root metadata | `dataSource`, `dataTimestamp`, `pipelineVersion`, `region` present |
 
-The validator wants the dataset packaged as a ZIP of split FeatureCollections (`nyc.nodes.geojson` + `nyc.edges.geojson`) — that ZIP is shipped as `nyc-osw-osw-split.zip`.
+Two pipeline-level guarantees behind the zero: Stage 4 drops edges that the 2 m endpoint merge collapses into zero-length self-loops (359,340 edges this build; they connect a node to itself and carry no connectivity), and the post-build snap moves every edge endpoint onto its node's coordinate.
+
+## Feature composition
+
+| OSW type | Count |
+|---|---|
+| Sidewalk edges | 703,467 |
+| Crossing edges | 424,564 |
+| Footway / steps edges | 429,328 |
+| Street edges | 661,522 |
+| Curb-ramp nodes | 199,836 |
+| Other point nodes | 955,544 |
+| **Total** | **3,374,261** |
+
+Edges are directed: each walkable segment appears once per travel direction (u→v and v→u), with `incline` signed in the direction of travel. Counting unique node pairs, the graph has 1,184,309 physical segments; the GraphML export carries exactly that collapsed view. Edge counts are therefore not directly comparable to v0.3.0, which shipped one edge per segment.
 
 ## Graph integrity
 
-### Self-loops, duplicates, orphans (after restoration)
-
-| Metric | Before restore | After restore (5 m merge) |
-|---|---|---|
-| LineStrings | 530,542 | 460,051 |
-| Self-loops (`_u_id == _v_id`) | 11,334 | **0** |
-| Duplicate edge pairs | 2,068 | **0** |
-| Edges with unresolved `_u_id`/`_v_id` | 0 | **0** |
-| Orphan Point Nodes (no edge references) | n/a | 0 (nodes not referenced by any edge are present in the file but counted separately for routing) |
-
-### Connectivity
-
-| Metric | Before restore | After restore (5 m merge) |
-|---|---|---|
-| Distinct nodes participating in edges | 635,896 | 489,328 |
-| Connected components | 142,452 | **107,604** |
-| Largest component (nodes) | 93,534 | **159,506** |
-| Largest component (% of nodes) | 14.7% | **32.6%** |
-| 2nd largest | n/a | 28,208 (corresponds to Staten Island, geographically separated) |
-| 3rd largest | n/a | 8,373 |
-| Components ≥ 1000 nodes | n/a | 3 |
-| Components ≥ 100 nodes | n/a | 30 |
-
-The giant component spans **all four mainland boroughs**:
-
-| Borough (rough bbox) | Nodes in giant |
+| Metric | Value |
 |---|---|
-| Brooklyn | 56,492 |
-| Queens | 49,795 |
-| Manhattan | 35,824 |
-| Bronx | 17,214 |
+| Edges with unresolved `_u_id`/`_v_id` | 0 |
+| Zero-length edges | 0 (dropped at the Stage 4 merge) |
+| Duplicate edges | 12 removed (borough-boundary overlap) |
+| Pedestrian-graph nodes (sidewalks + crossings + footways) | 849,417 |
+| Pedestrian-graph edges | 949,411 |
+| Connected components | 11,807 |
+| Largest component | 515,336 nodes (60.7%), spanning Manhattan, Brooklyn, Queens, and the Bronx |
+| Second largest | 132,012 nodes |
+| Third largest | 72,105 nodes |
 
-Staten Island is geographically separated from the mainland by water and is its own connected subgraph (≈28k nodes, the second-largest component) — this is a *real-world* fact, not a data bug. Together, the top three components account for 40% of all nodes; the remaining 60% are smaller, mostly size-2 fragments where an OSM-tagged sidewalk LineString has no shared endpoint coordinates with adjacent edges (ultimately a coordinate-noise problem in the upstream OSM data and a known limitation of the current pipeline's node-unification logic).
+Staten Island is geographically separated from the mainland; its subgraph is expected to be a separate component. The remaining fragments are mostly short dangling sidewalks and alleys whose OSM geometry shares no endpoint with adjacent features. Routing consumers should snap query points to the giant component.
 
-### Edge composition of the giant component
+Two integration numbers to know before consuming the nodes:
 
-| Edge type | In giant | Outside giant |
-|---|---|---|
-| `footway / sidewalk` | 94,753 | 59,910 |
-| `footway / crossing` | 79,402 | 39,102 |
-| `residential` street | 21,130 | 32,096 |
-| `secondary` street | 9,163 | 4,399 |
-| `primary` street | 7,825 | 4,204 |
-| `service` (alley/drive) | 6,173 | 79,902 |
-| `tertiary` street | 5,348 | 5,366 |
-| `unclassified` street | 1,366 | 1,473 |
-| `traffic_island` (in-roadway) | 1,032 | n/a |
-| `steps` | 697 | 2,484 |
+- **220,084 nodes are not referenced by any edge.** Most are original endpoint locations whose references were remapped to a canonical node by the 2 m merge, plus curb ramps that did not integrate into the graph. They are inert for routing; pruning them is open work.
+- **134,077 of 199,836 curb-ramp nodes (67%) are edge endpoints.** The rest carry their DOT survey data in the file but are not attached to the graph, mostly because the endpoint they snapped to was itself merged away.
 
-Service alleys and tiny dead-end footways dominate the not-in-giant set — entirely consistent with the hypothesis that fragmentation is driven by isolated OSM features rather than missing topology between major streets and sidewalks.
+Per-borough edge counts: QN 768,101; BK 515,555; SI 371,831; MN 290,897; BX 266,375. The sidewalk-to-street edge ratio falls from 1.80 in Manhattan to 0.76 in the Bronx, which tracks real OSM sidewalk mapping density, not pipeline behavior.
 
 ## Geometric sanity
 
 | Check | Result |
 |---|---|
-| Coordinates in NYC bbox `(40.477, 40.918) lat × (-74.260, -73.700) lng` | 999.6% in-bbox (out-of-bbox count is 446 features, all within ~50 m of the conservative bbox edge — these are real Bronx and Brooklyn boundary points, not data errors) |
-| Edge length distribution (metres, haversine) | min ≈ 0.1 m, p50 ≈ 23 m, p99 ≈ 250 m, max ~1.7 km (long arterials with no intermediate intersections — plausible) |
-| Zero-length edges | 0 (removed in restore) |
-| Edges with fewer than 2 distinct points | 0 |
+| Invalid geometries (SFA) | 0 |
+| Zero-length or sub-0.5 m edges | 0 |
+| Features outside a conservative NYC bbox | 27, all within ~50 m of the bbox edge (real boundary features) |
+| Edge length (metres) | min 2.0, median 8.4, p95 102, p99 213, max 2,943 |
+| Edges over 500 m | 147 (long arterials and park paths without intermediate intersections) |
 
-## Attribute distributions and enum conformance
+## Attribute coverage and distributions
 
-| Attribute | Status |
-|---|---|
-| `surface` non-canonical values | 0 after canonicalization (946 remaps applied: `unpaved`→`dirt`, `grass_paver`→`grass`, `compacted`→`gravel`, etc.) |
-| `crossing:markings` non-canonical values | 0 after canonicalization (86,955 remaps applied: `yes`→`surface`, `marked`→`surface`, `unmarked`→`no`) |
-| `kerb` distribution | `lowered`: 187,368, `raised`: 40,862 (both canonical) |
-| `tactile_paving` | `yes`: 75,561, `no`: 112,479 (both canonical) |
-| `barrier` | `kerb`: 228,230 (canonical) |
+| Attribute | Coverage | Notes |
+|---|---|---|
+| `incline` | 2,218,430 / 2,218,881 edges (99.98%) | p1 -6.1%, median 0.0%, p99 +6.1%; 3,115 edges carry grades beyond ±30%, the steep-noise tail of the DEM |
+| `ext:elevation_m` | 1,155,380 / 1,155,380 nodes (100%) | min -3.5 m, p95 25.9 m, max 84.9 m |
+| `width` | 815,782 sidewalk edges | OSM `width` tags first, planimetric polygon estimate fills the gaps |
+| `surface` | 921,303 edges (41.5%) | asphalt 555,711; concrete 267,531; paving_stones 46,470; the rest smaller |
+| `crossing:markings` | 369,932 / 424,564 crossings (87%) | `yes` 266,688; `zebra` 103,244 |
+| `kerb` / `tactile_paving` | 199,836 curb nodes | `kerb=lowered` universally (a source limitation); `tactile_paving=yes` wherever the DOT survey recorded a detectable warning surface |
 
-### Slope and incline
+All `surface` and `crossing:markings` values are OSW-canonical; the validator and the audit found zero non-canonical enum values and zero leaked `999.0` sentinels.
 
-| Stat | Value |
-|---|---|
-| `incline` (signed grade, edge-level) | min −0.25, p1 −0.092, p50 0.000, p95 0.038, p99 0.091, max 0.40 |
-| Outliers outside ±0.30 (likely data noise) | 1 |
-| `ext:elevation_m` (USGS 3DEP 10 m DEM) | min −12.2 m, p50 12.6 m, p95 58.3 m, p99 106.4 m, max 209.5 m |
-| Elevation outliers outside [−10 m, 200 m] | 36 (out of 643k Points; <0.006%) |
+### NYC DOT curb-ramp slope conformance (a finding about the city, not the data)
 
-### NYC DOT curb-ramp slope conformance (real-world finding, not a data bug)
+196,069 curb-ramp nodes carry measured slopes (the DOT `999.0` unmeasurable sentinel is omitted).
 
 | ADA threshold | Compliant share |
 |---|---|
-| Running slope ≤ 5% (ADA running-slope cap) | **33.2%** |
-| Cross slope ≤ 2% (ADA cross-slope cap) | **83.1%** |
+| Running slope ≤ 5% (ADA running-slope cap) | **33.0%** (64,632 of 196,069) |
+| Cross slope ≤ 2% (ADA cross-slope cap) | **82.6%** (161,918 of 196,069) |
 
-Two-thirds of NYC's surveyed curb ramps fail the ADA running-slope threshold. This is a *substantive accessibility finding* about NYC's pedestrian infrastructure — the dataset surfaces it; it's not a data quality issue.
+Two-thirds of NYC's surveyed curb ramps exceed the ADA running-slope threshold. The dataset surfaces this; it is not a data-quality problem. The same finding held in the v0.3.0 audit. At the edge level, 97.4% of sidewalk edges and 98.9% of crossings have DEM-derived incline at or below 5%.
 
 ## Provenance coverage
 
-| Field | Coverage after restore |
+| Field | Coverage |
 |---|---|
-| `ext:source` | **100%** of 955,026 features |
+| `ext:source` | 100% of 3,374,261 features |
 | `ext:source_timestamp` | 100% |
 | `ext:pipeline_version` | 100% |
-| Provenance breakdown by source | `osm_walk`: 796,026 features; `nyc_dot_ramps`: 159,000 |
+| `ext:osm_id` | OSM-derived edges |
+| `ext:borough` | Normalized `MN`/`BK`/`QN`/`BX`/`SI` codes |
 
-(The original v0.2 artifact had **0%** per-feature provenance coverage. This was the most cleanly fixable bug.)
+One nuance: when a DOT curb ramp and an OSM node occupy the same location, the merged node keeps the OSM node's `ext:source` while the DOT fields (`ext:ramp_id`, slopes, streets) preserve the survey linkage.
 
-## Coverage gaps and limitations
+## Known limitations
 
-These are documented honestly so consumers know what they're getting.
-
-1. **Fragmentation outside the giant component.** ~67% of nodes live in components smaller than the mainland giant. Most are size-2 dangles (a single OSM-tagged sidewalk LineString with no shared coordinate at either end with adjacent OSM features). This is upstream OSM-noise + the pipeline's pre-restore tolerances being too tight, not introduced by us. **Workaround for routing consumers:** snap query points to the giant component (`159,506` nodes spanning MN/BK/QN/BX) and avoid Staten Island routes, which require their own subgraph (28,208 nodes). A v0.3.1 rebuild should re-run the full pipeline with the fixes verified by this restore (5 m endpoint merge, post-merge dedup) baked in.
-2. **Staten Island is its own component.** It is geographically separated from the mainland by water; bridges and ferries exist but aren't tagged as pedestrian-walkable in OSM. Routing inside SI works; cross-borough SI⇄mainland routing doesn't.
-3. **Crossings as graph edges, not always at intersections.** OSW models a crossing as an edge that crosses a roadway, with curb-ramp Point Nodes as the interfaces. Some crossings in this artifact aren't incident to a street-class edge's endpoint — they're "free-floating crossings" attached to sidewalk fragments. This is consistent with OSM's representation but limits routing realism near less-mapped intersections. v0.3.1 should join crossings to street-edge endpoints.
-4. **`barrier=kerb` universally for NYC DOT ramps.** The DOT survey doesn't distinguish flush vs. lowered; we mapped all of it to `kerb=lowered` which is an over-claim for ramps that are actually flush in reality.
-5. **No NYC Planimetric gap-fill in this artifact.** The dataSource string of the underlying source file did not include planimetric sidewalks even though the pipeline supports it. Either the planimetric stage didn't run in the April 2026 build, or its output didn't survive into the export. v0.3.1 should re-include it; effect should be additional sidewalk coverage in OSM-sparse areas.
-6. **Per-feature `ext:source` is heuristic, not authoritative.** It's derived from `ext:osm_id` presence and `barrier=kerb` presence, not from the actual upstream source ID at acquisition time. v0.3.1 should propagate source IDs at acquisition and never strip them.
+1. **Fragmentation outside the giant component.** About 39% of pedestrian-graph nodes sit outside the mainland giant component (Staten Island plus thousands of small fragments). This reflects upstream OSM coordinate noise and coverage gaps, not pipeline-introduced breaks.
+2. **`kerb=lowered` for every DOT ramp.** The DOT survey does not distinguish flush from lowered ramps.
+3. **Planimetric centerlines are approximate.** Gap-fill geometry is a minimum-rotated-rectangle axis, roughly meter-level, and coarse for irregular polygons.
+4. **Incline is DEM-derived.** Short edges are noisier; values outside the OSW ±1.0 range are dropped as noise rather than clamped.
+5. **Crossings are not always incident to street-edge endpoints.** Some crossings attach to sidewalk fragments rather than intersections, consistent with OSM's representation but limiting routing realism at less-mapped intersections.
+6. **MTA ADA station index is a sidecar.** It is staged for consumers but not joined to graph nodes.
 
 ## Routing-engine end-to-end test
 
-The artifact was loaded into **Unweaver** (`nbolten/unweaver` @ `66352c1`), the OpenSidewalks community's reference routing engine, with two profiles from Unweaver's example project:
-
-- **distance** — minimum total walked distance.
-- **wheelchair** — distance-weighted with hard constraints: skip crossings without curb ramps; skip edges whose incline exceeds the user's `uphill`/`downhill` thresholds.
-
-A converter (`scripts/osw_to_unweaver.py`) flattens our OSW v0.3 FeatureCollection to Unweaver's expected `transportation.geojson` shape (LineStrings with denormalized `subclass`, `footway`, `curbramps`, `incline`, `length`, `surface`, `width`, `_u`, `_v`). The Unweaver project, profiles, cost functions, and routing-test results are committed under `unweaver-project/` and `validators/route_test_results.{json,md}` respectively.
-
-See `validators/route_test_results.md` for per-route results.
-
-### Compatibility patches applied to Unweaver
-
-Unweaver's last upstream commit is from November 2022 and doesn't run on Python ≥ 3.10 or modern Marshmallow. Three small patches were applied to the venv copy to make it work:
-
-- `unweaver/graphs/digraphgpkg/inner_adjlists/inner_successors.py`: `from collections import MutableMapping` → `from collections.abc import MutableMapping` (fixed in Python 3.10+).
-- `unweaver/geopackage/geopackage.py`: enable `enable_load_extension(True)` before `load_extension(...)`, and use the macOS-correct path `/opt/homebrew/lib/mod_spatialite.dylib` instead of `mod_spatialite.so`.
-- Pinned Marshmallow to `<4` (`Schema.__init__` no longer accepts `context=` kwarg in v4).
-
-These should be upstreamed if Unweaver is ever revived; for now they're documented here.
+The v0.3.0-nyc.1 artifact was end-to-end tested with **Unweaver** (`nbolten/unweaver` @ `66352c1`), the OpenSidewalks community's reference routing engine: 9/10 distance-profile and 8/10 wheelchair-profile routes succeeded across Manhattan, Brooklyn, Queens, and the Bronx (see `validators/route_test_results.md` and `unweaver-project/`). Those results apply to the previous artifact; the conversion tooling (`scripts/osw_to_unweaver.py`, `scripts/route_test.py`) ships in this repo, and re-running the suite against v0.3.1 is open work. Unweaver's last upstream commit is from 2022 and needs three small compatibility patches on modern Python, documented in the v0.3.0 report in git history.
 
 ## Reproducibility
 
 ```bash
-# from a fresh checkout of opensidewalks-nyc
+# from a fresh checkout, Python >= 3.11
+uv venv --python 3.11 && source .venv/bin/activate
+uv pip install -e .
+uv pip install python-osw-validation
 
-# 1. Restore artifact from source
-uv run --python ~/ariadne-nyc/.venv/bin/python \
-    scripts/restore_artifact.py \
-    --input  /path/to/source-osw.geojson \
-    --output ./output/nyc-osw.geojson \
-    --merge-tolerance-m 5.0
+# 1. Build (city-wide: ~60-90 min, ~10 GB scratch)
+python -m pipeline build
 
-# 2. Repackage for OSW validator
-python scripts/repackage_for_validator.py
+# 2. Snap edge endpoints onto node coordinates, emit the validator ZIP
+python scripts/snap_endpoints.py --input output/nyc-osw.geojson
 
-# 3. Validate
+# 3. The gate
 python -c "
 from python_osw_validation import OSWValidation
-r = OSWValidation('./output/nyc-osw-osw-split.zip').validate()
-print('valid:', r.is_valid, 'errors:', len(r.errors or []))
-"
+r = OSWValidation('output/nyc-osw-osw-split.zip').validate()
+print('valid:', r.is_valid, 'errors:', len(r.errors or []))"
 
-# 4. Convert + build for Unweaver
-python scripts/osw_to_unweaver.py \
-    --input output/nyc-osw.geojson \
-    --output-layer unweaver-project/layers/transportation.geojson \
-    --output-region unweaver-project/regions.geojson
-cd unweaver-project && unweaver build .
-
-# 5. Serve + run real routes
-unweaver serve --host 127.0.0.1 --port 5000 . &
-python ../scripts/route_test.py --base http://127.0.0.1:5000
+# 4. Full data-quality audit (this report's numbers)
+python validators/quality_audit.py output/nyc-osw.geojson
 ```
 
-## Recommendations for v0.3.1
+## Open work
 
-1. **Fix the pipeline's node-unification logic.** The 5 m endpoint-merge step in this restore script should be promoted into Stage 4 (assemble) of the pipeline, replacing the current 2 m `endpoint_merge_tolerance_meters`. Run on a fresh full pipeline build and ship.
-2. **Connect crossings to street-edge endpoints** via a Stage 4 sub-step that snaps crossing endpoints to the nearest street-edge node within ~5 m and unifies IDs. This will lift the giant component meaningfully.
-3. **Re-include NYC Planimetric gap-fill** with a verification step in Stage 4 that confirms planimetric features are present in the output.
-4. **Propagate `ext:source` natively** at acquisition (Stage 1) rather than reconstructing heuristically post-hoc.
-5. **Validate every stage's output** against OSW v0.3 immediately, not just at export. Catch the schema slip on day one.
-6. **Annotate Staten Island with its own region** and document its disconnection from the mainland subgraph as expected behavior.
+1. **Fold the endpoint snap into Stage 4** so `pipeline build` alone emits the validator-ready artifact.
+2. **Replace Stage 5 with the official validator** so the internal gate and the release gate are the same check.
+3. **Prune unreferenced nodes** left behind by the endpoint merge, and re-attach the 33% of curb ramps whose snap target was merged away.
+4. **Join crossings to street-edge endpoints** to lift the giant component further.
+5. **Re-run the Unweaver routing suite** against this artifact.
+6. **Join the MTA ADA index** onto transit-adjacent pedestrian nodes.

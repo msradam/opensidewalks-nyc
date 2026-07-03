@@ -21,17 +21,25 @@ All consumers must preserve these attributions per ODbL-1.0 §4.3.
     https://data.cityofnewyork.us/Transportation/Pedestrian-Ramp-Locations/ufzp-rrqu
     Public domain. Used for curb-ramp geometry, slopes, and condition.
 
-  - NYC Planimetric Database: Sidewalks (dataset id: vfx9-tbb6)
-    https://data.cityofnewyork.us/City-Government/Planimetrics/wt4d-p43d
-    Public domain. Used as a gap-fill source for sidewalk centerlines.
+  - NYC Planimetric Database: Sidewalks (dataset id: 52n9-sdep)
+    https://data.cityofnewyork.us/City-Government/NYC-Planimetric-Database-Sidewalk/52n9-sdep
+    Public domain. Used for sidewalk widths and as a gap-fill source for
+    sidewalk centerlines.
 
   - NYC Borough Boundaries (dataset id: 7t3b-ywvw)
     https://data.cityofnewyork.us/City-Government/Borough-Boundaries/7t3b-ywvw
-    Public domain. Used as region polygons.
+    Public domain. Used as region polygons (with OSMnx geocoding as a
+    fallback when the Socrata dataset is unavailable).
 
-  - U.S. Geological Survey 3D Elevation Program (3DEP) 10 m DEM
-    https://www.usgs.gov/3d-elevation-program
-    Public domain. Used to derive node elevations and edge inclines.
+  - NYC 2017 Topobathymetric LiDAR bare-earth DTM (1-foot resolution)
+    Served by the NY State GIS Program Office ArcGIS ImageServer
+    (https://elevation.its.ny.gov/). Public domain.
+    Used to derive node elevations and edge inclines.
+
+  - MTA subway stations with ADA accessibility flags (dataset id: drh3-e2fd,
+    with the MTA GTFS static feed as fallback)
+    https://data.cityofnewyork.us/resource/drh3-e2fd.json
+    Public domain. Used as a transit-accessibility sidecar index.
 
   - OpenSidewalks Schema v0.3
     https://sidewalks.washington.edu/opensidewalks/0.3/schema.json
