@@ -384,6 +384,7 @@ def acquire_mta_ada(source_cfg: dict, out_dir: Path, app_token: str | None,
             # accessible; writing them all with ada=1 would be a false claim.
             click.echo("    Warning: no wheelchair_boarding column in GTFS stops.txt. "
                        "Skipping the ADA station index.")
+            out_file.unlink(missing_ok=True)  # or Stage 2 stages a stale one
             return None
 
         features = []

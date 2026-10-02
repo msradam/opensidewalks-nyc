@@ -632,6 +632,9 @@ def _tag_borough(gdf: gpd.GeoDataFrame,
         how="left",
         predicate="within",
     )
+    # A centroid inside two overlapping borough polygons matches twice; keep
+    # the first so the result lines up with gdf.
+    joined = joined[~joined.index.duplicated(keep="first")]
     gdf["ext:borough"] = joined["ext:borough"].values
     return gdf
 

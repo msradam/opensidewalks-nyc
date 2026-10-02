@@ -394,7 +394,9 @@ def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
                 ids_rem, pts = [], []
                 for nid, lonlat in remaining.items():
                     x, y = project(*lonlat)
-                    if b.left <= x <= b.right and b.bottom <= y <= b.top:
+                    # Half-open, as rasterio indexes: the right and bottom
+                    # edges belong to the neighbouring tile.
+                    if b.left <= x < b.right and b.bottom < y <= b.top:
                         ids_rem.append(nid)
                         pts.append((x, y))
                 nodata = src.nodata
