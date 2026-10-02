@@ -22,24 +22,24 @@ import networkx as nx
 import requests
 
 
-# (name, lat, lon)
+# (name, lat, lon, borough)
 LANDMARKS = [
-    ("Penn Station",          40.7506, -73.9935),
-    ("Grand Central",         40.7527, -73.9772),
-    ("Times Square",          40.7580, -73.9855),
-    ("Empire State Building", 40.7484, -73.9857),
-    ("Union Square",          40.7359, -73.9911),
-    ("Washington Sq Park",    40.7308, -73.9973),
-    ("Brooklyn Bridge MN",    40.7115, -74.0028),
-    ("DUMBO",                 40.7033, -73.9888),
-    ("Atlantic Av-Barclays",  40.6840, -73.9778),
-    ("Prospect Park",         40.6602, -73.9690),
-    ("Williamsburg Bridge MN",40.7155, -73.9810),
-    ("Williamsburg Bridge BK",40.7128, -73.9650),
-    ("Court Sq Queens",       40.7470, -73.9445),
-    ("LIC Hunters Pt",        40.7424, -73.9534),
-    ("Yankee Stadium",        40.8296, -73.9262),
-    ("161 St-Yankee Stadium", 40.8275, -73.9282),
+    ("Penn Station",          40.7506, -73.9935, "MN"),
+    ("Grand Central",         40.7527, -73.9772, "MN"),
+    ("Times Square",          40.7580, -73.9855, "MN"),
+    ("Empire State Building", 40.7484, -73.9857, "MN"),
+    ("Union Square",          40.7359, -73.9911, "MN"),
+    ("Washington Sq Park",    40.7308, -73.9973, "MN"),
+    ("Brooklyn Bridge MN",    40.7115, -74.0028, "MN"),
+    ("DUMBO",                 40.7033, -73.9888, "BK"),
+    ("Atlantic Av-Barclays",  40.6840, -73.9778, "BK"),
+    ("Prospect Park",         40.6602, -73.9690, "BK"),
+    ("Williamsburg Bridge MN",40.7155, -73.9810, "MN"),
+    ("Williamsburg Bridge BK",40.7128, -73.9650, "BK"),
+    ("Court Sq Queens",       40.7470, -73.9445, "QN"),
+    ("LIC Hunters Pt",        40.7424, -73.9534, "QN"),
+    ("Yankee Stadium",        40.8296, -73.9262, "BX"),
+    ("161 St-Yankee Stadium", 40.8275, -73.9282, "BX"),
 ]
 
 # (origin_idx, destination_idx, label)
@@ -81,6 +81,7 @@ def snap_landmarks(osw_path: Path):
             coords_by_id[nid] = (float(c[0]), float(c[1]))
 
     G = nx.Graph()
+    boroughs = {}  # node id -> boroughs of the edges that end there
     for f in fc["features"]:
         if (f.get("geometry") or {}).get("type") != "LineString":
             continue
@@ -88,6 +89,8 @@ def snap_landmarks(osw_path: Path):
         u, v = p.get("_u_id"), p.get("_v_id")
         if u and v and u != v:
             G.add_edge(u, v)
+            for n in (u, v):
+                boroughs.setdefault(n, set()).add(p.get("ext:borough"))
     giant = max(nx.connected_components(G), key=len)
     print(f"  giant component: {len(giant):,} nodes")
 
@@ -95,13 +98,19 @@ def snap_landmarks(osw_path: Path):
                     if nid in coords_by_id]
 
     snapped = []
-    for name, lat, lon in LANDMARKS:
+    for name, lat, lon, boro in LANDMARKS:
         target = (lon, lat)
         best = None
+        # Snap inside the landmark's own borough. Snapping to the giant
+        # component alone once moved both Bronx landmarks into Manhattan.
         for nid, npos in giant_coords:
+            if boro not in boroughs[nid]:
+                continue
             d = hav(target, npos)
             if best is None or d < best[1]:
                 best = (nid, d, npos)
+        if best is None:
+            raise SystemExit(f"{name}: the giant component has no node in {boro}")
         snapped.append({
             "name": name,
             "query_lat": lat, "query_lon": lon,
