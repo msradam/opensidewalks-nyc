@@ -44,7 +44,7 @@ for f in fc["features"]:
         nrows.append((p["_id"], c[0], c[1], p.get("ext:elevation_m"), p.get("barrier"), p.get("kerb"),
                       p.get("tactile_paving"), p.get("ext:ramp_id"), p.get("ext:borough"), p.get("ext:source"),
                       p.get("ext:running_slope_pct"), p.get("ext:cross_slope_pct"), p.get("ext:counter_slope_pct"),
-                      p.get("ext:source_timestamp") is not None))
+                      p.get("ext:source_timestamp") is not None, p.get("ext:elevation_source")))
     else:
         c = g["coordinates"]
         bad_precision += not all(dec_ok(x) for pt in c for x in pt)
@@ -55,12 +55,13 @@ for f in fc["features"]:
         erows.append((p["_id"], p["_u_id"], p["_v_id"], kind, hw, p.get("ext:borough"), p.get("ext:source"),
                       p.get("incline"), p.get("width"), L, p.get("name"), c[0][0], c[0][1], c[-1][0], c[-1][1], len(c),
                       p.get("surface"), p.get("crossing:markings"), p.get("ext:osm_id") is not None,
-                      p.get("ext:source_timestamp") is not None))
+                      p.get("ext:source_timestamp") is not None, p.get("ext:structure")))
 del fc
 N = pd.DataFrame(nrows, columns=["id", "lon", "lat", "elev", "barrier", "kerb", "tactile", "ramp", "borough", "source",
-                                 "run", "cross", "counter", "has_ts"])
+                                 "run", "cross", "counter", "has_ts", "elev_source"])
 E = pd.DataFrame(erows, columns=["id", "u", "v", "kind", "highway", "borough", "source", "incline", "width", "length",
-                                 "name", "x0", "y0", "x1", "y1", "npts", "surface", "markings", "has_osm_id", "has_ts"])
+                                 "name", "x0", "y0", "x1", "y1", "npts", "surface", "markings", "has_osm_id", "has_ts",
+                                 "structure"])
 del nrows, erows
 
 # --- counts and form -------------------------------------------------------
@@ -127,6 +128,25 @@ res["incline_by_borough"] = {b: {"edges": len(d), "share_with_incline": round(fl
                                  "share_zero": round(float((d.incline == 0).mean()), 4)}
                              for b, d in E[E.kind != "street"].groupby(E.borough.fillna("none"))}
 
+# --- structures: deck heights and their inclines ----------------------------
+# Bridges and elevated ways take their height from LiDAR returns, not the
+# terrain model. A walkway does not climb at 15% over 3 m or more, so such an
+# edge touching a deck node is either a real change of level OSM joins by a
+# plain edge (a station entrance without steps) or a wrong height.
+deck = N[N.elev_source.notna()]
+zmap = N.set_index("id").elev
+T = E[(E.u.isin(deck.id) | E.v.isin(deck.id)) & (E.kind != "steps") & (E.structure != "tunnel")]
+raw_grade = (zmap.reindex(T.v.values).values - zmap.reindex(T.u.values).values) / T.length.values
+res["structure"] = {
+    "edges_by_structure": E.structure.fillna("none").value_counts().to_dict(),
+    "share_with_incline_by_structure": {k: round(float(d.incline.notna().mean()), 4) for k, d in E.groupby(E.structure.fillna("none"))},
+    "nodes_by_elevation_source": N.elev_source.fillna("terrain model or none").value_counts().to_dict(),
+    "structure_nodes_without_elevation": int(N[N.id.isin(set(E[E.structure.isin(["bridge", "elevated"])].u)
+                                                            | set(E[E.structure.isin(["bridge", "elevated"])].v))].elev.isna().sum()),
+    "edges_touching_a_deck_node": len(T),
+    "of_those_3m_or_longer_and_steeper_than_15pct_raw": int(((T.length.values >= 3) & (np.abs(raw_grade) > 0.15)).sum()),
+    "deck_elevation_m": {"min": float(deck.elev.min()) if len(deck) else None, "max": float(deck.elev.max()) if len(deck) else None}}
+
 # --- pedestrian graph components -------------------------------------------
 P = E[E.kind != "street"]
 codes, uniq = pd.factorize(np.r_[P.u.values, P.v.values]); m = len(P)
@@ -189,6 +209,7 @@ res["curb"] = {
                        "tactile_yes": int((d.tactile == "yes").sum()), "tactile_no": int((d.tactile == "no").sum())}
                    for b, d in curb.groupby(curb.poly_boro.fillna("outside"))}}
 res["nodes_not_on_any_edge"] = int((~N.id.isin(ref)).sum())
+res["nodes_not_on_any_edge_by_source"] = N[~N.id.isin(ref)].source.fillna("none").value_counts().to_dict()
 
 # --- widths ----------------------------------------------------------------
 sw = E[(E.kind == "sidewalk")]
@@ -228,10 +249,13 @@ res["width_vs_transect"] = {"all": wsum(W), **{b: wsum(d) for b, d in W.groupby(
 # --- gap-fill ---------------------------------------------------------------
 gf = E[E.source == "nyc_planimetric_sidewalks"]
 gp = set(zip(gf.u, gf.v))
-res["gap_fill"] = {"edges": len(gf), "segments": len(gf) // 2, "with_reverse": int(sum((b, a) in gp for a, b in gp)),
+sidecar = osw.with_name("nyc-gapfill-sidewalks.geojson")
+res["gap_fill"] = {"edges_in_graph": len(gf), "segments": len(gf) // 2, "with_reverse": int(sum((b, a) in gp for a, b in gp)),
                    "km_one_direction": round(float(gf.length.sum() / 2000), 1),
                    "by_borough": gf.borough.fillna("none").value_counts().to_dict(),
-                   "ends_on_an_osm_node": int((gf.u.isin(set(E[E.source == "osm_walk"].u) | set(E[E.source == "osm_walk"].v))).sum())}
+                   "ends_on_an_osm_node": int((gf.u.isin(set(E[E.source == "osm_walk"].u) | set(E[E.source == "osm_walk"].v))).sum()),
+                   "sidecar_file": str(sidecar) if sidecar.exists() else None,
+                   "sidecar_features": len(json.loads(sidecar.read_text())["features"]) if sidecar.exists() else None}
 out_path.with_suffix(".tables.pkl").write_bytes(pickle.dumps((N, E)))
 out_path.write_text(json.dumps(res, indent=1, default=str))
 print(json.dumps({k: v for k, v in res.items() if k not in ("borough_crossing_pedestrian_edges",)}, indent=1, default=str)[:6000])

@@ -40,6 +40,22 @@ LANDMARKS = [
     ("LIC Hunters Pt",        40.7424, -73.9534, "QN"),
     ("Yankee Stadium",        40.8296, -73.9262, "BX"),
     ("161 St-Yankee Stadium", 40.8275, -73.9282, "BX"),
+    # Structure routes: each pair crosses a bridge, viaduct or elevated walkway
+    # whose incline comes from LiDAR deck heights, not the terrain model.
+    ("Manhattan Bridge MN",    40.7160, -73.9960, "MN"),
+    ("Manhattan Bridge BK",    40.6995, -73.9865, "BK"),
+    ("Queensboro Bridge MN",   40.7592, -73.9640, "MN"),
+    ("Queensboro Bridge QN",   40.7520, -73.9410, "QN"),
+    ("High Line Gansevoort",   40.7395, -74.0082, "MN"),
+    ("High Line 30th St",      40.7533, -74.0040, "MN"),
+    ("Pulaski Bridge BK",      40.7335, -73.9535, "BK"),
+    ("Pulaski Bridge QN",      40.7428, -73.9527, "QN"),
+    ("East 103rd St FDR",      40.7838, -73.9402, "MN"),
+    ("Wards Island",           40.7862, -73.9340, "MN"),
+    ("Macombs Dam Bridge MN",  40.8280, -73.9380, "MN"),
+    ("Macombs Dam Bridge BX",  40.8285, -73.9285, "BX"),
+    ("Riverbank Park south",   40.8225, -73.9585, "MN"),
+    ("Riverbank Park north",   40.8285, -73.9535, "MN"),
 ]
 
 # (origin_idx, destination_idx, label)
@@ -54,6 +70,13 @@ ROUTES = [
     (14, 15, "Yankee Stadium -> 161 St"),
     (3, 7,  "Empire State Building -> DUMBO (cross-borough)"),
     (1, 5,  "Grand Central -> Washington Sq Park (long Manhattan)"),
+    (16, 17, "Manhattan Bridge MN -> Manhattan Bridge BK"),
+    (18, 19, "Queensboro Bridge MN -> Queensboro Bridge QN"),
+    (20, 21, "High Line Gansevoort -> High Line 30th St"),
+    (22, 23, "Pulaski Bridge BK -> Pulaski Bridge QN"),
+    (24, 25, "East 103rd St FDR -> Wards Island (footbridge)"),
+    (26, 27, "Macombs Dam Bridge MN -> Macombs Dam Bridge BX"),
+    (28, 29, "Riverbank Park south -> north (elevated)"),
 ]
 
 
