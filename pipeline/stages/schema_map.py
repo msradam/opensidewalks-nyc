@@ -498,9 +498,9 @@ def _planimetric_to_sidewalk_edges(
 
         # Sidewalk width from the polygon: 2*area/perimeter (Cauchy mean width).
         # Works well for elongated strips; polygon is in EPSG:32618 (metres).
-        perimeter = poly.exterior.length if poly.geom_type == "Polygon" else sum(
-            part.exterior.length for part in poly.geoms
-        )
+        # .length counts interior rings too: many planimetric sidewalks are
+        # rings around a block, and the outer ring alone doubles the width.
+        perimeter = poly.length
         width_m = round(2.0 * poly.area / perimeter, 2) if perimeter > 0 else None
 
         props = {
@@ -546,12 +546,11 @@ def _join_widths_from_planimetric(sidewalks: gpd.GeoDataFrame,
     def _poly_width(p) -> float | None:
         if p is None or p.is_empty:
             return None
-        if p.geom_type == "Polygon":
-            perim = p.exterior.length
-        elif p.geom_type == "MultiPolygon":
-            perim = sum(part.exterior.length for part in p.geoms)
-        else:
+        if p.geom_type not in ("Polygon", "MultiPolygon"):
             return None
+        # .length counts interior rings too: many planimetric sidewalks are
+        # rings around a block, and the outer ring alone doubles the width.
+        perim = p.length
         return round(2.0 * p.area / perim, 2) if perim > 0 else None
 
     plan_proj["_width_m"] = plan_proj.geometry.apply(_poly_width)
