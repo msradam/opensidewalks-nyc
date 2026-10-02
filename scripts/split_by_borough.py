@@ -6,11 +6,13 @@ Two-pass streaming, bounded memory:
             and collect the set of node _ids referenced via _u_id/_v_id.
     Pass 2: stream all features again, write each LineString into its
             borough file and each Point into every borough file whose
-            edge-endpoint set contains its _id.
+            edge-endpoint set contains its _id. A Point that no edge
+            references (a curb ramp kept at its surveyed position, say)
+            goes into the borough named by its own `ext:borough`.
 
 Per-borough output is a valid GeoJSON FeatureCollection, with the same
-top-level metadata as the source minus the `region` field (each borough
-gets only its own subset).
+top-level metadata as the source (licence and attribution included) minus
+the `region` field (each borough gets only its own subset).
 
 Usage:
     python scripts/split_by_borough.py INPUT.geojson OUTDIR/
@@ -35,8 +37,25 @@ def _default(o):
     raise TypeError(f"unserialisable: {type(o)}")
 
 
+def _root_metadata(in_path: Path) -> dict:
+    """Top-level members written ahead of `features`, minus `type` and `region`."""
+    meta, key, builder = {}, None, None
+    with in_path.open("rb") as f:
+        for prefix, event, value in ijson.parse(f):
+            if prefix == "" and event in ("map_key", "end_map") or prefix == "features":
+                if key not in (None, "type", "region", "features"):
+                    meta[key] = builder.value
+                if prefix == "features":
+                    break
+                key, builder = value, ijson.ObjectBuilder()
+            elif key is not None:
+                builder.event(event, value)
+    return meta
+
+
 def main(in_path: Path, out_dir: Path) -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
+    meta = _root_metadata(in_path)
 
     print(f"pass 1: scanning edges in {in_path.name}...", flush=True)
     edge_ids_by_boro: dict[str, set[str]] = defaultdict(set)
@@ -79,6 +98,8 @@ def main(in_path: Path, out_dir: Path) -> None:
     for b, h in handles.items():
         h.write('{"type":"FeatureCollection",')
         h.write(f'"name":"nyc-osw-{b}",')
+        for k, v in meta.items():
+            h.write(f"{json.dumps(k)}:{json.dumps(v, default=_default, separators=(',', ':'))},")
         h.write('"features":[')
 
     with in_path.open("rb") as f:
@@ -100,8 +121,10 @@ def main(in_path: Path, out_dir: Path) -> None:
                 if not fid:
                     continue
                 serialised = json.dumps(feat, default=_default, separators=(",", ":"))
+                referenced = any(fid in node_ids_by_boro[b] for b in BOROUGHS)
                 for b in BOROUGHS:
-                    if fid in node_ids_by_boro[b]:
+                    if fid in node_ids_by_boro[b] or (
+                            not referenced and props.get("ext:borough") == b):
                         h = handles[b]
                         if not first[b]:
                             h.write(",")
