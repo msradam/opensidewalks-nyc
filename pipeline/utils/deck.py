@@ -149,12 +149,14 @@ def label_surfaces(n: int, edges: list[tuple[int, int, float, bool]],
     # A structure no labelled node leads onto (its approaches are on structure
     # too, it is reached by lift, or OSM joins it to the ground a storey
     # below): start it from the node with the clearest solid surface. An
-    # unsure one may be a tree.
+    # unsure one may be a tree. A node beside a labelled one whose surfaces
+    # were all out of reach is not started: what it saw is not the deck (a
+    # bridge tower, say), and interpolation between its neighbours is right.
     counts = [{round(h, 3): c for h, c, _, _ in levels[i]} for i in range(n)]
     share = {}
     for i in range(n):
         solid = [counts[i][round(h, 3)] for h, s in options[i] if s]
-        if kind[i] < 0 and seed[i] and solid:
+        if kind[i] < 0 and seed[i] and solid and not any(kind[b] >= 0 for b, _, _ in adj[i]):
             share[i] = max(solid) / sum(counts[i].values())
     for start in sorted(share, key=share.get, reverse=True):
         if kind[start] < 0:

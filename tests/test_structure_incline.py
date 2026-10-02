@@ -102,6 +102,19 @@ def test_steps_reach_the_deck_not_the_ground_under_it():
     assert z.tolist() == [10.0, 16.0, 16.0]
 
 
+def test_a_tower_top_beside_a_labelled_deck_is_not_taken():
+    # Deck nodes 0, 1 and 3 at 71 m. Node 2 stands at a bridge tower: the only
+    # surface the survey saw there is the tower top, 175 m. It is not started
+    # on that surface; it is interpolated between its neighbours.
+    edges = [(0, 1, 10.0, False), (1, 2, 10.0, False), (2, 3, 10.0, False), (3, 4, 10.0, False)]
+    seed = np.array([False, True, True, True, False])
+    dtm = np.array([71.0, 5.0, 5.0, 5.0, 70.0])
+    levels = [[(71.0, 30, True, True)], [(71.5, 30, True, True)], [(175.0, 60, False, True)],
+              [(70.9, 30, True, True)], [(70.0, 30, True, True)]]
+    z, kind = label_surfaces(5, edges, seed, dtm, levels)
+    assert kind[2] == 2 and abs(z[2] - 71.2) < 1e-6
+
+
 def test_structure_with_no_survey_gets_no_height():
     edges = [(0, 1, 20.0, False), (1, 2, 20.0, False)]
     seed = np.array([True, True, True])
