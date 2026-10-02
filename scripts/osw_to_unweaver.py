@@ -115,8 +115,13 @@ def main():
             if n not in walk_nodes:
                 parent[find(eid)] = find(at_inner.setdefault(n, eid))
 
+    # One scale for the whole city. Scaling each point's longitude by the
+    # cosine of its own latitude shears the plane: a ramp 3 m due north came
+    # out 3.9 m away.
+    east = 111320 * math.cos(math.radians(40.7))
+
     def metres(lonlat):
-        return (lonlat[0] * 111320 * math.cos(math.radians(lonlat[1])), lonlat[1] * 111320)
+        return (lonlat[0] * east, lonlat[1] * 111320)
 
     ramps = cKDTree([metres(node_xy[n]) for n in curb_ids]) if curb_ids else None
     meets = {}
