@@ -21,6 +21,7 @@ dependencies = [
     "ijson>=3.3",
     "jsonschema>=4.0",
     "rasterio>=1.4",
+    "laspy[lazrs]>=2.5",
     "tqdm>=4.66",
     "pyyaml>=6.0",
     "scipy>=1.13",

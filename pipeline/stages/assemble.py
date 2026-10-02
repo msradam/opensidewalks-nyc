@@ -404,15 +404,121 @@ def _topology_report(all_edges: gpd.GeoDataFrame, all_nodes: gpd.GeoDataFrame,
 # Incline computation from DEM
 # ---------------------------------------------------------------------------
 
+# LiDAR returns within this distance of a node describe the surface it is on.
+# Paths are about 3 m wide and OSM lines sit within a metre or two of them.
+_LIDAR_RADIUS_M = 2.0
+
+
+def _structure_elevations(all_edges: gpd.GeoDataFrame,
+                          node_coords: dict[str, tuple[float, float]],
+                          node_elevs: dict[str, float],
+                          surveys: list[dict], cache_dir: Path
+                          ) -> tuple[dict[str, float], dict[str, str], set[str]]:
+    """Deck heights for nodes on bridges and elevated ways, from LiDAR returns.
+
+    The terrain model has the ground or water under a deck. Starting from the
+    edges OSM tags as a structure, read the returns around each node from the
+    first survey that has any (the 2017 one misses spans over open water, the
+    2014 one has them), and let pipeline.utils.deck pick the walking surface
+    by continuity along the path. A deck often runs on past the tagged part
+    (an approach viaduct), so the region grows wherever an untagged node comes
+    out on a deck, until every deck has met the ground.
+
+    Returns ({node ID: height} for nodes taken off the terrain model,
+    {node ID: where the height came from}, IDs of structure nodes with no
+    height at all).
+    """
+    from pyproj import Transformer
+    from scipy.sparse import coo_matrix
+
+    from pipeline.utils.deck import label_surfaces, surface_levels
+    from pipeline.utils.ept import EptCloud
+
+    if "ext:structure" not in all_edges.columns:
+        return {}, {}, set()
+    struct = all_edges["ext:structure"].isin(["bridge", "elevated"]).values
+    if not struct.any():
+        return {}, {}, set()
+
+    m = len(all_edges)
+    inv, ids = pd.factorize(np.r_[all_edges["_u_id"].values, all_edges["_v_id"].values])
+    u, v, n = inv[:m], inv[m:], len(ids)
+    lonlat = np.array([node_coords.get(i, (np.nan, np.nan)) for i in ids])
+    dtm = np.array([node_elevs.get(i, np.nan) for i in ids])
+    steps = (all_edges["highway"] == "steps").values
+    seed = np.zeros(n, dtype=bool)
+    seed[u[struct]] = seed[v[struct]] = True
+    nbr = coo_matrix((np.ones(2 * m), (np.r_[u, v], np.r_[v, u])), shape=(n, n)).tocsr()
+
+    def neighbours(nodes):
+        return np.unique(np.concatenate(
+            [nbr.indices[nbr.indptr[i]:nbr.indptr[i + 1]] for i in nodes] or [[]]).astype(int))
+
+    clouds = [(s["name"], EptCloud(s["url"], cache_dir / s["name"]),
+               s.get("surface_classes", [])) for s in surveys]
+    xy = np.c_[Transformer.from_crs(4326, int(clouds[0][1].srs["horizontal"]), always_xy=True)
+               .transform(lonlat[:, 0], lonlat[:, 1])]
+    length = np.hypot(*(xy[u] - xy[v]).T)
+
+    # Two hops beyond the tagged edges gives each structure ground to start from.
+    region = seed.copy()
+    for _ in range(2):
+        region[neighbours(np.flatnonzero(region))] = True
+    levels: dict[int, list] = {}
+    survey_of: dict[int, str] = {}
+    for _ in range(60):
+        new = np.array([i for i in np.flatnonzero(region)
+                        if i not in levels and not np.isnan(xy[i, 0])], dtype=int)
+        for name, cloud, classes in clouds:
+            if len(new) == 0:
+                break
+            found = [surface_levels(r, classes)
+                     for r in cloud.returns_near(xy[new], _LIDAR_RADIUS_M)]
+            for i, lv in zip(new, found):
+                if lv:
+                    levels[i], survey_of[i] = lv, name
+            new = np.array([i for i, lv in zip(new, found) if not lv], dtype=int)
+        for i in new:
+            levels[i] = []
+
+        idx = np.flatnonzero(region)
+        local = np.full(n, -1)
+        local[idx] = np.arange(len(idx))
+        inside = region[u] & region[v] & (u != v)
+        pairs = pd.DataFrame({"a": local[np.minimum(u, v)[inside]], "b": local[np.maximum(u, v)[inside]],
+                              "len": length[inside], "steps": steps[inside]}).drop_duplicates(["a", "b"])
+        z, kind = label_surfaces(len(idx), list(pairs.itertuples(index=False, name=None)),
+                                 seed[idx], dtm[idx], [levels.get(i, []) for i in idx])
+        # An untagged node on a deck: its neighbours may be on the deck too.
+        grow = neighbours(idx[(kind == 1) & ~seed[idx]])
+        grow = grow[~region[grow]]
+        if len(grow) == 0:
+            break
+        region[grow] = True
+
+    off_dtm = kind > 0
+    elevs = {ids[i]: float(h) for i, h in zip(idx[off_dtm], z[off_dtm])}
+    source = {ids[i]: (f"lidar_{survey_of[i]}" if k == 1 else "interpolated")
+              for i, k in zip(idx[off_dtm], kind[off_dtm])}
+    unknown = {ids[i] for i in idx[kind < 0]}
+    click.echo(f"    Structures: {int(seed.sum()):,} nodes on tagged edges, "
+               f"{int((kind == 1).sum()):,} heights from LiDAR "
+               f"({int(((kind == 1) & ~seed[idx]).sum()):,} on untagged approaches), "
+               f"{int((kind == 2).sum()):,} interpolated, {len(unknown):,} unknown")
+    return elevs, source, unknown
+
+
 def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
                             all_nodes: gpd.GeoDataFrame,
-                            dem_tiles: list[Path]) -> gpd.GeoDataFrame:
+                            dem_tiles: list[Path],
+                            lidar_surveys: list[dict] | None = None,
+                            lidar_cache: Path | None = None) -> gpd.GeoDataFrame:
     """Sample the NYC 2017 LiDAR DEM tiles at node coordinates and add incline to each edge.
 
     incline = (v_elevation - u_elevation) / edge_length_m
     Positive values indicate uphill travel from _u_id to _v_id.
-    Only street-type edges (highway != footway/steps) are excluded. Pedestrian
-    edges all get incline so routing can model grade penalties.
+    Nodes on bridges and elevated ways take their height from LiDAR returns
+    (_structure_elevations); tunnel edges get no incline.
     """
     try:
         import math
@@ -469,12 +575,33 @@ def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
 
         click.echo(f"    Elevations sampled: {len(node_elevs):,}/{len(node_coords):,} nodes")
 
+        # On a bridge the terrain model is not the walking surface. Without
+        # the LiDAR surveys (not configured, or unreachable) a node on a
+        # structure gets no height written and a structure edge no incline.
+        deck_source: dict[str, str] = {}
+        no_height: set[str] = set()
+        if "ext:structure" in all_edges.columns:
+            on = all_edges["ext:structure"].isin(["bridge", "elevated"])
+            no_height = set(all_edges.loc[on, "_u_id"]) | set(all_edges.loc[on, "_v_id"])
+        if lidar_surveys and lidar_cache is not None and no_height:
+            try:
+                deck_elevs, deck_source, _ = _structure_elevations(
+                    all_edges, node_coords, node_elevs, lidar_surveys, lidar_cache)
+                node_elevs.update(deck_elevs)
+                no_height -= set(deck_source)
+            except Exception as exc:
+                click.echo(f"  Warning: structure elevations failed ({exc}). "
+                           "Bridges get no incline.")
+
         # Mutates the caller's all_nodes: sampled elevations ship on the nodes
         # as ext:elevation_m alongside the per-edge incline.
         if node_elevs and "_id" in all_nodes.columns:
             all_nodes["ext:elevation_m"] = all_nodes["_id"].map(
-                lambda nid: round(node_elevs[nid], 1) if nid in node_elevs else None
+                lambda nid: round(node_elevs[nid], 1)
+                if nid in node_elevs and nid not in no_height else None
             )
+            if deck_source:
+                all_nodes["ext:elevation_source"] = all_nodes["_id"].map(deck_source)
 
         def _length_m(geom) -> float:
             coords = list(geom.coords)
@@ -491,9 +618,13 @@ def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
         for _, row in all_edges.iterrows():
             uid = row.get("_u_id")
             vid = row.get("_v_id")
-            # On a bridge or in a tunnel the terrain model is not the walking
-            # surface; no incline is better than a wrong one.
-            if row.get("ext:structure") in ("bridge", "tunnel"):
+            # In a tunnel the terrain model is not the walking surface and
+            # no survey sees it; no incline is better than a wrong one. The
+            # same goes for a bridge or elevated edge with an end that has
+            # no deck height.
+            structure = row.get("ext:structure")
+            if structure == "tunnel" or (structure in ("bridge", "elevated")
+                                         and (uid in no_height or vid in no_height)):
                 inclines.append(None)
             elif uid in node_elevs and vid in node_elevs:
                 dz = node_elevs[vid] - node_elevs[uid]
@@ -717,7 +848,10 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
     dem_tiles = [p for p in dem_tiles if p.stat().st_size > 1024]
     if dem_tiles:
         click.echo(f"\n  Computing edge inclines from {len(dem_tiles)} LiDAR tile(s)...")
-        all_edges = _compute_edge_inclines(all_edges, all_nodes, dem_tiles)
+        lidar = sources.get("sources", {}).get("lidar_points", {}).get("retrieval", {})
+        all_edges = _compute_edge_inclines(all_edges, all_nodes, dem_tiles,
+                                           lidar_surveys=lidar.get("surveys"),
+                                           lidar_cache=raw_dir / "lidar_points")
     else:
         click.echo("\n  LiDAR DEM not found. Skipping incline (run Stage 1 to acquire)")
 

@@ -119,6 +119,32 @@ sources:
       output_crs: EPSG:4326
     expected_geometry: Raster
 
+  lidar_points:
+    description: >
+      Classified LiDAR point clouds, read as Entwine Point Tiles from NOAA's
+      Digital Coast archive. Stage 4 reads the returns around nodes on bridges
+      and elevated ways, where the bare-earth DEM has the ground or the water
+      below the deck, and takes the deck height from them. The surveys are
+      tried in order: the 2017 city survey (the one the DEM was made from)
+      first, then the 2014 USGS survey, which has the spans over open water
+      that the 2017 point cloud lacks. Only the tiles around structures are
+      fetched (about 1 GB city-wide), into data/raw/lidar_points/.
+    type: ept
+    license: Public Domain (NOAA Digital Coast; NYC OTI and USGS surveys)
+    license_url: https://coast.noaa.gov/digitalcoast/data/coastallidar.html
+    retrieval:
+      method: ept
+      surveys:
+        - name: "2017"
+          url: https://noaa-nos-coastal-lidar-pds.s3.amazonaws.com/entwine/geoid18/9306
+          # LAS classes that are a surface to walk on: ground and bridge deck.
+          # The 2014 survey has no bridge deck class (its 17 and 18 are
+          # overlap points), so every return counts there.
+          surface_classes: [2, 17]
+        - name: "2014"
+          url: https://noaa-nos-coastal-lidar-pds.s3.amazonaws.com/entwine/geoid18/4920
+    expected_geometry: PointCloud
+
   nyc_address_points:
     description: >
       NYC Address Points. ~900k geocoded address points covering all five boroughs.
