@@ -76,7 +76,12 @@ def _socrata_fetch_all(domain: str, dataset_id: str, app_token: str | None,
     pbar = tqdm(desc=f"  Socrata {dataset_id}", unit=" rows", leave=False)
 
     while True:
-        params = {"$limit": page_size, "$offset": offset, **extra_params}
+        # Paging needs a stable order. Without $order Socrata can return a row
+        # on two pages and skip another: a Staten Island pull of 23,326 ramps
+        # came back with 6,662 of them twice. :id rides along so the result
+        # can be checked for repeats, and is dropped again below.
+        params = {"$select": "*, :id", "$order": ":id",
+                  "$limit": page_size, "$offset": offset, **extra_params}
         resp = requests.get(base_url, params=params, headers=headers, timeout=60)
         resp.raise_for_status()
         batch = resp.json()
@@ -89,6 +94,17 @@ def _socrata_fetch_all(domain: str, dataset_id: str, app_token: str | None,
             break
 
     pbar.close()
+
+    resp = requests.get(base_url, params={"$select": "count(*)", **extra_params},
+                        headers=headers, timeout=60)
+    resp.raise_for_status()
+    expected = int(next(iter(resp.json()[0].values())))
+    distinct = len({r.pop(":id") for r in rows})
+    if not (distinct == len(rows) == expected):
+        raise RuntimeError(
+            f"Socrata {dataset_id}: got {len(rows)} rows, {distinct} distinct, "
+            f"dataset has {expected}. Refusing to build on a partial download."
+        )
     return rows
 
 
