@@ -380,8 +380,11 @@ def acquire_mta_ada(source_cfg: dict, out_dir: Path, app_token: str | None,
         if ada_col:
             ada_stops = stops_df[stops_df[ada_col] == 1].copy()
         else:
-            ada_stops = stops_df.copy()
-            click.echo("    Warning: no wheelchair_boarding column found; keeping all stops")
+            # Without the column there is nothing to say which stops are
+            # accessible; writing them all with ada=1 would be a false claim.
+            click.echo("    Warning: no wheelchair_boarding column in GTFS stops.txt. "
+                       "Skipping the ADA station index.")
+            return None
 
         features = []
         for _, s in ada_stops.iterrows():
