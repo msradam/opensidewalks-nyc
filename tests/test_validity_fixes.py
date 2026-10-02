@@ -11,9 +11,9 @@ import geopandas as gpd
 import numpy as np
 import rasterio
 from rasterio.transform import from_origin
-from shapely.geometry import Point, Polygon
+from shapely.geometry import LineString, Point, Polygon
 
-from pipeline.stages.assemble import _compute_edge_inclines
+from pipeline.stages.assemble import _compute_edge_inclines, _merge_near_endpoints
 from pipeline.stages.schema_map import (
     _planimetric_to_sidewalk_edges,
     _ramps_to_curb_nodes,
@@ -65,6 +65,29 @@ def test_gap_fill_rejects_block_rings_and_keeps_strips():
     assert len(out) == 2, "one strip, both directions"
     assert set(out["_u_id"]) == set(out["_v_id"])
     assert abs(out["width"].iloc[0] - 2.89) < 0.05  # 2*240/166, a 3 m strip
+
+
+def test_endpoint_merge_closes_gaps_without_chaining():
+    def edges(lines, highway="footway"):
+        g = gpd.GeoDataFrame(geometry=[LineString(c) for c in lines], crs="EPSG:32618")
+        g = g.translate(583000, 4500000).to_crs("EPSG:4326")
+        ends = [(str(c[0]), str(c[-1])) for c in lines]
+        return gpd.GeoDataFrame({"_id": [f"e{i}" for i in range(len(lines))],
+                                 "_u_id": [a for a, _ in ends], "_v_id": [b for _, b in ends],
+                                 "highway": highway}, geometry=g.values, crs="EPSG:4326")
+    # A path with a vertex every metre: the old merge chained all of it into
+    # one node. Nothing here is a gap, so nothing may move or be dropped.
+    path = [[(i, 0), (i + 1, 0)] for i in range(10)]
+    out, remap = _merge_near_endpoints(edges(path), tolerance_m=2.0)
+    assert remap == {} and len(out) == 10
+    # A second path stops 1.5 m short of the first one's far end: its dead
+    # end moves onto that node, and only it moves.
+    stub = [[(11.5, 0), (20, 0)], [(20, 0), (30, 0)]]
+    out, remap = _merge_near_endpoints(edges(path + stub), tolerance_m=2.0)
+    assert remap in ({"(11.5, 0)": "(10, 0)"}, {"(10, 0)": "(11.5, 0)"}) and len(out) == 12
+    # A dead end 3 m away is out of tolerance and stays.
+    far = [[(13, 0), (20, 0)]]
+    assert _merge_near_endpoints(edges(path + far), tolerance_m=2.0)[1] == {}
 
 
 if __name__ == "__main__":

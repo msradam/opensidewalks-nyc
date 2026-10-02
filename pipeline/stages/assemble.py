@@ -109,102 +109,160 @@ def _snap_curb_nodes(curb_nodes: gpd.GeoDataFrame,
 
 
 # ---------------------------------------------------------------------------
-# Near-coincident cross-source endpoint merge
+# Near-miss endpoint merge
 # ---------------------------------------------------------------------------
 
 def _merge_near_endpoints(all_edges: gpd.GeoDataFrame,
-                           tolerance_m: float = 2.0) -> tuple[gpd.GeoDataFrame, dict]:
-    """Unify _u_id/_v_id for edge endpoints that are geographically near but
-    not identical across sources.
+                           tolerance_m: float = 2.0,
+                           near_factor: float = 5.0) -> tuple[gpd.GeoDataFrame, dict]:
+    """Close gaps between endpoints that nearly touch, without chaining.
 
-    Even with source-independent node IDs, OSM and planimetric-derived edges
-    that share a geographic endpoint may differ by 1-3 m due to survey precision.
-    This pass clusters endpoints within tolerance_m and remaps all references to
-    a single canonical ID per cluster, ensuring the two subgraphs are joined.
+    A node moves onto another node within tolerance_m only if that closes a
+    gap: one of the two is a dead end, or the two are in different connected
+    components (of the whole graph, or of the pedestrian graph). A dead end is
+    not moved onto a neighbour, or onto a node it already reaches within
+    near_factor * tolerance_m. Pairs are taken nearest first; a node that has
+    moved is never a target and a target never moves, so no endpoint moves
+    more than tolerance_m.
+
+    The earlier version united every pair within tolerance with union-find.
+    That chains along closely spaced vertices: on Staten Island it moved
+    endpoints up to 33 m and collapsed a quarter of all edges. This version
+    joins the same components and leaves the geometry alone.
 
     Returns the edges and the {merged ID: canonical ID} remap, so callers can
     carry anything else keyed on an endpoint ID (curb nodes) through the merge.
     """
+    import heapq
+
+    import shapely
     from pyproj import Transformer
+    from scipy.sparse import coo_matrix
+    from scipy.sparse.csgraph import connected_components
     from scipy.spatial import cKDTree
 
     if all_edges.empty or "_u_id" not in all_edges.columns:
         return all_edges, {}
 
-    # Build id -> (lon, lat) from edge endpoint geometry. Deduplicated.
-    u_frame = all_edges[["_u_id"]].copy()
-    u_frame["lon"] = [g.coords[0][0] if g and not g.is_empty else None
-                      for g in all_edges.geometry]
-    u_frame["lat"] = [g.coords[0][1] if g and not g.is_empty else None
-                      for g in all_edges.geometry]
-    u_frame = u_frame.rename(columns={"_u_id": "nid"})
-
-    v_frame = all_edges[["_v_id"]].copy()
-    v_frame["lon"] = [g.coords[-1][0] if g and not g.is_empty else None
-                      for g in all_edges.geometry]
-    v_frame["lat"] = [g.coords[-1][1] if g and not g.is_empty else None
-                      for g in all_edges.geometry]
-    v_frame = v_frame.rename(columns={"_v_id": "nid"})
-
-    endpoints = (
-        pd.concat([u_frame, v_frame], ignore_index=True)
-        .dropna(subset=["nid", "lon", "lat"])
-        .drop_duplicates(subset="nid")
-        .reset_index(drop=True)
-    )
-
+    # One row per endpoint node ID, from the edge geometry.
+    geoms = all_edges.geometry.values
+    first, last = shapely.get_point(geoms, 0), shapely.get_point(geoms, -1)
+    endpoints = pd.DataFrame({
+        "nid": np.r_[all_edges["_u_id"].values, all_edges["_v_id"].values],
+        "lon": np.r_[shapely.get_x(first), shapely.get_x(last)],
+        "lat": np.r_[shapely.get_y(first), shapely.get_y(last)],
+    }).dropna().drop_duplicates(subset="nid").reset_index(drop=True)
     if len(endpoints) == 0:
         return all_edges, {}
 
-    to_proj = Transformer.from_crs("EPSG:4326", "EPSG:32618", always_xy=True)
-    xy = np.array([
-        to_proj.transform(row.lon, row.lat)
-        for row in endpoints.itertuples()
-    ])
+    ids = endpoints["nid"].values
+    xy = np.c_[Transformer.from_crs("EPSG:4326", "EPSG:32618", always_xy=True)
+               .transform(endpoints["lon"].values, endpoints["lat"].values)]
+    index = {nid: k for k, nid in enumerate(ids)}
+    u = all_edges["_u_id"].map(index).values
+    v = all_edges["_v_id"].map(index).values
+    n = len(ids)
 
-    tree  = cKDTree(xy)
-    pairs = tree.query_pairs(tolerance_m)
+    adj: list[dict[int, float]] = [{} for _ in range(n)]
+    for a, b in zip(u, v):
+        if a != b:
+            d = float(np.hypot(*(xy[a] - xy[b])))
+            adj[a][b] = d
+            adj[b][a] = d
 
-    if not pairs:
-        click.echo("    No near-coincident cross-source endpoints found")
-        return all_edges, {}
+    def _labels(mask):
+        g = coo_matrix((np.ones(int(mask.sum())), (u[mask], v[mask])), shape=(n, n))
+        return connected_components(g, directed=False)[1]
 
-    ids_list = endpoints["nid"].tolist()
-    parent   = list(range(len(ids_list)))
+    ped = all_edges["highway"].isin(["footway", "steps"]).values
+    whole = _labels(np.ones(len(all_edges), dtype=bool))
+    pedc = _labels(ped)
+    in_ped = np.zeros(n, dtype=bool)
+    in_ped[u[ped]] = True
+    in_ped[v[ped]] = True
+    parents: dict[str, dict[int, int]] = {"whole": {}, "ped": {}}
 
-    def _find(x):
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
+    def _find(kind, x):
+        par = parents[kind]
+        while par.get(x, x) != x:
+            par[x] = par.get(par[x], par[x])
+            x = par[x]
         return x
 
-    for i, j in pairs:
-        ri, rj = _find(i), _find(j)
-        if ri != rj:
-            if ids_list[ri] <= ids_list[rj]:
-                parent[rj] = ri
-            else:
-                parent[ri] = rj
+    def _near_connected(a, b, cutoff):
+        dist = {a: 0.0}
+        heap = [(0.0, a)]
+        while heap:
+            d, x = heapq.heappop(heap)
+            if x == b:
+                return True
+            if d > dist.get(x, np.inf):
+                continue
+            for y, w in adj[x].items():
+                nd = d + w
+                if nd <= cutoff and nd < dist.get(y, np.inf):
+                    dist[y] = nd
+                    heapq.heappush(heap, (nd, y))
+        return False
 
-    remap = {
-        ids_list[i]: ids_list[_find(i)]
-        for i in range(len(ids_list))
-        if _find(i) != i
-    }
+    pairs = cKDTree(xy).query_pairs(tolerance_m, output_type="ndarray")
+    if len(pairs) == 0:
+        click.echo("    No near-miss endpoints found")
+        return all_edges, {}
+    gap = np.hypot(*(xy[pairs[:, 0]] - xy[pairs[:, 1]]).T)
+
+    moved: set[int] = set()
+    targets: set[int] = set()
+    remap: dict[str, str] = {}
+    largest = 0.0
+    for k in np.argsort(gap, kind="stable"):
+        i, j = int(pairs[k, 0]), int(pairs[k, 1])
+        diff_whole = _find("whole", whole[i]) != _find("whole", whole[j])
+        diff_ped = (in_ped[i] and in_ped[j]
+                    and _find("ped", pedc[i]) != _find("ped", pedc[j]))
+        if not (diff_whole or diff_ped):
+            # Same component both ways: only a dead end may close the gap,
+            # and only if the two are not already joined close by.
+            if len(adj[i]) != 1 and len(adj[j]) != 1:
+                continue
+            if j in adj[i] or _near_connected(i, j, near_factor * tolerance_m):
+                continue
+        # The dead end moves; otherwise the node with fewer neighbours.
+        for a, b in sorted([(i, j), (j, i)], key=lambda p: (len(adj[p[0]]), ids[p[0]])):
+            if a in moved or a in targets or b in moved:
+                continue
+            remap[ids[a]] = ids[b]
+            largest = max(largest, float(gap[k]))
+            moved.add(a)
+            targets.add(b)
+            for y, w in adj[a].items():
+                del adj[y][a]
+                if y != b:
+                    adj[b][y] = w
+                    adj[y][b] = w
+            adj[a] = {}
+            parents["whole"][_find("whole", whole[a])] = _find("whole", whole[b])
+            if in_ped[a] and in_ped[b]:
+                parents["ped"][_find("ped", pedc[a])] = _find("ped", pedc[b])
+            elif in_ped[a]:
+                in_ped[b] = True
+                pedc[b] = pedc[a]
+            break
 
     if not remap:
         return all_edges, {}
 
-    click.echo(f"    Merged {len(remap):,} near-coincident cross-source endpoints "
-               f"(tolerance {tolerance_m} m)")
+    click.echo(f"    Merged {len(remap):,} near-miss endpoints "
+               f"(tolerance {tolerance_m} m, largest move {largest:.2f} m)")
     result = all_edges.copy()
     result["_u_id"] = result["_u_id"].map(lambda x: remap.get(x, x) if pd.notna(x) else x)
     result["_v_id"] = result["_v_id"].map(lambda x: remap.get(x, x) if pd.notna(x) else x)
 
-    # Edges shorter than the tolerance collapse into 2-point self-loops whose
-    # geometry becomes zero-length (SFA-invalid) once endpoints snap to the
-    # node coordinate. Both endpoints are the same node, so they carry no
-    # connectivity; drop them. Self-loops with interior vertices stay valid.
+    # A street segment shorter than the tolerance, whose two ends were in
+    # different pedestrian components, collapses into a 2-point self-loop.
+    # Its geometry becomes zero-length (SFA-invalid) once endpoints snap to
+    # the node coordinate and it carries no connectivity, so drop it.
+    # Self-loops with interior vertices stay valid.
     collapsed = (result["_u_id"] == result["_v_id"]) & result.geometry.apply(
         lambda g: g is not None and not g.is_empty and len(g.coords) == 2
     )
@@ -526,10 +584,9 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
     surveyed   = curb_nodes[["_id", "geometry"]].copy()
     curb_nodes = _snap_curb_nodes(curb_nodes, endpoints, snap_tolerance)
 
-    # Merge near-coincident endpoints across sources. OSM and planimetric edges
-    # that share a geographic endpoint within survey tolerance get the same node ID,
-    # ensuring the two subgraphs are topologically joined.
-    click.echo("\n  Merging near-coincident cross-source endpoints...")
+    # Close near-miss gaps: dead ends and separate components whose endpoints
+    # lie within the tolerance get the same node ID.
+    click.echo("\n  Merging near-miss endpoints...")
     merge_tolerance = build_cfg.get("endpoint_merge_tolerance_meters", 2.0)
     all_edges, endpoint_remap = _merge_near_endpoints(all_edges, tolerance_m=merge_tolerance)
 

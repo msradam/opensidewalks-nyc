@@ -12,9 +12,9 @@ osw_schema_local_cache: "data/raw/osw_schema_v0.3.json"
 # Curb point nodes within this distance of an edge endpoint are snapped to it.
 snap_tolerance_meters: 5.0
 
-# Stage 4 (assemble): merge tolerance for cross-source near-coincident endpoints.
-# Edge endpoints from different sources (OSM vs planimetric) within this distance
-# are unified under one node ID, ensuring the two subgraphs are topologically joined.
+# Stage 4 (assemble): tolerance for closing near-miss gaps. A dead end, or a
+# node in a different connected component, within this distance of another
+# node takes that node's ID. No endpoint moves further than this.
 endpoint_merge_tolerance_meters: 2.0
 
 # Stage 3 (schema_map): maximum gap between an OSM edge endpoint and a planimetric
