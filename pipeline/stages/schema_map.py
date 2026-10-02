@@ -27,6 +27,7 @@ import click
 import geopandas as gpd
 import numpy as np
 import pandas as pd
+import shapely
 from shapely.geometry import LineString, MultiLineString, MultiPolygon, Point, mapping
 from shapely.ops import unary_union
 
@@ -417,6 +418,7 @@ def _planimetric_to_sidewalk_edges(
     build_cfg: dict,
     pipeline_version: str,
     manifest: dict,
+    osm_pedestrian_gdf: gpd.GeoDataFrame | None = None,
 ) -> gpd.GeoDataFrame:
     """Derive sidewalk edges from planimetric polygons where OSM coverage is sparse.
 
@@ -424,7 +426,9 @@ def _planimetric_to_sidewalk_edges(
     `planimetric_coverage_threshold_meters`, it's already covered. Skip it.
 
     For uncovered polygons, extract a centerline via the minimum rotated
-    rectangle and emit it as a Sidewalk Edge.
+    rectangle and emit it as a Sidewalk Edge, unless OSM already has a
+    crossing or footway along it (osm_pedestrian_gdf: every OSM pedestrian
+    edge, of any kind).
     """
     prov = provenance_fields("nyc_planimetric_sidewalks", manifest, pipeline_version)
     coverage_threshold = build_cfg.get("planimetric_coverage_threshold_meters", 10.0)
@@ -449,8 +453,13 @@ def _planimetric_to_sidewalk_edges(
 
     from tqdm import tqdm
 
+    ped_geoms = (osm_pedestrian_gdf.to_crs("EPSG:32618").geometry.values
+                 if osm_pedestrian_gdf is not None and len(osm_pedestrian_gdf) > 0 else None)
+    ped_tree = shapely.STRtree(ped_geoms) if ped_geoms is not None else None
+
     rows = []
     n_skipped_covered = 0
+    n_skipped_duplicate = 0
     n_centerline_ok   = 0
     n_centerline_fail = 0
 
@@ -485,6 +494,17 @@ def _planimetric_to_sidewalk_edges(
         if centerline.intersection(poly).length < 0.9 * centerline.length:
             n_centerline_fail += 1
             continue
+
+        # OSM may already have this strip as a crossing or a plain footway: a
+        # median refuge inside a crossing, a path mapped without
+        # footway=sidewalk. A centerline on top of that is a duplicate (in a
+        # Midtown window 39 of 51 gap-fill edges were).
+        if ped_tree is not None:
+            near = ped_tree.query(centerline, predicate="dwithin", distance=1.5)
+            if len(near) and centerline.intersection(shapely.union_all(
+                    shapely.buffer(ped_geoms[near], 1.5))).length >= 0.5 * centerline.length:
+                n_skipped_duplicate += 1
+                continue
 
         # Reproject centerline back to WGS-84.
         from pyproj import Transformer
@@ -536,7 +556,8 @@ def _planimetric_to_sidewalk_edges(
         n_centerline_ok += 1
 
     click.echo(f"    Planimetric gap-fill: {n_centerline_ok} new sidewalk edges "
-               f"(skipped {n_skipped_covered} covered, {n_centerline_fail} centerline failures)")
+               f"(skipped {n_skipped_covered} covered, {n_skipped_duplicate} on an OSM "
+               f"crossing or footway, {n_centerline_fail} centerline failures)")
 
     if not rows:
         return gpd.GeoDataFrame(columns=["_id", "_u_id", "_v_id", "geometry"],
@@ -694,7 +715,9 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
     # --- Transform 3: Planimetric → gap-fill sidewalk edges ---
     click.echo("\n  Deriving gap-fill sidewalk edges from planimetric polygons...")
     plan_sidewalks = _planimetric_to_sidewalk_edges(
-        plan_gdf, sidewalks, build_cfg, pipeline_version, manifest
+        plan_gdf, sidewalks, build_cfg, pipeline_version, manifest,
+        osm_pedestrian_gdf=pd.concat(
+            [g[["geometry"]] for g in (sidewalks, crossings, footways) if len(g) > 0]),
     )
 
     # Gap-fill edges have no OSMnx borough tag; assign one before the merge,

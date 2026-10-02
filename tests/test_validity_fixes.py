@@ -65,6 +65,13 @@ def test_gap_fill_rejects_block_rings_and_keeps_strips():
     assert len(out) == 2, "one strip, both directions"
     assert set(out["_u_id"]) == set(out["_v_id"])
     assert abs(out["width"].iloc[0] - 2.89) < 0.05  # 2*240/166, a 3 m strip
+    # The same strip with an OSM crossing already running along it (a median
+    # refuge) is a duplicate and yields nothing.
+    crossing = gpd.GeoDataFrame(geometry=[LineString([(190, 1.5), (290, 1.5)])],
+                                crs="EPSG:32618").translate(583000, 4500000)
+    crossing = gpd.GeoDataFrame(geometry=crossing).to_crs("EPSG:4326")
+    assert len(_planimetric_to_sidewalk_edges(plan, none, {}, "test", {},
+                                              osm_pedestrian_gdf=crossing)) == 0
 
 
 def test_endpoint_merge_closes_gaps_without_chaining():
