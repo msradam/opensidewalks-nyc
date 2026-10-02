@@ -599,7 +599,13 @@ def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
             todo = np.flatnonzero(np.isnan(sampled))
             if len(todo) == 0:
                 break
-            with rasterio.open(tile) as src:
+            try:
+                src = rasterio.open(tile)
+            except Exception as exc:
+                click.echo(f"  Warning: cannot read {tile.name} ({exc}); nodes it covers "
+                           "get no height from it")
+                continue
+            with src:
                 raster_epsg = src.crs.to_epsg() or 4326
                 x, y = lonlat[todo, 0], lonlat[todo, 1]
                 if raster_epsg != 4326:

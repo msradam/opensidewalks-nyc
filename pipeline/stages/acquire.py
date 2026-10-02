@@ -492,8 +492,11 @@ _NYC_DEM_URL = (
     "https://elevation.its.ny.gov/arcgis/rest/services/"
     "NYC_TopoBathymetric_2017_1_meter/ImageServer/exportImage"
 )
-# The ImageServer rejects responses over ~23 MB (~3000×3000 px is the safe cap).
-_NYC_DEM_MAX_PX = 3000
+# The ImageServer answers a request for a large tile with an HTML error page
+# instead of an image: of 67 tiles of 3000 px a side over the city, 17 came
+# back that way, all of them tiles full of land. 2048 px (16 MB of float32)
+# has not failed. A study area still gets one tile capped at this size.
+_NYC_DEM_MAX_PX = 2048
 
 
 def _fetch_dem_tile(b: dict, label: str, out_file: Path,
@@ -528,6 +531,15 @@ def _fetch_dem_tile(b: dict, label: str, out_file: Path,
     if len(resp.content) < 1000 or b"error" in resp.content[:100]:
         raise ValueError(f"Server returned error: {resp.content[:120]}")
     out_file.write_bytes(resp.content)
+    # An error page comes back with status 200 and a text/html body; keep
+    # only a file rasterio can open, or Stage 4 trips over it.
+    import rasterio
+    try:
+        with rasterio.open(out_file):
+            pass
+    except Exception as exc:
+        out_file.unlink(missing_ok=True)
+        raise ValueError(f"Server did not return a readable image: {exc}") from exc
     return True
 
 
