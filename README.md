@@ -54,7 +54,7 @@ Edges are directed: most walkable segments appear once per travel direction, wit
 
 ## Getting the data
 
-Don't clone for the data; pull a release. The canonical GeoJSON is 2 GB uncompressed.
+Don't clone for the data; pull a release. The canonical GeoJSON is 1.3 GB uncompressed.
 
 ```bash
 # canonical OSW GeoJSON (gzipped)
