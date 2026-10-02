@@ -140,6 +140,10 @@ NYC Planimetric Sidewalks (`52n9-sdep`); Borough Boundaries (`7t3b-ywvw`); NYC
 - **The DOT ramp survey is signed and has four sentinel codes** (555, 777, 888,
   999). Compare slope magnitudes. The curb ramp running-slope limit is 1:12
   (8.33%), not 5%. `DWS_CONDITIONS` is "Missing" on 59% of ramps.
+- **Stage 1 caches OSM per borough** (`data/raw/osm_walk/osm_*.graphml`) and
+  reuses a file whenever it exists. A cache written before the borough-seam fix
+  holds graphs cut at the borough line, so run `python -m pipeline clean`
+  before the first build on newer code.
 - **`SOCRATA_APP_TOKEN`** is optional but strongly recommended for city-wide
   builds (anonymous access is rate-limited to ~1 req/s).
 
@@ -163,7 +167,10 @@ v0.3.1-nyc.1 that passed the validator.
 - Python env is `uv` only (`uv venv`, `uv pip install`, `uv run`). Do not use
   `pip`/`venv` directly. Ask before creating a `.venv` if one is absent.
 - Run the deterministic quality passes on changed code: `ruff format .`,
-  `ruff check --fix .`, then any configured type-check/tests. Do not report a
+  `ruff check --fix .`, then `python tests/test_validity_fixes.py` and any
+  configured type-check. (The tree is not ruff-clean yet: as of 2026-10-02
+  `ruff format .` would rewrite about 1,300 lines in the pipeline files, so
+  check the files you touch and do not let a reformat bury a fix.) Do not report a
   task done with a failing pass.
 - Do not add AI co-authorship. No `Co-Authored-By: Claude` trailers, no
   "Generated with Claude Code" footers, no AI listed as author/contributor in
