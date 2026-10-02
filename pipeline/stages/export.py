@@ -37,13 +37,14 @@ def export_osw_geojson(fc: dict, output_dir: Path) -> Path:
 # ---------------------------------------------------------------------------
 
 def export_graphml(fc: dict, output_dir: Path) -> Path:
-    """Build a NetworkX DiGraph from OSW edges and export as GraphML.
+    """Build a NetworkX MultiDiGraph from OSW edges and export as GraphML.
 
     Every LineString edge is included (sidewalks, crossings, footways, and
-    streets); consumers filter by the highway/footway attributes. Each edge is
-    added in both directions. Nodes get coordinate attributes.
+    streets); consumers filter by the highway/footway attributes. The file
+    already holds one edge per travel direction, so each is added once, from
+    _u_id to _v_id. Nodes get coordinate attributes.
     """
-    G = nx.DiGraph()
+    G = nx.MultiDiGraph()
 
     node_coords = {}
 
@@ -88,9 +89,9 @@ def export_graphml(fc: dict, output_dir: Path) -> Path:
                     except Exception:
                         pass
 
+                # No reverse copy: it would overwrite the real reverse edge
+                # with this one's signed incline, and open one-way streets.
                 G.add_edge(u_id, v_id, edge_id=fid, **edge_attrs)
-                # Pedestrian graph is undirected. Add reverse edge.
-                G.add_edge(v_id, u_id, edge_id=fid, **edge_attrs)
 
     # Fill coordinates for nodes first created by add_edge, where the Point
     # feature appeared later in the file than the edge referencing it.
@@ -104,7 +105,7 @@ def export_graphml(fc: dict, output_dir: Path) -> Path:
     nx.write_graphml(G, str(out_path))
     size_mb = out_path.stat().st_size / 1_048_576
     click.echo(f"  nyc.graphml: {G.number_of_nodes():,} nodes, "
-               f"{G.number_of_edges() // 2:,} edges ({size_mb:.1f} MB)")
+               f"{G.number_of_edges():,} edges ({size_mb:.1f} MB)")
     return out_path
 
 

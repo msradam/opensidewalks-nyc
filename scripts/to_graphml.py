@@ -1,12 +1,16 @@
 """Convert the canonical OSW GeoJSON to a NetworkX GraphML file.
 
 The graph is built from the LineString edges:
-  - each edge contributes one networkx edge keyed by (_u_id, _v_id)
+  - each edge contributes one networkx edge from _u_id to _v_id (its OSW ID
+    is the `_id` attribute; NetworkX numbers parallel edges itself)
   - each Point feature contributes a node keyed by _id, with x/y coords
   - edge attributes: all OSW properties (flattened to strings/numbers)
   - node attributes: x, y (lon, lat), plus any OSW point properties
+  - graph attributes: licence, attribution and the OSM snapshot
 
-The graph is undirected (pedestrian edges are bidirectional by default).
+The graph is a directed multigraph, as the OSW file is: a walkable segment
+is one edge per travel direction and `incline` is signed for that direction.
+An undirected graph would keep one of the two and lose which way is uphill.
 
 Usage:
     python scripts/to_graphml.py INPUT.geojson OUTPUT.graphml
@@ -42,7 +46,11 @@ def _flatten(props: dict) -> dict:
 
 def main(in_path: Path, out_path: Path) -> None:
     print(f"streaming {in_path.name}...", flush=True)
-    G = nx.Graph()
+    G = nx.MultiDiGraph()
+    with in_path.open("rb") as f:
+        source = next(ijson.items(f, "dataSource"), None) or {}
+    for k, v in source.items():
+        G.graph[k] = v if isinstance(v, PRIMITIVE) else str(v)
 
     n_edges = 0
     n_nodes = 0
