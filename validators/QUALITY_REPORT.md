@@ -87,7 +87,7 @@ Share of each borough's pedestrian nodes in the largest component:
 
 | Brooklyn | Manhattan | Bronx | Queens | Staten Island |
 |---|---|---|---|---|
-| 96.2% | 89.4% | 85.7% | 84.1% | 0% (81.9% in its own largest) |
+| 96.2% | 89.4% | 85.7% | 84.0% | 0% (81.9% in its own largest) |
 
 Staten Island has no walkable link to another borough, so it is a separate component by geography. The rest of the fragmentation is OSM: pedestrian ways that share no node with their neighbours.
 
