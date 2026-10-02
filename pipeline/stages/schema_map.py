@@ -326,6 +326,14 @@ def _osm_edges_to_osw(edges_gdf: gpd.GeoDataFrame, pipeline_version: str,
             props["ext:structure"] = "bridge"
         elif tunnel not in ("", "nan", "none", "no", "building_passage"):
             props["ext:structure"] = "tunnel"
+        else:
+            # A way above ground level with no bridge tag: a deck over a
+            # building or a rail yard, a ramp on a viaduct.
+            try:
+                if float(str(row.get("layer")).split("|")[0]) > 0:
+                    props["ext:structure"] = "elevated"
+            except ValueError:
+                pass
 
         # A shared path is written as highway=footway; keep what OSM called it.
         highway_osm = str(row.get("highway", "")).split("|")[0]

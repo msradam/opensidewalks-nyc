@@ -272,7 +272,7 @@ def acquire_osm(source_cfg: dict, boroughs_file: Path, out_dir: Path,
 
     # Extend OSMnx's default useful_tags_way to preserve pedestrian sub-tags.
     extra_tags = ["footway", "crossing", "surface", "sidewalk", "tactile_paving",
-                  "kerb", "foot", "wheelchair"]
+                  "kerb", "foot", "wheelchair", "layer"]
     ox.settings.useful_tags_way = list(
         dict.fromkeys(ox.settings.useful_tags_way + extra_tags)
     )
