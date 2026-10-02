@@ -26,7 +26,7 @@ import pandas as pd
 from shapely.geometry import Point, mapping
 
 from pipeline.utils.ids import node_id
-from pipeline.utils.provenance import get_git_sha
+from pipeline.utils.provenance import get_git_sha, load_manifest
 
 
 # ---------------------------------------------------------------------------
@@ -466,6 +466,7 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
     raw_dir       = repo_root / build_cfg["dirs"]["raw"]
     pipeline_version = build_cfg.get("pipeline_version", "unknown")
     git_sha       = get_git_sha()
+    osm_extract   = load_manifest(raw_dir).get("osm_extract", {})
 
     snap_tolerance = build_cfg.get("snap_tolerance_meters", 5.0)
     min_comp_size  = build_cfg.get("min_component_size_nodes", 3)
@@ -719,6 +720,19 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
         "dataSource": {
             "name": "opensidewalks-nyc pipeline",
             "url": "https://github.com/msradam/opensidewalks-nyc",
+            "license": "ODbL-1.0",
+            "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
+            "attribution": (
+                "Pedestrian network derived from opensidewalks-nyc (ODbL-1.0). "
+                "\u00a9 OpenStreetMap contributors, NYC Open Data, NYS GIS."
+            ),
+            # Which OSM snapshot this build read: extract URL, SHA-256 and
+            # the extract's own data timestamp.
+            "osmExtract": {
+                "url": osm_extract.get("url"),
+                "sha256": osm_extract.get("content_hash"),
+                "dataTimestamp": osm_extract.get("osm_data_timestamp"),
+            },
         },
         "dataTimestamp": now_iso,
         "pipelineVersion": {
