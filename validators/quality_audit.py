@@ -59,6 +59,8 @@ BOROUGH_AREAS_KM2 = {
 }
 
 SCHEMA_FAIL_SAMPLE_LIMIT = 3
+# NYC DOT ramp survey codes for "no measurement"; a leak if seen in the artifact.
+DOT_SENTINELS = {555.0, 777.0, 888.0, 999.0}
 MAX_VALIDATION_FEATURES = None  # None = all; set int for a quick smoke pass
 
 
@@ -434,21 +436,21 @@ def main():
                 # slopes on ramps
                 rs = _to_float(props.get("ext:running_slope_pct"))
                 if rs is not None:
-                    if rs == 999.0:
+                    if rs in DOT_SENTINELS:
                         sentinel_999 += 1
                         w_sent.writerow([fid, "Point", "ext:running_slope_pct", rs])
                     else:
                         running_slope_vals.append(rs)
                 cs = _to_float(props.get("ext:cross_slope_pct"))
                 if cs is not None:
-                    if cs == 999.0:
+                    if cs in DOT_SENTINELS:
                         sentinel_999 += 1
                         w_sent.writerow([fid, "Point", "ext:cross_slope_pct", cs])
                     else:
                         cross_slope_vals.append(cs)
                 cnt_s = _to_float(props.get("ext:counter_slope_pct"))
                 if cnt_s is not None:
-                    if cnt_s == 999.0:
+                    if cnt_s in DOT_SENTINELS:
                         sentinel_999 += 1
                         w_sent.writerow([fid, "Point", "ext:counter_slope_pct", cnt_s])
                     else:
@@ -753,9 +755,14 @@ def main():
             "mean": sum(s)/len(s),
         }
     running_slope_stats = desc(running_slope_vals)
-    running_slope_le_5pct = sum(1 for v in running_slope_vals if v <= 5.0)
+    # Federal limits for a curb ramp: running slope 1:12 (2010 ADA Standards
+    # 406.1 via 405.2; PROWAG R304.2.2), cross slope 1:48 (405.3; R304.5.3).
+    # The survey signs each value by direction, so compare magnitudes. These are
+    # screening shares on raw measurements, not compliance findings: NYC DOT
+    # applies tolerances and site review before it calls a ramp non-compliant.
+    running_slope_within_1_12 = sum(1 for v in running_slope_vals if abs(v) <= 100 / 12)
     cross_slope_stats = desc(cross_slope_vals)
-    cross_slope_le_2pct = sum(1 for v in cross_slope_vals if v <= 2.0)
+    cross_slope_within_1_48 = sum(1 for v in cross_slope_vals if abs(v) <= 100 / 48)
     counter_slope_stats = desc(counter_slope_vals)
     incline_stats = desc(incline_vals)
     elevation_stats = desc(elevation_vals)
@@ -845,11 +852,11 @@ def main():
             "elevation_stats_m": elevation_stats,
             "elevation_outliers_outside_-10_200": elevation_outliers,
             "running_slope_pct_stats_curbramps": running_slope_stats,
-            "running_slope_le_5pct_count": running_slope_le_5pct,
-            "running_slope_le_5pct_share": running_slope_le_5pct / max(1, len(running_slope_vals)),
+            "running_slope_within_1_12_count": running_slope_within_1_12,
+            "running_slope_within_1_12_share": running_slope_within_1_12 / max(1, len(running_slope_vals)),
             "cross_slope_pct_stats_curbramps": cross_slope_stats,
-            "cross_slope_le_2pct_count": cross_slope_le_2pct,
-            "cross_slope_le_2pct_share": cross_slope_le_2pct / max(1, len(cross_slope_vals)),
+            "cross_slope_within_1_48_count": cross_slope_within_1_48,
+            "cross_slope_within_1_48_share": cross_slope_within_1_48 / max(1, len(cross_slope_vals)),
             "counter_slope_pct_stats_curbramps": counter_slope_stats,
         },
         "ada_edge_summary": {
