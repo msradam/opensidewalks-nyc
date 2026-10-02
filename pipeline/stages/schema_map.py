@@ -317,6 +317,16 @@ def _osm_edges_to_osw(edges_gdf: gpd.GeoDataFrame, pipeline_version: str,
         if osmid is not None and str(osmid) not in ("nan", "None", ""):
             props["ext:osm_id"] = str(osmid)
 
+        # The terrain model is bare earth: on a bridge or in a tunnel it gives
+        # the ground or water below or above, so Stage 4 leaves incline off
+        # these edges. A building passage is at ground level and keeps it.
+        bridge = str(row.get("bridge") or "").split("|")[0].lower()
+        tunnel = str(row.get("tunnel") or "").split("|")[0].lower()
+        if bridge not in ("", "nan", "none", "no"):
+            props["ext:structure"] = "bridge"
+        elif tunnel not in ("", "nan", "none", "no", "building_passage"):
+            props["ext:structure"] = "tunnel"
+
         # A shared path is written as highway=footway; keep what OSM called it.
         highway_osm = str(row.get("highway", "")).split("|")[0]
         if highway_osm in SHARED_TYPES and edge_type != "street":

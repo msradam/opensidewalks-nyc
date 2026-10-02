@@ -499,7 +499,11 @@ def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
         for _, row in all_edges.iterrows():
             uid = row.get("_u_id")
             vid = row.get("_v_id")
-            if uid in node_elevs and vid in node_elevs:
+            # On a bridge or in a tunnel the terrain model is not the walking
+            # surface; no incline is better than a wrong one.
+            if row.get("ext:structure") in ("bridge", "tunnel"):
+                inclines.append(None)
+            elif uid in node_elevs and vid in node_elevs:
                 dz = node_elevs[vid] - node_elevs[uid]
                 length = _length_m(row.geometry)
                 raw = round(dz / length, 4) if length > 0 else None

@@ -9,6 +9,7 @@ from pathlib import Path
 
 import geopandas as gpd
 import numpy as np
+import pandas as pd
 import rasterio
 from rasterio.transform import from_origin
 from shapely.geometry import LineString, Point, Polygon
@@ -58,6 +59,21 @@ def test_dem_is_interpolated_between_pixel_centres():
     edges = gpd.GeoDataFrame({"_id": [], "_u_id": [], "_v_id": []}, geometry=[], crs="EPSG:4326")
     _compute_edge_inclines(edges, nodes, [tmp / "dem.tif"])
     assert nodes["ext:elevation_m"].tolist() == [10.0, 2.5]
+
+
+def test_no_incline_on_a_bridge():
+    tmp = Path(tempfile.mkdtemp())
+    with rasterio.open(tmp / "dem.tif", "w", driver="GTiff", width=4, height=1, count=1,
+                       dtype="float32", crs="EPSG:4326",
+                       transform=from_origin(-74.0, 40.8, 0.01, 0.01)) as dst:
+        dst.write(np.array([[0, 10, 20, 30]], dtype="float32"), 1)
+    nodes = gpd.GeoDataFrame({"_id": ["a", "b"]},
+                             geometry=[Point(-73.995, 40.795), Point(-73.985, 40.795)], crs="EPSG:4326")
+    line = LineString([(-73.995, 40.795), (-73.985, 40.795)])
+    edges = gpd.GeoDataFrame({"_id": ["ground", "span"], "_u_id": ["a", "a"], "_v_id": ["b", "b"],
+                              "ext:structure": [None, "bridge"]}, geometry=[line, line], crs="EPSG:4326")
+    out = _compute_edge_inclines(edges, nodes, [tmp / "dem.tif"])
+    assert out["incline"].iloc[0] > 0 and pd.isna(out["incline"].iloc[1])
 
 
 def test_ramp_dws_and_sentinels():
