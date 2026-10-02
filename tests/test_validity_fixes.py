@@ -157,7 +157,7 @@ def test_one_way_pedestrian_edges_get_their_reverse():
     osm = gpd.GeoDataFrame({"highway": ["pedestrian", "residential"], "key": [0, 0]},
                            geometry=[LineString([(-73.97, 40.77), (-73.971, 40.771)]),
                                      LineString([(-73.98, 40.77), (-73.981, 40.771)])], crs="EPSG:4326")
-    sidewalks, crossings, footways, streets = _osm_edges_to_osw(osm, "test", {})
+    _, _, footways, streets = _osm_edges_to_osw(osm, "test", {})
     assert len(footways) == 2 and len(streets) == 1, "the street stays one-way"
     assert footways["_u_id"].tolist() == footways["_v_id"].tolist()[::-1]
     assert footways["_id"].is_unique
