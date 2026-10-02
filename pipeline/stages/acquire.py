@@ -207,20 +207,34 @@ def acquire_boroughs(source_cfg: dict, out_dir: Path, app_token: str | None,
     return out_file
 
 
-def _filter_extract(pbf: Path, out_xml: Path, custom_filter: str,
-                    bounds: tuple[float, float, float, float]) -> None:
-    """Write the ways the Overpass filter would return, with their nodes, as OSM XML.
-
-    custom_filter is the Overpass tag filter from sources.yaml. Overpass's ~ and
-    !~ are unanchored regex searches and a missing tag passes !~; the same
-    string is applied here so the extract yields the ways Overpass did.
-    """
-    import osmium
-
+def _parse_filter(custom_filter: str) -> list[tuple[str, bool, re.Pattern]]:
+    """(key, must match, regex) for each clause of an Overpass tag filter."""
     clauses = re.findall(r'\["([^"]+)"(!?~)"([^"]*)"\]', custom_filter)
     if "".join(f'["{k}"{op}"{rx}"]' for k, op, rx in clauses) != custom_filter:
         raise ValueError(f"Unsupported custom_filter syntax: {custom_filter}")
-    tests = [(k, op == "~", re.compile(rx)) for k, op, rx in clauses]
+    return [(k, op == "~", re.compile(rx)) for k, op, rx in clauses]
+
+
+def _way_passes(tags, tests) -> bool:
+    """Apply the filter as Overpass does (~ and !~ are unanchored regex
+    searches, and a missing tag passes !~), with one departure: foot=* is
+    more specific than access=* in OSM's access rules, so a way that fails
+    only the access clause stays when it is explicitly open to walkers. The
+    Queensboro Bridge walkway is access=no, foot=designated.
+    """
+    failed = [k for k, positive, rx in tests
+              if (k in tags and rx.search(tags[k]) is not None) != positive]
+    if failed == ["access"] and tags.get("foot") in ("yes", "designated", "permissive"):
+        return True
+    return not failed
+
+
+def _filter_extract(pbf: Path, out_xml: Path, custom_filter: str,
+                    bounds: tuple[float, float, float, float]) -> None:
+    """Write the ways that pass the tag filter, with their nodes, as OSM XML."""
+    import osmium
+
+    tests = _parse_filter(custom_filter)
     keys = [k for k, positive, _ in tests if positive]
 
     west, south, east, north = bounds
@@ -230,11 +244,7 @@ def _filter_extract(pbf: Path, out_xml: Path, custom_filter: str,
     with osmium.BackReferenceWriter(str(out_xml), ref_src=str(pbf),
                                     overwrite=True) as writer:
         for obj in fp:
-            if not obj.is_way():
-                continue
-            tags = obj.tags
-            if any((k in tags and rx.search(tags[k]) is not None) != positive
-                   for k, positive, rx in tests):
+            if not obj.is_way() or not _way_passes(obj.tags, tests):
                 continue
             # A way is written whole if any of its nodes is in the region, so
             # every edge with one end inside is there for the truncation.

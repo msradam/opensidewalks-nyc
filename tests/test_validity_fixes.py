@@ -13,6 +13,7 @@ import rasterio
 from rasterio.transform import from_origin
 from shapely.geometry import LineString, Point, Polygon
 
+from pipeline.stages.acquire import _parse_filter, _way_passes
 from pipeline.stages.assemble import _compute_edge_inclines, _merge_near_endpoints
 from pipeline.stages.schema_map import (
     _classify_osm_edge,
@@ -123,6 +124,17 @@ def test_shared_paths_are_walkable_only_where_osm_says_so():
     assert _classify_osm_edge({"highway": "track", "foot": "permissive"}) == "footway"
     assert _classify_osm_edge({"highway": "cycleway"}) is None
     assert _classify_osm_edge({"highway": "cycleway", "foot": "use_sidepath"}) is None
+
+
+def test_osm_filter_lets_foot_override_access():
+    tests = _parse_filter('["highway"~"footway|pedestrian|secondary"]["foot"!~"no"]["access"!~"no|private"]')
+    assert _way_passes({"highway": "footway"}, tests)
+    assert _way_passes({"highway": "secondary_link"}, tests), "unanchored, as Overpass"
+    assert not _way_passes({"highway": "motorway"}, tests)
+    assert not _way_passes({"highway": "footway", "access": "private"}, tests)
+    assert not _way_passes({"highway": "footway", "foot": "no"}, tests)
+    assert _way_passes({"highway": "pedestrian", "access": "no", "foot": "designated"}, tests)
+    assert not _way_passes({"highway": "motorway", "access": "no", "foot": "yes"}, tests)
 
 
 def test_one_way_pedestrian_edges_get_their_reverse():
