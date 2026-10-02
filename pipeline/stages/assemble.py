@@ -345,7 +345,7 @@ def _topology_report(all_edges: gpd.GeoDataFrame, all_nodes: gpd.GeoDataFrame,
 def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
                             all_nodes: gpd.GeoDataFrame,
                             dem_tiles: list[Path]) -> gpd.GeoDataFrame:
-    """Sample USGS 3DEP DEM at node coordinates and add incline to each edge.
+    """Sample the NYC 2017 LiDAR DEM tiles at node coordinates and add incline to each edge.
 
     incline = (v_elevation - u_elevation) / edge_length_m
     Positive values indicate uphill travel from _u_id to _v_id.
@@ -384,8 +384,16 @@ def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
                 else:
                     project = lambda lon, lat: (lon, lat)
 
-                ids_rem = list(remaining)
-                pts = [project(*remaining[nid]) for nid in ids_rem]
+                # The tiles carry no nodata value, so rasterio returns 0.0 for a
+                # point outside a tile's extent. Sample only the nodes a tile
+                # covers, or every node off the first tile is pinned at 0 m.
+                b = src.bounds
+                ids_rem, pts = [], []
+                for nid, lonlat in remaining.items():
+                    x, y = project(*lonlat)
+                    if b.left <= x <= b.right and b.bottom <= y <= b.top:
+                        ids_rem.append(nid)
+                        pts.append((x, y))
                 nodata = src.nodata
                 for nid, elev_arr in zip(ids_rem, src.sample(pts)):
                     elev = float(elev_arr[0])
