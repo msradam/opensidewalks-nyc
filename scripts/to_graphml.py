@@ -12,8 +12,13 @@ The graph is a directed multigraph, as the OSW file is: a walkable segment
 is one edge per travel direction and `incline` is signed for that direction.
 An undirected graph would keep one of the two and lose which way is uphill.
 
+With --undirected the graph is a simple undirected one, for code written
+against the releases before v0.3.2: one edge per pair of nodes, the first
+the file holds for that pair. Its `_u_id` and `_v_id` attributes say which
+way its `incline` reads; parallel edges and the reverse direction are gone.
+
 Usage:
-    python scripts/to_graphml.py INPUT.geojson OUTPUT.graphml
+    python scripts/to_graphml.py INPUT.geojson OUTPUT.graphml [--undirected]
 """
 
 from __future__ import annotations
@@ -44,9 +49,9 @@ def _flatten(props: dict) -> dict:
     return {k: _coerce(v) for k, v in props.items() if v is not None}
 
 
-def main(in_path: Path, out_path: Path) -> None:
+def main(in_path: Path, out_path: Path, undirected: bool = False) -> None:
     print(f"streaming {in_path.name}...", flush=True)
-    G = nx.MultiDiGraph()
+    G = nx.Graph() if undirected else nx.MultiDiGraph()
     with in_path.open("rb") as f:
         source = next(ijson.items(f, "dataSource"), None) or {}
     for k, v in source.items():
@@ -80,6 +85,8 @@ def main(in_path: Path, out_path: Path) -> None:
                 if not u or not v:
                     n_skipped += 1
                     continue
+                if undirected and G.has_edge(u, v):
+                    continue
                 attrs = _flatten(props)
                 G.add_edge(u, v, **attrs)
                 n_edges += 1
@@ -98,7 +105,9 @@ def main(in_path: Path, out_path: Path) -> None:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("usage: to_graphml.py INPUT.geojson OUTPUT.graphml", file=sys.stderr)
+    args = [a for a in sys.argv[1:] if a != "--undirected"]
+    if len(args) != 2:
+        print("usage: to_graphml.py INPUT.geojson OUTPUT.graphml [--undirected]",
+              file=sys.stderr)
         sys.exit(2)
-    main(Path(sys.argv[1]), Path(sys.argv[2]))
+    main(Path(args[0]), Path(args[1]), undirected="--undirected" in sys.argv)
