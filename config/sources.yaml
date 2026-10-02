@@ -101,7 +101,7 @@ sources:
 
   dem_nyc:
     description: >
-      NYC 2017 Topobathymetric LiDAR bare-earth DTM (1-foot native resolution) served
+      NYC 2017 Topobathymetric LiDAR bare-earth DTM, served in metres on a 1 m grid
       via NY State GIS ArcGIS ImageServer. Buildings removed, hydro-flattened.
       Captured May 2017 by Quantum Spatial using Leica ALS80. Used to compute
       edge incline (grade) for wheelchair routing and accessibility scoring.

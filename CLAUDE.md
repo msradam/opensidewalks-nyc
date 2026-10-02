@@ -15,10 +15,18 @@ r = OSWValidation("output/nyc-osw-osw-split.zip").validate()
 assert r.is_valid and not (r.errors or []), r.errors[:20]
 ```
 
-- Latest validator as of 2026-07-03 is **0.4.4** (July 1, 2026). Confirm the
-  current version on PyPI and pin it; the 0.4.x line is where the strict checks
-  live. The validator caps reported errors at 20, so "20 errors" means "at least
-  20", not "almost done".
+- Latest validator as of 2026-10-02 is **0.5.0** (August 5, 2026). Confirm the
+  current version on PyPI; 0.4.0 added the endpoint-coordinate check and 0.5.0
+  added a 7-decimal coordinate limit. The published v0.3.1-nyc.1 files pass
+  0.4.4 and 0.4.5 and fail 0.5.0; a build from current code passes 0.5.0. The
+  validator caps reported errors at 20, so "20 errors" means "at least 20", not
+  "almost done".
+- Passing the validator is a check of form. It does not look at connectivity or
+  at whether attribute values are true; v0.3.1-nyc.1 passed 0.4.4 with 80% of
+  its elevations wrong. Check the things in "Checks the validator does not do".
+- The validator pins `geopandas==0.14.4`. Never install it into the pipeline's
+  environment (Stage 1 then fails on `union_all`); run it with
+  `uv run --no-project --isolated --with python-osw-validation`.
 - The bundled schema is still **OSW v0.3** (`OpenSidewalks/OpenSidewalks-Schema`
   latest tag `0.3`, Jan 2026; no v0.4 exists). The schema target is current.
 - The validator input is a ZIP of `nyc.nodes.geojson` + `nyc.edges.geojson`, not
@@ -30,7 +38,6 @@ assert r.is_valid and not (r.errors or []), r.errors[:20]
 # 0. Environment (Python >= 3.11). rasterio (incline) is a normal project dep.
 uv venv --python 3.11 && source .venv/bin/activate
 uv pip install -e .
-uv pip install "python-osw-validation==0.4.4"   # not a project dep; install explicitly
 export SOCRATA_APP_TOKEN=...                     # optional: NYC Open Data 1 req/s -> 1000 req/s
 
 # 1. Build. Re-acquires OSM + NYC Open Data and assembles the graph.
@@ -46,8 +53,9 @@ python scripts/snap_endpoints.py --input output/nyc-osw.geojson
 #   -> output/osw-split/nyc.nodes.geojson, output/osw-split/nyc.edges.geojson,
 #      output/nyc-osw-osw-split.zip
 
-# 3. Validate against the real validator. THIS is the conformance gate.
-python -c "from python_osw_validation import OSWValidation as V; \
+# 3. Validate against the real validator, in its own environment. THIS is the
+#    conformance gate.
+uv run --no-project --isolated --with python-osw-validation python -c "from python_osw_validation import OSWValidation as V; \
 r=V('output/nyc-osw-osw-split.zip').validate(); \
 print('is_valid', r.is_valid, 'errors', len(r.errors or []))"
 #   REQUIRE: is_valid True, errors 0
@@ -63,7 +71,7 @@ validator rejects. Know them before trusting the pipeline's own output.
    canonical node ID (`_merge_near_endpoints`), but leaves the edge's terminal
    vertex at its original coordinate. `python-osw-validation` 0.4.0+ checks that
    every edge start/end coordinate equals the coordinate of the node it
-   references, so those sub-metre gaps fail. `scripts/snap_endpoints.py` (step 2
+   references, so those gaps (typically 1 to 4 m, since the merge chains) fail. `scripts/snap_endpoints.py` (step 2
    above) closes them by moving each edge endpoint onto its node's coordinate.
 
 2. **Stage 5 (`pipeline/stages/validate.py`) is not the official validator.** It
@@ -109,7 +117,8 @@ NYC Planimetric Sidewalks (`52n9-sdep`); Borough Boundaries (`7t3b-ywvw`); NYC
 ## Known state and gotchas (2026-07-03, v0.3.1-nyc.1)
 
 - **The from-scratch path works.** Build + snap + validate produces
-  `is_valid True, errors 0` under 0.4.4. Stage 4 drops edges the 2 m endpoint
+  `is_valid True, errors 0` under 0.4.4 and 0.5.0 (Staten Island bbox build,
+  2026-10-02; a city-wide build from current code has not been run). Stage 4 drops edges the 2 m endpoint
   merge collapses into zero-length self-loops (they fail shapely validity in
   0.4.x); do not "fix" that drop away.
 - **Borough codes are normalized to `MN`/`BK`/`QN`/`BX`/`SI`** at the end of
@@ -122,9 +131,32 @@ NYC Planimetric Sidewalks (`52n9-sdep`); Borough Boundaries (`7t3b-ywvw`); NYC
   Stage 4 skips incline with a warning instead of failing; the artifact still
   validates but loses grade data.
 - **Socrata borough-boundaries dataset `7t3b-ywvw` returns 404** (since ~mid
-  2026); Stage 1 falls back to OSMnx geocoding automatically.
+  2026); Stage 1 falls back to OSMnx geocoding automatically. The replacement
+  IDs are `gthc-hcne` (shoreline) and `wh2p-dxnf` (water included); only the
+  water-included polygons contain the bridges.
+- **`drh3-e2fd` is not an MTA dataset** (it is planimetric hydrography) and the
+  GTFS fallback has no `wheelchair_boarding` column, so no ADA station index is
+  produced. The live table is `39hk-dx4f` on data.ny.gov.
+- **The DOT ramp survey is signed and has four sentinel codes** (555, 777, 888,
+  999). Compare slope magnitudes. The curb ramp running-slope limit is 1:12
+  (8.33%), not 5%. `DWS_CONDITIONS` is "Missing" on 59% of ramps.
 - **`SOCRATA_APP_TOKEN`** is optional but strongly recommended for city-wide
   builds (anonymous access is rate-limited to ~1 req/s).
+
+## Checks the validator does not do
+
+Run these on any build before calling it right. Each caught a defect in
+v0.3.1-nyc.1 that passed the validator.
+
+- Share of nodes with `ext:elevation_m` exactly 0.0, by borough. It should be a
+  few percent (shoreline), and the Staten Island maximum should be near 118 m.
+- Components of the pedestrian graph, and the share of each borough's nodes in
+  the largest one. All four land-connected boroughs should be in it.
+- `tactile_paving` counts against `DWS_CONDITIONS` in the raw survey.
+- Curb nodes that are edge endpoints, as a share of curb nodes.
+- Sidewalk `width` median (polygon transects on Staten Island gave 2.6 m; the
+  release's 5.65 m citywide was the ring-polygon bug).
+- A few gap-fill edges drawn over orthoimagery.
 
 ## Conventions
 

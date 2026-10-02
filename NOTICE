@@ -26,20 +26,16 @@ All consumers must preserve these attributions per ODbL-1.0 §4.3.
     Public domain. Used for sidewalk widths and as a gap-fill source for
     sidewalk centerlines.
 
-  - NYC Borough Boundaries (dataset id: 7t3b-ywvw)
-    https://data.cityofnewyork.us/City-Government/Borough-Boundaries/7t3b-ywvw
-    Public domain. Used as region polygons (with OSMnx geocoding as a
-    fallback when the Socrata dataset is unavailable).
+  - Borough boundaries: OpenStreetMap, fetched through Nominatim. The
+    pipeline first tries NYC Borough Boundaries (dataset id: 7t3b-ywvw),
+    which NYC Open Data has withdrawn, so the fallback is what ships.
+    Used as region polygons and to bound the per-borough OSM queries.
 
-  - NYC 2017 Topobathymetric LiDAR bare-earth DTM (1-foot resolution)
+  - NYC 2017 Topobathymetric LiDAR bare-earth DTM
     Served by the NY State GIS Program Office ArcGIS ImageServer
-    (https://elevation.its.ny.gov/). Public domain.
-    Used to derive node elevations and edge inclines.
-
-  - MTA subway stations with ADA accessibility flags (dataset id: drh3-e2fd,
-    with the MTA GTFS static feed as fallback)
-    https://data.cityofnewyork.us/resource/drh3-e2fd.json
-    Public domain. Used as a transit-accessibility sidecar index.
+    (https://elevation.its.ny.gov/, NYC_TopoBathymetric_2017_1_meter).
+    Public domain. Sampled at 5 to 10 m per pixel to derive node elevations
+    and edge inclines.
 
   - OpenSidewalks Schema v0.3
     https://sidewalks.washington.edu/opensidewalks/0.3/schema.json
