@@ -153,14 +153,22 @@ def test_osm_filter_lets_foot_override_access():
     assert not _way_passes({"highway": "motorway", "access": "no", "foot": "yes"}, tests)
 
 
-def test_one_way_pedestrian_edges_get_their_reverse():
+def test_one_way_edges_get_their_reverse():
+    # OSM's oneway binds vehicles. A person walks a one-way path, and the edge
+    # of a one-way street, in either direction.
     osm = gpd.GeoDataFrame({"highway": ["pedestrian", "residential"], "key": [0, 0]},
                            geometry=[LineString([(-73.97, 40.77), (-73.971, 40.771)]),
                                      LineString([(-73.98, 40.77), (-73.981, 40.771)])], crs="EPSG:4326")
     _, _, footways, streets = _osm_edges_to_osw(osm, "test", {})
-    assert len(footways) == 2 and len(streets) == 1, "the street stays one-way"
-    assert footways["_u_id"].tolist() == footways["_v_id"].tolist()[::-1]
-    assert footways["_id"].is_unique
+    for edges in (footways, streets):
+        assert len(edges) == 2
+        assert edges["_u_id"].tolist() == edges["_v_id"].tolist()[::-1]
+        assert edges["_id"].is_unique
+    # An edge that already has its reverse gets no second one.
+    both = gpd.GeoDataFrame({"highway": ["residential", "residential"], "key": [0, 0]},
+                            geometry=[LineString([(-73.98, 40.77), (-73.981, 40.771)]),
+                                      LineString([(-73.981, 40.771), (-73.98, 40.77)])], crs="EPSG:4326")
+    assert len(_osm_edges_to_osw(both, "test", {})[3]) == 2
 
 
 def test_borough_names_become_codes():
