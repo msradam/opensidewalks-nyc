@@ -774,18 +774,17 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
             [g[["geometry"]] for g in (sidewalks, crossings, footways) if len(g) > 0]),
     )
 
-    # Gap-fill edges have no OSMnx borough tag; assign one before the merge,
-    # because _tag_borough skips a frame that already has the column.
+    # Gap-fill edges have no OSMnx borough tag.
     if len(plan_sidewalks) > 0:
         _tag_borough(plan_sidewalks, boroughs_gdf)
 
-    # Merge planimetric gap-fills into sidewalks layer.
-    all_sidewalks = gpd.GeoDataFrame(
-        pd.concat([sidewalks, plan_sidewalks], ignore_index=True),
-        geometry="geometry", crs="EPSG:4326"
-    )
-    click.echo(f"\n  Total sidewalk edges: {len(all_sidewalks)} "
-               f"(OSM: {len(sidewalks)}, planimetric gap-fill: {len(plan_sidewalks)})")
+    # The gap-fill centrelines stay out of the graph. In a sample checked over
+    # orthoimagery half of them lay on a sidewalk and the rest on driveways,
+    # lots and yards, and almost none touches the network. Stage 6 ships them
+    # as a sidecar file for whoever wants to check them.
+    all_sidewalks = sidewalks
+    click.echo(f"\n  Sidewalk edges: {len(sidewalks)} from OSM; "
+               f"{len(plan_sidewalks)} planimetric gap-fill edges kept apart")
 
     # --- Transform 4: Borough tags ---
     click.echo("\n  Tagging features with ext:borough...")
@@ -799,6 +798,7 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
         "footways":    footways,
         "streets":     streets,
         "curb_nodes":  curb_nodes,
+        "gapfill_sidewalks": plan_sidewalks,
     }
 
     # Sources tag boroughs three ways (OSMnx region slugs, DOT display names,
@@ -811,6 +811,9 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
     click.echo()
     for name, gdf in outputs.items():
         out_path = staged_dir / f"{name}.geojson"
+        if len(gdf) == 0 and name == "gapfill_sidewalks":
+            out_path.unlink(missing_ok=True)   # or Stage 6 ships a stale one
+            continue
         gdf.to_file(out_path, driver="GeoJSON")
         click.echo(f"  Staged {name}: {len(gdf)} features → {out_path.name}")
 

@@ -214,6 +214,47 @@ def export_routing_json(fc: dict, output_dir: Path) -> Path:
 
 
 # ---------------------------------------------------------------------------
+# Export: planimetric gap-fill sidecar
+# ---------------------------------------------------------------------------
+
+def export_gapfill_sidecar(staged_dir: Path, fc: dict, output_dir: Path) -> Path | None:
+    """Write the planimetric gap-fill centrelines as their own file.
+
+    They are not in the graph. The file says what they are in its root so it
+    cannot be mistaken for surveyed sidewalks.
+    """
+    src = staged_dir / "gapfill_sidewalks.geojson"
+    out_path = output_dir / "nyc-gapfill-sidewalks.geojson"
+    if not src.exists():
+        out_path.unlink(missing_ok=True)
+        return None
+    features = json.loads(src.read_text())["features"]
+    doc = {
+        "type": "FeatureCollection",
+        "description": (
+            "Candidate sidewalk centrelines derived from NYC Planimetric sidewalk "
+            "polygons that have no OpenStreetMap sidewalk within 10 m. Each is the "
+            "long axis of the polygon's minimum rotated rectangle, written once per "
+            "direction. They are NOT part of the opensidewalks-nyc graph and almost "
+            "none of them touches it. In a sample of 18 checked over orthoimagery, "
+            "9 lay on a sidewalk or walkway, 1 on other pedestrian paving, 4 were "
+            "unclear and 4 were wrong (a parking lot, a truck apron, a cemetery "
+            "road). Check a segment on the ground or in imagery before using it."
+        ),
+        "dataSource": {
+            "name": "opensidewalks-nyc pipeline, planimetric gap-fill sidecar",
+            "url": "https://github.com/msradam/opensidewalks-nyc",
+            "license": "Public Domain (NYC Open Data, dataset 52n9-sdep)",
+        },
+        "pipelineVersion": fc.get("pipelineVersion"),
+        "features": features,
+    }
+    out_path.write_text(json.dumps(doc))
+    click.echo(f"  nyc-gapfill-sidewalks.geojson: {len(features):,} features (not in the graph)")
+    return out_path
+
+
+# ---------------------------------------------------------------------------
 # Stage entry point
 # ---------------------------------------------------------------------------
 
@@ -244,5 +285,7 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
 
     if outputs.get("routing_json", True):
         export_routing_json(fc, output_dir)
+
+    export_gapfill_sidecar(staged_dir, fc, output_dir)
 
     click.echo(f"\n  All outputs written to {output_dir}/")
