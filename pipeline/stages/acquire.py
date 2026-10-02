@@ -536,9 +536,9 @@ def acquire_dem(out_dir: Path, manifest: dict, bbox: dict | None = None,
     """Download NYC 2017 1m bare-earth LiDAR DEM (NY State GIS ImageServer).
 
     Study area mode: single tile clipped to study bbox.
-    City-wide mode: one tile per borough (requests are capped at _NYC_DEM_MAX_PX
-    per side; tiling keeps effective resolution at 4-6m per borough vs ~12m for
-    one tile).
+    City-wide mode: a grid of tiles over each borough at resolution_m (requests
+    are capped at _NYC_DEM_MAX_PX per side; one tile per borough came out at 5
+    to 12 m per pixel, which blurs every wall, cut and embankment).
 
     Returns list of downloaded tile paths (may be empty on total failure).
     Non-fatal. Missing tiles mean incline is absent for that area.
@@ -578,30 +578,52 @@ def acquire_dem(out_dir: Path, manifest: dict, bbox: dict | None = None,
     name_col = next(
         (c for c in ["boro_name", "boroname", "name"] if c in boroughs_gdf.columns), None
     )
+    # One request returns at most _NYC_DEM_MAX_PX a side, so a borough is cut
+    # into a grid of tiles at the asked resolution. A tile that lies wholly
+    # outside the borough (open water in its bounding box) is not requested.
+    # Each tile reaches a few pixels into its neighbours, so a node near a
+    # seam is interpolated from real pixels on both sides.
+    import math
+    import time as _time
+    from shapely.geometry import box as shapely_box
+
     tiles = []
     for _, row in boroughs_gdf.iterrows():
         boro = str(row[name_col]).lower().replace(" ", "_") if name_col else "boro"
-        out_file = out_dir / f"dem_{boro}.tif"
-        if out_file.exists():
-            click.echo(f"  DEM [{boro}]: cache hit")
-            tiles.append(out_file)
-            continue
-        bounds = row.geometry.bounds  # (minx, miny, maxx, maxy)
-        b = {"west": bounds[0], "south": bounds[1],
-             "east": bounds[2], "north": bounds[3]}
-        try:
-            import time as _time
-            _time.sleep(1)  # rate-limit courtesy to the NY State ImageServer
-            _fetch_dem_tile(b, boro, out_file, resolution_m)
-            size_kb = out_file.stat().st_size // 1024
-            ch = _sha256_file(out_file)
-            record_source(manifest, f"dem_{boro}", str(out_file), ch, row_count=0)
-            click.echo(f"  DEM [{boro}]: {size_kb} KB → {out_file.name}")
-            tiles.append(out_file)
-        except Exception as exc:
-            click.echo(f"  Warning: DEM tile {boro} failed ({exc}). Skipping.")
-            if out_file.exists():
-                out_file.unlink()
+        west, south, east, north = row.geometry.bounds
+        lat_mid = (north + south) / 2
+        px_lon = resolution_m / (111319 * math.cos(math.radians(lat_mid)))
+        px_lat = resolution_m / 111319
+        margin = 4
+        step_lon = (_NYC_DEM_MAX_PX - 2 * margin) * px_lon
+        step_lat = (_NYC_DEM_MAX_PX - 2 * margin) * px_lat
+        n_cols = math.ceil((east - west) / step_lon)
+        n_rows = math.ceil((north - south) / step_lat)
+        for i in range(n_cols):
+            for j in range(n_rows):
+                b = {"west": west + i * step_lon - margin * px_lon,
+                     "east": min(west + (i + 1) * step_lon, east) + margin * px_lon,
+                     "south": south + j * step_lat - margin * px_lat,
+                     "north": min(south + (j + 1) * step_lat, north) + margin * px_lat}
+                if not row.geometry.intersects(
+                        shapely_box(b["west"], b["south"], b["east"], b["north"])):
+                    continue
+                out_file = out_dir / f"dem_{boro}_{i:02d}_{j:02d}.tif"
+                if out_file.exists():
+                    tiles.append(out_file)
+                    continue
+                try:
+                    _time.sleep(1)  # rate-limit courtesy to the NY State ImageServer
+                    _fetch_dem_tile(b, f"{boro} {i},{j}", out_file, resolution_m)
+                    ch = _sha256_file(out_file)
+                    record_source(manifest, out_file.stem, str(out_file), ch, row_count=0)
+                    tiles.append(out_file)
+                except Exception as exc:
+                    click.echo(f"  Warning: DEM tile {boro} {i},{j} failed ({exc}). Skipping.")
+                    if out_file.exists():
+                        out_file.unlink()
+        click.echo(f"  DEM [{boro}]: {sum(1 for t in tiles if t.name.startswith(f'dem_{boro}_'))} "
+                   f"tiles at {resolution_m} m")
 
     return tiles
 

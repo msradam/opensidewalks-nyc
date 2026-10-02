@@ -429,51 +429,43 @@ def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
         if not node_coords:
             return all_edges
 
-        node_elevs: dict[str, float] = {}
         from pyproj import Transformer as _T
 
-        # Sample across all tiles; first valid (non-nodata) value wins.
-        # Tiles may be a single study-area tile or per-borough city-wide tiles.
+        # Sample across all tiles; the first tile that covers a node wins.
+        # Tiles may be a single study-area tile or a grid over each borough.
+        ids = list(node_coords)
+        lonlat = np.array([node_coords[i] for i in ids])
+        sampled = np.full(len(ids), np.nan)
         for tile in dem_tiles:
-            remaining = {nid: node_coords[nid]
-                         for nid in node_coords if nid not in node_elevs}
-            if not remaining:
+            todo = np.flatnonzero(np.isnan(sampled))
+            if len(todo) == 0:
                 break
             with rasterio.open(tile) as src:
                 raster_epsg = src.crs.to_epsg() or 4326
+                x, y = lonlat[todo, 0], lonlat[todo, 1]
                 if raster_epsg != 4326:
-                    tr = _T.from_crs(4326, raster_epsg, always_xy=True)
-                    project = lambda lon, lat: tr.transform(lon, lat)
-                else:
-                    project = lambda lon, lat: (lon, lat)
+                    x, y = _T.from_crs(4326, raster_epsg, always_xy=True).transform(x, y)
 
                 # The tiles carry no nodata value, so a point outside a tile's
                 # extent would read as 0.0. Sample only the nodes a tile
                 # covers, or every node off the first tile is pinned at 0 m.
+                # Half-open, as rasterio indexes: the right and bottom edges
+                # belong to the neighbouring tile.
                 b = src.bounds
-                ids_rem, pts = [], []
-                for nid, lonlat in remaining.items():
-                    x, y = project(*lonlat)
-                    # Half-open, as rasterio indexes: the right and bottom
-                    # edges belong to the neighbouring tile.
-                    if b.left <= x < b.right and b.bottom < y <= b.top:
-                        ids_rem.append(nid)
-                        pts.append((x, y))
-                if not pts:
+                inside = (b.left <= x) & (x < b.right) & (b.bottom < y) & (y <= b.top)
+                if not inside.any():
                     continue
-                # Interpolate between pixel centres. A borough tile is 5 to
-                # 12 m per pixel and most edges are shorter than that, so
-                # the nearest pixel gives two neighbouring nodes either the
-                # same elevation or a whole pixel's step.
+                # Interpolate between pixel centres: the nearest pixel gives
+                # two neighbouring nodes either the same elevation or a whole
+                # pixel's step.
                 band = src.read(1).astype("float64")
                 if src.nodata is not None and not np.isnan(src.nodata):
                     band[band == src.nodata] = np.nan
-                cols, rows = ~src.transform * np.array(pts).T
-                elevs = map_coordinates(band, [rows - 0.5, cols - 0.5],
-                                        order=1, mode="nearest")
-                for nid, elev in zip(ids_rem, elevs):
-                    if not np.isnan(elev):
-                        node_elevs[nid] = float(elev)
+                cols, rows = ~src.transform * (x[inside], y[inside])
+                sampled[todo[inside]] = map_coordinates(
+                    band, [rows - 0.5, cols - 0.5], order=1, mode="nearest")
+        node_elevs: dict[str, float] = {ids[i]: float(sampled[i])
+                                        for i in np.flatnonzero(~np.isnan(sampled))}
 
         click.echo(f"    Elevations sampled: {len(node_elevs):,}/{len(node_coords):,} nodes")
 
