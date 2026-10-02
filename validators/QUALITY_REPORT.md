@@ -1,203 +1,241 @@
-# Quality Report: opensidewalks-nyc v0.3.1-nyc.1
+# Quality Report: opensidewalks-nyc v0.3.2-nyc.1
 
-> Audit date: 2026-07-03. Corrected after an independent review on 2026-10-02 (see "Corrections in this revision"). Artifact audited: the published `nyc-osw.geojson` of release v0.3.1-nyc.1, built by `python -m pipeline build` plus the post-build endpoint snap (`scripts/snap_endpoints.py`). Schema target: **OSW v0.3** (`OpenSidewalks/OpenSidewalks-Schema`, latest tag `0.3`). Validators run: **`python-osw-validation` 0.4.4, 0.4.5 and 0.5.0**.
+> Audit date: 2026-10-02. Artifact audited: `nyc-osw.geojson` of the v0.3.2-nyc.1 build, made by `python -m pipeline build` plus the post-build endpoint snap (`scripts/snap_endpoints.py`). OpenStreetMap data as of 2026-10-01T20:22:06Z (Geofabrik extract `new-york-261001.osm.pbf`). Schema target: **OSW v0.3**. Validator: **`python-osw-validation` 0.5.0**.
 >
-> The v0.3.0-nyc.1 report is preserved in git history.
+> Every number here comes from a script: `validators/post_build_checks.py` for the artifact, and the routing, bridge and imagery checks described in their sections. The v0.3.1-nyc.1 report, with the defects it lists, is in git history.
 
 ## Headline verdict
 
-**The artifact is schema-valid under OSW v0.3, and it has known defects that the validator does not see.**
+**The artifact is schema-valid under OSW v0.3 and the defects found in v0.3.1-nyc.1 are fixed. It is still not a graph to route a wheelchair user on without checking.**
 
-- `python-osw-validation` 0.4.4 and 0.4.5 return `is_valid: True` with zero errors across all 3,374,261 features (1,155,380 nodes, 2,218,881 edges).
-- `python-osw-validation` 0.5.0 (released 2026-08-05, after this artifact) returns `is_valid: False`: it rejects coordinates with more than 7 decimal places, which the planimetric gap-fill edges and injected nodes have.
-- Elevation and incline are wrong for about 80% of the graph, every curb ramp is tagged `tactile_paving=yes` regardless of the survey, the Bronx is not connected to the other boroughs, sidewalk widths are overstated, and most planimetric gap-fill "sidewalks" are not sidewalks. Each is described under "Known defects". All are fixed in the pipeline code after this release; the published files are unchanged.
+- `python-osw-validation` 0.5.0 returns `is_valid: True` with zero errors across all 3,874,332 features (1,189,651 nodes, 2,684,681 edges).
+- The validator checks form: file structure, the JSON schema, unique IDs, that `_u_id`/`_v_id` resolve, geometry validity, that edge endpoints equal their node coordinates, and coordinate precision. It does not check connectivity or whether an attribute value is true. v0.3.1-nyc.1 passed it with 80% of its elevations wrong. The checks in this report are the ones the validator does not do.
+- What remains weak, in order of how much it matters to a user: incline is a terrain estimate and is absent on bridges and tunnels; the curb ramp data is a 2018 survey; a sixth of the ramps are not on the graph; five of 23 bridges with a pedestrian path are not joined end to end on pedestrian edges; about half of the gap-fill sidewalk edges checked over imagery are on a sidewalk.
 
-The validator checks file structure, the JSON schema, unique IDs, that `_u_id`/`_v_id` resolve, geometry validity, and that edge endpoints equal their node coordinates. It does not check connectivity, whether an attribute value is true, or whether a line is where a sidewalk is. "Zero errors" is a statement about form.
+## What changed since v0.3.1-nyc.1
 
-## Corrections in this revision
-
-| Earlier statement | Correction |
-|---|---|
-| "Running slope ≤ 5% (ADA running-slope cap)": 33.0% compliant; "two-thirds of NYC's surveyed curb ramps exceed the ADA running-slope threshold" | Wrong threshold. A curb ramp run may be as steep as 1:12 (8.33%); 5% is the limit for a walkway. 73.8% of measured ramps are within 1:12. See the ramp section. |
-| "Cross slope ≤ 2%": 82.6% compliant | Computed on signed values, so every negative cross slope passed. On magnitudes, 66.4% are within 1:48 (2.08%). |
-| Largest component "spanning Manhattan, Brooklyn, Queens, and the Bronx" | The Bronx is its own component. The largest component covers Manhattan, Brooklyn and Queens. |
-| 11,807 components, 849,417 pedestrian nodes, largest 515,336 | These came from the Stage 4 topology log, which runs before the endpoint merge. Measured on the artifact: 10,743 components, 678,310 nodes, largest 428,068. |
-| `incline` on 99.98% of edges, `ext:elevation_m` on 100% of nodes | The fields are present, but 80.3% of node elevations are a spurious 0.0. |
-| `width` on 815,782 sidewalk edges | 620,595 edges carry `width` (615,099 of them sidewalks). 815,782 was a Stage 3 count before the merge dropped edges. |
-| `tactile_paving=yes` "wherever the DOT survey recorded a detectable warning surface" | It is `yes` on every curb node. The survey records the surface as missing on 59% of ramps. |
-| "zero leaked `999.0` sentinels" | True for 999. The survey also uses 888 and 777, and 829 curb nodes carry one of those as a slope. |
-| `ext:source_timestamp` on 100% of features | Present on 66.6%. OSM-derived nodes lack it. |
-
-## What changed since v0.3.0-nyc.1
-
-| | v0.3.0-nyc.1 (restore script) | v0.3.1-nyc.1 (pipeline) |
+| | v0.3.1-nyc.1 | v0.3.2-nyc.1 |
 |---|---|---|
-| Features | 955,026 | 3,374,261 |
-| Edges | 460,051 | 2,218,881 |
-| Nodes | 494,975 | 1,155,380 |
-| Connected components (pedestrian graph) | 107,604 | 10,743 |
-| Largest component | 159,506 nodes (32.6%) | 428,068 nodes (63.1% of pedestrian-graph nodes) |
-| Planimetric widths + gap-fill | absent | present, both defective (see below) |
-| Incline / elevation | present (USGS 10 m DEM) | NYC 2017 LiDAR DTM, valid only inside the Bronx tile |
-| Provenance | reconstructed heuristically post-hoc | native from acquisition |
-| Reproducible from public sources | no (source file gone) | yes |
+| Features | 3,374,261 | 3,874,332 |
+| Nodes | 1,155,380 | 1,189,651 |
+| Edges | 2,218,881 | 2,684,681 |
+| `python-osw-validation` 0.5.0 | invalid (coordinates over 7 decimals) | valid, 0 errors |
+| Nodes with elevation exactly 0.0 | 927,754 (80.3%) | 455 (0.04%) |
+| Highest node on Staten Island | 0.0 m | 122.5 m |
+| Edges with incline exactly 0 | 1,830,745 (82.5%) | 8,744 (0.3%) |
+| `tactile_paving` | `yes` on all 199,836 curb nodes | `no` 128,911, `yes` 88,624, untagged 144; agrees with the survey on all 217,679 |
+| Surveyed ramps in the file | 199,836 of 217,679 | 217,679 of 217,679 |
+| Curb nodes that are an edge endpoint | 134,077 (67.1%) | 181,686 (83.5%) |
+| Pedestrian graph components | 10,743 | 6,083 |
+| Largest pedestrian component | 428,068 nodes (63.1%), no Bronx node | 611,991 nodes (71.5%), all four land-connected boroughs |
+| Share of Bronx pedestrian nodes in it | 0% | 85.7% |
+| Williamsburg Bridge, end to end on foot | 7.9 km (by way of the Brooklyn Bridge) | 2.45 km |
+| Median sidewalk `width` | 5.65 m | 3.12 m |
+| Gap-fill sidewalk edges | 6,122, one direction, 694 km | 2,318 (1,159 segments, both directions), 60 km |
+| Edges dropped by the endpoint merge | 359,340 | 66 |
+| Edge ends moved by the endpoint snap | not recorded (2,309 moved over 5 m in a Staten Island rebuild) | 1,617, none over 2 m |
+| Secondary road edges | 0 | 67,937 |
+| Nodes on no edge | 220,084 | 44,065 |
+| Licence and attribution in the file | absent | in the root of every asset |
+| OSM snapshot | not recorded | recorded, with the extract's checksum |
 
 ## Schema conformance
 
 | Check | Result |
 |---|---|
 | Input | `nyc-osw-osw-split.zip` (split `nyc.nodes.geojson` + `nyc.edges.geojson`) |
-| `python-osw-validation` 0.4.4 | `is_valid: True, errors: 0` |
-| `python-osw-validation` 0.4.5 | `is_valid: True, errors: 0` |
-| `python-osw-validation` 0.5.0 | `is_valid: False`; first errors are "contains coordinates with more than 7 decimal places" on the gap-fill edges. The validator stops reporting at 20 errors. |
-| Geometry-to-node coordinate check (0.4.0+) | Pass: every edge terminal vertex equals its referenced node coordinate exactly |
+| `python-osw-validation` 0.5.0 | `is_valid: True, errors: 0` |
+| Coordinates over 7 decimal places | 0 |
+| Edge ends that differ from their node's coordinate | 0 |
+| Edges with unresolved `_u_id`/`_v_id`, self-loops, zero-length edges, duplicate IDs | 0 of each |
 | `$schema` | `https://sidewalks.washington.edu/opensidewalks/0.3/schema.json` |
-| Root metadata | `dataSource`, `dataTimestamp`, `pipelineVersion`, `region` present |
-
-Two pipeline steps are behind the 0.4.x result. Stage 4 drops edges that the 2 m endpoint merge collapses into zero-length self-loops (359,340 edges in the release build, per its build log). The post-build snap then moves every edge endpoint onto its node's coordinate. The merge is single-linkage, so it chains: in a Staten Island rebuild, 10% of endpoints moved, the median move was 1.8 m, 2,309 endpoints moved more than 5 m and the largest move was 33 m.
+| Root metadata | `dataSource` (with licence, attribution and OSM extract), `dataTimestamp`, `pipelineVersion`, `region` |
 
 ## Feature composition
 
 | OSW type | Count |
 |---|---|
-| Sidewalk edges | 703,467 (697,345 from OSM, 6,122 planimetric gap-fill) |
-| Crossing edges | 424,564 |
-| Footway / steps edges | 429,328 (416,950 footway, 12,378 steps) |
-| Street edges | 661,522 |
-| Curb-ramp nodes | 199,836 |
-| Other point nodes | 955,544 |
-| **Total** | **3,374,261** |
+| Sidewalk edges | 935,428 (933,110 from OSM, 2,318 planimetric gap-fill) |
+| Crossing edges | 437,510 |
+| Footway edges | 544,672 |
+| Steps edges | 15,470 |
+| Street edges | 751,601 |
+| Curb-ramp nodes | 217,679 |
+| Other point nodes | 971,972 |
+| **Total** | **3,874,332** |
 
-Edges are directed. Most walkable segments appear once per travel direction, with `incline` signed in the direction of travel. There are 1,184,309 unique node pairs. Two groups appear in one direction only: 151,145 street segments (OSM one-way streets, which a pedestrian can walk both ways) and 5,934 sidewalk segments (the gap-fill edges).
+Edges are directed. Every pedestrian segment appears once per travel direction, with `incline` signed in the direction of travel (963,620 pedestrian segments). Streets follow OSM's `oneway`: 177,743 street segments appear in one direction only. There are 1,428,249 unique node pairs in all.
 
-The curb-ramp nodes hold 199,836 of the 217,679 surveyed ramps. When several ramps snap to one node, the node keeps one ramp's fields and the other 17,843 survey records are not in the artifact.
+26,756 of the footway, crossing and sidewalk edges come from OSM ways tagged `highway=cycleway` or `track` that OSM tags as open to walkers. They carry `ext:osm_highway`. v0.3.1-nyc.1 dropped all of them, which cut several bridges.
+
+Every edge is a segment between consecutive OSM nodes (the OSM graph is not simplified). The median edge is 7.0 m long, 5% are shorter than 1.2 m, and 79 are longer than 500 m.
 
 ## Graph integrity
 
-Measured on the published artifact. The pedestrian graph is the sidewalk, crossing, footway and steps edges.
+The pedestrian graph is the sidewalk, crossing, footway and steps edges.
 
 | Metric | Value |
 |---|---|
-| Edges with unresolved `_u_id`/`_v_id` | 0 |
-| Zero-length edges | 0 (dropped at the Stage 4 merge) |
-| Pedestrian-graph nodes | 678,310 |
-| Pedestrian-graph segments | 778,123 (1,557,359 directed edges) |
-| Connected components | 10,743, of which 7,569 have fewer than 3 nodes |
-| Largest component | 428,068 nodes (63.1%): Manhattan, Brooklyn and Queens |
-| Second largest | 83,984 nodes: Staten Island |
-| Third largest | 61,919 nodes: the Bronx |
-| Share of each borough's pedestrian nodes in the largest component | Brooklyn 95.3%, Manhattan 89.8%, Queens 83.2%, Bronx 0%, Staten Island 0% |
+| Pedestrian-graph nodes | 855,905 |
+| Pedestrian-graph segments | 963,620 (1,933,080 directed edges) |
+| Connected components | 6,083, of which 3,171 have fewer than 3 nodes and 1,110 have 10 or more |
+| Components that are a single unconnected gap-fill segment | 1,108 |
+| Largest component | 611,991 nodes (71.5%) |
+| Second largest | 136,147 nodes: Staten Island |
 
-**The boroughs are barely joined.** OSM is queried one borough polygon at a time and each result is cut at the polygon, so every segment that crosses a borough line is missing. Only 13 nodes are shared between boroughs: 10 between Brooklyn and Queens, 1 between Manhattan and Brooklyn (on the Brooklyn Bridge promenade), 2 between Manhattan and the Bronx (on a sidewalk fragment at Marble Hill, outside the largest component), and none between Manhattan and Queens. The Williamsburg, Manhattan, Queensboro, RFK and Harlem River bridges are all cut mid-span. A route from the Manhattan end of the Williamsburg Bridge to the Brooklyn end is 7.9 km in this graph.
+Share of each borough's pedestrian nodes in the largest component:
 
-Two integration numbers to know before consuming the nodes:
+| Brooklyn | Manhattan | Bronx | Queens | Staten Island |
+|---|---|---|---|---|
+| 96.2% | 89.4% | 85.7% | 84.1% | 0% (81.9% in its own largest) |
 
-- **220,084 nodes are not referenced by any edge.** Most are original endpoint locations whose references were remapped to a canonical node by the 2 m merge, plus curb ramps that did not integrate into the graph.
-- **134,077 of 199,836 curb-ramp nodes (67%) are edge endpoints**, and 111,292 are endpoints of a crossing edge. The rest carry their survey data in the file but are not attached. The cause is a pipeline defect: the ramp took the ID of the endpoint it snapped to, and the merge then renamed that endpoint without renaming the ramp. In an imagery sample, 15 of 15 unattached ramps sat at a corner on the graph.
+Staten Island has no walkable link to another borough, so it is a separate component by geography. The rest of the fragmentation is OSM: pedestrian ways that share no node with their neighbours.
 
-Per-borough edge counts: QN 768,101; BK 515,555; SI 371,831; MN 290,897; BX 266,375. 6,122 gap-fill edges and 10,858 nodes have no `ext:borough`. The sidewalk-to-street edge ratio falls from 1.80 in Manhattan to 0.76 in the Bronx, which tracks OSM sidewalk mapping density.
+### Borough joins, bridge by bridge
 
-## Geometric sanity
+A citywide component count cannot show a cut bridge, so each bridge with a pedestrian path was tested: snap a point at each landfall to the largest component in that borough, and compare the walking distance with the straight line. "Joined" means the walk is at most 2.5 times the straight line.
 
-| Check | Result |
+| Bridge | Straight line | Walk on pedestrian edges | Walk with street centrelines | Verdict |
+|---|---|---|---|---|
+| Brooklyn Bridge | 1,866 m | 1,921 m | 1,921 m | joined |
+| Manhattan Bridge | 1,944 m | 2,312 m | 2,308 m | joined |
+| Williamsburg Bridge | 2,298 m | 2,450 m | 2,450 m | joined |
+| Ed Koch Queensboro Bridge | 2,332 m | 2,532 m | 2,515 m | joined |
+| Roosevelt Island Bridge | 594 m | 1,034 m | 1,034 m | joined |
+| RFK Triborough Bridge, Queens span | 1,633 m | 2,916 m | 2,913 m | joined |
+| RFK Triborough Bridge, Bronx span | 597 m | 2,484 m | 2,475 m | not joined: the route found is another crossing |
+| Randall's Island Connector | 446 m | 1,301 m | 1,018 m | joined only along a street centreline |
+| Willis Avenue Bridge | 564 m | 795 m | 795 m | joined |
+| Third Avenue Bridge | 414 m | 545 m | 545 m | joined |
+| Madison Avenue Bridge | 476 m | 626 m | 623 m | joined |
+| 145th Street Bridge | 545 m | 2,474 m | 785 m | joined only along a street centreline |
+| Macombs Dam Bridge | 661 m | 836 m | 780 m | joined |
+| High Bridge | 447 m | 801 m | 801 m | joined |
+| Washington Bridge | 706 m | 1,033 m | 1,033 m | joined |
+| University Heights Bridge | 397 m | 827 m | 827 m | joined |
+| Henry Hudson Bridge | 535 m | 1,524 m | 1,516 m | a path exists at 2.85 times the straight line |
+| Broadway Bridge (Inwood to Marble Hill) | 232 m | 1,282 m | 579 m | joined only along a street centreline |
+| Pulaski Bridge | 944 m | 1,108 m | 1,108 m | joined |
+| Greenpoint Avenue Bridge | 665 m | 1,099 m | 1,099 m | joined |
+| Kosciuszko Bridge | 958 m | 1,623 m | 1,403 m | joined |
+| Grand Street Bridge | 395 m | 754 m | 753 m | joined |
+| Marine Parkway Bridge | 2,300 m | 2,573 m | 2,571 m | joined |
+
+18 of 23 are joined on pedestrian edges. The landfall points are approximate and were chosen by hand, so a ratio near the threshold says little. On the three bridges joined only along a street centreline, the pedestrian edges on or beside the bridge do not connect through; the cause was not looked into bridge by bridge. The pedestrian edges that cross a borough line form 36 clusters; all but one small fragment on the Brooklyn and Queens land border are in the largest component.
+
+In v0.3.1-nyc.1 the boroughs shared 13 nodes and every bridge above except the Brooklyn Bridge promenade was cut.
+
+### Nodes on no edge
+
+44,065 nodes are not an endpoint of any edge: 35,993 curb ramps (see below) and 8,072 OSM nodes that no kept edge uses.
+
+## Curb ramps
+
+All 217,679 ramps of the NYC DOT survey are in the file, one node each.
+
+| | Count |
 |---|---|
-| Invalid geometries (SFA) | 0 |
-| Zero-length or sub-0.5 m edges | 0 |
-| Features outside a conservative NYC bbox | 27, all within ~50 m of the bbox edge (real boundary features) |
-| Edge length (metres) | min 2.0, median 8.4, p95 102, p99 213, max 2,943 |
-| Edges over 500 m | 147 (long arterials and park paths without intermediate intersections) |
+| Curb nodes that are an endpoint of a pedestrian edge | 181,686 (83.5%) |
+| of which an endpoint of a crossing edge | 126,128 |
+| Not on the graph: no pedestrian vertex within 5 m | 18,305 |
+| Not on the graph: another ramp already holds the node | 17,688 |
 
-Every edge is a two-point segment between consecutive OSM nodes (the OSM graph is not simplified), which is why the median edge is 8.4 m.
+A node holds one ramp's fields. Where several ramps land on one node, the first keeps it and the others stay in the file at their surveyed position, on no edge. So the second group is on the graph in effect: the node they share is a curb node.
 
-## Known defects in the published artifact
+Attached share by borough: Brooklyn 93.8%, Staten Island 93.6%, Queens 82.3%, Manhattan 78.9%, Bronx 60.7%. A ramp attaches only where OSM has a separately mapped sidewalk, crossing or footway within 5 m, so the share follows how completely OSM maps each borough.
 
-Each is fixed in the pipeline code after this release. A corrected release needs a rebuild.
+`tactile_paving` follows the survey's `DWS_CONDITIONS` field on every one of the 217,679 nodes: `no` where it reads Missing (128,911), `yes` where it reads Good Condition, Defective or one of the two Off Ramp values (88,624), and no tag where it reads Not Applicable (144). No node carries a sentinel code (555, 777, 888, 999) as a slope.
 
-1. **Elevation and incline are wrong outside the Bronx tile.** 927,754 of 1,155,380 nodes (80.3%) have `ext:elevation_m` of exactly 0.0, and 1,787,431 edges (80.6%) have both endpoints at 0.0 and so an `incline` of 0. This covers all of Brooklyn and Staten Island, 91% of Manhattan and 82% of Queens. The DEM is fetched as one tile per borough, the tiles carry no nodata value, and a point outside a tile samples as 0.0, so the first tile (the Bronx) assigned 0.0 to every node outside its extent. Staten Island's high point is about 118 m in the same DEM; the artifact's maximum there is 0.0.
-2. **Where elevation is real, incline is coarse.** Each borough tile is capped at 3,000 pixels a side, which is 5 to 10 m per pixel, not the 1 ft native resolution. On the 430,999 edges with real elevations, the 1st and 99th percentile inclines are -16.6% and +16.5%, and 85.9% of sidewalk edges are at or below 5%.
-3. **`tactile_paving=yes` is on all 199,836 curb nodes.** The pipeline set it whenever the survey's `DWS_CONDITIONS` field was non-empty. That field reads "Missing" on 128,911 of 217,679 ramps (59%).
-4. **Sidewalk `width` is overstated.** Width is 2 × area / perimeter of the planimetric polygon, using the outer ring only. Many polygons are rings around a block, and for those the formula returns about twice the width. The median sidewalk width in the artifact is 5.65 m. Against polygon transects in Staten Island the published formula had a median error of 0.76 m; counting interior rings cuts that to 0.30 m.
-5. **Planimetric gap-fill sidewalks are mostly not sidewalks.** The 6,122 gap-fill edges (694 km) are the long axis of each polygon's minimum rotated rectangle. For a block-shaped polygon that axis runs through the block. In a random sample of 15 checked against 2022 to 2025 orthoimagery, 13 crossed buildings, yards, cemeteries or roadway, 1 followed a real path and 1 was unclear.
-6. **The Bronx and the bridges** (see Graph integrity).
-7. **Survey sentinels 888 and 777 are present as slopes** on 829 curb nodes.
-8. **Ramps detached from the graph** (see Graph integrity).
-
-## Attribute coverage and distributions
-
-| Attribute | Coverage | Notes |
-|---|---|---|
-| `incline` | 2,218,430 / 2,218,881 edges (99.98%) | Defect 1 applies: 1,830,745 values are exactly 0. |
-| `ext:elevation_m` | 1,155,380 / 1,155,380 nodes | Defect 1 applies. min -3.5 m, max 84.9 m (the Bronx). |
-| `width` | 620,595 edges (615,099 sidewalks) | Defect 4 applies. OSM `width` tags first, planimetric estimate fills the gaps. |
-| `surface` | 921,303 edges (41.5%) | asphalt 555,711; concrete 267,531; paving_stones 46,470; the rest smaller |
-| `crossing:markings` | 369,932 / 424,564 crossings (87%) | `yes` 266,688; `zebra` 103,244. OSM `crossing=uncontrolled` is mapped to `zebra`, which asserts more than the source says. |
-| `kerb` | 199,836 curb nodes | `kerb=lowered` universally (the survey does not distinguish flush from lowered) |
-| `tactile_paving` | 199,836 curb nodes | Defect 3 applies. |
-
-All `surface` and `crossing:markings` values are OSW-canonical.
+279,172 of the 437,510 crossing edges (63.8%) have a curb node at one of their own ends. A crossing is usually several edges, and a ramp is as often on a sidewalk vertex beside the crossing as on the crossing itself, so this understates how many crossings have ramps. Counting a surveyed ramp within 5 m of each end of the whole crossing, 387,464 crossing edges (88.6%) are on a crossing with a ramp at both ends. The routing layer uses that test (`scripts/osw_to_unweaver.py`).
 
 ### NYC DOT curb-ramp slopes
 
-The artifact carries the DOT survey's running, cross and counter slope on 196,069 curb nodes. The survey was captured almost entirely in 2018 (216,220 of 217,679 rows), and DOT reports 70,615 corners rebuilt between July 2017 and June 2026, so many of these measurements describe ramps that have since been replaced.
+The survey was captured almost entirely in 2018 (216,220 of 217,679 rows), and DOT's program data lists 88,725 of the surveyed ramps at corners rebuilt after their survey date, so many of these measurements describe ramps that have since been replaced.
 
 The values are percentages signed by direction, so magnitudes are compared. Sentinel codes are excluded.
 
 | Screening test (federal design limit) | Share of measured ramps within it |
 |---|---|
-| Running slope within 1:12, 8.33% (2010 ADA Standards 405.2 via 406.1; PROWAG R304.2.1) | 73.8% (144,175 of 195,240) |
-| Cross slope within 1:48, 2.08% (405.3; R304.2.2) | 66.4% (129,559 of 195,161) |
-| Counter slope within 1:20, 5% (406.2) | 68.0% (132,671 of 195,153) |
+| Running slope within 1:12, 8.33% (2010 ADA Standards 405.2 via 406.1; PROWAG R304.2.1) | 74.1% (157,199 of 212,194) |
+| Cross slope within 1:48, 2.08% (405.3; R304.2.2) | 66.4% (140,866 of 212,111) |
+| Counter slope within 1:20, 5% (406.2) | 67.8% (143,827 of 212,104) |
 
 These are not compliance findings. The dataset's own description says its measurements "are not indicative of whether a particular ramp is compliant" with the ADA, because DOT applies tolerances, the existing-site exception for short ramps (Table 405.2) and a technical infeasibility review. DOT's own per-ramp assessment of the same survey (ArcGIS layer `CMT_SURVEY_COMPLIANCY_TOLERANCE_PROD`, last edited December 2020) passes 79.8% of ramps on running slope, 80.0% on cross slope and 76.4% on counter slope, and passes 1.5% (3,366 of 217,679) on every attribute at once.
 
-At the edge level, incline cannot be summarised citywide because of defect 1.
+## Elevation and incline
 
-## Provenance coverage
-
-| Field | Coverage |
+| | Value |
 |---|---|
-| `ext:source` | 100% of 3,374,261 features |
-| `ext:source_timestamp` | 2,248,847 features (66.6%): every edge, and 29,966 nodes. OSM-derived nodes lack it. |
-| `ext:pipeline_version` | 100%, value `0.1.0` (the `pipeline_version` in `config/build.yaml`, not the release version) |
-| `ext:osm_id` | OSM-derived edges |
-| `ext:borough` | `MN`/`BK`/`QN`/`BX`/`SI` on all but 6,122 edges and 10,858 nodes |
+| Nodes with `ext:elevation_m` | 1,189,642 of 1,189,651 |
+| Nodes at exactly 0.0 m | 455 (0.04%), at most 0.12% in any borough |
+| Highest node by borough | Staten Island 122.5 m, Bronx 84.9 m, Manhattan 80.4 m, Queens 79.5 m, Brooklyn 62.5 m |
+| Nodes below -1 m | 149 |
+| Edges with `incline` | 2,668,664 of 2,684,681 (99.4%) |
+| Edges with incline exactly 0 | 8,744 (0.3%) |
+| Sidewalk edges steeper than 5% | 6.3% |
+| Sidewalk edges outside the wheelchair profile's limits (up 8.3%, down 10%) | 1.5% |
 
-When a DOT curb ramp and an OSM node occupy the same location, the merged node keeps the OSM node's `ext:source` while the DOT fields (`ext:ramp_id`, slopes, streets) preserve the survey linkage. Only 19,108 curb nodes have `ext:source` of `nyc_dot_ramps`.
+Read incline as an estimate of the terrain, not a measurement of the path.
 
-The borough polygons come from OSM through Nominatim, because the NYC Open Data boundary dataset the pipeline names (`7t3b-ywvw`) has been withdrawn. The region polygon is therefore ODbL data too.
+1. The elevation model is bare earth and includes the river bed. A node on a bridge, a deck or a pier gets the ground or water below it; that is where the negative elevations come from. From v0.3.2 an edge whose OSM way is a bridge or a tunnel carries `ext:structure` and no `incline` (15,841 edges). Node elevations on those structures are still the ground below.
+2. Each borough's tile is 5 to 12 m per pixel (the 1 m service is resampled to 3,000 pixels a side), and half the edges are shorter than 7 m. Elevations are interpolated between pixel centres. With the nearest-pixel sampling used before, the share of edges outside the limits rose as edges got shorter; now it does not depend on edge length (2% to 4% in every length class up to 50 m).
+3. Against an independent measurement, the survey's gutter slope at 6,245 Staten Island ramps, the incline of the adjoining sidewalk edges has a rank correlation of 0.42 and is within 2 percentage points for 74% of ramps. That is agreement in the large, not edge by edge.
 
-## Other limitations
+## Sidewalk width
 
-1. **Coverage follows OSM.** Where OSM has no separately mapped sidewalk, the graph has none (apart from the gap-fill edges of defect 5).
-2. **`kerb=lowered` for every DOT ramp.** The survey does not distinguish flush from lowered ramps.
-3. **Crossings are not always incident to street-edge endpoints,** consistent with OSM's representation.
-4. **No MTA ADA station index ships.** The dataset ID the pipeline names for it (`drh3-e2fd`) is a hydrography layer, and the GTFS fallback has no accessibility column.
+`width` is on 828,509 edges, 820,940 of them sidewalks (87.8% of sidewalk edges). The median is 3.12 m: 2.57 m on Staten Island, 3.07 m in Queens, 3.44 m in Brooklyn, 3.62 m in the Bronx and 4.26 m in Manhattan.
 
-## Independent imagery check
+The value is 2 × area / perimeter of the planimetric polygon the edge lies in, with interior rings counted: the mean width of the whole polygon, not the clear width at that spot. Against 5,805 transects cut across the polygon at the edge's midpoint, the median ratio of `width` to transect is 0.94 and the median absolute difference 0.58 m. It runs low in Brooklyn (ratio 0.87) and is closest on Staten Island (0.98, 0.30 m).
 
-A seeded random sample of 105 features was drawn from the artifact and overlaid on NY State orthoimagery (2022 to 2025), which the pipeline does not use: 6 OSM sidewalk edges, 6 crossing edges and 6 curb-ramp nodes in each borough, and 15 gap-fill edges.
+## Planimetric gap-fill sidewalks
 
-| Stratum | On target |
-|---|---|
-| OSM sidewalk edges | 30 of 30 on or within about 3 m of a visible sidewalk |
-| Crossing edges | 30 of 30 at a crossing |
-| Curb-ramp nodes | 30 of 30 at a corner or crossing end |
-| Gap-fill sidewalk edges | 1 of 15 (13 wrong, 1 unclear) |
+1,159 segments (2,318 directed edges, 60 km) are derived from planimetric sidewalk polygons that have no OSM sidewalk within 10 m. Each is the long axis of the polygon's minimum rotated rectangle, kept only if at least 90% of it lies inside the polygon and it does not lie along a crossing or footway OSM already has.
 
-One rater, not blind to the stratum. The sample is small: it can show a gross problem (the gap-fill edges) and cannot bound a low error rate.
+This is the least reliable layer. In a seeded random sample of 18 drawn over 2022 to 2025 orthoimagery, 9 are on a sidewalk or walkway, 1 is on other pedestrian paving, 4 are unclear and 4 are wrong (a truck apron, a parking lot, a paved yard and a cemetery road). One rater, not blind. They are also unconnected: only 45 of the 1,159 segments are joined to the rest of the graph, and the others make up 1,108 components of their own, so a router cannot use them. They are 0.25% of sidewalk edges, and `ext:source = nyc_planimetric_sidewalks` selects them.
+
+## Attribute coverage
+
+| Attribute | Coverage | Notes |
+|---|---|---|
+| `surface` | 1,138,913 edges (42.4%) | asphalt 648,630; concrete 356,138; paving_stones 68,532 |
+| `crossing:markings` | 380,888 of 437,510 crossings (87.1%) | `yes` 272,110; `zebra` 108,778. OSM `crossing=uncontrolled` is mapped to `zebra`, which asserts more than the source says. |
+| `kerb` | 217,679 curb nodes | `lowered` on all (the survey does not distinguish flush from lowered) |
+| `ext:source`, `ext:pipeline_version` | every feature | `ext:pipeline_version` is `0.1.0`, the pipeline's own version, not the release's |
+| `ext:source_timestamp` | every edge; 38,245 nodes | OSM-derived nodes lack it |
+| `ext:osm_id` | every OSM-derived edge | |
+| `ext:borough` | all but 64 edges and 2,252 nodes | The 64 are gap-fill segments at the city line; the nodes are injected gap-fill endpoints |
 
 ## Routing
 
-The v0.3.0-nyc.1 artifact was tested with Unweaver (`validators/route_test_results.md`). Those results do not apply to this artifact, and the suite has not been run against it.
+Unweaver needs `mod_spatialite`, which is not installed on the build machine and would be a global install. The check below uses the repository's own Unweaver inputs: `scripts/osw_to_unweaver.py` makes the layer Unweaver would read, `unweaver-project/cost-wheelchair.py` decides edge by edge, and only the graph search is re-implemented.
 
-A re-implementation of the shipped profiles on this artifact, for the same ten landmark pairs, found:
+The wheelchair profile now refuses steps and street centrelines, refuses a crossing unless a surveyed ramp lies within 5 m of each of its ends, and refuses an edge steeper than 8.3% up or 10% down.
 
-- The wheelchair cost function (`unweaver-project/cost-wheelchair.py`) blocks crossings that have no curb node and edges outside the incline limits, and nothing else. It allows 11,010 of the 12,378 steps edges and every street-centreline edge. The wheelchair route from Penn Station to Grand Central starts and ends on steps and runs 29% of its length along a street centreline.
-- The incline limits do nothing on these routes: every edge on every route has the spurious zero incline of defect 1.
-- With steps and street centrelines excluded, 7 of 10 pairs have no path.
-- `scripts/route_test.py` snaps landmarks to the largest component, which moves both Bronx landmarks about 600 m across the Harlem River into Manhattan.
+Share of 2,000 random origin and destination pairs with a route, both ends in the same borough (95% intervals are about 2 points wide either way). A sub-agent with no access to this work recomputed the pedestrian and wheelchair rows from the file with its own code and 20,000 pairs, and came within 3 points in every cell:
 
-Do not present routes from this artifact as wheelchair-accessible.
+| Profile | Brooklyn | Bronx | Manhattan | Queens | Staten Island | Ends anywhere in the city |
+|---|---|---|---|---|---|---|
+| Every edge, street centrelines included | 97.8% | 92.2% | 81.7% | 93.0% | 93.8% | 61.8% |
+| Pedestrian edges only | 94.0% | 72.7% | 81.5% | 71.9% | 68.0% | 52.2% |
+| Pedestrian edges without steps (the most the wheelchair profile could reach) | 93.7% | 71.9% | 77.3% | 71.2% | 67.3% | 51.2% |
+| Wheelchair profile without its incline limits | 87.9% | 58.3% | 71.0% | 66.1% | 52.2% | 45.3% |
+| **Wheelchair profile** | **84.7%** | **37.4%** | **51.4%** | **60.4%** | **41.8%** | **38.2%** |
+
+The citywide column is capped by geography: a pair with one end on Staten Island has no route.
+
+Three things separate the wheelchair profile from the pedestrian network, and none of them is a finding about the city:
+
+- **Fragmentation.** Even with every rule off, a quarter to a third of pairs outside Brooklyn have no route, because OSM's pedestrian ways do not all connect.
+- **Ramps.** The profile needs a surveyed ramp within 5 m of each end of a crossing. That costs 5 to 15 points. With the stricter test that the ramp must be on the crossing's own nodes, the profile reaches 25% of pairs in Brooklyn, 16% in Manhattan and 1% to 2% elsewhere, so the result depends heavily on how ramps are tied to crossings.
+- **Incline.** The limits cost 3 points in Brooklyn and 21 in the Bronx. Part of that is real hills and part is wrong incline next to structures: the step-free route from the Manhattan end of the Brooklyn Bridge to DUMBO is 3.8 km, and with the limits on it is 9.1 km by way of the Williamsburg Bridge, because two approach edges of the promenade that OSM does not tag as a bridge carry inclines of 14% and 19%.
+
+For the ten landmark pairs of `scripts/route_test.py` the profile finds a route for all ten, none with a steps edge or a street centreline (in v0.3.1-nyc.1 the same profile routed over steps and centrelines, and 7 of 10 had no path once those were excluded). Nine are 1.1 to 2.2 times the straight line; the tenth is the Brooklyn Bridge detour above.
+
+Do not present a route from this graph as wheelchair accessible. The ramp data is from 2018 and says a ramp was there, not that it meets a standard. Incline is a terrain estimate. Nothing in the graph knows about sidewalk condition, obstructions, construction or signal timing.
+
+## Independent imagery check
+
+The v0.3.1-nyc.1 review drew 105 features over NY State orthoimagery, which the pipeline does not use, and found 30 of 30 OSM sidewalk edges, 30 of 30 crossings and 30 of 30 curb nodes on target. That geometry is OSM's and the survey's and has not changed. For v0.3.2 the gap-fill edges were re-sampled (see above) and four landmark routes were drawn over the imagery: all four lie on sidewalks, crosswalks and paths, and one of them is the wrong detour described under Routing.
 
 ## Reproducibility
 
@@ -206,7 +244,8 @@ Do not present routes from this artifact as wheelchair-accessible.
 uv venv --python 3.11 && source .venv/bin/activate
 uv pip install -e .
 
-# 1. Build (city-wide: ~60-90 min, ~10 GB scratch)
+# 1. Build (city-wide: about 40 minutes and 33 GB of memory at peak on a 32 GB
+#    Apple Silicon machine, 11 GB under data/, 6 GB under output/)
 python -m pipeline build
 
 # 2. Snap edge endpoints onto node coordinates, emit the validator ZIP
@@ -219,21 +258,17 @@ from python_osw_validation import OSWValidation
 r = OSWValidation('output/nyc-osw-osw-split.zip').validate()
 print('valid:', r.is_valid, 'errors:', len(r.errors or []))"
 
-# 4. Data-quality audit. Needs the schema once:
-mkdir -p validators/schema-cache
-curl -sLo validators/schema-cache/opensidewalks.schema.json \
-  https://raw.githubusercontent.com/OpenSidewalks/OpenSidewalks-Schema/0.3/opensidewalks.schema.json
-python validators/quality_audit.py output/nyc-osw.geojson
+# 4. The checks the validator does not do
+python validators/post_build_checks.py output/nyc-osw.geojson output/post_build_checks.json
 ```
 
-A Staten Island bounding-box build from a fresh clone on 2026-10-02 took about 8 minutes and passed validator 0.4.4. With the fixes that followed this release it passes 0.5.0 as well.
+The build reads one dated OSM extract, pinned by URL and SHA-256 in `config/sources.yaml`, so two builds from the same commit read the same OSM data. The NYC Open Data sources are downloaded at build time; the ramp survey has not changed since October 2021.
 
 ## Open work
 
-1. **Cut a corrected release** from the fixed pipeline, and state in its notes what changed.
-2. **Tile the DEM finer** than one tile per borough, so incline on a short edge means something.
-3. **Replace the single-linkage 2 m merge** with one that cannot chain, or restrict it to cross-source endpoint pairs.
-4. **Fold the endpoint snap into Stage 4** and **replace Stage 5 with the official validator**.
-5. **Derive real centerlines** for planimetric polygons (a skeleton, not a rectangle axis) before using them for gap-fill again.
-6. **Join the ramp survey to DOT's program-progress data** (`e7gc-ub6z`) so rebuilt corners are not described by their old measurements.
-7. **Give the routing profiles a steps rule and a street rule,** then run them.
+1. **Attach ramps to crossings, not to the nearest vertex.** For about a quarter of crossing edges the ramp is on a neighbouring sidewalk vertex. The survey names the street each ramp is on.
+2. **Measure incline over a longer baseline** than one edge, and fetch finer DEM tiles, before relying on a slope limit.
+3. **Join the ramp survey to DOT's program-progress data** (`e7gc-ub6z`) so rebuilt corners are not described by their old measurements.
+4. **Drop or replace the gap-fill layer.** A rectangle axis is not a centerline; a skeleton of the polygon would be.
+5. **Fold the endpoint snap into Stage 4** and **replace Stage 5 with the official validator**.
+6. **Report the unconnected bridge sidewalks to OSM mappers** (145th Street, Broadway Bridge, the RFK Bronx span, the Randall's Island Connector).

@@ -2,37 +2,30 @@
 
 **An OpenSidewalks v0.3-conformant pedestrian graph of New York City.**
 
-A schema-valid graph of NYC's pedestrian network. Sidewalks, crossings, footways, steps, and curb ramps are first-class features, built from OpenStreetMap, the NYC DOT curb-ramp survey, and NYC Planimetric sidewalk polygons, with per-edge incline from the city's 2017 LiDAR elevation model. The published artifact passes `python-osw-validation` 0.4.4 and 0.4.5 with zero errors across all 3,374,261 features, and the build reproduces from public sources.
+A schema-valid graph of NYC's pedestrian network. Sidewalks, crossings, footways, steps, and curb ramps are first-class features, built from OpenStreetMap, the NYC DOT curb-ramp survey, and NYC Planimetric sidewalk polygons, with per-edge incline from the city's 2017 LiDAR elevation model. v0.3.2-nyc.1 passes `python-osw-validation` 0.5.0 with zero errors across all 3,874,332 features, and the build reproduces from public sources and one dated OpenStreetMap extract.
 
-**Read this before using v0.3.1-nyc.1.** A review in October 2026 found defects in the published files that the validator does not catch. They are fixed in the pipeline code and a corrected release has not been cut yet.
+**If you have v0.3.1-nyc.1, replace it.** That release passed the validator with defects the validator does not check: elevation and incline were a spurious zero on 80% of the graph, every curb ramp was tagged `tactile_paving=yes` where the survey says the warning surface is missing on 59%, the boroughs were cut at their bridges, sidewalk widths were about double, and it held no secondary roads. v0.3.2 fixes each of these; [`release-notes/v0.3.2-nyc.1.md`](release-notes/v0.3.2-nyc.1.md) lists what changed and why. An earlier quality report also said two-thirds of the city's curb ramps exceed the ADA running-slope limit. That used the wrong limit and is withdrawn.
 
-- Elevation and incline are a spurious zero for about 80% of the graph (all of Brooklyn and Staten Island, most of Manhattan and Queens).
-- Every curb ramp is tagged `tactile_paving=yes`. The DOT survey records the warning surface as missing on 59% of ramps.
-- The Bronx is not connected to the other boroughs, and nearly every bridge is cut at the borough line.
-- Sidewalk `width` is overstated, about double on block-ring polygons.
-- Most of the 6,122 planimetric gap-fill "sidewalk" edges run through block interiors.
-- The files fail `python-osw-validation` 0.5.0 (August 2026), which limits coordinates to 7 decimal places.
-- An earlier version of the quality report said two-thirds of the city's curb ramps exceed the ADA running-slope limit. That used the wrong limit and is withdrawn.
-
-Do not present routes from this release as wheelchair-accessible. [`validators/QUALITY_REPORT.md`](validators/QUALITY_REPORT.md) has the evidence for each point.
+**Do not present routes from this graph as wheelchair accessible.** The ramp data is a 2018 survey, incline is a terrain estimate, and a sixth of the ramps are not on the graph. [`validators/QUALITY_REPORT.md`](validators/QUALITY_REPORT.md) has the measurements behind every statement here.
 
 | | |
 |---|---|
 | **Spec** | [OpenSidewalks Schema v0.3](https://github.com/OpenSidewalks/OpenSidewalks-Schema) (Taskar Center for Accessible Technology, University of Washington) |
-| **Coverage** | All five NYC boroughs. The largest connected component holds 428,068 nodes (63% of pedestrian-graph nodes) and covers Manhattan, Brooklyn and Queens; Staten Island and the Bronx are separate subgraphs. |
-| **Size** | 3,374,261 features (1,155,380 Point nodes, 2,218,881 LineString edges) |
+| **Coverage** | All five NYC boroughs. The largest connected component holds 611,991 nodes (71.5% of pedestrian-graph nodes) and covers Manhattan, Brooklyn, Queens and the Bronx. Staten Island has no walkable link to the others and is a separate component. |
+| **Size** | 3,874,332 features (1,189,651 Point nodes, 2,684,681 LineString edges) |
+| **OSM data** | as of 2026-10-01T20:22:06Z (Geofabrik `new-york-261001.osm.pbf`, checksum recorded in the file root) |
 | **Releases** | [GitHub Releases](https://github.com/msradam/opensidewalks-nyc/releases): canonical GeoJSON, FlatGeobuf, GraphML, routing JSON, OSW-validator ZIP, per-borough splits |
 | **Code license** | Apache-2.0 |
-| **Data license** | ODbL-1.0 (inherited from OpenStreetMap), see [LICENSE-DATA.md](LICENSE-DATA.md) |
+| **Data license** | ODbL-1.0 (inherited from OpenStreetMap), see [LICENSE-DATA.md](LICENSE-DATA.md). Each file carries the licence and the attribution line in its root metadata. |
 
 ## Why this exists
 
 NYC has the densest pedestrian network in North America. OpenStreetMap already holds a routable sidewalk and crossing network for the city, and research networks such as NYCWalks exist. To the author's knowledge this is the first public graph of NYC in the OpenSidewalks schema (the TDEI catalogue, which needs an account, has not been checked). The artifact fuses:
 
-- **OpenStreetMap**: footways, crossings, steps, and street centerlines, the topological scaffold.
-- **NYC DOT Pedestrian Ramp Locations** (`ufzp-rrqu`): 217,679 curb ramps surveyed in 2017 to 2020, of which 199,836 appear as curb Point nodes, carrying measured running slope, cross slope and counter slope. The survey is a snapshot; ramps rebuilt since are not updated.
-- **NYC Planimetric Sidewalks** (`52n9-sdep`, 2022 capture): sidewalk widths for 615,099 sidewalk edges, plus gap-fill centerlines where OSM has no sidewalk geometry.
-- **NYC 2017 LiDAR DTM** (NY State GIS ImageServer): per-edge `incline` and per-node `ext:elevation_m`, sampled from one downsampled tile per borough (5 to 10 m per pixel).
+- **OpenStreetMap**: footways, crossings, steps, shared paths open to walkers, and street centerlines, the topological scaffold.
+- **NYC DOT Pedestrian Ramp Locations** (`ufzp-rrqu`): 217,679 curb ramps surveyed in 2017 to 2020, every one a curb Point node carrying measured running slope, cross slope and counter slope and the survey's warning-surface status. 181,686 of them (83.5%) are on the graph. The survey is a snapshot; ramps rebuilt since are not updated.
+- **NYC Planimetric Sidewalks** (`52n9-sdep`, 2022 capture): sidewalk widths for 820,940 sidewalk edges, plus 1,159 gap-fill centerlines where OSM has no sidewalk geometry.
+- **NYC 2017 LiDAR DTM** (NY State GIS ImageServer): per-edge `incline` and per-node `ext:elevation_m`, interpolated from one downsampled tile per borough (5 to 12 m per pixel).
 
 Every feature carries `ext:source` and `ext:pipeline_version`; edges and non-OSM nodes also carry `ext:source_timestamp`, and OSM-derived edges keep `ext:osm_id`.
 
@@ -42,19 +35,19 @@ Each feature in the canonical GeoJSON is one of:
 
 | OSW type | Tagging | Count |
 |---|---|---|
-| Sidewalk Edge | `highway=footway, footway=sidewalk` | 703,467 |
-| Crossing Edge | `highway=footway, footway=crossing` | 424,564 |
-| Footway / Steps Edge | `highway=footway/pedestrian/steps` (other) | 429,328 |
-| Street Edge | `highway=residential/service/primary/...` | 661,522 |
-| Curb-ramp Point Node | `barrier=kerb` with DOT survey fields | 199,836 |
-| Point Node (graph-structural) | edge endpoints | 955,544 |
-| **Total** | | **3,374,261** |
+| Sidewalk Edge | `highway=footway, footway=sidewalk` | 935,428 |
+| Crossing Edge | `highway=footway, footway=crossing` | 437,510 |
+| Footway / Steps Edge | `highway=footway` (other) or `highway=steps` | 560,142 |
+| Street Edge | `highway=residential/service/secondary/...` | 751,601 |
+| Curb-ramp Point Node | `barrier=kerb` with DOT survey fields | 217,679 |
+| Point Node (graph-structural) | edge endpoints | 971,972 |
+| **Total** | | **3,874,332** |
 
-Edges are directed: most walkable segments appear once per travel direction, with `incline` signed in the direction of travel (1,184,309 unique segments; the GraphML export carries that collapsed view). One-way streets and the gap-fill sidewalks appear in one direction only. Edges carry `_u_id`/`_v_id` graph references, `surface`, `width`, `incline`, `name`, `crossing:markings`, and `ext:*` provenance. Curb nodes carry `kerb`, `tactile_paving`, cross streets, and the DOT slope measurements. See [`SCHEMA.md`](SCHEMA.md) for the full property reference.
+Edges are directed. Every pedestrian segment appears once per travel direction, with `incline` signed in the direction of travel (963,620 pedestrian segments). Streets follow OSM's `oneway`, so a one-way street is a single edge. Edges carry `_u_id`/`_v_id` graph references, `surface`, `width`, `incline`, `name`, `crossing:markings`, and `ext:*` provenance. Curb nodes carry `kerb`, `tactile_paving`, cross streets, and the DOT slope measurements. See [`SCHEMA.md`](SCHEMA.md) for the full property reference.
 
 ## Getting the data
 
-Don't clone for the data; pull a release. The canonical GeoJSON is 1.3 GB uncompressed.
+Don't clone for the data; pull a release. The canonical GeoJSON is 1.5 GB uncompressed.
 
 ```bash
 # canonical OSW GeoJSON (gzipped)
@@ -66,6 +59,9 @@ curl -LO https://github.com/msradam/opensidewalks-nyc/releases/latest/download/n
 
 # NetworkX / Gephi
 curl -LO https://github.com/msradam/opensidewalks-nyc/releases/latest/download/nyc-osw.graphml.gz
+
+# flat nodes dict and edges list with lengths, for a router
+curl -LO https://github.com/msradam/opensidewalks-nyc/releases/latest/download/nyc-routing.json.gz
 
 # per-borough splits
 for b in MN BK QN BX SI; do
@@ -89,9 +85,11 @@ sidewalks = gdf[(gdf["highway"] == "footway") & (gdf["footway"] == "sidewalk")]
 
 ```python
 import networkx as nx
-G = nx.read_graphml("nyc-osw.graphml")
+G = nx.read_graphml("nyc-osw.graphml")   # a MultiDiGraph: one edge per OSW edge, u to v
 print(G.number_of_nodes(), G.number_of_edges())
 ```
+
+From v0.3.2 the GraphML is directed, because `incline` is signed by direction. Earlier releases shipped an undirected graph that kept one direction of each segment.
 
 ### DuckDB (spatial extension)
 
@@ -111,7 +109,8 @@ cd opensidewalks-nyc
 uv venv --python 3.11 && source .venv/bin/activate
 uv pip install -e .
 
-# 1. Build: acquires all sources, assembles the graph (~60-90 min, ~10 GB scratch)
+# 1. Build: acquires all sources, assembles the graph (about 40 min, 33 GB of
+#    memory at peak, 11 GB of scratch under data/)
 python -m pipeline build
 
 # 2. Snap edge endpoints onto their node coordinates and emit the validator ZIP
@@ -124,31 +123,38 @@ uv run --no-project --isolated --with python-osw-validation python -c "
 from python_osw_validation import OSWValidation
 r = OSWValidation('output/nyc-osw-osw-split.zip').validate()
 print('valid:', r.is_valid, 'errors:', len(r.errors or []))"
+
+# 4. The checks the validator does not do (elevation, components by borough,
+#    ramps against the survey, widths, gap-fill)
+python validators/post_build_checks.py output/nyc-osw.geojson output/post_build_checks.json
 ```
 
-Set `SOCRATA_APP_TOKEN` in the environment to lift NYC Open Data rate limits from about 1 req/s to 1000 req/s. For a quick trial, uncomment the `study_area` block in `config/build.yaml`; a Staten Island bounding box builds in about 8 minutes.
+Set `SOCRATA_APP_TOKEN` in the environment to lift NYC Open Data rate limits. For a quick trial, uncomment the `study_area` block in `config/build.yaml`; a Staten Island bounding box builds in about 8 minutes.
 
-The city-wide build pulls the whole OSM walk network through the public Overpass API, one borough per query. That is a heavy use of a shared service; a dated regional extract (for example from Geofabrik) is the better source for repeated or scheduled builds, and it would also pin the OSM snapshot date.
+OpenStreetMap comes from one dated Geofabrik extract, named by URL and SHA-256 in `config/sources.yaml`. A build downloads it once, checks it, and makes no Overpass query. To build on newer OSM data, change both lines. [`scripts/README.md`](scripts/README.md) has the commands that turn a build into the release assets.
 
 ## Sources and licenses
 
 | Source | What it contributes | License |
 |---|---|---|
-| OpenStreetMap (Overpass via OSMnx) | Footways, crossings, steps, street centerlines, topology | ODbL-1.0 |
+| OpenStreetMap (dated Geofabrik extract, graph built with OSMnx) | Footways, crossings, steps, shared paths, street centerlines, topology | ODbL-1.0 |
 | NYC DOT Pedestrian Ramp Locations (`ufzp-rrqu`) | 217,679 curb ramps with measured slopes | Public Domain |
 | NYC Planimetric Sidewalks (`52n9-sdep`) | Sidewalk widths and gap-fill centerlines | Public Domain |
-| Borough boundaries from OpenStreetMap via Nominatim (the NYC Open Data dataset `7t3b-ywvw` the pipeline tries first has been withdrawn) | Region polygons, per-borough OSM queries | ODbL-1.0 |
-| NYC 2017 topobathymetric LiDAR bare-earth DTM (NY State GIS ImageServer, 1 m service, sampled at 5 to 10 m) | Node elevations, edge inclines | Public Domain |
+| Borough boundaries from OpenStreetMap via Nominatim (the NYC Open Data dataset `7t3b-ywvw` the pipeline tries first has been withdrawn) | Region polygons, per-borough cut of the OSM graph | ODbL-1.0 |
+| NYC 2017 topobathymetric LiDAR bare-earth DTM (NY State GIS ImageServer, 1 m service, sampled at 5 to 12 m) | Node elevations, edge inclines | Public Domain |
 
 The combined dataset is **ODbL-1.0** by inheritance from OSM. Pipeline code is **Apache-2.0**.
 
 ## Limits, honest
 
-- **Coverage follows the sources.** Where neither OSM nor the planimetric polygons record a sidewalk, it is not in the graph. Coverage thins at the borough periphery.
-- **The graph is fragmented.** 63% of pedestrian-graph nodes sit in one component covering Manhattan, Brooklyn and Queens. Staten Island and the Bronx are separate components, and there are thousands of small fragments where OSM features share no endpoint. Snapping every query to the largest component moves Bronx and Staten Island points into another borough.
-- **Planimetric centerlines are approximate.** Gap-fill geometry is derived from polygon axes, roughly meter-level.
+- **Coverage follows OpenStreetMap.** Where OSM has no separately mapped sidewalk, the graph has none. A ramp can attach only where OSM has a sidewalk, crossing or footway within 5 m: 60.7% of the Bronx's surveyed ramps are on the graph, against 93.8% of Brooklyn's.
+- **The graph is fragmented.** 71.5% of pedestrian-graph nodes sit in one component covering Manhattan, Brooklyn, Queens and the Bronx. Staten Island is its own component, and there are thousands of small fragments where OSM ways share no node. 18 of 23 bridges with a pedestrian path are walkable end to end on pedestrian edges; the quality report lists the rest.
+- **Incline is an estimate of the terrain.** It comes from a bare-earth model at 5 to 12 m per pixel. Edges on bridges and in tunnels carry `ext:structure` and no incline, because the model describes the ground below them; node elevations there are the ground below too.
+- **The ramp data is a 2018 survey.** It says a ramp was there and what DOT measured. DOT's own program data lists 41% of surveyed ramps at corners rebuilt since. The survey's description says its measurements do not establish ADA compliance.
+- **A sixth of the ramps are not on the graph.** 18,305 have no pedestrian vertex within 5 m, and 17,688 share a node with a ramp that is on it.
+- **Gap-fill sidewalks are the least reliable layer.** 1,159 segments come from planimetric polygons where OSM has no sidewalk. In a sample of 18 checked over orthoimagery, 9 were on a sidewalk or walkway and 4 were plainly wrong, and nearly all are unconnected to the rest of the graph. Filter on `ext:source = nyc_planimetric_sidewalks` to drop them.
+- **`width` is the mean width of the planimetric polygon,** not the clear width at that spot. It is within about 0.6 m of a local transect at the median.
 - **DOT records every ramp as `kerb=lowered`.** The source survey does not distinguish flush from lowered.
-- **Incline is DEM-derived, and in this release mostly wrong.** See the notice at the top. Even where the elevation is real, the DEM is sampled at 5 to 10 m per pixel and the median edge is 8.4 m long, so short-edge inclines are noise.
 - **No live data.** Elevator outages, construction closures, and weather belong in the consuming application.
 
 ## Citation
@@ -158,7 +164,7 @@ The combined dataset is **ODbL-1.0** by inheritance from OSM. Pipeline code is *
   author       = {Rahman, Adam Munawar},
   title        = {opensidewalks-nyc: An OpenSidewalks v0.3-conformant pedestrian graph of New York City},
   year         = {2026},
-  version      = {0.3.1-nyc.1},
+  version      = {0.3.2-nyc.1},
   publisher    = {GitHub},
   url          = {https://github.com/msradam/opensidewalks-nyc}
 }
@@ -176,4 +182,4 @@ Portions of this repository (pipeline code, conversion scripts, documentation) w
 
 ## Status
 
-`v0.3.1-nyc.1`. Rebuilt from scratch by the pipeline (the v0.3.0 release was produced by a one-shot restoration script). This release adds planimetric widths and gap-fill, LiDAR incline and elevations, native per-feature provenance, and a far less fragmented graph. Several of those additions are defective in the published files (see the notice at the top); the fixes are in the code and a corrected release is pending. Issues and PRs welcome, especially around accessibility-feature coverage gaps.
+`v0.3.2-nyc.1`. A corrected rebuild of v0.3.1-nyc.1, whose published files had defects the validator does not check. This release fixes them, pins the OSM input to a dated extract, and adds the checks that would have caught them (`validators/post_build_checks.py`). Issues and PRs welcome, especially around accessibility-feature coverage gaps.

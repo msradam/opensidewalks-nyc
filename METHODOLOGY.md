@@ -6,19 +6,19 @@ This document records every data source, transformation, and schema mapping deci
 
 ## Data Sources
 
-### 1. OpenStreetMap (via OSMnx)
+### 1. OpenStreetMap (dated Geofabrik extract, graph built with OSMnx)
 
 **What it is:** The OpenStreetMap pedestrian walking network for NYC. Footways, paths, crossings, steps, and street edges where foot travel is permitted. Maintained by the OSM community.
 
-**Where it came from:** Fetched via [OSMnx](https://github.com/gboeing/osmnx) using the Overpass API. Queried borough-by-borough (five separate queries) to manage memory.
+**Where it came from:** One dated regional extract from Geofabrik (`new-york-YYMMDD.osm.pbf`), named by URL and SHA-256 in `config/sources.yaml`. Stage 1 downloads it once, refuses a file whose checksum differs from the pin, filters its ways with pyosmium, and hands the result to [OSMnx](https://github.com/gboeing/osmnx) to build the graph. No Overpass query is made.
 
 **License:** [ODbL 1.0](https://www.openstreetmap.org/copyright). Data must be attributed.
 
-**Why borough-by-borough:** NYC is large. A single city-wide query would time out or exhaust memory on the Overpass API. Querying by borough polygon produces manageable payloads and allows partial reruns if one borough fails.
+**Snapshot:** The extract's own data timestamp (from the PBF header), its URL and its SHA-256 are written to `data/raw/manifest.json` and to `dataSource.osmExtract` in the root of every output file. To move to newer OSM data, change the URL and the checksum together. Releases up to v0.3.1-nyc.1 queried the public Overpass API at build time, so their OSM snapshot is not recorded anywhere. On Staten Island the two sources give the same graph: every finished edge has the same ID, geometry and properties.
 
-**Borough seams:** OSMnx cuts each result at the query polygon. The queries pass `truncate_by_edge=True` so the segments that cross a borough line are kept (both neighbouring boroughs return them and Stage 4 removes the duplicate). The v0.3.1-nyc.1 release was built without this, so its boroughs are joined at only 13 nodes and nearly every bridge is cut mid-span.
+**Borough seams:** The city graph is built once and each borough is cut from it with `truncate_by_edge=True`, so the segments that cross a borough line are kept (both neighbouring boroughs hold them and Stage 4 removes the duplicate). The v0.3.1-nyc.1 release was built without this, so its boroughs are joined at only 13 nodes and nearly every bridge is cut mid-span.
 
-**Overpass load and snapshot date:** a city-wide build downloads the whole walk network from the public Overpass API. The OSM snapshot is whatever Overpass held at build time and is not pinned. A dated regional extract would be lighter on the shared service and reproducible; it is not implemented.
+**Reach of the extract:** It covers New York State. A way that crosses into New Jersey is kept whole, but a study-area box that reaches across the state line gets no New Jersey streets.
 
 **Why explicit custom_filter, not `network_type='walk'`:** OSMnx's `network_type='walk'` applies its own undocumented heuristics for what counts as walkable. For a standards-conformant pipeline, we prefer explicit control: we whitelist specific `highway` tag values and exclude `foot=no` and `access=no`. This makes the inclusion criteria auditable.
 
@@ -27,11 +27,18 @@ This document records every data source, transformation, and schema mapping deci
 ["highway"~"footway|path|pedestrian|steps|residential|service|tertiary|secondary|primary|cycleway|track|living_street"]["foot"!~"no"]["access"!~"no|private"]
 ```
 
+The syntax is Overpass's and so are the semantics: each regex is an unanchored search, and a way with no `foot` or `access` tag passes. There is one departure. In OSM's access rules a tag for one mode is more specific than `access`, so a way that fails only the access clause is kept when it carries `foot=yes`, `designated` or `permissive`. The Queensboro Bridge walkway is tagged `access=no`, `foot=designated`. Up to v0.3.1-nyc.1 the filter was folded over two lines in the YAML, which put a space before `secondary`, so no secondary road was ever requested and none is in those releases. `highway=unclassified` is not in the filter, although Stage 3 would keep it. The link roads (`primary_link` and so on) match the unanchored regex and are then dropped by Stage 3.
+
 **How it was transformed:** OSM edges are classified into four OSW feature types based on `highway` and `footway` tag values:
 - `highway=footway` + `footway=sidewalk` → Sidewalk Edge
 - `highway=footway` + `footway=crossing` → Crossing Edge
 - `highway=footway|path|pedestrian|steps` (other) → Footway Edge
+- `highway=cycleway|track` with `foot=yes`, `designated` or `permissive` → the same three classes, with `ext:osm_highway` keeping the OSM value. Without one of those foot values the way is dropped. Many bridge paths and greenways are mapped this way; v0.3.1-nyc.1 dropped them all.
 - `highway=residential|service|...` → Street Edge
+
+The graph is built without OSMnx's walk mode, so a way tagged `oneway=yes` arrives in one direction. Stage 3 adds the missing reverse of every pedestrian edge (OSM's `oneway` binds vehicles and bicycles, not people on foot). Streets keep their direction.
+
+An edge whose OSM way is a bridge or a tunnel is marked `ext:structure` (`bridge` or `tunnel`; a building passage is not marked). Stage 4 writes no incline on those edges.
 
 OSM `surface` tags are mapped to the OSW surface enum (9 canonical values). Non-canonical OSM surface values (e.g. `tarmac`, `cobblestone`) are mapped to the nearest canonical equivalent.
 
@@ -45,7 +52,7 @@ OSM `crossing` tags are mapped to `crossing:markings`. Non-canonical values (e.g
 
 **What it is:** A point dataset of 217,000+ pedestrian curb ramp locations citywide, surveyed by the NYC Department of Transportation 2017-2020. Records ramp location, geometry (running slope, cross slope, landing dimensions), and condition.
 
-**Where it came from:** NYC Open Data Socrata API (`data.cityofnewyork.us/resource/ufzp-rrqu.json`), paginated in batches of 10,000 rows.
+**Where it came from:** NYC Open Data Socrata API (`data.cityofnewyork.us/resource/ufzp-rrqu.json`), paginated in batches of 10,000 rows ordered by `:id`. Stage 1 counts distinct row IDs and compares the total with the dataset's own `count(*)`, and stops if they differ. Without `$order`, Socrata pages can overlap: one Staten Island pull of 23,326 rows held 16,664 distinct ramps.
 
 **License:** Public Domain (NYC Open Data).
 
@@ -83,7 +90,7 @@ OSM `crossing` tags are mapped to `crossing:markings`. Non-canonical values (e.g
 
 **What it is:** Sidewalk polygon features produced by the NYC Office of Technology and Innovation from aerial imagery. The polygons represent the physical extent of sidewalk surfaces, not centerlines.
 
-**Where it came from:** NYC Open Data Socrata API, paginated in batches of 5,000 rows.
+**Where it came from:** NYC Open Data Socrata API, paginated in batches of 5,000 rows ordered by `:id`, with the same completeness check as the ramps.
 
 **License:** Public Domain (NYC Open Data).
 
@@ -91,7 +98,7 @@ OSM `crossing` tags are mapped to `crossing:markings`. Non-canonical values (e.g
 
 Widths: each OSM sidewalk edge whose centroid falls inside a planimetric polygon gets `width` = 2 × polygon area / perimeter (the mean width of an elongated strip). The perimeter counts interior rings, because many polygons are rings around a whole block; the v0.3.1-nyc.1 release used the outer ring only, which about doubles the width on those. OSM-surveyed `width` tags take precedence; the planimetric estimate only fills gaps. The value is the mean width of the whole polygon, not the clear width at the edge.
 
-Gap-fill coverage check: for each planimetric polygon, check whether any existing OSM sidewalk edge is within 10 m of the polygon boundary. If covered, skip. If not covered (typically where OSM has only a `sidewalk=both` tag on the street centerline), extract a centerline from the polygon and emit it as a Sidewalk Edge.
+Gap-fill coverage check: for each planimetric polygon, check whether any existing OSM sidewalk edge is within 10 m of the polygon boundary. If covered, skip. If not covered (typically where OSM has only a `sidewalk=both` tag on the street centerline), extract a centerline from the polygon and emit it as a Sidewalk Edge, unless at least half of that centerline lies within 1.5 m of an OSM crossing or footway. That last test removes the median refuges that a crossing already runs through and the paths OSM maps without `footway=sidewalk`.
 
 **Centerline extraction method (minimum rotated rectangle):** Implemented in `schema_map.py::_polygon_centerline()`. Compute the polygon's minimum rotated rectangle and return the straight line connecting the midpoints of its two short sides. This is O(1) per polygon and fits the elongated strip geometry typical of sidewalk polygons. The axis is only kept when at least 90% of it lies inside its own polygon. For a ring around a block, or an L-shaped polygon, the axis runs through the block interior and is rejected and counted as a failure. The v0.3.1-nyc.1 release had no such check, and in an imagery sample 13 of 15 of its gap-fill edges were not on a sidewalk. Each gap-fill centerline is emitted in both directions.
 
@@ -110,7 +117,7 @@ Gap-fill coverage check: for each planimetric polygon, check whether any existin
 **How it was used:**
 1. **Root metadata `region`:** The five borough polygons are unioned into a single MultiPolygon and written to the OSW root-level `region` field. This is the geographic scope declaration of the dataset.
 2. **Per-feature `ext:borough`:** A spatial join assigns each feature to the borough whose polygon contains its centroid. Used for downstream filtering and analysis.
-3. **OSM query bounds:** Each borough polygon is passed to OSMnx as the query boundary in Stage 1.
+3. **OSM cut:** Each borough polygon is used to cut that borough's graph from the city graph in Stage 1.
 
 ---
 
@@ -118,15 +125,17 @@ Gap-fill coverage check: for each planimetric polygon, check whether any existin
 
 **What it is:** A bare-earth digital terrain model of NYC captured by LiDAR between May and July 2017 (buildings removed, hydro-flattened), served in metres on a 1 m grid by the NY State GIS Program Office ArcGIS ImageServer (`NYC_TopoBathymetric_2017_1_meter`).
 
-**Where it came from:** `elevation.its.ny.gov` ImageServer export, one GeoTIFF tile per borough. The pipeline caps each tile at 3,000 pixels a side, so a borough tile is resampled to roughly 5 to 10 m per pixel.
+**Where it came from:** `elevation.its.ny.gov` ImageServer export, one GeoTIFF tile per borough. The pipeline caps each tile at 3,000 pixels a side, so a borough tile is resampled to 5 to 12 m per pixel (Bronx 5.2 m, Staten Island 6.5 m, Brooklyn 7.0 m, Manhattan 7.5 m, Queens 11.9 m).
 
 **License:** Public Domain (NY State).
 
-**How it was used:** Stage 4 samples the DTM at every node coordinate. Each node whose sample lands on valid data gets `ext:elevation_m`; each edge whose two endpoint elevations are both known gets `incline` = rise / run, clamped to the OSW range of ±1.0. Values outside that range are DEM noise on very short edges and are dropped rather than clamped into pseudo-plausibility.
+**How it was used:** Stage 4 samples the DTM at every node coordinate, interpolating bilinearly between pixel centres. Each node whose sample lands on valid data gets `ext:elevation_m`; each edge whose two endpoint elevations are both known gets `incline` = rise / run, clamped to the OSW range of ±1.0. Values outside that range are DEM noise on very short edges and are dropped rather than clamped into pseudo-plausibility.
 
 A node is only sampled from a tile whose extent contains it. The tiles have no nodata value, and a point outside a tile reads as 0.0; the v0.3.1-nyc.1 release sampled every node from the first tile (the Bronx), so 80% of its nodes have an elevation of exactly 0.0 and their edges an incline of 0.
 
-At 5 to 10 m per pixel against a median edge length of 8.4 m, the two ends of a short edge often fall in the same or neighbouring pixels. Treat incline on edges shorter than about 20 m as noise.
+At 5 to 12 m per pixel against a median edge length of 7 m, the two ends of a short edge usually fall in the same or neighbouring pixels. Reading the nearest pixel gave them either the same elevation or a whole pixel's step; interpolating between pixel centres removes that. In a Midtown window the share of sidewalk edges steeper than 8.33% fell from 4.8% to 2.5% at 7 m per pixel, and the edges over that limit at 7 m and at 10 m per pixel now largely agree. On Staten Island the agreement with the ramp survey's gutter slopes rose a little (rank correlation 0.38 to 0.42).
+
+The model is bare earth and includes the river bed. On a bridge, a deck or a pier it describes what is underneath, so edges marked `ext:structure` get no incline. Node elevations on those structures are still the ground or water below.
 
 ---
 
@@ -148,11 +157,11 @@ At 5 to 10 m per pixel against a median edge length of 8.4 m, the two ends of a 
 
 ### Stage 1: Acquire
 
-Downloads raw data from all six sources and records provenance (retrieval timestamp, content hash, row count) in `data/raw/manifest.json`. Caches by file existence. A content-hash cache-busting mechanism will be added in V1.1.
+Downloads raw data from all six sources and records provenance (retrieval timestamp, content hash, row count) in `data/raw/manifest.json`. The OSM extract and the DEM tiles are reused when the file is already there; the extract is checked against its pinned SHA-256 every time. The Socrata sources are downloaded on every run.
 
-Borough boundaries are acquired first because OSM borough queries require the polygon bounds.
+Borough boundaries are acquired first because the OSM graph is cut by borough polygon.
 
-OSM data is saved as per-borough GraphML files plus merged nodes/edges GeoJSONs. The GraphML files enable re-loading without re-querying OSM if a later stage needs to restart.
+OSM data is saved as merged nodes/edges GeoJSONs. There is no per-borough graph cache any more (a cache written before the borough seam fix used to be reused silently).
 
 ### Stage 2: Clean
 
@@ -175,7 +184,7 @@ The most complex transformation is the planimetric gap-fill: deriving sidewalk c
 
 Builds the single canonical FeatureCollection from staged feature files:
 1. Snap CurbRamp nodes to edge endpoints within 5 m (reconciles survey/OSM positional discrepancy)
-2. Merge near-coincident endpoints within 2 m (cluster with a KD-tree, remap `_u_id`/`_v_id` to one canonical ID per cluster, and carry curb nodes along with the endpoint they snapped to). Edges shorter than the tolerance collapse into zero-length self-loops during this merge and are dropped; they connect a node to itself and carry no connectivity. The clustering is single-linkage over every endpoint, OSM to OSM included, so it chains along closely spaced vertices: in a Staten Island build 23% of edges were dropped and a few hundred endpoints moved more than 10 m.
+2. Close near-miss gaps within 2 m. A node takes another node's ID only when that closes a gap: one of the two is a dead end, or the two are in different connected components of the whole graph or of the pedestrian graph. A dead end is not moved onto a neighbour or onto a node it already reaches within 10 m. Pairs are taken nearest first, a node that has moved is never a target and a target never moves, so no endpoint moves more than 2 m. Curb nodes are carried along with the endpoint they snapped to. The only edges that can collapse are street segments under 2 m whose two ends are in different pedestrian components; they are dropped. Up to v0.3.1-nyc.1 the merge united every pair of endpoints within 2 m with union-find, which chains along closely spaced vertices: on Staten Island it dropped a quarter of all edges and moved endpoints up to 33 m. The comparison behind the change is in the v0.3.2 release notes.
 3. Combine all nodes (OSM nodes + snapped curb nodes)
 4. Inject bare nodes for any edge endpoint not yet in the node set
 5. Deduplicate nodes by `_id`, preserving curb-ramp annotations when a ramp and an OSM node share a location
@@ -197,14 +206,16 @@ This stage is a fast pre-check, not the conformance gate. The gate is the offici
 
 ### Post-build: endpoint snap
 
-`scripts/snap_endpoints.py` runs after the build. The Stage 4 endpoint merge remaps `_u_id`/`_v_id` without moving edge terminal vertices, which leaves sub-metre gaps between an edge's endpoints and its referenced node coordinates. `python-osw-validation` 0.4.0+ checks those coordinates exactly, so the snap moves every edge endpoint onto its node's coordinate, rounds every coordinate to 7 decimal places (the limit `python-osw-validation` 0.5.0 enforces), rewrites `output/nyc-osw.geojson` in place, and emits the split node/edge files plus `output/nyc-osw-osw-split.zip` for the validator. The gaps it closes are typically 1 to 4 m.
+`scripts/snap_endpoints.py` runs after the build. The Stage 4 endpoint merge remaps `_u_id`/`_v_id` without moving edge terminal vertices, which leaves a gap of up to 2 m between a merged edge end and its referenced node coordinate. `python-osw-validation` 0.4.0+ checks those coordinates exactly, so the snap moves every edge endpoint onto its node's coordinate, rounds every coordinate to 7 decimal places (the limit `python-osw-validation` 0.5.0 enforces), rewrites `output/nyc-osw.geojson` in place, and emits the split node/edge files plus `output/nyc-osw-osw-split.zip` for the validator.
 
 ### Stage 6: Export
 
 Three output formats from the same staged FeatureCollection:
 - **nyc-osw.geojson**. Copy of the canonical FeatureCollection (the OSW deliverable)
-- **nyc.graphml**. NetworkX DiGraph with nodes/edges, suitable for academic analysis
+- **nyc.graphml**. NetworkX MultiDiGraph, one edge per OSW edge from `_u_id` to `_v_id`
 - **nyc-routing.json**. Compact JSON with approximate edge lengths, intended for downstream routing engine consumption
+
+Stage 6 runs before the endpoint snap, so its GraphML and routing JSON predate the snap and the coordinate rounding. Release assets are made afterwards from the snapped `output/nyc-osw.geojson` with the scripts in `scripts/` (see `scripts/README.md`), and every asset carries the licence, the attribution and the OSM snapshot.
 
 ---
 
@@ -230,10 +241,10 @@ Where OSM has `sidewalk=both` or `sidewalk=left/right` tags on a street centerli
 
 ## Known Limitations
 
-1. **Incline is DEM-derived, not surveyed.** Short edges are noisier because sub-meter elevation error divides by a small run; values outside the OSW ±1.0 range are dropped as noise.
+1. **Incline is DEM-derived, not surveyed.** It is an estimate of the terrain from a 5 to 12 m grid, absent on bridges and tunnels, and it agrees with surveyed street grades in the large, not edge by edge. Values outside the OSW ±1.0 range are dropped.
 2. **No APS (Accessible Pedestrian Signal) data.** Would require a separate NYC DOT dataset or field survey.
 3. **No sidewalk condition ratings.** The DOT ramp dataset has condition flags but there is no equivalent for sidewalk pavement quality citywide.
-4. **Planimetric centerlines are approximate.** The minimum-rotated-rectangle axis is geometrically valid but not survey-accurate, and is coarse for irregular polygons.
+4. **Planimetric centerlines are unreliable.** The minimum-rotated-rectangle axis is not a centerline. About half of a v0.3.2 sample lay on a sidewalk, and nearly all gap-fill segments are unconnected to the rest of the graph.
 5. **No live feeds.** The pipeline is a point-in-time snapshot. Rerun to refresh.
 6. **MTA ADA annotation not implemented.** No station index is produced (see the MTA section above).
 
