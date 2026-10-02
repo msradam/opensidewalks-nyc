@@ -23,7 +23,7 @@ sources:
       # are unanchored, as in Overpass. Keep the filter on one line: folded
       # over two, YAML put a space inside the regex and "secondary" never
       # matched.
-      custom_filter: '["highway"~"footway|path|pedestrian|steps|residential|service|tertiary|secondary|primary|cycleway|track|living_street"]["foot"!~"no"]["access"!~"no|private"]'
+      custom_filter: '["highway"~"footway|path|pedestrian|steps|residential|service|tertiary|secondary|primary|unclassified|cycleway|track|living_street"]["foot"!~"no"]["access"!~"no|private"]'
       retain_all: true
       simplify: false
     expected_geometry: LineString
