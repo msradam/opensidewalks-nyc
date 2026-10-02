@@ -404,6 +404,12 @@ def _topology_report(all_edges: gpd.GeoDataFrame, all_nodes: gpd.GeoDataFrame,
 # Incline computation from DEM
 # ---------------------------------------------------------------------------
 
+# Edges shorter than this share their end heights before incline is taken.
+_SMOOTH_M = 5.0
+# A height step this large between two nodes that close is a change of level
+# (a wall, untagged steps, a deck beside the ground), not noise.
+_LEVEL_BREAK_M = 0.5
+
 # LiDAR returns within this distance of a node describe the surface it is on.
 # Paths are about 3 m wide and OSM lines sit within a metre or two of them.
 _LIDAR_RADIUS_M = 2.0
@@ -508,6 +514,53 @@ def _structure_elevations(all_edges: gpd.GeoDataFrame,
     return elevs, source, unknown
 
 
+def _smoothed_for_incline(all_edges: gpd.GeoDataFrame,
+                          node_coords: dict[str, tuple[float, float]],
+                          node_elevs: dict[str, float]) -> dict[str, float]:
+    """Node heights with the survey noise taken out of short edges.
+
+    The graph keeps every OSM vertex as a node, so half its edges are shorter
+    than 6 m, and a few decimetres of height error (or a kerb) between two
+    nodes a metre apart reads as a 30% grade. Before the difference is taken,
+    each node's height is averaged with its neighbours', weighted
+    1 - length / _SMOOTH_M: a node 1 m away counts almost as much as the node
+    itself, one 5 m away not at all. A steady slope comes through unchanged
+    (the neighbours up and down the path cancel); a jump between two close
+    nodes is smoothed out unless it is a real change of level, which is left
+    alone. The heights written on the nodes are not smoothed.
+    """
+    from scipy.sparse import coo_matrix
+
+    m = len(all_edges)
+    if m == 0:
+        return dict(node_elevs)
+    inv, ids = pd.factorize(np.r_[all_edges["_u_id"].values, all_edges["_v_id"].values])
+    u, v, n = inv[:m], inv[m:], len(ids)
+    z = np.array([node_elevs.get(i, np.nan) for i in ids])
+    lonlat = np.array([node_coords.get(i, (np.nan, np.nan)) for i in ids])
+    east = 111319 * np.cos(np.radians(40.7))
+    length = np.hypot((lonlat[u, 0] - lonlat[v, 0]) * east, (lonlat[u, 1] - lonlat[v, 1]) * 111319)
+
+    w = np.clip(1 - length / _SMOOTH_M, 0, None)
+    step = np.abs(z[u] - z[v])
+    w[np.isnan(step) | (step > _LEVEL_BREAK_M) | (u == v)] = 0
+    if "highway" in all_edges.columns:
+        w[(all_edges["highway"] == "steps").values] = 0
+    if "ext:structure" in all_edges.columns:
+        w[(all_edges["ext:structure"] == "tunnel").values] = 0
+    # One weight per pair of nodes, whatever number of edges join them.
+    pair = pd.DataFrame({"a": np.minimum(u, v), "b": np.maximum(u, v), "w": w})
+    pair = pair[pair.w > 0].groupby(["a", "b"], as_index=False).w.max()
+    W = coo_matrix((np.r_[pair.w, pair.w], (np.r_[pair.a, pair.b], np.r_[pair.b, pair.a])),
+                   shape=(n, n)).tocsr()
+    total = 1 + np.asarray(W.sum(axis=1)).ravel()
+    known = ~np.isnan(z)
+    for _ in range(2):
+        filled = np.where(known, z, 0.0)
+        z = np.where(known, (filled + W @ filled) / total, np.nan)
+    return {ids[i]: float(z[i]) for i in np.flatnonzero(known)}
+
+
 def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
                             all_nodes: gpd.GeoDataFrame,
                             dem_tiles: list[Path],
@@ -603,6 +656,8 @@ def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
             if deck_source:
                 all_nodes["ext:elevation_source"] = all_nodes["_id"].map(deck_source)
 
+        slope_elevs = _smoothed_for_incline(all_edges, node_coords, node_elevs)
+
         def _length_m(geom) -> float:
             coords = list(geom.coords)
             total = 0.0
@@ -626,8 +681,8 @@ def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
             if structure == "tunnel" or (structure in ("bridge", "elevated")
                                          and (uid in no_height or vid in no_height)):
                 inclines.append(None)
-            elif uid in node_elevs and vid in node_elevs:
-                dz = node_elevs[vid] - node_elevs[uid]
+            elif uid in slope_elevs and vid in slope_elevs:
+                dz = slope_elevs[vid] - slope_elevs[uid]
                 length = _length_m(row.geometry)
                 raw = round(dz / length, 4) if length > 0 else None
                 # Clamp to OSW schema range [-1.0, 1.0]; values outside are DEM

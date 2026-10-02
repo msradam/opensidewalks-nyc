@@ -4,9 +4,15 @@ short edges. The official validator looks at none of this.
 Run: python tests/test_structure_incline.py
 """
 
+import geopandas as gpd
 import numpy as np
+from shapely.geometry import LineString
 
+from pipeline.stages.assemble import _smoothed_for_incline
 from pipeline.utils.deck import label_surfaces, surface_levels
+
+NAN = float("nan")
+
 
 def test_returns_group_into_surfaces():
     # Ground returns at 10 m (class 2), a deck at 16 m (class 17), a car roof
@@ -101,6 +107,44 @@ def test_structure_with_no_survey_gets_no_height():
     seed = np.array([True, True, True])
     z, kind = label_surfaces(3, edges, seed, np.array([1.0, 1.0, 1.0]), [[], [], []])
     assert kind.tolist() == [-1, -1, -1] and np.isnan(z).all()
+
+
+def _path(heights, spacing_m):
+    """A straight path of nodes spacing_m apart with the given heights."""
+    step = spacing_m / 84400.0
+    ids = [f"n{i}" for i in range(len(heights))]
+    coords = {i: (-73.99 + k * step, 40.7) for k, i in enumerate(ids)}
+    edges = gpd.GeoDataFrame(
+        {"_u_id": ids[:-1], "_v_id": ids[1:], "highway": "footway"},
+        geometry=[LineString([coords[a], coords[b]]) for a, b in zip(ids[:-1], ids[1:])],
+        crs="EPSG:4326")
+    return edges, coords, dict(zip(ids, heights))
+
+
+def test_short_edge_noise_is_smoothed_and_a_steady_slope_is_not():
+    # Flat ground with 0.3 m of survey noise on one node of a 1 m edge: read
+    # raw, that edge is a 30% grade.
+    flat = [10.0] * 6 + [10.3] + [10.0] * 6
+    out = _smoothed_for_incline(*_path(flat, 1.0))
+    grades = np.abs(np.diff([out[f"n{i}"] for i in range(13)]))
+    assert grades.max() < 0.083, "no edge of a flat path may read as too steep"
+    # A steady 10% slope in 1 m edges keeps its grade away from the ends.
+    slope = [10.0 + 0.1 * i for i in range(13)]
+    out = _smoothed_for_incline(*_path(slope, 1.0))
+    grades = np.diff([out[f"n{i}"] for i in range(13)])
+    assert np.allclose(grades[3:-3], 0.1, atol=1e-6)
+    # Edges of 10 m are left as measured.
+    out = _smoothed_for_incline(*_path([10.0, 10.9, 10.0], 10.0))
+    assert out == {"n0": 10.0, "n1": 10.9, "n2": 10.0}
+
+
+def test_a_real_change_of_level_is_not_smoothed_away():
+    # A 0.8 m step between two nodes 1 m apart is a wall or untagged steps.
+    out = _smoothed_for_incline(*_path([10.0, 10.0, 10.0, 10.8, 10.8, 10.8], 1.0))
+    assert out["n3"] - out["n2"] > 0.79
+    # Height unknown at one node: its neighbours are not pulled toward zero.
+    out = _smoothed_for_incline(*_path([10.0, NAN, 10.0], 1.0))
+    assert out == {"n0": 10.0, "n2": 10.0}
 
 
 if __name__ == "__main__":
