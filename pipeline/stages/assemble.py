@@ -472,7 +472,7 @@ def _structure_elevations(all_edges: gpd.GeoDataFrame,
         region[neighbours(np.flatnonzero(region))] = True
     levels: dict[int, list] = {}
     survey_of: dict[int, str] = {}
-    for _ in range(60):
+    for _ in range(40):
         new = np.array([i for i in np.flatnonzero(region)
                         if i not in levels and not np.isnan(xy[i, 0])], dtype=int)
         for name, cloud, classes in clouds:

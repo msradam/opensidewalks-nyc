@@ -22,6 +22,15 @@ STEPS_TOL_GRADE = 1.0
 # An unclassified surface counts as solid with this many returns within this
 # interquartile range of height.
 FLAT_MIN_RETURNS, FLAT_IQR_M = 8, 0.15
+# A solid surface this little above the terrain, at a node OSM does not put on
+# a structure, may be the end of a ramp or an embankment the deck runs down,
+# so the node is left for the deck to claim. Higher up it is something else
+# (an elevated railway over a sidewalk) and the node stays on the ground.
+LOW_DECK_M = 3.0
+# A deck that has come down to the ground hands over to the terrain model
+# where the two agree this closely. Until then the LiDAR ground height is
+# kept, so the last edge of a ramp does not read the terrain model's error.
+HANDOVER_M = 0.3
 
 
 def surface_levels(returns: np.ndarray, surface_classes=()) -> list[tuple[float, int, bool, bool]]:
@@ -98,8 +107,9 @@ def label_surfaces(n: int, edges: list[tuple[int, int, float, bool]],
         if seed[i] or np.isnan(dtm[i]):
             continue
         classified = [h for h, _, c, _ in levels[i] if c]
-        if any(on_ground(i, h) for h in classified) or (
-                not classified and all(on_ground(i, h) for h, _ in options[i])):
+        low_deck = any(s and GROUND_TOL_M < h - dtm[i] <= LOW_DECK_M for h, s in options[i])
+        if not low_deck and (any(abs(h - dtm[i]) <= HANDOVER_M for h in classified) or (
+                not classified and all(on_ground(i, h) for h, _ in options[i]))):
             z[i], kind[i] = dtm[i], 0
 
     def claim(a: int, b: int, length: float, steps: bool) -> bool:
@@ -120,7 +130,7 @@ def label_surfaces(n: int, edges: list[tuple[int, int, float, bool]],
         if not near:
             return False
         h = min(near, key=lambda h: abs(h - z[a]))
-        if not seed[b] and on_ground(b, h):
+        if not seed[b] and abs(h - dtm[b]) <= HANDOVER_M:
             z[b], kind[b] = dtm[b], 0   # the deck has met the ground
         else:
             z[b], kind[b] = h, 1

@@ -65,6 +65,31 @@ def test_untagged_approach_is_on_the_deck_and_a_path_below_is_not():
     assert z[2] == z[3] == 16.0
 
 
+def test_a_ramp_running_down_an_embankment_keeps_the_deck_height():
+    # The tagged bridge ends at 1, still 1.7 m above the terrain model. The
+    # untagged nodes 2 and 3 are on the ramp down: the ground beside it shows
+    # (classified, at terrain height) and so does the ramp surface, a little
+    # above. 4 is where the ramp meets the ground.
+    edges = [(0, 1, 20.0, False), (1, 2, 12.0, False), (2, 3, 12.0, False), (3, 4, 12.0, False)]
+    seed = np.array([True, True, False, False, False])
+    dtm = np.array([20.0, 22.1, 22.1, 21.5, 21.0])
+    levels = [[(24.0, 30, True, True)], [(23.8, 30, True, True)],
+              [(22.1, 10, True, True), (23.3, 20, True, True)], [(21.5, 10, True, True), (22.6, 20, True, True)],
+              [(21.0, 30, True, True)]]
+    z, kind = label_surfaces(5, edges, seed, dtm, levels)
+    assert z.tolist() == [24.0, 23.8, 23.3, 22.6, 21.0]
+    assert kind.tolist() == [1, 1, 1, 1, 0]
+    # Where the ramp has all but met the ground, the LiDAR ground height is
+    # kept until it agrees with the terrain model, so the terrain model's
+    # error on the embankment does not land on the ramp's last edge.
+    dtm = np.array([20.0, 22.1, 21.7, 21.6, 21.0])
+    levels = [[(24.0, 30, True, True)], [(23.8, 30, True, True)], [(22.4, 30, True, True)],
+              [(21.8, 30, True, True)], [(21.0, 30, True, True)]]
+    z, kind = label_surfaces(5, edges, seed, dtm, levels)
+    assert z.tolist() == [24.0, 23.8, 22.4, 21.6, 21.0]
+    assert kind.tolist() == [1, 1, 1, 0, 0]
+
+
 def test_plaza_deck_is_taken_over_the_ground_seen_past_its_edge():
     # Revson Plaza: a deck over an avenue, unclassified in the survey but flat
     # and dense, with a few classified ground returns from the avenue below.
