@@ -629,6 +629,17 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
                 axis=1
             )
 
+        # Stage 1 saves the nodes of every way that passed the tag filter.
+        # Stage 3 then drops some of those ways (a cycleway or track with no
+        # foot tag), and their nodes would ride along as points no edge
+        # touches. A surveyed ramp off the graph is a record worth keeping;
+        # a bare OSM vertex is not.
+        referenced = set(all_edges["_u_id"]) | set(all_edges["_v_id"])
+        orphan = ~osm_nodes["_id"].isin(referenced)
+        if orphan.any():
+            click.echo(f"    Dropped {int(orphan.sum()):,} OSM nodes that no edge references")
+            osm_nodes = osm_nodes[~orphan].copy()
+
         if "ext:source" not in osm_nodes.columns:
             osm_nodes["ext:source"] = "osm_walk"
         if "ext:pipeline_version" not in osm_nodes.columns:
