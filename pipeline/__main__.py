@@ -19,6 +19,7 @@ from pathlib import Path
 import click
 import yaml
 
+from pipeline import __version__
 # Stage imports. Each stage is independently importable.
 from pipeline.stages import acquire, clean, schema_map, assemble, validate, export
 
@@ -42,6 +43,8 @@ def _load_config():
         sources = yaml.safe_load(f)
     with open(build_path) as f:
         build = yaml.safe_load(f)
+    # Stamped on every feature as ext:pipeline_version and in the file root.
+    build["pipeline_version"] = __version__
     return sources, build
 
 

@@ -1,7 +1,7 @@
 # Pipeline build parameters.
 # Stage logic reads this file for tunable thresholds and switches.
 
-pipeline_version: "0.1.0"
+# The pipeline version is the package version (pyproject.toml), set at run time.
 
 # Target OpenSidewalks schema version
 osw_schema_version: "0.3"
