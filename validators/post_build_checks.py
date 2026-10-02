@@ -10,6 +10,7 @@ polygons, the ramp survey as downloaded and the cleaned sidewalk polygons are
 read from it. Writes OUT_JSON, a pickle of the node and edge tables beside it,
 and the width transect sample as CSV.
 """
+import itertools
 import json
 import math
 import pickle
@@ -61,7 +62,6 @@ N = pd.DataFrame(nrows, columns=["id", "lon", "lat", "elev", "barrier", "kerb", 
 E = pd.DataFrame(erows, columns=["id", "u", "v", "kind", "highway", "borough", "source", "incline", "width", "length",
                                  "name", "x0", "y0", "x1", "y1", "npts", "surface", "markings", "has_osm_id", "has_ts"])
 del nrows, erows
-out_path.with_suffix(".tables.pkl").write_bytes(pickle.dumps((N, E)))
 
 # --- counts and form -------------------------------------------------------
 res["counts"] = {"features": len(N) + len(E), "nodes": len(N), "edges": len(E),
@@ -76,6 +76,8 @@ res["form"] = {"coordinates_over_7_decimals": int(bad_precision),
                "self_loop_edges": int((E.u == E.v).sum()),
                "zero_length_edges": int((E.length == 0).sum()),
                "edges_over_500m": int((E.length > 500).sum())}
+res["edge_length_m"] = {f"p{int(q * 100):02d}": round(float(E.length.quantile(q)), 2) for q in (0.01, 0.05, 0.5, 0.95, 0.99)}
+res["edge_length_m"]["max"] = round(float(E.length.max()), 1)
 ncoord = N.set_index("id")[["lon", "lat"]]
 eu = ncoord.reindex(E.u.values).values; ev = ncoord.reindex(E.v.values).values
 res["form"]["edge_ends_off_their_node"] = int(((eu[:, 0] != E.x0.values) | (eu[:, 1] != E.y0.values) |
@@ -120,7 +122,7 @@ walk = E[E.kind.isin(["sidewalk", "crossing", "footway"]) & E.incline.notna()]
 bins = [0, 2, 5, 10, 20, 50, 1e9]
 res["incline_outside_limits_by_edge_length"] = {
     f"{lo} to {hi if hi < 1e9 else 'inf'} m": {"edges": len(d), "share_outside": round(float(((d.incline > .083) | (d.incline < -.1)).mean()), 4)}
-    for lo, hi in zip(bins[:-1], bins[1:]) for d in [walk[(walk.length >= lo) & (walk.length < hi)]] if len(d)}
+    for lo, hi in itertools.pairwise(bins) for d in [walk[(walk.length >= lo) & (walk.length < hi)]] if len(d)}
 res["incline_by_borough"] = {b: {"edges": len(d), "share_with_incline": round(float(d.incline.notna().mean()), 4),
                                  "share_zero": round(float((d.incline == 0).mean()), 4)}
                              for b, d in E[E.kind != "street"].groupby(E.borough.fillna("none"))}
@@ -230,5 +232,6 @@ res["gap_fill"] = {"edges": len(gf), "segments": len(gf) // 2, "with_reverse": i
                    "km_one_direction": round(float(gf.length.sum() / 2000), 1),
                    "by_borough": gf.borough.fillna("none").value_counts().to_dict(),
                    "ends_on_an_osm_node": int((gf.u.isin(set(E[E.source == "osm_walk"].u) | set(E[E.source == "osm_walk"].v))).sum())}
+out_path.with_suffix(".tables.pkl").write_bytes(pickle.dumps((N, E)))
 out_path.write_text(json.dumps(res, indent=1, default=str))
 print(json.dumps({k: v for k, v in res.items() if k not in ("borough_crossing_pedestrian_edges",)}, indent=1, default=str)[:6000])

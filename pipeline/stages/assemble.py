@@ -25,6 +25,7 @@ import numpy as np
 import pandas as pd
 from shapely.geometry import Point, mapping
 
+from pipeline.stages.schema_map import borough_code
 from pipeline.utils.ids import node_id
 from pipeline.utils.provenance import get_git_sha, load_manifest
 
@@ -628,6 +629,10 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
             osm_nodes["ext:source"] = "osm_walk"
         if "ext:pipeline_version" not in osm_nodes.columns:
             osm_nodes["ext:pipeline_version"] = pipeline_version
+        # The nodes come straight from Stage 2 with the OSMnx region name
+        # ("queens", "bronx_county"); the edges got their codes in Stage 3.
+        if "ext:borough" in osm_nodes.columns:
+            osm_nodes["ext:borough"] = osm_nodes["ext:borough"].map(borough_code)
 
         # Strip all non-OSW properties. OSMnx attaches osmid, oneway, reversed,
         # length, junction, ref, etc.. These fail the OSW additionalProperties:false

@@ -15,8 +15,10 @@ from shapely.geometry import LineString, Point, Polygon
 
 from pipeline.stages.assemble import _compute_edge_inclines, _merge_near_endpoints
 from pipeline.stages.schema_map import (
+    _classify_osm_edge,
     _planimetric_to_sidewalk_edges,
     _ramps_to_curb_nodes,
+    borough_code,
 )
 
 
@@ -112,6 +114,19 @@ def test_endpoint_merge_closes_gaps_without_chaining():
     # A dead end 3 m away is out of tolerance and stays.
     far = [[(13, 0), (20, 0)]]
     assert _merge_near_endpoints(edges(path + far), tolerance_m=2.0)[1] == {}
+
+
+def test_shared_paths_are_walkable_only_where_osm_says_so():
+    assert _classify_osm_edge({"highway": "cycleway", "foot": "designated"}) == "footway"
+    assert _classify_osm_edge({"highway": "cycleway", "foot": "yes", "footway": "crossing"}) == "crossing"
+    assert _classify_osm_edge({"highway": "track", "foot": "permissive"}) == "footway"
+    assert _classify_osm_edge({"highway": "cycleway"}) is None
+    assert _classify_osm_edge({"highway": "cycleway", "foot": "use_sidepath"}) is None
+
+
+def test_borough_names_become_codes():
+    assert [borough_code(v) for v in ("queens", "bronx_county", "Staten Island", "MN", "study_area")] == \
+        ["QN", "BX", "SI", "MN", "study_area"]
 
 
 if __name__ == "__main__":

@@ -55,6 +55,15 @@ _BOROUGH_CODES = {
     "staten_island": "SI",
 }
 
+
+
+def borough_code(value):
+    """MN/BK/QN/BX/SI for any of the ways the sources name a borough."""
+    if pd.isna(value):
+        return value
+    return _BOROUGH_CODES.get(str(value).strip().lower().replace(" ", "_"), value)
+
+
 CROSSING_MARKINGS_ENUM = frozenset([
     "zebra", "zebra:double", "zebra:paired", "zebra:bicolour",
     "lines", "lines:paired", "lines:rainbow",
@@ -764,11 +773,7 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
     # two-letter codes SCHEMA.md documents.
     for gdf in outputs.values():
         if "ext:borough" in gdf.columns:
-            gdf["ext:borough"] = gdf["ext:borough"].map(
-                lambda v: _BOROUGH_CODES.get(
-                    str(v).strip().lower().replace(" ", "_"), v
-                ) if pd.notna(v) else v
-            )
+            gdf["ext:borough"] = gdf["ext:borough"].map(borough_code)
 
     click.echo()
     for name, gdf in outputs.items():
