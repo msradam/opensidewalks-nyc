@@ -113,7 +113,7 @@ def _snap_curb_nodes(curb_nodes: gpd.GeoDataFrame,
 # ---------------------------------------------------------------------------
 
 def _merge_near_endpoints(all_edges: gpd.GeoDataFrame,
-                           tolerance_m: float = 2.0) -> gpd.GeoDataFrame:
+                           tolerance_m: float = 2.0) -> tuple[gpd.GeoDataFrame, dict]:
     """Unify _u_id/_v_id for edge endpoints that are geographically near but
     not identical across sources.
 
@@ -121,12 +121,15 @@ def _merge_near_endpoints(all_edges: gpd.GeoDataFrame,
     that share a geographic endpoint may differ by 1-3 m due to survey precision.
     This pass clusters endpoints within tolerance_m and remaps all references to
     a single canonical ID per cluster, ensuring the two subgraphs are joined.
+
+    Returns the edges and the {merged ID: canonical ID} remap, so callers can
+    carry anything else keyed on an endpoint ID (curb nodes) through the merge.
     """
     from pyproj import Transformer
     from scipy.spatial import cKDTree
 
     if all_edges.empty or "_u_id" not in all_edges.columns:
-        return all_edges
+        return all_edges, {}
 
     # Build id -> (lon, lat) from edge endpoint geometry. Deduplicated.
     u_frame = all_edges[["_u_id"]].copy()
@@ -151,7 +154,7 @@ def _merge_near_endpoints(all_edges: gpd.GeoDataFrame,
     )
 
     if len(endpoints) == 0:
-        return all_edges
+        return all_edges, {}
 
     to_proj = Transformer.from_crs("EPSG:4326", "EPSG:32618", always_xy=True)
     xy = np.array([
@@ -164,7 +167,7 @@ def _merge_near_endpoints(all_edges: gpd.GeoDataFrame,
 
     if not pairs:
         click.echo("    No near-coincident cross-source endpoints found")
-        return all_edges
+        return all_edges, {}
 
     ids_list = endpoints["nid"].tolist()
     parent   = list(range(len(ids_list)))
@@ -190,7 +193,7 @@ def _merge_near_endpoints(all_edges: gpd.GeoDataFrame,
     }
 
     if not remap:
-        return all_edges
+        return all_edges, {}
 
     click.echo(f"    Merged {len(remap):,} near-coincident cross-source endpoints "
                f"(tolerance {tolerance_m} m)")
@@ -209,7 +212,7 @@ def _merge_near_endpoints(all_edges: gpd.GeoDataFrame,
         click.echo(f"    Dropped {int(collapsed.sum()):,} edges collapsed "
                    f"to zero length by the merge")
         result = result[~collapsed].copy()
-    return result
+    return result, remap
 
 
 # ---------------------------------------------------------------------------
@@ -517,6 +520,7 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
     )
     click.echo(f"    {len(pedestrian_edges):,} pedestrian edge endpoints to index")
     endpoints  = _endpoint_coords(pedestrian_edges)
+    surveyed   = curb_nodes[["_id", "geometry"]].copy()
     curb_nodes = _snap_curb_nodes(curb_nodes, endpoints, snap_tolerance)
 
     # Merge near-coincident endpoints across sources. OSM and planimetric edges
@@ -524,7 +528,24 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
     # ensuring the two subgraphs are topologically joined.
     click.echo("\n  Merging near-coincident cross-source endpoints...")
     merge_tolerance = build_cfg.get("endpoint_merge_tolerance_meters", 2.0)
-    all_edges = _merge_near_endpoints(all_edges, tolerance_m=merge_tolerance)
+    all_edges, endpoint_remap = _merge_near_endpoints(all_edges, tolerance_m=merge_tolerance)
+
+    # A curb node took the ID of the endpoint it snapped to. If the merge then
+    # folded that endpoint into another node, follow it, or the ramp is left on
+    # an ID no edge references.
+    if endpoint_remap and len(curb_nodes) > 0:
+        curb_nodes["_id"] = curb_nodes["_id"].map(lambda i: endpoint_remap.get(i, i))
+
+    # Several ramps at one corner can land on the same node, and a node holds
+    # one ramp's fields. The first ramp keeps the node; the others go back to
+    # their surveyed position as unattached nodes, so the dedup below does not
+    # silently discard their survey record.
+    extra = curb_nodes["_id"].duplicated(keep="first")
+    if extra.any():
+        curb_nodes.loc[extra, "_id"] = surveyed.loc[extra, "_id"]
+        curb_nodes.loc[extra, "geometry"] = surveyed.loc[extra, "geometry"]
+        click.echo(f"    {int(extra.sum()):,} ramps share a node with another ramp; "
+                   f"kept at their surveyed position")
 
     # Prepare OSM nodes with _id field.
     if len(osm_nodes) > 0:
@@ -551,8 +572,15 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
         ]
         osm_nodes = osm_nodes[cols_to_keep].copy()
 
+    # Inject bare nodes for any dangling edge endpoints. This runs before the
+    # curb nodes join, so the first row for every referenced ID sits at the
+    # edge's own endpoint coordinate; the dedup below keeps that row's geometry
+    # and folds the ramp fields into it.
+    click.echo("\n  Ensuring all edge endpoints have corresponding Node features...")
+    all_nodes = _inject_missing_nodes(all_edges, osm_nodes, pipeline_version)
+
     # Combine all nodes.
-    all_node_gdfs = [g for g in [osm_nodes, curb_nodes] if len(g) > 0]
+    all_node_gdfs = [g for g in [all_nodes, curb_nodes] if len(g) > 0]
     if all_node_gdfs:
         all_nodes = gpd.GeoDataFrame(
             pd.concat(all_node_gdfs, ignore_index=True),
@@ -560,10 +588,6 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
         )
     else:
         all_nodes = gpd.GeoDataFrame(geometry=gpd.GeoSeries([], crs="EPSG:4326"))
-
-    # Inject bare nodes for any dangling edge endpoints.
-    click.echo("\n  Ensuring all edge endpoints have corresponding Node features...")
-    all_nodes = _inject_missing_nodes(all_edges, all_nodes, pipeline_version)
 
     # Deduplicate nodes by _id, merging properties so CurbRamp annotations
     # (barrier, kerb, tactile_paving) survive even when the same location also
