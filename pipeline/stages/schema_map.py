@@ -478,6 +478,14 @@ def _planimetric_to_sidewalk_edges(
             n_centerline_fail += 1
             continue
 
+        # The rectangle axis only stands for the sidewalk when the polygon is
+        # a strip. For a ring around a block, or any irregular shape, it cuts
+        # straight through the block interior, so require the line to stay
+        # inside its own polygon.
+        if centerline.intersection(poly).length < 0.9 * centerline.length:
+            n_centerline_fail += 1
+            continue
+
         # Reproject centerline back to WGS-84.
         from pyproj import Transformer
         transformer = Transformer.from_crs("EPSG:32618", "EPSG:4326", always_xy=True)
@@ -515,6 +523,16 @@ def _planimetric_to_sidewalk_edges(
             props["width"] = width_m
 
         rows.append({**props, "geometry": centerline_wgs84})
+        # Edges are directed, one per travel direction (as the OSM edges are),
+        # so emit the reverse too or the sidewalk is one-way to a router.
+        rows.append({
+            **props,
+            "_id": edge_id(v_lon, v_lat, u_lon, u_lat,
+                           f"sidewalk|{c.x:.6f},{c.y:.6f}", "nyc_planimetric_sidewalks"),
+            "_u_id": vid,
+            "_v_id": uid,
+            "geometry": LineString(coords[::-1]),
+        })
         n_centerline_ok += 1
 
     click.echo(f"    Planimetric gap-fill: {n_centerline_ok} new sidewalk edges "
@@ -675,6 +693,11 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
     plan_sidewalks = _planimetric_to_sidewalk_edges(
         plan_gdf, sidewalks, build_cfg, pipeline_version, manifest
     )
+
+    # Gap-fill edges have no OSMnx borough tag; assign one before the merge,
+    # because _tag_borough skips a frame that already has the column.
+    if len(plan_sidewalks) > 0:
+        _tag_borough(plan_sidewalks, boroughs_gdf)
 
     # Merge planimetric gap-fills into sidewalks layer.
     all_sidewalks = gpd.GeoDataFrame(
