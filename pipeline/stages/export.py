@@ -189,6 +189,8 @@ def export_routing_json(fc: dict, output_dir: Path) -> Path:
             "generated_at":      datetime.now(timezone.utc).isoformat(),
             "schema_version":    fc.get("$schema", ""),
             "pipeline_version":  (fc.get("pipelineVersion") or {}).get("version", ""),
+            # Licence, attribution and the OSM snapshot, as in the GeoJSON root.
+            "data_source":       fc.get("dataSource") or {},
             "n_nodes":           len(nodes_out),
             "n_edges":           len(edges_out),
             "description": (
