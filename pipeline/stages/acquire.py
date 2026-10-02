@@ -82,8 +82,19 @@ def _socrata_fetch_all(domain: str, dataset_id: str, app_token: str | None,
         # can be checked for repeats, and is dropped again below.
         params = {"$select": "*, :id", "$order": ":id",
                   "$limit": page_size, "$offset": offset, **extra_params}
-        resp = requests.get(base_url, params=params, headers=headers, timeout=60)
-        resp.raise_for_status()
+        for attempt in range(5):
+            try:
+                resp = requests.get(base_url, params=params, headers=headers, timeout=60)
+                resp.raise_for_status()
+                break
+            except requests.RequestException as exc:
+                # A page can come back 500 or reset for no reason of ours;
+                # one such answer killed a city-wide build at page 19 of 22.
+                status = getattr(exc.response, "status_code", None)
+                if attempt == 4 or (status is not None and status < 500 and status != 429):
+                    raise
+                import time
+                time.sleep(5 * 2 ** attempt)
         batch = resp.json()
         if not batch:
             break
