@@ -5,7 +5,9 @@ Unweaver schema (per nbolten/unweaver example/layers/uw.geojson):
   Feature.properties:
     footway         str    "sidewalk" | "crossing" | etc. (or absent for streets)
     subclass        str    "footway" | "street" | ...
-    curbramps       bool   True if either endpoint has a Curb Node
+    curbramps       bool   On a crossing: True if the whole crossing, kerb to
+                           kerb, has a Curb Node at each end. Elsewhere: True
+                           if either endpoint has a Curb Node.
     incline         float  signed grade (rise/run)
     length          float  edge length, metres (great-circle)
     surface         str    OSW canonical surface
@@ -73,6 +75,45 @@ def main():
                 curb_ids.add(nid)
     print(f"[curb] curb-annotated nodes: {len(curb_ids):,}")
 
+    # A crossing is usually several edges: kerb, lane and centreline vertices
+    # are all nodes. Only the two outer edges touch a kerb, so "either endpoint
+    # is a curb node" fails every edge in the middle of a crossing that has a
+    # ramp at both ends. Judge the crossing as a whole instead: group crossing
+    # edges that meet at a node no sidewalk or footway reaches, and pass the
+    # group when every node where it meets the rest of the pedestrian network
+    # is a curb node.
+    crossing_edges, walk_nodes = [], set()
+    for f in feats:
+        if (f.get("geometry") or {}).get("type") != "LineString":
+            continue
+        p = f.get("properties") or {}
+        u, v = p.get("_u_id"), p.get("_v_id")
+        if p.get("highway") == "footway" and p.get("footway") == "crossing":
+            crossing_edges.append((p.get("_id"), u, v))
+        elif p.get("highway") in ("footway", "steps"):
+            walk_nodes.update((u, v))
+    ends = curb_ids | walk_nodes
+    parent = {}
+
+    def find(x):
+        while parent.setdefault(x, x) != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    at_inner = {}
+    for eid, u, v in crossing_edges:
+        for n in (u, v):
+            if n not in ends:
+                parent[find(eid)] = find(at_inner.setdefault(n, eid))
+    group_ends = {}
+    for eid, u, v in crossing_edges:
+        group_ends.setdefault(find(eid), set()).update(n for n in (u, v) if n in ends)
+    crossing_ok = {eid for eid, _, _ in crossing_edges
+                   if group_ends[find(eid)] and group_ends[find(eid)] <= curb_ids}
+    print(f"[crossings] {len(crossing_edges):,} edges, {len(crossing_ok):,} on a crossing "
+          f"with a curb node at each end")
+
     # Second pass: build flat-format edges
     out_features = []
     skipped_no_geom = 0
@@ -94,8 +135,10 @@ def main():
         coords = [[float(c[0]), float(c[1])] for c in coords]
         length_m = round(_polyline_length_m(coords), 3)
 
-        # Heuristic curbramps: True if either endpoint is curb-annotated.
-        curbramps = (u in curb_ids) or (v in curb_ids)
+        if p.get("footway") == "crossing":
+            curbramps = p.get("_id") in crossing_ok
+        else:
+            curbramps = (u in curb_ids) or (v in curb_ids)
 
         # Subclass
         hw = p.get("highway")
