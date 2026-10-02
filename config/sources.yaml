@@ -20,10 +20,10 @@ sources:
       extract_url: https://download.geofabrik.de/north-america/us/new-york-261001.osm.pbf
       extract_sha256: 1214968b2c988e13ee6a6bde6b9c9891337a588475b7fd2ac1939e175073d8b7
       # Overpass tag filter syntax, applied to the extract's ways. The regexes
-      # are unanchored, as in Overpass.
-      custom_filter: >
-        ["highway"~"footway|path|pedestrian|steps|residential|service|tertiary|
-        secondary|primary|cycleway|track|living_street"]["foot"!~"no"]["access"!~"no|private"]
+      # are unanchored, as in Overpass. Keep the filter on one line: folded
+      # over two, YAML put a space inside the regex and "secondary" never
+      # matched.
+      custom_filter: '["highway"~"footway|path|pedestrian|steps|residential|service|tertiary|secondary|primary|cycleway|track|living_street"]["foot"!~"no"]["access"!~"no|private"]'
       retain_all: true
       simplify: false
     expected_geometry: LineString
