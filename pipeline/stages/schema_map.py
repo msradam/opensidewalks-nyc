@@ -75,9 +75,15 @@ _DWS_PRESENT = frozenset([
 # OSM highway tags that map to OSW footway/sidewalk edges.
 FOOTWAY_TYPES = frozenset(["footway", "path", "pedestrian", "steps"])
 
+# OSM highway tags that are walkable only where OSM says so: a cycleway or a
+# track becomes a footway edge when it carries foot=yes, designated or
+# permissive, and is dropped otherwise. Many bridge paths and greenways are
+# mapped this way (the Williamsburg, Third Avenue and Kosciuszko bridge paths
+# among them); dropping them all cut those bridges.
+SHARED_TYPES = frozenset(["cycleway", "track"])
+FOOT_ALLOWED = frozenset(["yes", "designated", "permissive"])
+
 # OSM highway tags that map to OSW street edges (not sidewalk-class).
-# cycleway and track are excluded: cycleway has no OSW schema definition and is
-# not pedestrian infrastructure; track is rural/unpaved and not relevant to NYC.
 STREET_TYPES = frozenset([
     "residential", "service", "tertiary", "secondary", "primary",
     "living_street", "unclassified",
@@ -216,7 +222,8 @@ def _classify_osm_edge(row: pd.Series) -> str | None:
     crossing_raw = row.get("crossing")
     has_crossing = crossing_raw is not None and str(crossing_raw) not in ("nan", "None", "no", "")
 
-    if highway in FOOTWAY_TYPES:
+    foot = str(row.get("foot", "")).lower().strip()
+    if highway in FOOTWAY_TYPES or (highway in SHARED_TYPES and foot in FOOT_ALLOWED):
         if footway == "crossing" or has_crossing:
             return "crossing"
         elif footway == "sidewalk":
@@ -300,6 +307,11 @@ def _osm_edges_to_osw(edges_gdf: gpd.GeoDataFrame, pipeline_version: str,
         osmid = row.get("osmid")
         if osmid is not None and str(osmid) not in ("nan", "None", ""):
             props["ext:osm_id"] = str(osmid)
+
+        # A shared path is written as highway=footway; keep what OSM called it.
+        highway_osm = str(row.get("highway", "")).split("|")[0]
+        if highway_osm in SHARED_TYPES and edge_type != "street":
+            props["ext:osm_highway"] = highway_osm
 
         if edge_type == "sidewalk":
             props["footway"] = "sidewalk"
