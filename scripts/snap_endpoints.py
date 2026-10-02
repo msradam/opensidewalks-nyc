@@ -7,9 +7,13 @@ python-osw-validation >= 0.4.0 validates that each edge's start/end coordinate
 matches the coordinate of the node referenced by _u_id / _v_id. The pipeline's
 endpoint merge (pipeline/stages/assemble.py, _merge_near_endpoints) remaps
 _u_id/_v_id to canonical node IDs without moving the edge's terminal vertices,
-leaving sub-metre gaps that 0.4.x flags. This pass snaps every edge endpoint to
-its node coordinate, rewrites the canonical GeoJSON in place, and emits the
+leaving gaps that 0.4.x flags (typically 1 to 4 m, occasionally tens of metres
+where the merge chains several endpoints). This pass snaps every edge endpoint
+to its node coordinate, rewrites the canonical GeoJSON in place, and emits the
 split node/edge files plus the validator ZIP. Stdlib only. Idempotent.
+
+python-osw-validation >= 0.5.0 also rejects coordinates with more than 7
+decimal places, so every coordinate is rounded to 7 places (about 1 cm) first.
 """
 
 from __future__ import annotations
@@ -19,6 +23,9 @@ import json
 import time
 import zipfile
 from pathlib import Path
+
+# Decimal places kept on every coordinate; the validator's limit since 0.5.0.
+PRECISION = 7
 
 
 def main():
@@ -41,7 +48,8 @@ def main():
         nid = p.get("_id")
         c = ft["geometry"].get("coordinates")
         if nid and c and len(c) >= 2:
-            node_coord[nid] = [float(c[0]), float(c[1])]
+            c[:2] = [round(float(c[0]), PRECISION), round(float(c[1]), PRECISION)]
+            node_coord[nid] = c[:2]
 
     snapped_u = snapped_v = degenerate = unresolved = 0
     for ft in feats:
@@ -50,6 +58,7 @@ def main():
         coords = ft["geometry"].get("coordinates")
         if not coords or len(coords) < 2:
             continue
+        coords[:] = [[round(float(x), PRECISION) for x in pt] for pt in coords]
         p = ft.get("properties") or {}
         cu = node_coord.get(p.get("_u_id"))
         cv = node_coord.get(p.get("_v_id"))
