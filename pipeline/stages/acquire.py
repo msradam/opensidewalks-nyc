@@ -6,8 +6,8 @@ Output: data/raw/{source_id}/ files + data/raw/manifest.json
 Caches by content hash. Re-running skips files that haven't changed upstream.
 All raw files are stored as-downloaded; no transformation happens here.
 
-OSM data is queried borough-by-borough via OSMnx to manage memory, saved as
-GraphML files (one per borough) plus a merged nodes/edges GeoJSON pair.
+OSM data is read from one dated regional extract (pinned by URL and SHA-256 in
+sources.yaml), cut per borough, and saved as a merged nodes/edges GeoJSON pair.
 
 Socrata sources are paginated via the Socrata REST API (raw requests).
 MTA ADA data falls back to GTFS stops.txt if the Open Data endpoint is missing.
@@ -17,6 +17,7 @@ import hashlib
 import io
 import json
 import os
+import re
 import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
@@ -190,17 +191,58 @@ def acquire_boroughs(source_cfg: dict, out_dir: Path, app_token: str | None,
     return out_file
 
 
+def _filter_extract(pbf: Path, out_xml: Path, custom_filter: str,
+                    bounds: tuple[float, float, float, float]) -> None:
+    """Write the ways the Overpass filter would return, with their nodes, as OSM XML.
+
+    custom_filter is the Overpass tag filter from sources.yaml. Overpass's ~ and
+    !~ are unanchored regex searches and a missing tag passes !~; the same
+    string is applied here so the extract yields the ways Overpass did.
+    """
+    import osmium
+
+    clauses = re.findall(r'\["([^"]+)"(!?~)"([^"]*)"\]', custom_filter)
+    if "".join(f'["{k}"{op}"{rx}"]' for k, op, rx in clauses) != custom_filter:
+        raise ValueError(f"Unsupported custom_filter syntax: {custom_filter}")
+    tests = [(k, op == "~", re.compile(rx)) for k, op, rx in clauses]
+    keys = [k for k, positive, _ in tests if positive]
+
+    west, south, east, north = bounds
+    fp = osmium.FileProcessor(str(pbf)).with_locations()
+    if keys:
+        fp = fp.with_filter(osmium.filter.KeyFilter(*keys))
+    with osmium.BackReferenceWriter(str(out_xml), ref_src=str(pbf),
+                                    overwrite=True) as writer:
+        for obj in fp:
+            if not obj.is_way():
+                continue
+            tags = obj.tags
+            if any((k in tags and rx.search(tags[k]) is not None) != positive
+                   for k, positive, rx in tests):
+                continue
+            # A way is written whole if any of its nodes is in the region, so
+            # every edge with one end inside is there for the truncation.
+            if any(n.location.valid() and west <= n.lon <= east
+                   and south <= n.lat <= north for n in obj.nodes):
+                writer.add_way(obj)
+
+
 def acquire_osm(source_cfg: dict, boroughs_file: Path, out_dir: Path,
                 manifest: dict, bbox: dict | None = None) -> Path:
-    """Fetch OSM walking infrastructure via OSMnx.
+    """Build the OSM walking graph from a dated regional extract.
 
-    City-wide mode: queries each borough polygon separately (15-30 min).
-    Study area mode: single graph_from_bbox query (seconds).
+    The extract (sources.yaml: extract_url, extract_sha256) is downloaded once,
+    checked against its pinned SHA-256, filtered to the configured highway
+    ways, and cut per borough (city-wide) or to the bbox (study area). Its
+    data timestamp and checksum go into the manifest and the root metadata.
     """
+    from shapely.geometry import box as shapely_box
+
     retrieval     = source_cfg["retrieval"]
     custom_filter = " ".join(retrieval["custom_filter"].split())
     retain_all    = retrieval.get("retain_all", True)
     simplify      = retrieval.get("simplify", False)
+    extract_url   = retrieval["extract_url"]
 
     # Extend OSMnx's default useful_tags_way to preserve pedestrian sub-tags.
     extra_tags = ["footway", "crossing", "surface", "sidewalk", "tactile_paving",
@@ -212,77 +254,72 @@ def acquire_osm(source_cfg: dict, boroughs_file: Path, out_dir: Path,
     nodes_file = out_dir / "osm_nodes.geojson"
     edges_file = out_dir / "osm_edges.geojson"
 
-    if bbox:
-        graphml_file = out_dir / "osm_study_area.graphml"
-        if graphml_file.exists():
-            click.echo(f"  OSM study area: cache hit, loading {graphml_file.name}")
-            G = ox.load_graphml(graphml_file)
-        else:
-            click.echo(f"  OSM study area: querying bbox "
-                       f"({bbox['south']}, {bbox['west']}) → "
-                       f"({bbox['north']}, {bbox['east']})...")
-            G = ox.graph_from_bbox(
-                (bbox["west"], bbox["south"], bbox["east"], bbox["north"]),
-                custom_filter=custom_filter,
-                retain_all=retain_all,
-                simplify=simplify,
-            )
-            ox.save_graphml(G, graphml_file)
-            click.echo(f"    {len(G.nodes)} nodes, {len(G.edges)} edges → {graphml_file.name}")
-
-        nodes_gdf, edges_gdf = ox.graph_to_gdfs(G)
-        nodes_gdf["ext:borough"] = "study_area"
-        edges_gdf["ext:borough"] = "study_area"
-
-        combined_nodes = gpd.GeoDataFrame(nodes_gdf, crs="EPSG:4326")
-        combined_edges = gpd.GeoDataFrame(edges_gdf, crs="EPSG:4326")
-
+    pbf = out_dir / extract_url.rsplit("/", 1)[-1]
+    if pbf.exists():
+        click.echo(f"  OSM extract: cache hit, {pbf.name}")
     else:
-        click.echo("  Acquiring OSM walking infrastructure (this may take 15-30 min)...")
+        click.echo(f"  OSM extract: downloading {extract_url}")
+        with requests.get(extract_url, stream=True, timeout=120) as resp:
+            resp.raise_for_status()
+            with open(pbf, "wb") as f:
+                f.writelines(resp.iter_content(1 << 20))
+    sha = _sha256_file(pbf)
+    if sha != retrieval["extract_sha256"]:
+        raise RuntimeError(
+            f"{pbf.name} has SHA-256 {sha}, sources.yaml pins "
+            f"{retrieval['extract_sha256']}. Delete the file, or update the pin "
+            f"if the extract was changed on purpose."
+        )
+    import osmium
+    osm_timestamp = osmium.io.Reader(str(pbf)).header().get(
+        "osmosis_replication_timestamp")
+    click.echo(f"    OSM data as of {osm_timestamp}, sha256 {sha[:16]}...")
+    record_source(manifest, "osm_extract", str(pbf), sha)
+    manifest["osm_extract"].update(url=extract_url, osm_data_timestamp=osm_timestamp)
 
+    if bbox:
+        regions = [("study_area",
+                    shapely_box(bbox["west"], bbox["south"], bbox["east"], bbox["north"]))]
+    else:
         boroughs_gdf = gpd.read_file(boroughs_file)
         if boroughs_gdf.crs is None or boroughs_gdf.crs.to_epsg() != 4326:
             boroughs_gdf = boroughs_gdf.to_crs("EPSG:4326")
-
         name_col = next(
             (c for c in ["boro_name", "BoroName", "name"] if c in boroughs_gdf.columns),
             None
         )
-        all_nodes_gdfs = []
-        all_edges_gdfs = []
+        regions = [
+            (str(row[name_col]).replace(" ", "_").lower() if name_col else f"boro_{idx}",
+             row.geometry)
+            for idx, row in boroughs_gdf.iterrows()
+        ]
 
-        for idx, row in boroughs_gdf.iterrows():
-            boro_name    = str(row[name_col]).replace(" ", "_").lower() if name_col else f"boro_{idx}"
-            graphml_file = out_dir / f"osm_{boro_name}.graphml"
+    xml_file = out_dir / "osm_filtered.osm"
+    click.echo("  Filtering the extract to the configured ways...")
+    _filter_extract(pbf, xml_file, custom_filter,
+                    gpd.GeoSeries([g for _, g in regions]).total_bounds)
+    G_all = ox.graph_from_xml(xml_file, retain_all=retain_all, simplify=simplify)
+    click.echo(f"    {len(G_all.nodes)} nodes, {len(G_all.edges)} edges in the region")
 
-            if graphml_file.exists():
-                click.echo(f"    {boro_name}: cache hit, loading existing GraphML")
-                G = ox.load_graphml(graphml_file)
-            else:
-                click.echo(f"    {boro_name}: querying OSM...")
-                # truncate_by_edge keeps the segments that cross the borough
-                # line. Without it each borough's graph stops at its last node
-                # inside the polygon and every bridge is cut mid-span; Stage 4
-                # dedups the crossing edges both boroughs then return.
-                G = ox.graph_from_polygon(
-                    row.geometry,
-                    custom_filter=custom_filter,
-                    retain_all=retain_all,
-                    simplify=simplify,
-                    truncate_by_edge=True,
-                )
-                ox.save_graphml(G, graphml_file)
-                click.echo(f"    {boro_name}: {len(G.nodes)} nodes, {len(G.edges)} edges "
-                           f"→ {graphml_file.name}")
+    all_nodes_gdfs = []
+    all_edges_gdfs = []
+    for name, polygon in regions:
+        # truncate_by_edge keeps the segments that cross the borough line.
+        # Without it each borough's graph stops at its last node inside the
+        # polygon and every bridge is cut mid-span; Stage 4 dedups the
+        # crossing edges both boroughs then hold. The study-area box is cut
+        # at its last inside node, as before.
+        G = ox.truncate.truncate_graph_polygon(G_all, polygon,
+                                               truncate_by_edge=not bbox)
+        click.echo(f"    {name}: {len(G.nodes)} nodes, {len(G.edges)} edges")
+        nodes_gdf, edges_gdf = ox.graph_to_gdfs(G)
+        nodes_gdf["ext:borough"] = name
+        edges_gdf["ext:borough"] = name
+        all_nodes_gdfs.append(nodes_gdf)
+        all_edges_gdfs.append(edges_gdf)
 
-            nodes_gdf, edges_gdf = ox.graph_to_gdfs(G)
-            nodes_gdf["ext:borough"] = boro_name
-            edges_gdf["ext:borough"] = boro_name
-            all_nodes_gdfs.append(nodes_gdf)
-            all_edges_gdfs.append(edges_gdf)
-
-        combined_nodes = gpd.GeoDataFrame(pd.concat(all_nodes_gdfs), crs="EPSG:4326")
-        combined_edges = gpd.GeoDataFrame(pd.concat(all_edges_gdfs), crs="EPSG:4326")
+    combined_nodes = gpd.GeoDataFrame(pd.concat(all_nodes_gdfs), crs="EPSG:4326")
+    combined_edges = gpd.GeoDataFrame(pd.concat(all_edges_gdfs), crs="EPSG:4326")
 
     combined_nodes.reset_index().to_file(nodes_file, driver="GeoJSON")
     combined_edges.reset_index().to_file(edges_file, driver="GeoJSON")
