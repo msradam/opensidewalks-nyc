@@ -260,11 +260,16 @@ def acquire_osm(source_cfg: dict, boroughs_file: Path, out_dir: Path,
                 G = ox.load_graphml(graphml_file)
             else:
                 click.echo(f"    {boro_name}: querying OSM...")
+                # truncate_by_edge keeps the segments that cross the borough
+                # line. Without it each borough's graph stops at its last node
+                # inside the polygon and every bridge is cut mid-span; Stage 4
+                # dedups the crossing edges both boroughs then return.
                 G = ox.graph_from_polygon(
                     row.geometry,
                     custom_filter=custom_filter,
                     retain_all=retain_all,
                     simplify=simplify,
+                    truncate_by_edge=True,
                 )
                 ox.save_graphml(G, graphml_file)
                 click.echo(f"    {boro_name}: {len(G.nodes)} nodes, {len(G.edges)} edges "
