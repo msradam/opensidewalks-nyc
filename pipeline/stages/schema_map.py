@@ -62,6 +62,15 @@ CROSSING_MARKINGS_ENUM = frozenset([
     "pictograms", "rainbow", "surface", "yes", "no",
 ])
 
+# NYC DOT ramp survey codes. The slope and dimension fields use these values
+# for "no measurement" (999 is mostly cut-through ramps, which have no slope).
+_DOT_SENTINELS = frozenset([555.0, 777.0, 888.0, 999.0])
+
+# DWS_CONDITIONS values that mean a detectable warning surface is there.
+_DWS_PRESENT = frozenset([
+    "good condition", "defective", "off ramp - good", "off ramp-defective",
+])
+
 # OSM highway tags that map to OSW footway/sidewalk edges.
 FOOTWAY_TYPES = frozenset(["footway", "path", "pedestrian", "steps"])
 
@@ -360,12 +369,14 @@ def _ramps_to_curb_nodes(ramps_gdf: gpd.GeoDataFrame, pipeline_version: str,
         if "borough" in ramp:
             props["ext:borough"] = str(ramp["borough"])
 
-        # Tactile paving: DOT dataset doesn't have a direct flag, but we can
-        # check dws_conditions (detectable warning strip condition) as a proxy.
-        dws = ramp.get("dws_conditions")
-        if dws and str(dws).strip().lower() not in ("nan", "none", ""):
-            # Any non-empty dws_conditions means a DWS was surveyed.
+        # Tactile paving from the survey's detectable warning surface status.
+        # "Missing" is the most common value, so a non-empty field does not
+        # mean a surface exists. "Not Applicable" and blanks stay untagged.
+        dws = str(ramp.get("dws_conditions") or "").strip().lower()
+        if dws in _DWS_PRESENT:
             props["tactile_paving"] = "yes"
+        elif dws == "missing":
+            props["tactile_paving"] = "no"
 
         # Preserve key ramp identifiers as ext: fields for auditability.
         for orig_key, ext_key in [("rampid", "ext:ramp_id"),
@@ -376,8 +387,9 @@ def _ramps_to_curb_nodes(ramps_gdf: gpd.GeoDataFrame, pipeline_version: str,
             if val and str(val) not in ("nan", "None", ""):
                 props[ext_key] = str(val)
 
-        # DOT survey slope measurements, in percent. 999.0 is the DOT
-        # sentinel for "unmeasurable" (see SCHEMA.md); omit rather than carry it.
+        # DOT survey slope measurements, in percent, signed by direction. The
+        # survey codes "no measurement" as 555, 777, 888 or 999 (see SCHEMA.md);
+        # omit those rather than carry them.
         for orig_key, ext_key in [("ramp_running_slope_total", "ext:running_slope_pct"),
                                    ("ramp_cross_slope", "ext:cross_slope_pct"),
                                    ("counter_slope", "ext:counter_slope_pct")]:
@@ -385,7 +397,7 @@ def _ramps_to_curb_nodes(ramps_gdf: gpd.GeoDataFrame, pipeline_version: str,
                 slope = float(ramp.get(orig_key))
             except (TypeError, ValueError):
                 continue
-            if slope != 999.0:
+            if slope not in _DOT_SENTINELS:
                 props[ext_key] = slope
 
         rows.append({**props, "geometry": geom})

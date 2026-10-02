@@ -161,16 +161,19 @@ def _source_specific_normalize(source_id: str, gdf: gpd.GeoDataFrame,
     """Apply any source-specific normalization steps."""
 
     if source_id == "nyc_dot_ramps":
-        # Replace sentinel "999.0" values (used for unmeasurable/missing data) with NaN.
+        # Replace the survey's "no measurement" codes (555, 777, 888, 999) with
+        # NaN. Socrata usually delivers these columns as strings, in which case
+        # nothing matches here and Stage 3 filters the codes instead.
         numeric_cols = gdf.select_dtypes(include="number").columns
+        n_sentinels = 0
         for col in numeric_cols:
-            mask = gdf[col] == 999.0
+            mask = gdf[col].isin([555.0, 777.0, 888.0, 999.0])
             if mask.any():
+                n_sentinels += int(mask.sum())
                 gdf.loc[mask, col] = None
-        n_sentinels = sum((gdf[c] == 999.0).sum() for c in numeric_cols)
         if n_sentinels:
             report["notes"].append(
-                f"Replaced {n_sentinels} sentinel 999.0 values with NaN in ramp measurements"
+                f"Replaced {n_sentinels} sentinel values with NaN in ramp measurements"
             )
 
         # Normalize borough column to string name.
