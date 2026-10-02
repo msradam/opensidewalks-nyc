@@ -417,6 +417,7 @@ def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
         import math
         import numpy as np
         import rasterio
+        from scipy.ndimage import map_coordinates
 
         node_coords: dict[str, tuple[float, float]] = {}
         for _, row in all_nodes.iterrows():
@@ -445,8 +446,8 @@ def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
                 else:
                     project = lambda lon, lat: (lon, lat)
 
-                # The tiles carry no nodata value, so rasterio returns 0.0 for a
-                # point outside a tile's extent. Sample only the nodes a tile
+                # The tiles carry no nodata value, so a point outside a tile's
+                # extent would read as 0.0. Sample only the nodes a tile
                 # covers, or every node off the first tile is pinned at 0 m.
                 b = src.bounds
                 ids_rem, pts = [], []
@@ -457,14 +458,21 @@ def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
                     if b.left <= x < b.right and b.bottom < y <= b.top:
                         ids_rem.append(nid)
                         pts.append((x, y))
-                nodata = src.nodata
-                for nid, elev_arr in zip(ids_rem, src.sample(pts)):
-                    elev = float(elev_arr[0])
-                    is_nodata = np.isnan(elev) or (
-                        nodata is not None and not np.isnan(nodata) and elev == nodata
-                    )
-                    if not is_nodata:
-                        node_elevs[nid] = elev
+                if not pts:
+                    continue
+                # Interpolate between pixel centres. A borough tile is 5 to
+                # 12 m per pixel and most edges are shorter than that, so
+                # the nearest pixel gives two neighbouring nodes either the
+                # same elevation or a whole pixel's step.
+                band = src.read(1).astype("float64")
+                if src.nodata is not None and not np.isnan(src.nodata):
+                    band[band == src.nodata] = np.nan
+                cols, rows = ~src.transform * np.array(pts).T
+                elevs = map_coordinates(band, [rows - 0.5, cols - 0.5],
+                                        order=1, mode="nearest")
+                for nid, elev in zip(ids_rem, elevs):
+                    if not np.isnan(elev):
+                        node_elevs[nid] = float(elev)
 
         click.echo(f"    Elevations sampled: {len(node_elevs):,}/{len(node_coords):,} nodes")
 
