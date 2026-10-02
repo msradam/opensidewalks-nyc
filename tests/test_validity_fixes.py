@@ -16,6 +16,7 @@ from shapely.geometry import LineString, Point, Polygon
 from pipeline.stages.assemble import _compute_edge_inclines, _merge_near_endpoints
 from pipeline.stages.schema_map import (
     _classify_osm_edge,
+    _osm_edges_to_osw,
     _planimetric_to_sidewalk_edges,
     _ramps_to_curb_nodes,
     borough_code,
@@ -122,6 +123,16 @@ def test_shared_paths_are_walkable_only_where_osm_says_so():
     assert _classify_osm_edge({"highway": "track", "foot": "permissive"}) == "footway"
     assert _classify_osm_edge({"highway": "cycleway"}) is None
     assert _classify_osm_edge({"highway": "cycleway", "foot": "use_sidepath"}) is None
+
+
+def test_one_way_pedestrian_edges_get_their_reverse():
+    osm = gpd.GeoDataFrame({"highway": ["pedestrian", "residential"], "key": [0, 0]},
+                           geometry=[LineString([(-73.97, 40.77), (-73.971, 40.771)]),
+                                     LineString([(-73.98, 40.77), (-73.981, 40.771)])], crs="EPSG:4326")
+    sidewalks, crossings, footways, streets = _osm_edges_to_osw(osm, "test", {})
+    assert len(footways) == 2 and len(streets) == 1, "the street stays one-way"
+    assert footways["_u_id"].tolist() == footways["_v_id"].tolist()[::-1]
+    assert footways["_id"].is_unique
 
 
 def test_borough_names_become_codes():

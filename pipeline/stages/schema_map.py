@@ -343,6 +343,27 @@ def _osm_edges_to_osw(edges_gdf: gpd.GeoDataFrame, pipeline_version: str,
             props["highway"] = highway_raw
             street_rows.append({**props, "geometry": geom})
 
+    # OSM's oneway=yes binds vehicles and bicycles, not people on foot, but
+    # the graph builder honours it for every way (Central Park's drives, the
+    # reservoir track, one-way bike paths). Give each pedestrian edge that
+    # came through in one direction its reverse.
+    walk_rows = (sidewalk_rows, crossing_rows, footway_rows)
+    have = {(r["_u_id"], r["_v_id"]) for rows in walk_rows for r in rows}
+    n_reversed = 0
+    for rows in walk_rows:
+        for r in [r for r in rows if (r["_v_id"], r["_u_id"]) not in have]:
+            back = list(r["geometry"].coords)[::-1]
+            rows.append({
+                **r,
+                "_id": edge_id(*back[0], *back[-1], f"reverse_of_{r['_id']}", "osm_walk"),
+                "_u_id": r["_v_id"],
+                "_v_id": r["_u_id"],
+                "geometry": LineString(back),
+            })
+            n_reversed += 1
+    if n_reversed:
+        click.echo(f"    Added the reverse of {n_reversed} one-way pedestrian edges")
+
     def _to_gdf(rows, geom_type_label):
         if not rows:
             click.echo(f"    Warning: no {geom_type_label} edges found")
