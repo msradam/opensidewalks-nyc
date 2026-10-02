@@ -5,9 +5,10 @@ Unweaver schema (per nbolten/unweaver example/layers/uw.geojson):
   Feature.properties:
     footway         str    "sidewalk" | "crossing" | etc. (or absent for streets)
     subclass        str    "footway" | "street" | ...
-    curbramps       bool   On a crossing: True if the whole crossing, kerb to
-                           kerb, has a Curb Node at each end. Elsewhere: True
-                           if either endpoint has a Curb Node.
+    curbramps       bool   On a crossing: True if a surveyed ramp lies within
+                           5 m of each end of the whole crossing (see the
+                           comment in main). Elsewhere: True if either
+                           endpoint has a Curb Node.
     incline         float  signed grade (rise/run)
     length          float  edge length, metres (great-circle)
     surface         str    OSW canonical surface
@@ -27,7 +28,11 @@ import json
 import math
 from pathlib import Path
 
-import click
+from scipy.spatial import cKDTree
+
+# How far a surveyed ramp may be from the end of a crossing and still count
+# for it. The pipeline snaps a ramp to the graph within the same distance.
+RAMP_REACH_M = 5.0
 
 
 # ----- length helpers ------------------------------------------------------
@@ -61,13 +66,15 @@ def main():
     fc = json.loads(args.input.read_text())
     feats = fc["features"]
 
-    # First pass: which node ids carry a curb-ramp annotation?
+    # First pass: node coordinates, and which node ids carry a curb-ramp annotation.
     curb_ids = set()
+    node_xy = {}
     for f in feats:
         gt = (f.get("geometry") or {}).get("type")
         if gt != "Point":
             continue
         p = f.get("properties") or {}
+        node_xy[p.get("_id")] = f["geometry"]["coordinates"][:2]
         if (p.get("barrier") == "kerb"
                 or p.get("kerb") in {"lowered", "raised", "flush"}):
             nid = p.get("_id")
@@ -75,13 +82,15 @@ def main():
                 curb_ids.add(nid)
     print(f"[curb] curb-annotated nodes: {len(curb_ids):,}")
 
-    # A crossing is usually several edges: kerb, lane and centreline vertices
-    # are all nodes. Only the two outer edges touch a kerb, so "either endpoint
-    # is a curb node" fails every edge in the middle of a crossing that has a
-    # ramp at both ends. Judge the crossing as a whole instead: group crossing
-    # edges that meet at a node no sidewalk or footway reaches, and pass the
-    # group when every node where it meets the rest of the pedestrian network
-    # is a curb node.
+    # A crossing is usually several edges: the kerb, lane and centreline
+    # vertices of the OSM way are all nodes. A surveyed ramp is snapped to the
+    # nearest pedestrian vertex within 5 m, which is as often a sidewalk
+    # vertex beside the crossing as a node of the crossing itself. So "either
+    # endpoint of this edge is a curb node" fails most edges of a crossing
+    # that has a ramp at both corners. Judge the crossing as a whole: join
+    # crossing edges that meet at a node no sidewalk or footway reaches, and
+    # pass the group when every node where it meets the rest of the pedestrian
+    # network has a surveyed ramp within RAMP_REACH_M.
     crossing_edges, walk_nodes = [], set()
     for f in feats:
         if (f.get("geometry") or {}).get("type") != "LineString":
@@ -92,7 +101,6 @@ def main():
             crossing_edges.append((p.get("_id"), u, v))
         elif p.get("highway") in ("footway", "steps"):
             walk_nodes.update((u, v))
-    ends = curb_ids | walk_nodes
     parent = {}
 
     def find(x):
@@ -104,15 +112,22 @@ def main():
     at_inner = {}
     for eid, u, v in crossing_edges:
         for n in (u, v):
-            if n not in ends:
+            if n not in walk_nodes:
                 parent[find(eid)] = find(at_inner.setdefault(n, eid))
-    group_ends = {}
+
+    def metres(lonlat):
+        return (lonlat[0] * 111320 * math.cos(math.radians(lonlat[1])), lonlat[1] * 111320)
+
+    ramps = cKDTree([metres(node_xy[n]) for n in curb_ids]) if curb_ids else None
+    meets = {}
     for eid, u, v in crossing_edges:
-        group_ends.setdefault(find(eid), set()).update(n for n in (u, v) if n in ends)
-    crossing_ok = {eid for eid, _, _ in crossing_edges
-                   if group_ends[find(eid)] and group_ends[find(eid)] <= curb_ids}
-    print(f"[crossings] {len(crossing_edges):,} edges, {len(crossing_ok):,} on a crossing "
-          f"with a curb node at each end")
+        meets.setdefault(find(eid), set()).update(n for n in (u, v) if n in walk_nodes)
+    ramped = {g: bool(ends) and ramps is not None and all(
+                  ramps.query(metres(node_xy[n]))[0] <= RAMP_REACH_M for n in ends)
+              for g, ends in meets.items()}
+    crossing_ok = {eid for eid, _, _ in crossing_edges if ramped[find(eid)]}
+    print(f"[crossings] {len(crossing_edges):,} edges in {len(meets):,} crossings; "
+          f"{len(crossing_ok):,} edges on a crossing with a ramp at each end")
 
     # Second pass: build flat-format edges
     out_features = []
