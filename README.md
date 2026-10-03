@@ -135,6 +135,21 @@ Set `SOCRATA_APP_TOKEN` in the environment to lift NYC Open Data rate limits. Fo
 
 OpenStreetMap comes from one dated Geofabrik extract, named by URL and SHA-256 in `config/sources.yaml`. A build downloads it once, checks it, and makes no Overpass query. To build on newer OSM data, change both lines. [`scripts/README.md`](scripts/README.md) has the commands that turn a build into the release assets.
 
+## The Brownsville demo
+
+[`demo/`](demo/) is a static page for Brooklyn Community District 16: the sidewalk network with width and incline, the crossings, every surveyed curb ramp drawn by NYC DOT's own assessment (with rebuilt corners marked), and eleven trips routed three ways (this graph's wheelchair profile, OpenRouteService's wheelchair profile on plain OpenStreetMap, and OpenRouteService's walking profile). Every route is also written out step by step, so the page works with a screen reader and without the map. A panel says what was checked, where this graph does worse, and what nobody has checked yet. Nothing on it has been verified on the ground.
+
+Open `demo/index.html` in a browser. There is no server and nothing to install: the data are plain script files under `demo/data/`, and the only library, Leaflet 1.9.4, is stored in `demo/vendor/`. The page has no basemap tiles; streets come from the same OpenStreetMap extract as the graph. To publish it, serve the `demo/` folder as it is (GitHub Pages can serve a folder of a branch).
+
+```bash
+open demo/index.html                       # macOS; or double-click the file
+
+# Rebuild the data files from the comparison's results (see demo/build_config.json for the inputs)
+python scripts/build_demo_data.py demo/build_config.json
+```
+
+The page is checked with axe-core 4.11 and pa11y 9.1 (both of its runners) in headless Chrome at desktop and phone width, with a keyboard pass and a reduced-motion pass; it has zero violations in each.
+
 ## Sources and licenses
 
 | Source | What it contributes | License |

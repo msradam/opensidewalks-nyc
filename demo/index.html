@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brownsville sidewalks and curb ramps: a wheelchair routing demo</title>
+<meta name="description" content="Sidewalks, crossings and surveyed curb ramps in Brownsville, Brooklyn, with wheelchair routes from the opensidewalks-nyc graph beside routes from OpenRouteService. Not yet checked on the ground.">
+<link rel="stylesheet" href="vendor/leaflet-1.9.4/leaflet.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#routes">Skip to the routes as text</a>
+<header>
+  <h1>Brownsville sidewalks and curb ramps</h1>
+  <p class="lede">A wheelchair routing demo for Brooklyn Community District 16, built from the
+    <a href="https://github.com/msradam/opensidewalks-nyc">opensidewalks-nyc</a> pedestrian graph.</p>
+  <p class="warning" role="note"><strong>Not checked on the ground.</strong> Nobody has travelled these routes or
+    measured these ramps for this project. Do not rely on this page to plan a trip.</p>
+  <nav aria-label="Sections">
+    <ul>
+      <li><a href="#map-section">Map</a></li>
+      <li><a href="#routes">Routes</a></li>
+      <li><a href="#network">Network in numbers</a></li>
+      <li><a href="#ramps">Curb ramps</a></li>
+      <li><a href="#status">What is verified</a></li>
+      <li><a href="#audit">Field audit</a></li>
+      <li><a href="#sources">Sources</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+<section id="map-section" aria-labelledby="map-h">
+  <h2 id="map-h">Map</h2>
+  <p>Everything drawn on the map is also given as text on this page: routes under
+    <a href="#routes">Routes</a>, the network under <a href="#network">Network in numbers</a> and every corner's
+    ramps under <a href="#ramps">Curb ramps</a>. With the map focused, the arrow keys move it and the plus and minus
+    keys zoom.</p>
+  <div class="layers" role="group" aria-labelledby="layers-h">
+    <p id="layers-h" class="group-title">Show on the map</p>
+    <label for="show-sidewalks"><input type="checkbox" id="show-sidewalks" checked> <span>Sidewalks and paths</span></label>
+    <label for="show-crossings"><input type="checkbox" id="show-crossings" checked> <span>Crossings</span></label>
+    <label for="show-ramps"><input type="checkbox" id="show-ramps" checked> <span>Curb ramps</span></label>
+    <label for="show-streets"><input type="checkbox" id="show-streets" checked> <span>Street names</span></label>
+  </div>
+  <div id="map" role="region" aria-label="Map of Brownsville's sidewalks, crossings, curb ramps and the selected routes"></div>
+  <p class="credit">Streets, sidewalks and crossings: OpenStreetMap contributors (ODbL). Curb ramps: NYC DOT. Sidewalk width:
+    NYC planimetric survey. Incline: NYC 2017 LiDAR. Full credits are under <a href="#sources">Sources</a>.</p>
+  <div class="legend" id="legend"></div>
+</section>
+
+<section id="routes" aria-labelledby="routes-h">
+  <h2 id="routes-h">Routes</h2>
+  <p>Each trip below was computed three ways on the same OpenStreetMap extract of 1 October 2026: by this graph's
+    wheelchair profile, by OpenRouteService's wheelchair profile on plain OpenStreetMap data, and by
+    OpenRouteService's ordinary walking profile. The trips run from public housing developments, senior centres and
+    subway entrances to clinics, schools, libraries and cooling sites, all taken from public city datasets.</p>
+  <p>
+    <label for="route-select">Trip</label>
+    <select id="route-select"></select>
+  </p>
+  <div id="route-verdict" class="verdict" aria-live="polite"></div>
+  <div id="route-cards" class="cards"></div>
+</section>
+
+<section id="network" aria-labelledby="network-h">
+  <h2 id="network-h">Network in numbers</h2>
+  <p>The same network the map draws, as counts. Sidewalk width is the mapped strip between kerb and property line
+    from the city's planimetric survey, which is wider than the clear path left by poles, trees and stoops. Incline
+    comes from the city's 2017 airborne LiDAR.</p>
+  <div id="network-tables"></div>
+</section>
+
+<section id="ramps" aria-labelledby="ramps-h">
+  <h2 id="ramps-h">Curb ramps</h2>
+  <p>Ramp positions and measurements come from NYC DOT's pedestrian ramp survey, taken from street-level imagery
+    and vehicle-mounted LiDAR, not with a level on the ramp. The status shown is DOT's own published assessment of
+    that survey. DOT's caveat applies to all of it:</p>
+  <blockquote cite="https://data.cityofnewyork.us/d/ufzp-rrqu">
+    <p>Please note that measurements shown are not indicative of whether a particular ramp is compliant with design
+      and construction standards pursuant to the Americans with Disabilities Act (ADA).</p>
+    <footer>NYC DOT, description of the Pedestrian Ramp Locations dataset</footer>
+  </blockquote>
+  <p id="ramp-dates"></p>
+  <div id="ramp-table"></div>
+  <h3 id="corner-h">Find a corner</h3>
+  <p>
+    <label for="corner-filter">Street name</label>
+    <input id="corner-filter" type="search" autocomplete="off" aria-describedby="corner-count">
+  </p>
+  <p id="corner-count" aria-live="polite"></p>
+  <div class="table-scroll" tabindex="0" role="region" aria-labelledby="corner-h">
+    <table id="corner-table">
+      <thead><tr><th scope="col">Corner</th><th scope="col">Surveyed ramps</th><th scope="col">DOT's assessment of the survey</th><th scope="col">Since the survey</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<section id="status" aria-labelledby="status-h">
+  <h2 id="status-h">What is verified and what is not</h2>
+  <div id="status-body"></div>
+</section>
+
+<section id="audit" aria-labelledby="audit-h">
+  <h2 id="audit-h">The planned field audit, and an invitation</h2>
+  <p>The check that matters has not been done: people measuring ramps with a level and wheelchair users travelling
+    the routes. A field audit of Brownsville is planned and has no partner yet. In outline it covers about 70 corners
+    (roughly 125 ramps, measured for slope, lip, width and warning surface), 40 block faces (clear width, surface and
+    slope) and 12 trips, each travelled twice by wheelchair users who judge whether a route is passable. The sample is
+    drawn at random before anyone goes out, the people measuring do not see the survey's values, and the result is
+    published whatever it shows.</p>
+  <p><strong>Disability organisations and wheelchair users in Brooklyn are invited to take part,</strong> as paid
+    co-researchers who set the pass and fail criteria, not as subjects. If you or your organisation would consider
+    it, or if you can see from this page that something is wrong, please open an issue on the
+    <a href="https://github.com/msradam/opensidewalks-nyc/issues">project's issue tracker</a>.</p>
+</section>
+
+<section id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources, licences and credit</h2>
+  <div id="sources-body"></div>
+</section>
+</main>
+
+<footer>
+  <p>Graph data: Open Database License 1.0. Code: Apache License 2.0. City-wide files are on the
+    <a href="https://github.com/msradam/opensidewalks-nyc/releases">releases page</a>.</p>
+</footer>
+
+<script src="vendor/leaflet-1.9.4/leaflet.js"></script>
+<script src="data/meta.js"></script>
+<script src="data/network.js"></script>
+<script src="data/ramps.js"></script>
+<script src="data/routes.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
