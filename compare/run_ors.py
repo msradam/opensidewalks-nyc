@@ -67,7 +67,8 @@ def ask(session, base, profile, body, o, d):
     return {"found": True, "length_m": f["properties"]["summary"].get("distance", 0.0),
             "snap_m": [snap(c[0], o), snap(c[-1], d)],
             "coords": [[round(x, 6), round(y, 6)] for x, y, *_ in c],
-            "osmid": f["properties"].get("extras", {}).get("osmid", {}).get("values")}
+            # The OSM ways the route uses (the wheelchair profile stores them; foot-walking does not).
+            "osmid": sorted({int(v[2]) for v in f["properties"].get("extras", {}).get("osmId", {}).get("values", [])}) or None}
 
 
 def main(base, pairs_json, out, only=None, threads=6):

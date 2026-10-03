@@ -9,6 +9,9 @@ Routers (ROUTERS below): this graph's own search, ORS on raw OSM (arm A), ORS
 on this graph converted to OSM (arm B, strict and known kerbs), Valhalla.
 
 usage: python compare/analyse.py GRAPH_NPZ OSM_TAGS_JSON PAIRS_JSON ROUTES_DIR OUT_DIR [PROCESSES]
+
+ROUTES_DIR holds ours.pkl, the engines' *.jsonl.gz and, for each arm B source,
+SOURCE.ways.json (the sidecar scripts/osw_to_osm.py writes beside its PBF).
 """
 import gzip
 import json
@@ -54,6 +57,7 @@ ARM_B = "ors_b_strict_shortest_i10_k6"   # same engine and limits on this graph'
 SNAP_FAR_M = 25.0
 SAME_ROUTE = 0.9                # both routes within 10 m of each other over this share of their length
 G = M = TAGS = OURS = ENGINE = None
+WAYS = {}        # arm B source -> the matcher geometry behind each OSM way id the converter wrote
 
 
 def structure(tags):
@@ -102,7 +106,13 @@ def one(p):
         if geom is None or geom.length == 0:      # both ends snapped to one point
             rec["routes"][key].update(length_m=0.0, **describe([]))
             continue
-        edges, unmatched = M.match(geom)
+        ids = np.array(r.get("osmid") or [], dtype=np.int64)
+        if len(ids) and src == "ors_armA":      # ORS names the OSM ways it used
+            edges, unmatched = M.match(geom, ways=ids)
+        elif len(ids) and src in WAYS:          # on this graph, its way ids are this graph's own edges
+            edges, unmatched = M.match(geom, among=WAYS[src][ids - 1])
+        else:                                   # foot-walking and Valhalla give no way ids
+            edges, unmatched = M.match(geom)
         rec["routes"][key].update(length_m=round(r["length_m"], 1), **describe(edges, unmatched))
         lines[key] = geom
         if role == "wheelchair":
@@ -243,6 +253,11 @@ def main(npz, tags_json, pairs_json, routes_dir, out_dir, procs=8):
         ENGINE[src], found = load_engine(routes_dir, src)
         if src.startswith("ors"):
             matrix[src] = found
+    edge_of = {str(f): e for e, f in enumerate(G.fid.tolist())}
+    for src in ENGINE:
+        sidecar = routes_dir / f"{src}.ways.json"
+        if sidecar.exists():
+            WAYS[src] = M.base_of([edge_of[f] for f in read_json(sidecar)])
     pairs = read_json(pairs_json)["pairs"]
     G.snap_edge(pairs[0]["o"], "wheelchair")        # build the snap index before the fork
     recs = []

@@ -93,6 +93,16 @@ def test_match_reports_length_off_the_graph():
     assert 0.49 < unmatched < 0.51
 
 
+def test_match_tells_coincident_ways_apart_by_their_ids():
+    g = graph()
+    m = Matcher(g)
+    route = line([ll(112, 0), ll(112, 50)])
+    assert fid(g, m.match(route)[0]) == ["t"]
+    assert m.match(route, ways=[999])[0] == [], "the engine says it used another way on this line"
+    assert fid(g, m.match(route, ways=[1])[0]) == ["t"]
+    assert fid(g, m.match(route, among=m.base_of([e for e in range(g.m) if str(g.fid[e]) == "tr"]))[0]) == ["t"]
+
+
 def test_audit_names_the_first_barrier_and_respects_direction():
     g = graph()
     m = Matcher(g)
