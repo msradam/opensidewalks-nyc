@@ -141,17 +141,17 @@ OpenStreetMap comes from one dated Geofabrik extract, named by URL and SHA-256 i
 
 What it found, in short:
 
-- **This graph finds fewer routes.** Its wheelchair profile finds a route for 87% of random pairs in Brooklyn, 65% in Queens, 56% in Manhattan, 46% in the Bronx and 45% on Staten Island. OpenRouteService on plain OSM finds 97% to 99% everywhere.
+- **This graph finds fewer routes.** Its wheelchair profile finds a route for 91% of random pairs in Brooklyn, 68% in Queens, 64% in Manhattan, 51% in the Bronx and 50% on Staten Island. OpenRouteService on plain OSM finds 97% to 99% everywhere.
 - **Most of OpenRouteService's routes cross where this graph has no surveyed ramp.** By this graph's data, 88% to 95% of its wheelchair routes in each borough use at least one crossing with no surveyed ramp within 5 m of an end, and 13% (Brooklyn) to 73% (Staten Island) spend more than 10 m in the roadway. OSM carries no kerb tag there that OpenRouteService reads as a barrier, and where no sidewalk is mapped it routes along the street.
 - **The same engine on this graph's data behaves like this graph.** Given this graph converted back to OSM with the ramp rule on the crossing ends ([`scripts/osw_to_osm.py`](scripts/osw_to_osm.py)), OpenRouteService finds 67% to 95% of the pairs in a borough, and its routes use an unramped crossing 0.02 to 0.10 times per kilometre, against 0.7 to 1.1 on plain OSM.
 - **This graph is worse in ways the comparison names.** It refuses crossings an OSM mapper tagged with a lowered or flush kerb (24.9% of the 15,599 crossing ends where the 2018 survey has no ramp within 5 m), it ignores OSM's surface, smoothness and `wheelchair=no` tags, and it has no route where OSM has no sidewalk.
-- **The search is the engine's.** On 840 Brownsville requests and 34 landmark requests, this repo's search and Unweaver agree every time on whether a route exists and on its length.
+- **The search is the engine's.** On 1,354 requests (840 in Brownsville, 34 between landmarks, 480 random across the city), this repo's search and Unweaver agree every time on whether a route exists, and on its length to within 7 m.
 
 None of this says which route a wheelchair user could travel. That takes the field audit the demo describes. The result files and the method are in `research_notes/compare/` (not in the repository); `compare/analyse.py` regenerates them.
 
 ## The Brownsville demo
 
-[`demo/`](demo/) is a static page for Brooklyn Community District 16: the sidewalk network with width and incline, the crossings, every surveyed curb ramp drawn by NYC DOT's own assessment (with rebuilt corners marked), and eleven trips routed three ways (this graph's wheelchair profile, OpenRouteService's wheelchair profile on plain OpenStreetMap, and OpenRouteService's walking profile). Every route is also written out step by step, so the page works with a screen reader and without the map. A panel says what was checked, where this graph does worse, and what nobody has checked yet. Nothing on it has been verified on the ground.
+[`demo/`](demo/) is a static page for Brooklyn Community District 16: the sidewalk network with width and incline, the crossings, every surveyed curb ramp drawn by NYC DOT's own assessment (with rebuilt corners marked), and ten trips routed three ways (this graph's wheelchair profile, OpenRouteService's wheelchair profile on plain OpenStreetMap, and OpenRouteService's walking profile). Every route is also written out step by step, so the page works with a screen reader and without the map. A panel says what was checked, where this graph does worse, and what nobody has checked yet. Nothing on it has been verified on the ground.
 
 Open `demo/index.html` in a browser. There is no server and nothing to install: the data are plain script files under `demo/data/`, and the only library, Leaflet 1.9.4, is stored in `demo/vendor/`. The page has no basemap tiles; streets come from the same OpenStreetMap extract as the graph. To publish it, serve the `demo/` folder as it is (GitHub Pages can serve a folder of a branch).
 
