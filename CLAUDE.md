@@ -108,8 +108,15 @@ edge endpoints and nodes, and replace Stage 5 with a call to
   release asset makers. Run them on the snapped GeoJSON; `scripts/README.md`
   has the exact commands. Stage 6's own GraphML and routing JSON predate the
   snap and are not the release assets.
-- `scripts/{osw_to_unweaver,route_test}.py`: routing layer and route test.
+- `scripts/{osw_to_unweaver,route_test}.py`: routing layer (with the 5 m ramp
+  rule, `crossings_with_ramps`) and route test (17 landmark pairs, 7 across
+  structures).
+- `pipeline/utils/ept.py`, `pipeline/utils/deck.py`: the LiDAR point cloud
+  reader and the deck height rules; `assemble._structure_elevations` wires them
+  in, `assemble._smoothed_for_incline` smooths short edges.
 - `validators/post_build_checks.py`: the checks the validator does not do.
+- `tests/`: `test_validity_fixes.py`, `test_structure_incline.py`,
+  `test_crossing_rule.py`; run each with `python tests/<file>`.
 - `validators/QUALITY_REPORT.md`: conformance + quality writeup for the current
   artifact. Its numbers come from `post_build_checks.py`.
 - `release-notes/`: one file per release, what changed and why.
@@ -121,15 +128,24 @@ OSM walk network from one dated Geofabrik extract, pinned by URL and SHA-256 in
 `config/sources.yaml` and built into a graph with OSMnx (ODbL-1.0; no Overpass
 query); NYC DOT Pedestrian Ramps (`ufzp-rrqu`);
 NYC Planimetric Sidewalks (`52n9-sdep`); Borough Boundaries (`7t3b-ywvw`); NYC
-2017 LiDAR DEM (NY State ArcGIS ImageServer, for incline); NYC Address Points
+2017 LiDAR DEM (NY State ArcGIS ImageServer, 2 m tiles, for incline); LiDAR
+point clouds (NOAA Digital Coast Entwine tiles, 2017 NYC and 2014 USGS, fetched
+by Stage 4 around structures into `data/raw/lidar_points/`); NYC Address Points
 (`g6pj-hd8k`); MTA ADA stations (`drh3-e2fd` / GTFS fallback).
 
-## Known state and gotchas (2026-10-02, v0.3.2-nyc.1)
+## Known state and gotchas (2026-10-03, v0.3.3-nyc.1)
 
-- **The from-scratch path works city-wide.** Build + snap + validate produces
-  `is_valid True, errors 0` under 0.5.0 on 3,874,332 features. It takes about
-  40 minutes and peaks at 33 GB of memory footprint on a 32 GB machine, so
-  close other heavy programs first.
+- **The from-scratch path works city-wide in one run.** Build + snap + validate
+  produces `is_valid True, errors 0` under 0.5.0 on 4,068,058 features. It
+  takes about 48 min and peaks at 35 GB of memory footprint on a
+  32 GB machine, so close other heavy programs first.
+- **Stage 4 downloads during the build:** the LiDAR tiles around structures
+  (about 2 GB from a public S3 bucket, with retries). Offline, structure edges
+  get no incline and the build still finishes.
+- **The terrain tiles come as 2,048 px squares.** Larger requests come back as
+  HTML error pages with status 200; Stage 1 opens each download with rasterio
+  before keeping it.
+- **Socrata pages can come back 500;** Stage 1 retries a page five times.
 - **Moving to newer OSM data** means changing `extract_url` and
   `extract_sha256` together. Stage 1 refuses a file whose checksum differs.
   The extract covers New York State, so a study-area box that reaches into New
@@ -152,11 +168,18 @@ NYC Planimetric Sidewalks (`52n9-sdep`); Borough Boundaries (`7t3b-ywvw`); NYC
 - **pandas 3 hazard:** `groupby(...).apply()` excludes the grouping column from
   the groups. The node dedup in `assemble.py` restores `_id` via a plain
   `reset_index()`; a `drop=True` there silently produces a node-less artifact.
-- **Incline needs `rasterio`.** If it is missing, Stage 4 skips incline with a
-  warning instead of failing. Elevation is interpolated between pixel centres;
-  the tiles have no nodata value, so a node is only sampled from a tile whose
-  extent contains it. Edges tagged `ext:structure` (bridge, tunnel) get no
-  incline.
+- **Incline needs `rasterio`** (and `laspy[lazrs]` for the point clouds). If
+  rasterio is missing, Stage 4 skips incline with a warning instead of failing.
+  Elevation is interpolated between pixel centres; the tiles have no nodata
+  value, so a node is only sampled from a tile whose extent contains it. Bridge
+  and elevated edges take deck heights from the point clouds; tunnel edges get
+  no incline. Node heights are smoothed along the path over edges under 5 m
+  before incline is taken (the written `ext:elevation_m` is not smoothed).
+- **The deck rules have corner cases.** Plazas over roads are unclassified in
+  the survey (flat and dense counts as solid); sidewalks under elevated
+  railways stay on the ground; a bridge tower top is not a deck; a ramp on an
+  embankment is followed down until LiDAR and the terrain model agree. Each has
+  a test in `tests/test_structure_incline.py`; add one before changing a rule.
 - **Socrata borough-boundaries dataset `7t3b-ywvw` returns 404;** Stage 1 falls
   back to OSMnx geocoding (Nominatim). The replacement IDs are `gthc-hcne`
   (shoreline) and `wh2p-dxnf` (water included); only the water-included
@@ -176,7 +199,7 @@ NYC Planimetric Sidewalks (`52n9-sdep`); Borough Boundaries (`7t3b-ywvw`); NYC
 ## Checks the validator does not do
 
 `validators/post_build_checks.py` runs these and writes one JSON. Each caught a
-defect in v0.3.1-nyc.1 that passed the validator. What v0.3.2 looks like:
+defect in v0.3.1-nyc.1 that passed the validator. What v0.3.3 looks like:
 
 - `elevation`: nodes at exactly 0.0 are 0.04% (at most 0.12% in a borough), and
   the Staten Island maximum is 122.5 m. A large zero share means the tile
@@ -189,12 +212,19 @@ defect in v0.3.1-nyc.1 that passed the validator. What v0.3.2 looks like:
   slopes.
 - `width`: sidewalk median 3.1 m; 0.94 of a polygon transect at the median.
   v0.3.1's 5.65 m was the ring-polygon bug.
-- `gap_fill`: about 1,160 segments, both directions.
+- `gap_fill`: 0 edges in the graph; the sidecar has about 2,320.
+- `structure`: 14,402 nodes with an `ext:elevation_source`, 48
+  structure nodes without a height, 1,708 edges touching a deck node
+  that read steeper than 15% over 3 m or more (most are station entrances OSM
+  joins to the sidewalk without steps).
+- `nodes_not_on_any_edge_by_source`: only `nyc_dot_ramps`.
+- `one_direction_only`: empty.
 - `form`: no coordinate over 7 decimals, no edge end off its node.
-- A component count cannot show a cut bridge. Test bridges end to end (walking
-  distance against straight line between the landfalls); 18 of 23 are joined
-  on pedestrian edges in v0.3.2, listed in `validators/QUALITY_REPORT.md`.
-- Draw a few gap-fill edges over orthoimagery. About half are on a sidewalk.
+- A component count cannot show a cut bridge. Test bridges end to end with
+  `research_notes/next/routing/bridges.py` (landfalls on the walkways' own
+  landings); 20 of 23 are joined on pedestrian edges in v0.3.3.
+- Deck heights: `research_notes/next/structure/validate.py` against the 2014
+  survey, `where_check.py` against the planimetric structure polygons.
 
 ## Conventions
 

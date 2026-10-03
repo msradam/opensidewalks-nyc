@@ -27,6 +27,7 @@ output/*.geojson
 
 # Release-asset staging
 release-assets/
+release-assets-*/
 
 # Unweaver-derived artifacts (regenerable)
 unweaver-project/graph.gpkg
