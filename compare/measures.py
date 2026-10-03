@@ -7,7 +7,15 @@ graph's: an edge of this graph is "on" the route when the whole edge lies
 within MATCH_M of the polyline. No map matching is needed.
 """
 import numpy as np
-from shapely import STRtree, linestrings, union_all
+from shapely import (
+    STRtree,
+    distance,
+    get_point,
+    length,
+    line_locate_point,
+    linestrings,
+    union_all,
+)
 from shapely.geometry import LineString, Point
 
 from compare.graph import DOWNHILL, UPHILL, metres
@@ -61,23 +69,23 @@ class Matcher:
         """(edges, unmatched share): directed edge indices in route order, and
         the share of the route's length that lies on no edge of this graph."""
         g = self.g
-        hit = self.tree.query(route.buffer(MATCH_M), predicate="contains")
-        pos, edges, used = [], [], []
-        for i in hit:
-            e = int(self.base[i])
-            start, end = Point(self.geoms[i].coords[0]), Point(self.geoms[i].coords[-1])
-            if self.geoms[i].length < 3 * MATCH_M and max(route.distance(start), route.distance(end)) > ON_VERTEX_M:
-                continue        # a stub beside the route, not part of it
-            a, b = route.project(start), route.project(end)
-            if b < a:           # the route runs v to u: take the opposite edge where the graph has one
-                e = self.by_pair.get((int(g.v[e]), int(g.u[e])), e)
-            pos.append(min(a, b))
-            edges.append(e)
-            used.append(i)
-        if not edges:
+        hit = self.tree.query(route.buffer(MATCH_M, quad_segs=4), predicate="contains")
+        if len(hit) == 0:
             return [], 1.0
-        on = route.intersection(union_all(self.geoms[used]).buffer(MATCH_M))
-        order = np.argsort(pos, kind="stable")
+        geoms = self.geoms[hit]
+        start, end = get_point(geoms, 0), get_point(geoms, -1)
+        # A short edge inside the buffer may be a stub beside the route: it must also have both ends on it.
+        stub = (length(geoms) < 3 * MATCH_M) & (np.maximum(distance(route, start), distance(route, end)) > ON_VERTEX_M)
+        hit, start, end = hit[~stub], start[~stub], end[~stub]
+        if len(hit) == 0:
+            return [], 1.0
+        a, b = line_locate_point(route, start), line_locate_point(route, end)
+        edges = self.base[hit].tolist()
+        for i in np.flatnonzero(b < a):     # the route runs v to u: take the opposite edge where the graph has one
+            e = edges[i]
+            edges[i] = self.by_pair.get((int(g.v[e]), int(g.u[e])), e)
+        on = route.intersection(union_all(self.geoms[hit]).buffer(MATCH_M, quad_segs=4))
+        order = np.argsort(np.minimum(a, b), kind="stable")
         return [edges[i] for i in order], max(0.0, float(1 - on.length / route.length)) if route.length else 0.0
 
 
