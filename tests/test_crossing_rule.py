@@ -4,13 +4,12 @@ layer applies it.
 Run: python tests/test_crossing_rule.py
 """
 
+import math
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from osw_to_unweaver import crossings_with_ramps  # noqa: E402
-
-import math
+from osw_to_unweaver import crossings_with_ramps
 
 M = 1 / 111320                                  # one metre of latitude, in degrees
 ME = 1 / (111320 * math.cos(math.radians(40.7)))  # one metre of longitude, at the city's latitude

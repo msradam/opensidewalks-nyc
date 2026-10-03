@@ -4,6 +4,8 @@ short edges. The official validator looks at none of this.
 Run: python tests/test_structure_incline.py
 """
 
+import itertools
+
 import geopandas as gpd
 import numpy as np
 from shapely.geometry import LineString
@@ -99,7 +101,7 @@ def test_plaza_deck_is_taken_over_the_ground_seen_past_its_edge():
     dtm = np.array([42.8, 42.9, 42.9])
     levels = [[(42.8, 20, True, True)], [(42.8, 5, True, True), (48.7, 51, False, True)],
               [(48.6, 50, False, True)]]
-    z, kind = label_surfaces(3, edges, seed, dtm, levels)
+    z, _ = label_surfaces(3, edges, seed, dtm, levels)
     assert z.tolist() == [42.8, 48.7, 48.6]
 
 
@@ -123,7 +125,7 @@ def test_steps_reach_the_deck_not_the_ground_under_it():
     seed = np.array([False, True, True])
     dtm = np.array([10.0, 10.0, 10.0])
     levels = [[(10.0, 30, True, True)], [(10.0, 20, True, True), (16.0, 20, True, True)], [(16.0, 30, True, True)]]
-    z, kind = label_surfaces(3, edges, seed, dtm, levels)
+    z, _ = label_surfaces(3, edges, seed, dtm, levels)
     assert z.tolist() == [10.0, 16.0, 16.0]
 
 
@@ -167,7 +169,7 @@ def _path(heights, spacing_m):
     coords = {i: (-73.99 + k * step, 40.7) for k, i in enumerate(ids)}
     edges = gpd.GeoDataFrame(
         {"_u_id": ids[:-1], "_v_id": ids[1:], "highway": "footway"},
-        geometry=[LineString([coords[a], coords[b]]) for a, b in zip(ids[:-1], ids[1:])],
+        geometry=[LineString([coords[a], coords[b]]) for a, b in itertools.pairwise(ids)],
         crs="EPSG:4326")
     return edges, coords, dict(zip(ids, heights))
 
