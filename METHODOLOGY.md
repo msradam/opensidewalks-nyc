@@ -36,15 +36,17 @@ The syntax is Overpass's and so are the semantics: each regex is an unanchored s
 - `highway=cycleway|track` with `foot=yes`, `designated` or `permissive` → the same three classes, with `ext:osm_highway` keeping the OSM value. Without one of those foot values the way is dropped. Many bridge paths and greenways are mapped this way; v0.3.1-nyc.1 dropped them all.
 - `highway=residential|service|...` → Street Edge
 
-The graph is built without OSMnx's walk mode, so a way tagged `oneway=yes` arrives in one direction. Stage 3 adds the missing reverse of every pedestrian edge (OSM's `oneway` binds vehicles and bicycles, not people on foot). Streets keep their direction.
+The graph is built without OSMnx's walk mode, so a way tagged `oneway=yes` arrives in one direction. Stage 3 adds the missing reverse of every edge, street edges included from v0.3.3 (OSM's `oneway` binds vehicles and bicycles, not people on foot, and a pedestrian graph has no business making a one-way street one-way for walkers).
 
-An edge whose OSM way is a bridge or a tunnel is marked `ext:structure` (`bridge` or `tunnel`; a building passage is not marked). Stage 4 writes no incline on those edges.
+An edge whose OSM way is a bridge or a tunnel is marked `ext:structure` (`bridge` or `tunnel`; a building passage is not marked), and from v0.3.3 a way with `layer` above 0 and no bridge tag is marked `elevated`. Stage 4 reads deck heights for bridge and elevated edges from LiDAR returns (section 5b) and writes no incline on tunnel edges.
 
 OSM `surface` tags are mapped to the OSW surface enum (9 canonical values). Non-canonical OSM surface values (e.g. `tarmac`, `cobblestone`) are mapped to the nearest canonical equivalent.
 
 OSM `crossing` tags are mapped to `crossing:markings`. Non-canonical values (e.g. `marked`, `traffic_signals`) are mapped to the nearest canonical equivalent.
 
-**Known issues:** OSM coverage of NYC sidewalks is incomplete. Many streets have `sidewalk=both` or `sidewalk=left/right` tags on the street centerline rather than separate sidewalk geometry. These are handled by Stage 3's planimetric gap-fill pass.
+**Known issues:** OSM coverage of NYC sidewalks is incomplete. Many streets have `sidewalk=both` or `sidewalk=left/right` tags on the street centerline rather than separate sidewalk geometry. Stage 3's planimetric gap-fill pass derives candidate centrelines for those; from v0.3.3 they ship as a sidecar file and are not part of the graph.
+
+OSM nodes that belong only to ways Stage 3 drops (a cycleway or track with no `foot` tag) are dropped with them from v0.3.3; v0.3.2 carried 8,072 of them as points on no edge.
 
 ---
 
@@ -100,7 +102,7 @@ Widths: each OSM sidewalk edge whose centroid falls inside a planimetric polygon
 
 Gap-fill coverage check: for each planimetric polygon, check whether any existing OSM sidewalk edge is within 10 m of the polygon boundary. If covered, skip. If not covered (typically where OSM has only a `sidewalk=both` tag on the street centerline), extract a centerline from the polygon and emit it as a Sidewalk Edge, unless at least half of that centerline lies within 1.5 m of an OSM crossing or footway. That last test removes the median refuges that a crossing already runs through and the paths OSM maps without `footway=sidewalk`.
 
-**Centerline extraction method (minimum rotated rectangle):** Implemented in `schema_map.py::_polygon_centerline()`. Compute the polygon's minimum rotated rectangle and return the straight line connecting the midpoints of its two short sides. This is O(1) per polygon and fits the elongated strip geometry typical of sidewalk polygons. The axis is only kept when at least 90% of it lies inside its own polygon. For a ring around a block, or an L-shaped polygon, the axis runs through the block interior and is rejected and counted as a failure. The v0.3.1-nyc.1 release had no such check, and in an imagery sample 13 of 15 of its gap-fill edges were not on a sidewalk. Each gap-fill centerline is emitted in both directions.
+**Centerline extraction method (minimum rotated rectangle):** Implemented in `schema_map.py::_polygon_centerline()`. Compute the polygon's minimum rotated rectangle and return the straight line connecting the midpoints of its two short sides. This is O(1) per polygon and fits the elongated strip geometry typical of sidewalk polygons. The axis is only kept when at least 90% of it lies inside its own polygon. For a ring around a block, or an L-shaped polygon, the axis runs through the block interior and is rejected and counted as a failure. The v0.3.1-nyc.1 release had no such check, and in an imagery sample 13 of 15 of its gap-fill edges were not on a sidewalk. Each gap-fill centerline is emitted in both directions. From v0.3.3 the centrelines are staged apart and shipped as a sidecar file (`output/nyc-gapfill-sidewalks.geojson`) rather than merged into the sidewalk layer: in the v0.3.2 sample of 18 checked over orthoimagery, 9 lay on a sidewalk, 4 were plainly wrong, almost none touched the network, and nothing in the sample separated the good from the bad.
 
 **Known limitation:** Planimetric-derived sidewalk edges have approximate centerline geometry only. They may not connect cleanly to adjacent OSM nodes. The Stage 4 assemble step injects bare nodes at their endpoints to satisfy the OSW structural requirement that all `_u_id`/`_v_id` references resolve to Node features.
 
@@ -125,17 +127,35 @@ Gap-fill coverage check: for each planimetric polygon, check whether any existin
 
 **What it is:** A bare-earth digital terrain model of NYC captured by LiDAR between May and July 2017 (buildings removed, hydro-flattened), served in metres on a 1 m grid by the NY State GIS Program Office ArcGIS ImageServer (`NYC_TopoBathymetric_2017_1_meter`).
 
-**Where it came from:** `elevation.its.ny.gov` ImageServer export, one GeoTIFF tile per borough. The pipeline caps each tile at 3,000 pixels a side, so a borough tile is resampled to 5 to 12 m per pixel (Bronx 5.2 m, Staten Island 6.5 m, Brooklyn 7.0 m, Manhattan 7.5 m, Queens 11.9 m).
+**Where it came from:** `elevation.its.ny.gov` ImageServer export. From v0.3.3 each borough is fetched as a grid of GeoTIFF tiles at 2 m per pixel, 2,048 pixels a side, skipping tiles with no land (121 tiles, about 650 MB); each tile reaches four pixels into its neighbours so a node near a seam is interpolated from real pixels on both sides. v0.3.2 fetched one tile per borough capped at 3,000 pixels a side, which is 5 to 12 m per pixel (Bronx 5.2 m, Staten Island 6.5 m, Brooklyn 7.0 m, Manhattan 7.5 m, Queens 11.9 m), and at that size a sidewalk beside a railway cut or a retaining wall takes on part of the drop.
 
 **License:** Public Domain (NY State).
 
-**How it was used:** Stage 4 samples the DTM at every node coordinate, interpolating bilinearly between pixel centres. Each node whose sample lands on valid data gets `ext:elevation_m`; each edge whose two endpoint elevations are both known gets `incline` = rise / run, clamped to the OSW range of ±1.0. Values outside that range are DEM noise on very short edges and are dropped rather than clamped into pseudo-plausibility.
+**How it was used:** Stage 4 samples the DTM at every node coordinate, interpolating bilinearly between pixel centres. Each node whose sample lands on valid data gets `ext:elevation_m`; each edge whose two endpoint heights are both known gets `incline` = rise / run, clamped to the OSW range of ±1.0. Values outside that range are noise on very short edges and are dropped rather than clamped into pseudo-plausibility.
+
+**Smoothing over short edges (v0.3.3).** The graph keeps every OSM vertex as a node, so half its edges are shorter than 6 m, and a few decimetres of height error, or a kerb, between two nodes a metre apart reads as a 30% grade. Before the difference is taken, each node's height is averaged with its neighbours' along the path, weighted 1 minus length / 5 m, in two passes, so a node 1 m away counts almost as much as the node itself and one 5 m away not at all. A steady slope comes through unchanged, because the neighbours up and down the path cancel. A step of 0.5 m or more between two close nodes is a real change of level (a wall, untagged steps, a deck beside the ground) and is left alone; steps and tunnel edges take no part. The test of the setting is that real steepness does not depend on how finely a mapper cut a path: in a study area at 1 m resolution the share of footway edges over the wheelchair limits was 6.6% for edges under 2 m against 1.0% for edges of 10 to 25 m before smoothing, and about 1.3% in every length band after. The heights written on the nodes are not smoothed.
 
 A node is only sampled from a tile whose extent contains it. The tiles have no nodata value, and a point outside a tile reads as 0.0; the v0.3.1-nyc.1 release sampled every node from the first tile (the Bronx), so 80% of its nodes have an elevation of exactly 0.0 and their edges an incline of 0.
 
 At 5 to 12 m per pixel against a median edge length of 7 m, the two ends of a short edge usually fall in the same or neighbouring pixels. Reading the nearest pixel gave them either the same elevation or a whole pixel's step; interpolating between pixel centres removes that. In a Midtown window the share of sidewalk edges steeper than 8.33% fell from 4.8% to 2.5% at 7 m per pixel, and the edges over that limit at 7 m and at 10 m per pixel now largely agree. On Staten Island the agreement with the ramp survey's gutter slopes rose a little (rank correlation 0.38 to 0.42).
 
-The model is bare earth and includes the river bed. On a bridge, a deck or a pier it describes what is underneath, so edges marked `ext:structure` get no incline. Node elevations on those structures are still the ground or water below.
+The model is bare earth and includes the river bed. On a bridge, a deck or a pier it describes what is underneath, so v0.3.2 wrote no incline on edges marked `ext:structure` and left their nodes with the height of the ground or water below. Approaches that OSM does not tag as a bridge kept a terrain incline of up to 19%, which sent the wheelchair route from the Brooklyn Bridge to DUMBO 9 km round by the Williamsburg Bridge. v0.3.3 reads deck heights instead (next section).
+
+---
+
+### 5b. LiDAR point clouds (2017 NYC, 2014 USGS) for deck heights
+
+**What it is:** The classified point clouds behind the city's 2017 topobathymetric LiDAR (22.8 billion returns) and the 2014 USGS survey of the city (4.8 billion), served by NOAA's Digital Coast archive as Entwine Point Tiles: an octree of LAZ files over plain HTTPS, each node holding one return per voxel of its cube. At depth 9 a tile is a 93 m square with a return about every 0.7 m, 100 to 400 KB.
+
+**Where it came from:** `noaa-nos-coastal-lidar-pds.s3.amazonaws.com/entwine/geoid18/9306` (2017) and `.../4920` (2014). Heights are NAVD88 metres. Only the tiles that contain a node on or beside a structure are fetched, about 2 GB city-wide, cached under `data/raw/lidar_points/`.
+
+**License:** Public Domain (NOAA Digital Coast; NYC OTI and USGS surveys).
+
+**How it was used** (`pipeline/utils/ept.py`, `pipeline/utils/deck.py`, `assemble._structure_elevations`): starting from the nodes of edges tagged `bridge` or `elevated`, plus two hops of neighbours, the returns within 2 m of each node are read from the 2017 survey, and from the 2014 survey where the 2017 one has none (it lacks the main spans over open water). Returns are grouped into surfaces by a 0.5 m height gap. A surface is classified if the survey's class says ground or bridge deck; it is solid if it is classified, or flat (interquartile range of 0.15 m) and populated by at least eight returns, which is how a plaza over a road or a deck on a building looks, since the bridge deck class does not cover them. Tree crowns, fences and cables are neither. The walking surface is then chosen by continuity: a node OSM does not put on a structure is on the ground wherever the survey classified ground at terrain height, whatever hangs above it, and from those nodes each next node along the path takes the solid surface nearest in height to the one before, within 0.6 m plus 12% of the edge length (plus the whole length on steps). A node OSM puts on a structure prefers a solid surface off the ground, so the ground seen past the edge of a deck does not pull the deck down. A deck that runs on past the tagged part claims untagged nodes until it meets the ground, and the region of nodes read grows with it. A structure no labelled node leads onto (its approaches are untagged, or it is reached by lift) is started from the node with the clearest solid surface, unless that node sits beside a labelled one whose surfaces were all out of reach, which is what a bridge tower looks like; such nodes, and covered spans, are interpolated between their labelled ends. Structure nodes with no surface at all get no height and their edges no incline.
+
+**Validation:** heights taken from the 2017 survey were compared with the 2014 survey, which the fix did not use for them: at the node, is there a surface in the 2014 returns at the same height? The numbers are in `validators/QUALITY_REPORT.md` and `research_notes/next/structure/`. The places where the surveys disagree by more than 2 m are mostly places rebuilt between the two flights (Hudson Yards, Empire Outlets, the Bayonne Bridge, LaGuardia). Nodes lifted 2 m or more above the terrain model were also checked against the city's planimetric transport structure polygons, which come from photogrammetry and know nothing of OSM tags or LiDAR.
+
+**Limits:** a structure built after May 2017 (LaGuardia's new terminals, the new Kosciuszko span) is read as whatever the 2017 survey saw there. Covered walkways and lower decks under an upper deck are interpolated. A station entrance that OSM joins to the sidewalk by a plain edge, without steps, comes out as a near-vertical edge, which is the honest reading. Deck heights have about 5 cm of survey noise, so incline on a 3 m deck edge is still noisy.
 
 ---
 
@@ -188,7 +208,7 @@ Builds the single canonical FeatureCollection from staged feature files:
 3. Combine all nodes (OSM nodes + snapped curb nodes)
 4. Inject bare nodes for any edge endpoint not yet in the node set
 5. Deduplicate nodes by `_id`, preserving curb-ramp annotations when a ramp and an OSM node share a location
-6. Compute per-edge `incline` by sampling the LiDAR DTM at node coordinates (rise over run, clamped to the OSW range of ±1.0)
+6. Compute per-edge `incline`: sample the LiDAR DTM at node coordinates, replace the heights of nodes on and beside bridges and elevated ways with deck heights from the LiDAR point clouds (section 5b), smooth over edges shorter than 5 m, then rise over run, clamped to the OSW range of ±1.0
 7. Write topology report (connected components, fragmentation)
 8. Serialize to `data/staged/nyc-osw-unvalidated.geojson`
 
@@ -235,16 +255,16 @@ The OSW spec requires crossings to be modeled as separate Edge features that exi
 
 ### Handling OSM `sidewalk=both` on street centerlines
 
-Where OSM has `sidewalk=both` or `sidewalk=left/right` tags on a street centerline rather than separate sidewalk geometry, the OSM edge is classified as a Street Edge (not a Sidewalk Edge) and the planimetric gap-fill pass derives the sidewalk geometry from the planimetric polygon layer. This is a simplification: the rectangle axis only stands for the sidewalk when the polygon is a strip, and it is not connected to the rest of the network unless an endpoint falls within 2 m of another.
+Where OSM has `sidewalk=both` or `sidewalk=left/right` tags on a street centerline rather than separate sidewalk geometry, the OSM edge is classified as a Street Edge (not a Sidewalk Edge) and the planimetric gap-fill pass derives a candidate sidewalk centreline from the planimetric polygon layer, shipped as a sidecar file from v0.3.3. This is a simplification: the rectangle axis only stands for the sidewalk when the polygon is a strip, and it is not connected to the rest of the network.
 
 ---
 
 ## Known Limitations
 
-1. **Incline is DEM-derived, not surveyed.** It is an estimate of the terrain from a 5 to 12 m grid, absent on bridges and tunnels, and it agrees with surveyed street grades in the large, not edge by edge. Values outside the OSW ±1.0 range are dropped.
+1. **Incline is estimated, not surveyed.** It comes from the terrain model at 2 m, smoothed over short edges, and on structures from LiDAR deck heights; it is absent in tunnels. It agrees with surveyed street grades in the large, not edge by edge, and a kerb ramp a metre long is below what any airborne survey can resolve. Values outside the OSW ±1.0 range are dropped.
 2. **No APS (Accessible Pedestrian Signal) data.** Would require a separate NYC DOT dataset or field survey.
 3. **No sidewalk condition ratings.** The DOT ramp dataset has condition flags but there is no equivalent for sidewalk pavement quality citywide.
-4. **Planimetric centerlines are unreliable.** The minimum-rotated-rectangle axis is not a centerline. About half of a v0.3.2 sample lay on a sidewalk, and nearly all gap-fill segments are unconnected to the rest of the graph.
+4. **Planimetric centerlines are unreliable.** The minimum-rotated-rectangle axis is not a centerline. About half of a v0.3.2 sample lay on a sidewalk, and nearly all gap-fill segments are unconnected to the rest of the graph. From v0.3.3 they are not in the graph: they ship as `nyc-gapfill-sidewalks.geojson`, whose root says what they are.
 5. **No live feeds.** The pipeline is a point-in-time snapshot. Rerun to refresh.
 6. **MTA ADA annotation not implemented.** No station index is produced (see the MTA section above).
 
