@@ -1,5 +1,5 @@
 {
- "_about": "Inputs for scripts/build_demo_data.py. The research_notes/ paths are result files of the router comparison (git-ignored; compare/ rebuilds them). Every number in 'status' names its result file.",
+ "_about": "Inputs for scripts/build_demo_data.py. The research_notes/ paths are build-time inputs from the project's local, git-ignored working archive (see scripts/README.md); readers find the summary results in evaluation/. The status and sources strings below are shown on the demo page.",
  "osw_clip": "research_notes/compare/brownsville/bk16.geojson",
  "community_districts": "research_notes/ramp_backlog/raw/community_districts_5crt-au7u.geojson",
  "compliance_pages": "research_notes/ramp_backlog/raw/compliance/page_*.json",
@@ -19,19 +19,20 @@
     "title": "Checked, and how",
     "items": [
      "Form. The city-wide graph passes the official OpenSidewalks validator (python-osw-validation 0.5.0) with zero errors, and so does the Brownsville extract drawn here. The validator checks structure, not truth.",
-     "Where a surveyed ramp serves a crossing. On 200 crossings rated over the city's 2018 aerial imagery, 164 of the 166 crossings that the 5 m rule passes have a surveyed ramp placed to serve both ends (98.8%). Two raters agreed with kappa 0.81. The imagery shows where the survey put a ramp, not whether anyone can use it.",
+     "Where a surveyed ramp serves a crossing. On 200 crossings rated remotely over the city's 2018 aerial imagery, 164 of the 166 crossings that the 5 m rule passes have a surveyed ramp placed to serve both ends (98.8%). The raters were language-model agents following a written protocol, not people; two independent ratings agreed with kappa 0.81. No crossing was visited. The imagery shows where the survey put a ramp, not whether it is there today or anyone can use it.",
      "The route search. This page's routes match Unweaver, the open routing engine the profile was written for. On 840 route requests in Brownsville the two agree every time on whether a route exists, and all 826 routes found by both have the same length to within 1 m. On 514 more requests across the city they also agree every time on whether a route exists.",
      "Against OpenRouteService. On 362 Brownsville trips, this graph and OpenRouteService's wheelchair profile (plain OpenStreetMap data, 10% incline limit, 6 cm kerb limit) both find a route every time. They take the same route on 130 trips and different routes on 232. 151 of OpenRouteService's 362 routes (41.7%) use a crossing with no surveyed ramp within 5 m of one end. OpenStreetMap carries no kerb information there that OpenRouteService treats as a barrier.",
-     "What the disagreements look like from above. 48 places across the city where the two routers part were drawn over the city's March 2024 aerial imagery and rated by agents that were not told why each was chosen. Where OpenRouteService's route had been flagged as running in the roadway, the photograph agreed at 10 of 12 places. At the 11 crossings flagged for a missing ramp, the photograph showed a ramp at both ends at none, at one end or neither at 3, and could not tell at 8. At 15 cm per pixel a kerb ramp is rarely visible, so this check cannot confirm the ramp data. A further agent rated 24 of the sheets again, without seeing the first ratings, and agreed on the kind of place at 23 (kappa 0.94)."
+     "What the disagreements look like from above. 48 places across the city where the two routers part were drawn over the city's March 2024 aerial imagery and rated by language-model agents, following a written protocol, that were not told why each was chosen. Where OpenRouteService's route had been flagged as running in the roadway, the photograph agreed at 10 of 12 places. At the 11 crossings flagged for a missing ramp, the photograph showed a ramp at both ends at none, at one end or neither at 3, and could not tell at 8. At 15 cm per pixel a kerb ramp is rarely visible, so this check cannot confirm the ramp data. A further language-model agent rated 24 of the sheets again, without seeing the first ratings, and agreed on the kind of place at 23 (kappa 0.94). No person rated the sheets."
     ]
    },
    {
     "title": "Where this graph does worse",
     "items": [
-     "Outside Brownsville it finds far fewer routes. Its wheelchair profile routes 91% of random trips in Brooklyn and 51% in the Bronx, where OpenRouteService routes 97% to 99%. A missing route can be a real barrier or a gap in the data, and this page cannot tell which.",
+     "Outside Brownsville it finds far fewer routes. With each trip end snapped to the nearest edge, its wheelchair profile routes 91% of random trips in Brooklyn and 51% in the Bronx, where OpenRouteService routes 97% to 99%. A missing route can be a real barrier or a gap in the data, and this page cannot tell which.",
      "It may refuse crossings that have ramps. Across Brooklyn, OpenStreetMap mappers tagged a lowered or flush kerb at 1,893 of the 3,394 crossing ends (55.8%) where the survey has no ramp within 5 m. Some of those are likely ramps built after the survey.",
      "It does not read OpenStreetMap's surface, smoothness or wheelchair=no tags. OpenRouteService does.",
      "Where OpenStreetMap has no mapped sidewalk, this graph has no route. OpenRouteService falls back to the roadway, which is a choice a rider may or may not want.",
+     "It has lost connectivity that plain OpenStreetMap has. With every edge allowed, OpenRouteService on this graph routes 82.1% of Manhattan pairs, against 100% on plain OpenStreetMap, because the pipeline's tag filter drops some ways.",
      "Its incline limits (8.3% up, 10% down) apply to every short stretch. A noisy LiDAR reading on one short stretch can close a route."
     ]
    },
@@ -39,10 +40,11 @@
     "title": "Not checked",
     "items": [
      "Nobody has measured a ramp with a level or travelled one of these routes for this project.",
-     "The survey's slopes were taken from street imagery and vehicle LiDAR between 2018 and 2019. No public record shows them checked against a hand measurement.",
+     "This project has not compared the survey's slopes with a hand measurement.",
      "978 of the 2,363 surveyed ramps here are at corners DOT lists as rebuilt since the survey. Their slopes and status describe ramps that may be gone, and nothing here says how the new ramps measure.",
      "Clear width past poles, trees and stoops, surface condition, the lip at the gutter, ponding, construction and snow are not in the data.",
-     "The imagery ratings and the route comparison were carried out by language-model agents following written protocols, with an independent agent rating a sample again. No person has reviewed them on the ground."
+     "The imagery ratings were carried out by language-model agents following written protocols, with an independent agent rating a sample again. No person rated the sheets, and nothing on this page has been checked on the ground.",
+     "The page passes automated accessibility checks (axe-core and pa11y, zero violations) and a keyboard pass. It has not been tested by a screen-reader user."
     ]
    }
   ],
@@ -55,7 +57,7 @@
    ],
    [
     "Curb ramp positions and survey values",
-    "NYC DOT, Pedestrian Ramp Locations (ufzp-rrqu), surveyed 2017 to 2020",
+    "NYC DOT, Pedestrian Ramp Locations (ufzp-rrqu), surveyed April 2018 to October 2019",
     "https://data.cityofnewyork.us/d/ufzp-rrqu",
     "NYC Open Data terms of use; credit by source and date"
    ],

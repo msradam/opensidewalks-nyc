@@ -86,7 +86,7 @@ def load_ramps(nodes, compliance_glob, progress_csv):
                 end = datetime.strptime(corner["Construction_End_Date"], "%Y/%m/%d").date()  # noqa: DTZ007 (a calendar day)
             except ValueError:
                 end = None
-            # As in the ramp backlog method: a built corner with no usable date counts as rebuilt.
+            # As in the ramp backlog method (evaluation/ramp_backlog/METHOD.md): a built corner with no usable date counts as rebuilt.
             usable = end is not None and 1990 <= end.year and end <= date.today()  # noqa: DTZ011
             rebuilt = not usable or surveyed is None or end > surveyed
             built_year = end.year if usable and rebuilt else None
@@ -298,9 +298,11 @@ def verdict_text(rec, ours, ref):
         "rule": "By this graph's data OpenRouteService's route is passable too. The difference comes from OpenRouteService's own rules "
                 "(its surface and smoothness limits and its route weighting), not from the ramp or incline data",
     }[v["cause"]]
-    tail = f", and its route is {longer}." if v["status"] == "different route" else ", and with it barred finds no way through."
-    if v["cause"] == "rule":
-        tail = f". This graph's route is {longer}." if diff is not None else "."
+    # Name this graph as the subject: after the incline data and connectivity
+    # clauses "its route" would read as OpenRouteService compared with itself.
+    tail = f". This graph's route is {longer}." if v["status"] == "different route" else ", and with it barred finds no way through."
+    if v["cause"] == "rule" and v["status"] != "different route":
+        tail = "."
     return head, why + tail
 
 
