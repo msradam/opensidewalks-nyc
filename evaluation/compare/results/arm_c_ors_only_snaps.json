@@ -1,0 +1,32 @@
+{
+ "random/BK": {
+  "ors_only": 89,
+  "ends_over_25m_apart": 75,
+  "median_apart_m": 118.5
+ },
+ "random/BX": {
+  "ors_only": 134,
+  "ends_over_25m_apart": 91,
+  "median_apart_m": 63.5
+ },
+ "random/MN": {
+  "ors_only": 96,
+  "ends_over_25m_apart": 25,
+  "median_apart_m": 0.1
+ },
+ "random/QN": {
+  "ors_only": 114,
+  "ends_over_25m_apart": 93,
+  "median_apart_m": 79.2
+ },
+ "random/SI": {
+  "ors_only": 140,
+  "ends_over_25m_apart": 89,
+  "median_apart_m": 40.7
+ },
+ "random/citywide": {
+  "ors_only": 85,
+  "ends_over_25m_apart": 60,
+  "median_apart_m": 63.8
+ }
+}

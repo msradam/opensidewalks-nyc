@@ -1,0 +1,6 @@
+{
+ "validator_version": "0.5.0",
+ "is_valid": true,
+ "errors": [],
+ "input": "output/nyc-osw-osw-split.zip"
+}

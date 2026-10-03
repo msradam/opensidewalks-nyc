@@ -1,0 +1,3 @@
+One terrain tile per borough, capped at 3000 pixels a side, is 5 to 12 m per pixel, and at that size a sidewalk beside a railway cut or a retaining wall takes on part of the drop.
+
+Against a 1 m tile of the same box, the coarse tiles put 2.6% of footway edges of 5 to 10 m over the wheelchair limits where the fine tile put 1.2%, and 1.7% of edges of 10 to 25 m where the fine tile put 1.0%; only a third of the edges flagged at one resolution are flagged at the other. A grid of 2 m tiles over each borough is 67 requests and about 650 MB. Evidence: research_notes/next/structure/steep_by_length_bb.json, the v0.3.2 box in the same file.

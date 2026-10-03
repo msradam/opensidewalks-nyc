@@ -1,0 +1,133 @@
+n,end,ramp_serves,seen_in_imagery,end_type,marked,note
+3,A,yes,cannot_tell,corner,yes,
+3,B,yes,cannot_tell,corner,yes,
+6,A,yes,cannot_tell,corner,yes,
+6,B,yes,cannot_tell,corner,yes,
+9,A,yes,cannot_tell,corner,yes,
+9,B,no,cannot_tell,corner,yes,no square at east end
+12,A,yes,cannot_tell,corner,no,
+12,B,yes,cannot_tell,corner,no,
+15,A,yes,cannot_tell,corner,yes,
+15,B,yes,cannot_tell,corner,yes,
+18,A,yes,cannot_tell,corner,yes,
+18,B,yes,cannot_tell,corner,yes,squares at corner apex about 3 m east of stripes; only crossing at that corner
+21,A,yes,cannot_tell,corner,yes,
+21,B,yes,cannot_tell,corner,yes,
+24,A,yes,cannot_tell,corner,yes,crossing in building shadow
+24,B,yes,cannot_tell,corner,yes,
+27,A,yes,cannot_tell,corner,yes,
+27,B,yes,cannot_tell,corner,yes,
+30,A,yes,cannot_tell,corner,yes,parallel line crosswalk
+30,B,yes,cannot_tell,corner,yes,
+33,A,yes,cannot_tell,corner,yes,
+33,B,yes,cannot_tell,corner,yes,
+36,A,yes,cannot_tell,corner,yes,
+36,B,yes,cannot_tell,corner,yes,
+39,A,yes,cannot_tell,corner,no,ring sits on road 5 m east of corner; corner apex squares counted
+39,B,no,cannot_tell,other,no,end sits on road beside painted gore; no kerb
+42,A,yes,cannot_tell,corner,no,crossing of divided road; squares on median too
+42,B,yes,cannot_tell,midblock,no,
+45,A,no,cannot_tell,midblock,yes,no squares anywhere on sheet
+45,B,no,cannot_tell,corner,yes,lands on triangular sidewalk at road junction
+48,A,yes,cannot_tell,corner,yes,
+48,B,yes,cannot_tell,corner,yes,
+51,A,yes,cannot_tell,corner,yes,crosses a parking lot access lane
+51,B,yes,cannot_tell,corner,yes,
+54,A,yes,cannot_tell,corner,yes,
+54,B,yes,cannot_tell,corner,yes,
+57,A,yes,cannot_tell,corner,no,
+57,B,yes,cannot_tell,corner,no,
+60,A,yes,cannot_tell,corner,yes,
+60,B,no,cannot_tell,corner,yes,no square at south-east end
+63,A,yes,cannot_tell,corner,yes,
+63,B,yes,ramp,corner,yes,reddish pad visible at kerb
+66,A,yes,cannot_tell,corner,no,T intersection; north side is a park
+66,B,yes,cannot_tell,midblock,no,
+69,A,yes,cannot_tell,corner,yes,
+69,B,yes,cannot_tell,corner,yes,
+72,A,no,cannot_tell,other,no,rail station platforms; not a street crossing
+72,B,no,cannot_tell,other,no,
+75,A,yes,cannot_tell,corner,no,long unmarked diagonal crossing of a wide road
+75,B,yes,cannot_tell,midblock,no,south end in shadow
+78,A,yes,cannot_tell,corner,yes,
+78,B,yes,cannot_tell,corner,yes,
+81,A,yes,cannot_tell,corner,yes,
+81,B,yes,cannot_tell,corner,yes,
+84,A,unclear,cannot_tell,corner,no,deep shadow; no kerb or crosswalk visible
+84,B,unclear,cannot_tell,corner,no,deep shadow; no kerb or crosswalk visible
+87,A,yes,cannot_tell,corner,yes,
+87,B,yes,cannot_tell,corner,yes,
+90,A,yes,cannot_tell,corner,yes,
+90,B,yes,cannot_tell,corner,yes,south-east end in building shadow
+93,A,unclear,cannot_tell,corner,no,2 m crossing at one corner; no street between the ends
+93,B,unclear,cannot_tell,corner,no,
+96,A,yes,cannot_tell,corner,no,this arm unmarked while others are striped; shadow
+96,B,yes,cannot_tell,corner,no,
+99,A,yes,cannot_tell,corner,yes,deep shadow; stripes faintly visible
+99,B,yes,cannot_tell,corner,yes,
+102,A,yes,cannot_tell,corner,yes,
+102,B,yes,cannot_tell,corner,yes,
+105,A,yes,cannot_tell,corner,yes,stripes faint
+105,B,no,cannot_tell,corner,yes,nearest square round the corner on the other kerb
+108,A,yes,cannot_tell,corner,yes,west side under trees
+108,B,yes,cannot_tell,corner,yes,
+111,A,yes,cannot_tell,corner,yes,
+111,B,yes,cannot_tell,corner,yes,
+114,A,yes,cannot_tell,corner,yes,2 m stub at the end of a wide crosswalk; rings overlap; shadow
+114,B,unclear,cannot_tell,corner,yes,end sits on the road with no kerb of its own
+117,A,yes,cannot_tell,corner,yes,west end under tree shadow
+117,B,yes,cannot_tell,corner,yes,
+120,A,yes,cannot_tell,corner,yes,
+120,B,yes,cannot_tell,corner,yes,
+123,A,yes,cannot_tell,corner,yes,crosses a park access lane
+123,B,yes,cannot_tell,corner,yes,
+126,A,yes,cannot_tell,corner,yes,trees over both ends
+126,B,yes,cannot_tell,corner,yes,
+129,A,yes,cannot_tell,corner,no,
+129,B,yes,cannot_tell,corner,no,
+132,A,yes,cannot_tell,corner,no,squares at corner apex
+132,B,yes,cannot_tell,corner,no,
+135,A,yes,cannot_tell,corner,no,
+135,B,yes,cannot_tell,corner,no,
+138,A,yes,cannot_tell,corner,yes,
+138,B,yes,cannot_tell,corner,yes,
+141,A,yes,cannot_tell,corner,no,under elevated rail; crossing itself not visible
+141,B,yes,cannot_tell,corner,no,
+144,A,yes,cannot_tell,corner,no,
+144,B,yes,cannot_tell,corner,no,
+147,A,yes,cannot_tell,corner,no,crosses a parking lot access road
+147,B,yes,cannot_tell,corner,no,
+150,A,yes,cannot_tell,corner,no,
+150,B,yes,cannot_tell,corner,no,
+153,A,yes,cannot_tell,other,no,crosses a narrow driveway or alley
+153,B,yes,cannot_tell,other,no,
+156,A,yes,cannot_tell,corner,no,
+156,B,yes,cannot_tell,corner,no,east end under tree
+159,A,yes,cannot_tell,other,no,north end is a sidewalk bulb where a path or driveway meets the street
+159,B,yes,cannot_tell,corner,no,
+162,A,yes,cannot_tell,corner,no,imagery blurry
+162,B,yes,cannot_tell,corner,no,
+165,A,yes,cannot_tell,corner,no,
+165,B,yes,cannot_tell,corner,no,
+168,A,yes,cannot_tell,corner,yes,
+168,B,yes,cannot_tell,corner,yes,
+171,A,yes,cannot_tell,corner,no,faint lines near south end may be a stop bar
+171,B,yes,cannot_tell,corner,no,
+174,A,yes,cannot_tell,corner,no,
+174,B,no,cannot_tell,corner,no,no square at east end
+177,A,yes,ramp,corner,yes,reddish pad visible at kerb
+177,B,yes,cannot_tell,corner,yes,
+180,A,yes,ramp,corner,yes,reddish pad visible
+180,B,yes,ramp,corner,yes,reddish pad visible
+183,A,yes,cannot_tell,corner,yes,
+183,B,yes,cannot_tell,corner,yes,
+186,A,yes,cannot_tell,corner,yes,square at corner apex about 3 m west of stripes
+186,B,yes,cannot_tell,corner,yes,
+189,A,yes,cannot_tell,corner,yes,
+189,B,yes,cannot_tell,median,yes,triangular island
+192,A,yes,cannot_tell,corner,yes,
+192,B,yes,cannot_tell,corner,yes,
+195,A,no,cannot_tell,corner,yes,no square at north end
+195,B,yes,cannot_tell,corner,yes,
+198,A,yes,cannot_tell,corner,no,trees over both ends
+198,B,yes,cannot_tell,corner,no,

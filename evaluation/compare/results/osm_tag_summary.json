@@ -1,0 +1,33 @@
+{
+ "source_extract": "engines/osm/nyc-261001.osm.pbf (sha256 4fd1d8ac...)",
+ "osm_ways_under_this_graph": 393531,
+ "of_which_with_incline_tag": 4359,
+ "nodes_with_any_kerb_key_in_whole_extract": 105016,
+ "nodes_with_kerb_height_in_whole_extract": 15,
+ "kerb_height_values": {
+  "2.54 cm": 1,
+  "3 cm": 1,
+  "> 3 cm": 3,
+  "1 cm": 6,
+  "5 cm": 2,
+  "0": 1,
+  "0.1": 1
+ },
+ "ors_plain_osm_wheelchair_routes_found": {
+  "default": 12186,
+  "rec_i6_k6": 12114,
+  "rec_i10_k6": 12182,
+  "i10_k6": 12182
+ },
+ "of_which_use_a_highway_steps_way": {
+  "default": 0,
+  "rec_i6_k6": 0,
+  "rec_i10_k6": 0,
+  "i10_k6": 0
+ },
+ "note": "Way ids are ORS's own (extra_info osmid), present only on the four wheelchair configurations listed. A way's highway tag is looked up in graph/osm_tags.json, which holds every OSM way this graph is built from, 5,551 of them steps. 28,514 of 3,030,948 way ids on the reference routes (0.9%) are not in that file, so a steps way among them would be missed. The foot-walking runs were made without way ids, so there is no positive control from routes in this file.",
+ "reference_rec_i10_k6_way_ids_found_in_osm_tags": 3002434,
+ "reference_rec_i10_k6_way_ids_not_in_osm_tags": 28514,
+ "highway_steps_ways_in_osm_tags": 5551,
+ "made_by": "a short script run once on 2026-10-03 over research_notes/compare (not published); the extract scan uses pyosmium"
+}

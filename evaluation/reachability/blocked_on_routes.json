@@ -1,0 +1,640 @@
+{
+ "Penn Station -> Grand Central": {
+  "edges": 96,
+  "outside_limits": [
+   {
+    "incline": -0.1345,
+    "length_m": 38.6,
+    "kind": "sidewalk",
+    "name": null,
+    "structure": null,
+    "z_u": 19.1,
+    "z_v": 13.9,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.97911,
+    "lat": 40.75286
+   },
+   {
+    "incline": 0.1093,
+    "length_m": 34.0,
+    "kind": "sidewalk",
+    "name": null,
+    "structure": null,
+    "z_u": 13.9,
+    "z_v": 17.7,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.97871,
+    "lat": 40.75269
+   }
+  ]
+ },
+ "Times Square -> Empire State Building": {
+  "edges": 95,
+  "outside_limits": []
+ },
+ "Union Square -> Washington Sq Park": {
+  "edges": 68,
+  "outside_limits": []
+ },
+ "Brooklyn Bridge MN -> DUMBO": {
+  "edges": 216,
+  "outside_limits": []
+ },
+ "Atlantic Av-Barclays -> Prospect Park": {
+  "edges": 240,
+  "outside_limits": [
+   {
+    "incline": 0.2472,
+    "length_m": 14.9,
+    "kind": "footway",
+    "name": null,
+    "structure": null,
+    "z_u": 44.5,
+    "z_v": 48.2,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.96899,
+    "lat": 40.67132
+   }
+  ]
+ },
+ "Williamsburg Bridge MN -> Williamsburg Bridge BK": {
+  "edges": 68,
+  "outside_limits": [
+   {
+    "incline": 0.9635,
+    "length_m": 7.2,
+    "kind": "footway",
+    "name": "Williamsburg Bridge Bike Path",
+    "structure": null,
+    "z_u": 9.5,
+    "z_v": 16.4,
+    "src_u": null,
+    "src_v": "lidar_2017",
+    "lon": -73.98558,
+    "lat": 40.71766
+   }
+  ]
+ },
+ "Court Sq Queens -> LIC Hunters Point": {
+  "edges": 62,
+  "outside_limits": []
+ },
+ "Yankee Stadium -> 161 St": {
+  "edges": 30,
+  "outside_limits": []
+ },
+ "Empire State Building -> DUMBO (cross-borough)": {
+  "edges": 378,
+  "outside_limits": [
+   {
+    "incline": 0.0974,
+    "length_m": 56.9,
+    "kind": "footway",
+    "name": "Manhattan Bridge Pedestrian Path",
+    "structure": null,
+    "z_u": 19.5,
+    "z_v": 25.1,
+    "src_u": "lidar_2017",
+    "src_v": "lidar_2017",
+    "lon": -73.99504,
+    "lat": 40.71478
+   },
+   {
+    "incline": -0.1109,
+    "length_m": 236.0,
+    "kind": "footway",
+    "name": "Manhattan Bridge Pedestrian Path",
+    "structure": "bridge",
+    "z_u": 40.4,
+    "z_v": 14.2,
+    "src_u": "lidar_2017",
+    "src_v": "lidar_2017",
+    "lon": -73.98935,
+    "lat": 40.7046
+   },
+   {
+    "incline": 0.2469,
+    "length_m": 2.4,
+    "kind": "footway",
+    "name": null,
+    "structure": null,
+    "z_u": 17.8,
+    "z_v": 18.4,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.98665,
+    "lat": 40.69969
+   },
+   {
+    "incline": -0.3971,
+    "length_m": 2.3,
+    "kind": "footway",
+    "name": null,
+    "structure": null,
+    "z_u": 20.4,
+    "z_v": 19.5,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.98665,
+    "lat": 40.69966
+   },
+   {
+    "incline": -0.1937,
+    "length_m": 2.3,
+    "kind": "footway",
+    "name": null,
+    "structure": null,
+    "z_u": 19.8,
+    "z_v": 19.2,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.98672,
+    "lat": 40.6996
+   },
+   {
+    "incline": -0.1424,
+    "length_m": 4.8,
+    "kind": "footway",
+    "name": null,
+    "structure": null,
+    "z_u": 19.2,
+    "z_v": 18.5,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.98673,
+    "lat": 40.69958
+   }
+  ]
+ },
+ "Grand Central -> Washington Sq Park (long Manhattan)": {
+  "edges": 181,
+  "outside_limits": [
+   {
+    "incline": -0.1093,
+    "length_m": 34.0,
+    "kind": "sidewalk",
+    "name": null,
+    "structure": null,
+    "z_u": 17.7,
+    "z_v": 13.9,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.97836,
+    "lat": 40.75254
+   },
+   {
+    "incline": 0.1345,
+    "length_m": 38.6,
+    "kind": "sidewalk",
+    "name": null,
+    "structure": null,
+    "z_u": 13.9,
+    "z_v": 19.1,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.97871,
+    "lat": 40.75269
+   }
+  ]
+ },
+ "Manhattan Bridge MN -> Manhattan Bridge BK": {
+  "edges": 70,
+  "outside_limits": [
+   {
+    "incline": 0.0974,
+    "length_m": 56.9,
+    "kind": "footway",
+    "name": "Manhattan Bridge Pedestrian Path",
+    "structure": null,
+    "z_u": 19.5,
+    "z_v": 25.1,
+    "src_u": "lidar_2017",
+    "src_v": "lidar_2017",
+    "lon": -73.99504,
+    "lat": 40.71478
+   },
+   {
+    "incline": -0.1109,
+    "length_m": 236.0,
+    "kind": "footway",
+    "name": "Manhattan Bridge Pedestrian Path",
+    "structure": "bridge",
+    "z_u": 40.4,
+    "z_v": 14.2,
+    "src_u": "lidar_2017",
+    "src_v": "lidar_2017",
+    "lon": -73.98935,
+    "lat": 40.7046
+   }
+  ]
+ },
+ "Queensboro Bridge MN -> Queensboro Bridge QN": {
+  "edges": 53,
+  "outside_limits": [
+   {
+    "incline": 0.0881,
+    "length_m": 1.6,
+    "kind": "footway",
+    "name": null,
+    "structure": null,
+    "z_u": 18.6,
+    "z_v": 18.8,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.96304,
+    "lat": 40.76025
+   },
+   {
+    "incline": 0.0952,
+    "length_m": 1.6,
+    "kind": "footway",
+    "name": null,
+    "structure": null,
+    "z_u": 18.8,
+    "z_v": 18.9,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.96303,
+    "lat": 40.76026
+   },
+   {
+    "incline": 0.0876,
+    "length_m": 3.2,
+    "kind": "footway",
+    "name": null,
+    "structure": null,
+    "z_u": 18.9,
+    "z_v": 19.2,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.96302,
+    "lat": 40.76027
+   },
+   {
+    "incline": 0.0917,
+    "length_m": 5.7,
+    "kind": "footway",
+    "name": null,
+    "structure": null,
+    "z_u": 19.8,
+    "z_v": 20.2,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.96289,
+    "lat": 40.76029
+   },
+   {
+    "incline": 0.6372,
+    "length_m": 17.5,
+    "kind": "footway",
+    "name": null,
+    "structure": null,
+    "z_u": 20.2,
+    "z_v": 31.3,
+    "src_u": null,
+    "src_v": "lidar_2017",
+    "lon": -73.96283,
+    "lat": 40.76028
+   },
+   {
+    "incline": 0.0882,
+    "length_m": 105.0,
+    "kind": "footway",
+    "name": "Queensboro Bridge Outer Roadway",
+    "structure": "bridge",
+    "z_u": 11.4,
+    "z_v": 20.7,
+    "src_u": "lidar_2017",
+    "src_v": "lidar_2017",
+    "lon": -73.94196,
+    "lat": 40.75131
+   }
+  ]
+ },
+ "High Line Gansevoort -> High Line 30th St": {
+  "edges": 107,
+  "outside_limits": [
+   {
+    "incline": -0.1077,
+    "length_m": 16.2,
+    "kind": "footway",
+    "name": null,
+    "structure": "bridge",
+    "z_u": 11.0,
+    "z_v": 9.3,
+    "src_u": "lidar_2017",
+    "src_v": "interpolated",
+    "lon": -74.00789,
+    "lat": 40.74145
+   },
+   {
+    "incline": -0.1076,
+    "length_m": 28.6,
+    "kind": "footway",
+    "name": null,
+    "structure": "bridge",
+    "z_u": 9.3,
+    "z_v": 6.2,
+    "src_u": "interpolated",
+    "src_v": "interpolated",
+    "lon": -74.00797,
+    "lat": 40.74158
+   },
+   {
+    "incline": -0.1076,
+    "length_m": 5.1,
+    "kind": "footway",
+    "name": null,
+    "structure": "bridge",
+    "z_u": 6.2,
+    "z_v": 5.7,
+    "src_u": "interpolated",
+    "src_v": "lidar_2017",
+    "lon": -74.00791,
+    "lat": 40.74184
+   },
+   {
+    "incline": -0.2288,
+    "length_m": 2.9,
+    "kind": "footway",
+    "name": "High Line",
+    "structure": "bridge",
+    "z_u": 11.0,
+    "z_v": 10.4,
+    "src_u": "lidar_2017",
+    "src_v": "lidar_2017",
+    "lon": -74.00789,
+    "lat": 40.7419
+   }
+  ]
+ },
+ "Pulaski Bridge BK -> Pulaski Bridge QN": {
+  "edges": 60,
+  "outside_limits": [
+   {
+    "incline": -0.2313,
+    "length_m": 5.4,
+    "kind": "footway",
+    "name": "Pulaski Bridge",
+    "structure": null,
+    "z_u": 7.5,
+    "z_v": 6.3,
+    "src_u": "lidar_2017",
+    "src_v": null,
+    "lon": -73.95161,
+    "lat": 40.74272
+   }
+  ]
+ },
+ "East 103rd St FDR -> Wards Island (footbridge)": {
+  "edges": 29,
+  "outside_limits": [
+   {
+    "incline": 0.1578,
+    "length_m": 6.1,
+    "kind": "footway",
+    "name": "Wards Island Bridge",
+    "structure": null,
+    "z_u": 1.8,
+    "z_v": 2.7,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.93897,
+    "lat": 40.78626
+   },
+   {
+    "incline": 0.1157,
+    "length_m": 59.5,
+    "kind": "footway",
+    "name": "Wards Island Bridge",
+    "structure": "bridge",
+    "z_u": 9.0,
+    "z_v": 15.9,
+    "src_u": "lidar_2017",
+    "src_v": "lidar_2017",
+    "lon": -73.93902,
+    "lat": 40.78632
+   }
+  ]
+ },
+ "Macombs Dam Bridge MN -> Macombs Dam Bridge BX": {
+  "edges": 207,
+  "outside_limits": [
+   {
+    "incline": 0.1226,
+    "length_m": 4.4,
+    "kind": "sidewalk",
+    "name": null,
+    "structure": null,
+    "z_u": 31.0,
+    "z_v": 31.4,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.93971,
+    "lat": 40.83006
+   },
+   {
+    "incline": 0.0916,
+    "length_m": 7.9,
+    "kind": "footway",
+    "name": null,
+    "structure": null,
+    "z_u": 8.8,
+    "z_v": 9.5,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.93252,
+    "lat": 40.82978
+   },
+   {
+    "incline": 0.0858,
+    "length_m": 11.6,
+    "kind": "footway",
+    "name": null,
+    "structure": null,
+    "z_u": 9.5,
+    "z_v": 10.5,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.93255,
+    "lat": 40.82985
+   },
+   {
+    "incline": 0.1123,
+    "length_m": 57.8,
+    "kind": "footway",
+    "name": null,
+    "structure": "bridge",
+    "z_u": 13.8,
+    "z_v": 20.3,
+    "src_u": "lidar_2017",
+    "src_v": "lidar_2017",
+    "lon": -73.93238,
+    "lat": 40.83052
+   },
+   {
+    "incline": 0.0849,
+    "length_m": 20.6,
+    "kind": "footway",
+    "name": null,
+    "structure": null,
+    "z_u": 20.1,
+    "z_v": 21.8,
+    "src_u": "lidar_2017",
+    "src_v": null,
+    "lon": -73.93171,
+    "lat": 40.83091
+   },
+   {
+    "incline": 0.0879,
+    "length_m": 2.5,
+    "kind": "footway",
+    "name": null,
+    "structure": null,
+    "z_u": 22.2,
+    "z_v": 22.5,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.9317,
+    "lat": 40.83066
+   },
+   {
+    "incline": -0.1566,
+    "length_m": 3.5,
+    "kind": "footway",
+    "name": null,
+    "structure": null,
+    "z_u": 22.4,
+    "z_v": 21.9,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.93155,
+    "lat": 40.83059
+   },
+   {
+    "incline": -0.1785,
+    "length_m": 3.3,
+    "kind": "footway",
+    "name": null,
+    "structure": null,
+    "z_u": 21.9,
+    "z_v": 21.3,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.93151,
+    "lat": 40.83059
+   },
+   {
+    "incline": -0.1759,
+    "length_m": 4.5,
+    "kind": "footway",
+    "name": null,
+    "structure": null,
+    "z_u": 21.3,
+    "z_v": 20.5,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.93147,
+    "lat": 40.83058
+   },
+   {
+    "incline": -0.1311,
+    "length_m": 15.4,
+    "kind": "footway",
+    "name": null,
+    "structure": null,
+    "z_u": 20.4,
+    "z_v": 18.4,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.93136,
+    "lat": 40.83058
+   },
+   {
+    "incline": -0.1531,
+    "length_m": 7.7,
+    "kind": "footway",
+    "name": null,
+    "structure": null,
+    "z_u": 18.4,
+    "z_v": 17.2,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.93145,
+    "lat": 40.83046
+   },
+   {
+    "incline": -0.1594,
+    "length_m": 6.7,
+    "kind": "footway",
+    "name": null,
+    "structure": null,
+    "z_u": 17.2,
+    "z_v": 16.1,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.93151,
+    "lat": 40.83041
+   },
+   {
+    "incline": -0.1949,
+    "length_m": 6.5,
+    "kind": "footway",
+    "name": null,
+    "structure": null,
+    "z_u": 16.1,
+    "z_v": 15.1,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.93155,
+    "lat": 40.83036
+   },
+   {
+    "incline": -0.1299,
+    "length_m": 1.5,
+    "kind": "footway",
+    "name": null,
+    "structure": null,
+    "z_u": 14.6,
+    "z_v": 14.4,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.9316,
+    "lat": 40.83028
+   },
+   {
+    "incline": -0.1303,
+    "length_m": 16.2,
+    "kind": "footway",
+    "name": null,
+    "structure": null,
+    "z_u": 14.2,
+    "z_v": 12.2,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.93161,
+    "lat": 40.83026
+   },
+   {
+    "incline": -0.1064,
+    "length_m": 16.8,
+    "kind": "footway",
+    "name": null,
+    "structure": null,
+    "z_u": 12.2,
+    "z_v": 10.4,
+    "src_u": null,
+    "src_v": null,
+    "lon": -73.93154,
+    "lat": 40.83012
+   }
+  ]
+ },
+ "Riverbank Park south -> north (elevated)": {
+  "edges": 22,
+  "outside_limits": []
+ }
+}

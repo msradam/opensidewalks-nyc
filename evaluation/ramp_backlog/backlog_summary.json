@@ -1,0 +1,410 @@
+{
+ "caveat": "The survey dataset description says: \"measurements shown are not indicative of whether a particular ramp is compliant with design and construction standards pursuant to the Americans with Disabilities Act (ADA). DOT applies additional parameters in its compliance assessment\". DOT's classifications in the compliance layer date from 2020 (layer last edited 2020-12-28) and the survey measurements mostly from 2018.",
+ "definitions": {
+  "surveyed_ramp": "one row of the DOT compliance layer",
+  "noncompliant": "COMPLIANCY_TOTAL == 'Non-Compliant' in the DOT compliance layer",
+  "corner_rebuilt_since_survey": "the corner's Construction_Status_Value in e7gc-ub6z is 'Constructed' or 'Complex Constructed' and its Construction_End_Date is later than the ramp's survey date (GEOCYCLORAMA_DATE); a built corner whose date is unusable counts as rebuilt on its status alone",
+  "backlog": "noncompliant ramps whose corner is not rebuilt since survey, including ramps with no progress record",
+  "published_field": "COMPLIANCY_STATUS is the field DOT draws on its Survey Assessment Map (Compliant, Non-Compliant, Pending = 'Pending Technical Review'); COMPLIANCY_TOTAL is an unpublished roll-up with no public description. Keys named compliancy_status_* use the published field; noncompliant_* and backlog_* keys with no field in the name use COMPLIANCY_TOTAL"
+ },
+ "headlines": {
+  "surveyed_ramps": 217679,
+  "noncompliant_ramps": 214200,
+  "compliant_ramps": 3366,
+  "tbd_ramps": 113,
+  "backlog_noncompliant_at_corners_not_since_rebuilt": 126395,
+  "backlog_share_of_noncompliant": 0.5901,
+  "backlog_share_of_surveyed": 0.5806,
+  "noncompliant_at_corners_rebuilt_after_survey": 87805,
+  "noncompliant_at_built_corners_with_unusable_date": 0,
+  "backlog_by_corner_state": {
+   "Planned Construction": 77512,
+   "Not Assigned": 23568,
+   "Complex Planned Construction": 20139,
+   "Constructed on or before survey date": 2979,
+   "Not Required": 2174,
+   "No progress record": 23
+  },
+  "backlog_by_borough": {
+   "Manhattan": 18432,
+   "Bronx": 16238,
+   "Brooklyn": 33159,
+   "Queens": 45164,
+   "Staten Island": 13402
+  },
+  "backlog_distinct_corners": 79789,
+  "running_slope_check_noncompliant": 44048,
+  "running_slope_check_noncompliant_at_corners_not_since_rebuilt": 27201,
+  "cross_slope_check_noncompliant": 43637,
+  "cross_slope_check_noncompliant_at_corners_not_since_rebuilt": 26855,
+  "counter_slope_check_noncompliant": 51355,
+  "counter_slope_check_noncompliant_at_corners_not_since_rebuilt": 30441,
+  "compliancy_status_field_noncompliant": 145890,
+  "compliancy_status_field_noncompliant_at_corners_not_since_rebuilt": 81390,
+  "compliancy_status_field_pending": 69406,
+  "compliancy_status_field_pending_at_corners_not_since_rebuilt": 45759,
+  "surveyed_ramps_at_corners_not_since_rebuilt": 128954,
+  "distinct_corners_not_since_rebuilt": {
+   "compliancy_status_noncompliant_not_since_rebuilt": 53731,
+   "compliancy_status_pending_not_since_rebuilt": 30598,
+   "compliancy_total_noncompliant_not_since_rebuilt": 79789,
+   "compliancy_status_noncompliant_or_pending_not_since_rebuilt": 80048,
+   "any_surveyed_ramp_not_since_rebuilt": 80642
+  },
+  "compliancy_status_noncompliant_or_pending_not_since_rebuilt": 127149,
+  "percent_of_surveyed_ramps": {
+   "compliancy_status_noncompliant": 67.0,
+   "compliancy_status_pending": 31.9,
+   "compliancy_total_noncompliant": 98.4
+  },
+  "not_since_rebuilt_compliancy_total_by_compliancy_status": {
+   "Compliant": {
+    "Compliant": 1622,
+    "Pending": 640,
+    "Non-Compliant": 16
+   },
+   "Compliant < 60": {
+    "Compliant": 183,
+    "Non-Compliant": 17,
+    "Pending": 2
+   },
+   "Non-Compliant": {
+    "Non-Compliant": 81357,
+    "Pending": 45038
+   },
+   "TBD": {
+    "Pending": 79
+   }
+  },
+  "compliancy_total_by_compliancy_status": {
+   "Compliant": {
+    "Compliant": 2181,
+    "Pending": 944,
+    "Non-Compliant": 16
+   },
+   "Compliant < 60": {
+    "Compliant": 202,
+    "Non-Compliant": 21,
+    "Pending": 2
+   },
+   "Non-Compliant": {
+    "Non-Compliant": 145853,
+    "Pending": 68347
+   },
+   "TBD": {
+    "Pending": 113
+   }
+  }
+ },
+ "per_corner_limits": {
+  "surveyed_ramps_at_corners_rebuilt_after_survey": 88725,
+  "of_which_at_corners_with_more_than_one_surveyed_ramp": 70315,
+  "corners_rebuilt_after_survey": 53513,
+  "of_which_with_more_than_one_surveyed_ramp": 35103,
+  "corners_with_some_ramps_rebuilt_after_survey_and_some_not": 28
+ },
+ "status_counts": {
+  "Complex Constructed": {
+   "progress_corners": 4538,
+   "surveyed_ramps": 6091,
+   "noncompliant_ramps": 5976,
+   "backlog_ramps": 568,
+   "status_field_noncompliant_ramps": 3750,
+   "status_field_noncompliant_not_since_rebuilt": 157,
+   "status_field_pending_ramps": 2255,
+   "status_field_pending_not_since_rebuilt": 412
+  },
+  "Complex Planned Construction": {
+   "progress_corners": 16082,
+   "surveyed_ramps": 20550,
+   "noncompliant_ramps": 20139,
+   "backlog_ramps": 20139,
+   "status_field_noncompliant_ramps": 14027,
+   "status_field_noncompliant_not_since_rebuilt": 14027,
+   "status_field_pending_ramps": 6211,
+   "status_field_pending_not_since_rebuilt": 6211
+  },
+  "Constructed": {
+   "progress_corners": 54820,
+   "surveyed_ramps": 85846,
+   "noncompliant_ramps": 84808,
+   "backlog_ramps": 2411,
+   "status_field_noncompliant_ramps": 61557,
+   "status_field_noncompliant_not_since_rebuilt": 650,
+   "status_field_pending_ramps": 23607,
+   "status_field_pending_not_since_rebuilt": 1803
+  },
+  "No progress record": {
+   "progress_corners": 0,
+   "surveyed_ramps": 23,
+   "noncompliant_ramps": 23,
+   "backlog_ramps": 23,
+   "status_field_noncompliant_ramps": 7,
+   "status_field_noncompliant_not_since_rebuilt": 7,
+   "status_field_pending_ramps": 16,
+   "status_field_pending_not_since_rebuilt": 16
+  },
+  "Not Assigned": {
+   "progress_corners": 25933,
+   "surveyed_ramps": 24019,
+   "noncompliant_ramps": 23568,
+   "backlog_ramps": 23568,
+   "status_field_noncompliant_ramps": 15158,
+   "status_field_noncompliant_not_since_rebuilt": 15158,
+   "status_field_pending_ramps": 8590,
+   "status_field_pending_not_since_rebuilt": 8590
+  },
+  "Not Required": {
+   "progress_corners": 25207,
+   "surveyed_ramps": 2221,
+   "noncompliant_ramps": 2174,
+   "backlog_ramps": 2174,
+   "status_field_noncompliant_ramps": 1712,
+   "status_field_noncompliant_not_since_rebuilt": 1712,
+   "status_field_pending_ramps": 470,
+   "status_field_pending_not_since_rebuilt": 470
+  },
+  "Planned Construction": {
+   "progress_corners": 61116,
+   "surveyed_ramps": 78929,
+   "noncompliant_ramps": 77512,
+   "backlog_ramps": 77512,
+   "status_field_noncompliant_ramps": 49679,
+   "status_field_noncompliant_not_since_rebuilt": 49679,
+   "status_field_pending_ramps": 28257,
+   "status_field_pending_not_since_rebuilt": 28257
+  }
+ },
+ "corner_state_counts": {
+  "Complex Planned Construction": {
+   "surveyed_ramps": 20550,
+   "noncompliant_ramps": 20139,
+   "status_field_noncompliant_ramps": 14027,
+   "status_field_pending_ramps": 6211
+  },
+  "Constructed on or before survey date": {
+   "surveyed_ramps": 3212,
+   "noncompliant_ramps": 2979,
+   "status_field_noncompliant_ramps": 807,
+   "status_field_pending_ramps": 2215
+  },
+  "No progress record": {
+   "surveyed_ramps": 23,
+   "noncompliant_ramps": 23,
+   "status_field_noncompliant_ramps": 7,
+   "status_field_pending_ramps": 16
+  },
+  "Not Assigned": {
+   "surveyed_ramps": 24019,
+   "noncompliant_ramps": 23568,
+   "status_field_noncompliant_ramps": 15158,
+   "status_field_pending_ramps": 8590
+  },
+  "Not Required": {
+   "surveyed_ramps": 2221,
+   "noncompliant_ramps": 2174,
+   "status_field_noncompliant_ramps": 1712,
+   "status_field_pending_ramps": 470
+  },
+  "Planned Construction": {
+   "surveyed_ramps": 78929,
+   "noncompliant_ramps": 77512,
+   "status_field_noncompliant_ramps": 49679,
+   "status_field_pending_ramps": 28257
+  },
+  "Rebuilt after survey": {
+   "surveyed_ramps": 88725,
+   "noncompliant_ramps": 87805,
+   "status_field_noncompliant_ramps": 64500,
+   "status_field_pending_ramps": 23647
+  }
+ },
+ "date_dependence": {
+  "backlog_ramps_in_only_because_construction_date_is_on_or_before_survey_date": 2979,
+  "share_of_backlog_that_depends_on_the_date_comparison": 0.0236,
+  "noncompliant_ramps_at_built_corners": 90784,
+  "of_which_date_after_survey": 87805,
+  "of_which_date_on_or_before_survey": 2979,
+  "of_which_date_unusable": 0
+ },
+ "headline_under_other_treatments": {
+  "headline": 126395,
+  "status_only_ignoring_all_dates": 123416,
+  "unusable_dates_at_built_corners_counted_as_not_rebuilt": 126395,
+  "pre_programme_dates_at_built_corners_counted_as_unusable_so_rebuilt_on_status": 126395,
+  "unbuilt_status_corners_with_a_date_after_survey_counted_as_rebuilt": 126275,
+  "ramps_with_no_progress_record_left_out": 126372
+ },
+ "join": {
+  "key": "corner ID (layer CORNERID, progress CornerID)",
+  "id_normalisation": {
+   "progress_ids_all_digits": true,
+   "progress_ids_with_whitespace": 0,
+   "progress_id_lengths": {
+    "7": 187696
+   },
+   "layer_id_type": "integer",
+   "layer_id_lengths": {
+    "7": 217679
+   },
+   "normalisation": "both sides cast to the decimal string of the integer; no padding or trimming was needed"
+  },
+  "layer_ramps": 217679,
+  "layer_ramps_with_progress_record": 217656,
+  "layer_distinct_corners": 134127,
+  "layer_distinct_corners_with_progress_record": 134108,
+  "progress_corners": 187696,
+  "progress_corners_with_a_surveyed_ramp": 134108,
+  "progress_corners_without_a_surveyed_ramp_by_status": {
+   "Not Required": 23474,
+   "Planned Construction": 12882,
+   "Not Assigned": 10304,
+   "Constructed": 3138,
+   "Complex Planned Construction": 3073,
+   "Complex Constructed": 717
+  },
+  "duplicate_corner_ids_in_progress": 0,
+  "duplicate_ramp_ids_in_layer": 0,
+  "ramps_per_corner_in_layer": {
+   "1": 51123,
+   "2": 82475,
+   "3": 510,
+   "4": 19
+  },
+  "share_of_ramps_matched": 0.999894,
+  "share_of_layer_corners_matched": 0.999858,
+  "share_of_progress_corners_matched": 0.714496
+ },
+ "malformed_dates": {
+  "first_survey_date": "2017-03-27",
+  "last_survey_date": "2020-01-29",
+  "progress_retrieval_date_used_as_future_cutoff": "2026-10-02",
+  "earliest_plausible_year": 1990,
+  "corners_by_date_class": {
+   "blank": 127470,
+   "ok": 59908,
+   "before_survey_programme": 315,
+   "unparseable": 2,
+   "impossible_year": 1
+  },
+  "distinct_values_by_class": {
+   "before_survey_programme": 139,
+   "impossible_year": 1,
+   "unparseable": 2
+  },
+  "ramps_by_date_class": {
+   "blank": 124458,
+   "ok": 92728,
+   "before_survey_programme": 465,
+   "no_record": 23,
+   "unparseable": 3,
+   "impossible_year": 2
+  },
+  "noncompliant_ramps_by_date_class": {
+   "blank": 122197,
+   "ok": 91535,
+   "before_survey_programme": 440,
+   "no_record": 23,
+   "unparseable": 3,
+   "impossible_year": 2
+  },
+  "treatment": {
+   "unparseable": "not usable; a built corner keeps its status, so it counts as rebuilt",
+   "impossible_year": "not usable; a built corner keeps its status, so it counts as rebuilt",
+   "future": "not usable; a built corner keeps its status, so it counts as rebuilt",
+   "before_survey_programme": "usable; it precedes every survey date, so the corner is not rebuilt since the survey"
+  },
+  "values_unparseable_impossible_or_future": [
+   "0205/05/29",
+   "3505/20/72",
+   "3668/40/72"
+  ],
+  "built_corners_with_no_date": 0,
+  "unbuilt_status_corners_with_a_date": {
+   "Planned Construction": 438,
+   "Not Assigned": 287,
+   "Complex Planned Construction": 78,
+   "Not Required": 65
+  },
+  "noncompliant_ramps_built_same_day_as_survey": 13
+ },
+ "layer_versus_survey_csv": {
+  "ramp_ids_in_both": 217679,
+  "ramp_ids_only_in_layer": 0,
+  "ramp_ids_only_in_survey_csv": 0,
+  "survey_date_equal": 217679,
+  "corner_id_equal": 217679
+ },
+ "district_assignment": {
+  "method": "point in polygon on the ramp location from the compliance layer; neither DOT source has district fields",
+  "council": {
+   "polygons": 51,
+   "ramps_outside_every_polygon": 86,
+   "assigned_to_nearest_polygon_max_distance_ft": 116.4
+  },
+  "community": {
+   "polygons": 71,
+   "ramps_outside_every_polygon": 86,
+   "assigned_to_nearest_polygon_max_distance_ft": 116.4,
+   "ramps_where_dot_borough_differs_from_district_borough": 74
+  }
+ },
+ "comparison_with_earlier_join": {
+  "earlier_file": "research_notes/evidence/ramps/program_progress_join.json",
+  "ramps_by_corner_status_identical": true,
+  "ramps_by_corner_status_here": {
+   "Constructed": 85846,
+   "Planned Construction": 78929,
+   "Not Assigned": 24019,
+   "Complex Planned Construction": 20550,
+   "Complex Constructed": 6091,
+   "Not Required": 2221,
+   "NaN": 23
+  },
+  "ramps_at_built_corners": {
+   "earlier": 91937,
+   "here": 91937
+  },
+  "ramps_at_built_corners_with_date_after_survey": {
+   "earlier": 88725,
+   "here": 88725
+  },
+  "earlier_test": "running slope over 1:12 on the raw measurement (this project's threshold)",
+  "earlier_over_1_12": 54995,
+  "earlier_over_1_12_not_yet_built": 31942,
+  "nearest_equivalent_here": "DOT's RAMP_RUNNING_SLOPE_CHECK",
+  "here_running_slope_check_noncompliant": 44048,
+  "here_running_slope_check_noncompliant_not_since_rebuilt": 27201
+ },
+ "sources": {
+  "compliance_layer": {
+   "url": "https://services.arcgis.com/wmZOI9vyUBq1zTZx/arcgis/rest/services/CMT_SURVEY_COMPLIANCY_TOLERANCE_PROD/FeatureServer",
+   "retrieved": {
+    "url": "https://services.arcgis.com/wmZOI9vyUBq1zTZx/arcgis/rest/services/CMT_SURVEY_COMPLIANCY_TOLERANCE_PROD/FeatureServer",
+    "first_request": "2026-10-02T16:55:09Z",
+    "last_request": "2026-10-02T16:58:24Z",
+    "expected_rows": 217679
+   },
+   "data_last_edited": "2020-12-28T21:53:12Z"
+  },
+  "program_progress": {
+   "url": "https://data.cityofnewyork.us/d/e7gc-ub6z",
+   "retrieved": "2026-10-02T16:06:50Z",
+   "file": "research_notes/evidence/raw/e7gc-ub6z_rows.csv"
+  },
+  "ramp_survey": {
+   "url": "https://data.cityofnewyork.us/d/ufzp-rrqu",
+   "retrieved": "2026-10-02T15:04:55Z",
+   "file": "research_notes/evidence/raw/ufzp-rrqu_rows.csv",
+   "use": "cross-check of survey date and corner ID only"
+  },
+  "council_districts": {
+   "url": "https://data.cityofnewyork.us/resource/872g-cjhh.geojson",
+   "retrieved": "2026-10-02T16:58:31Z"
+  },
+  "community_districts": {
+   "url": "https://data.cityofnewyork.us/resource/5crt-au7u.geojson",
+   "retrieved": "2026-10-02T16:58:39Z"
+  }
+ }
+}

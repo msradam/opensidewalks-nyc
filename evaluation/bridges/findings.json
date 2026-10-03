@@ -1,0 +1,2259 @@
+{
+ "inputs": {
+  "osm_extract": "research_notes/next/cache/new-york-261001.osm.pbf",
+  "built_graph": "v032_harlem_river_tables.pkl (v0.3.2)"
+ },
+ "stage_4_merge": "For all five bridges the pedestrian shortest path in the built graph equals the path on the raw OSM ways that the Stage 1 and Stage 3 rules keep. Stage 4 cuts nothing here.",
+ "bridges": {
+  "145th Street Bridge": {
+   "verdict": "OSM",
+   "summary": "Both bridge sidewalks are mapped, kept, and joined to Manhattan. At the Bronx end they reach a closed cluster of crossings and traffic islands at Exterior Street, East 149th Street and River Avenue. No sidewalk way leaves that cluster.",
+   "release_test": {
+    "anchor_a": {
+     "osm_node": 12650570689,
+     "lat": 40.819357,
+     "lon": -73.9362448,
+     "snap_m": 26
+    },
+    "anchor_b": {
+     "osm_node": 13337724674,
+     "lat": 40.8202236,
+     "lon": -73.9298852,
+     "snap_m": 27
+    },
+    "straight_line_m": 545,
+    "built_pedestrian_path_m": 2476,
+    "built_path_with_street_edges_m": 786,
+    "osm_path_on_ways_the_rules_keep_as_pedestrian_m": 2476,
+    "pedestrian_path_with_proposed_fix_m": 804
+   },
+   "deck": {
+    "from_node": 7732264955,
+    "to_node": 4111221251,
+    "straight_line_m": 246,
+    "pedestrian_path_m": 250,
+    "ratio": 1.02
+   },
+   "osm_ways": [
+    {
+     "id": 409222599,
+     "role": "north sidewalk, Manhattan approach",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk",
+      "foot": "yes",
+      "bicycle": "yes",
+      "name": "145th Street Bridge"
+     },
+     "length_m": 143,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 9557088445,
+      "lat": 40.8204701,
+      "lon": -73.9360175
+     },
+     "last_node": {
+      "id": 7732264955,
+      "lat": 40.8198351,
+      "lon": -73.9345508
+     }
+    },
+    {
+     "id": 409222602,
+     "role": "north sidewalk, bridge",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk",
+      "foot": "yes",
+      "bicycle": "yes",
+      "bridge": "yes",
+      "layer": "2",
+      "name": "145th Street Bridge"
+     },
+     "length_m": 81,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 7732264955,
+      "lat": 40.8198351,
+      "lon": -73.9345508
+     },
+     "last_node": {
+      "id": 4111221244,
+      "lat": 40.8195933,
+      "lon": -73.9336596
+     }
+    },
+    {
+     "id": 799505589,
+     "role": "north sidewalk, swing span",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk",
+      "foot": "yes",
+      "bicycle": "yes",
+      "bridge": "movable",
+      "layer": "2",
+      "name": "145th Street Bridge"
+     },
+     "length_m": 92,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 4111221244,
+      "lat": 40.8195933,
+      "lon": -73.9336596
+     },
+     "last_node": {
+      "id": 4111221246,
+      "lat": 40.8196157,
+      "lon": -73.9325736
+     }
+    },
+    {
+     "id": 799505592,
+     "role": "north sidewalk, bridge",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk",
+      "foot": "yes",
+      "bicycle": "yes",
+      "bridge": "yes",
+      "layer": "2",
+      "name": "145th Street Bridge"
+     },
+     "length_m": 77,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 4111221246,
+      "lat": 40.8196157,
+      "lon": -73.9325736
+     },
+     "last_node": {
+      "id": 4111221251,
+      "lat": 40.8195387,
+      "lon": -73.9316628
+     }
+    },
+    {
+     "id": 409222603,
+     "role": "north sidewalk, Bronx approach",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk",
+      "foot": "yes",
+      "bicycle": "yes",
+      "name": "145th Street Bridge"
+     },
+     "length_m": 94,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 4111221251,
+      "lat": 40.8195387,
+      "lon": -73.9316628
+     },
+     "last_node": {
+      "id": 9166288599,
+      "lat": 40.8194447,
+      "lon": -73.9305506
+     }
+    },
+    {
+     "id": 409222604,
+     "role": "south sidewalk, Manhattan approach",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk",
+      "foot": "yes",
+      "bicycle": "yes",
+      "name": "145th Street Bridge"
+     },
+     "length_m": 154,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 7732264956,
+      "lat": 40.8196377,
+      "lon": -73.9345479
+     },
+     "last_node": {
+      "id": 9166288593,
+      "lat": 40.8202816,
+      "lon": -73.9361492
+     }
+    },
+    {
+     "id": 600283264,
+     "role": "south sidewalk, bridge",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk",
+      "foot": "yes",
+      "bicycle": "yes",
+      "bridge": "yes",
+      "layer": "2",
+      "name": "145th Street Bridge"
+     },
+     "length_m": 80,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 7477194681,
+      "lat": 40.8194097,
+      "lon": -73.9336588
+     },
+     "last_node": {
+      "id": 7732264956,
+      "lat": 40.8196377,
+      "lon": -73.9345479
+     }
+    },
+    {
+     "id": 799505590,
+     "role": "south sidewalk, swing span",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk",
+      "foot": "yes",
+      "bicycle": "yes",
+      "bridge": "movable",
+      "layer": "2",
+      "name": "145th Street Bridge"
+     },
+     "length_m": 92,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 3871130717,
+      "lat": 40.8194396,
+      "lon": -73.932565
+     },
+     "last_node": {
+      "id": 7477194681,
+      "lat": 40.8194097,
+      "lon": -73.9336588
+     }
+    },
+    {
+     "id": 799505591,
+     "role": "south sidewalk, bridge",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk",
+      "foot": "yes",
+      "bicycle": "yes",
+      "bridge": "yes",
+      "layer": "2",
+      "name": "145th Street Bridge"
+     },
+     "length_m": 74,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 7450676603,
+      "lat": 40.8193618,
+      "lon": -73.9316887
+     },
+     "last_node": {
+      "id": 3871130717,
+      "lat": 40.8194396,
+      "lon": -73.932565
+     }
+    },
+    {
+     "id": 796690083,
+     "role": "south sidewalk, Bronx approach",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk",
+      "foot": "yes",
+      "bicycle": "yes",
+      "name": "145th Street Bridge"
+     },
+     "length_m": 114,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 7450676603,
+      "lat": 40.8193618,
+      "lon": -73.9316887
+     },
+     "last_node": {
+      "id": 9166288597,
+      "lat": 40.8191739,
+      "lon": -73.9303667
+     }
+    },
+    {
+     "id": 799505593,
+     "role": "roadway, swing span",
+     "tags": {
+      "highway": "secondary",
+      "foot": "use_sidepath",
+      "bridge": "movable",
+      "layer": "2",
+      "oneway": "no",
+      "sidewalk": "separate",
+      "name": "145th Street Bridge"
+     },
+     "length_m": 95,
+     "pipeline": "kept as a street edge (not pedestrian)",
+     "in_built_graph": "street",
+     "first_node": {
+      "id": 1669480024,
+      "lat": 40.819522,
+      "lon": -73.9325498
+     },
+     "last_node": {
+      "id": 42439115,
+      "lat": 40.819494,
+      "lon": -73.9336744
+     }
+    },
+    {
+     "id": 1443528565,
+     "role": "Bronx end crossing of Exterior Street",
+     "tags": {
+      "highway": "footway",
+      "footway": "crossing",
+      "bicycle": "yes",
+      "crossing": "traffic_signals"
+     },
+     "length_m": 14,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 9166288601,
+      "lat": 40.8194299,
+      "lon": -73.9303808
+     },
+     "last_node": {
+      "id": 9166288599,
+      "lat": 40.8194447,
+      "lon": -73.9305506
+     }
+    },
+    {
+     "id": 1244669272,
+     "role": "Bronx end crossing, south sidewalk to the south-east corner",
+     "tags": {
+      "highway": "footway",
+      "footway": "crossing",
+      "crossing": "traffic_signals"
+     },
+     "length_m": 26,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 9166288597,
+      "lat": 40.8191739,
+      "lon": -73.9303667
+     },
+     "last_node": {
+      "id": 11570004635,
+      "lat": 40.819098,
+      "lon": -73.930082
+     }
+    },
+    {
+     "id": 1244669273,
+     "role": "Bronx end crossing of East 149th Street, ends on a slip road",
+     "tags": {
+      "highway": "footway",
+      "footway": "crossing",
+      "crossing": "traffic_signals"
+     },
+     "length_m": 39,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 9903127443,
+      "lat": 40.8194383,
+      "lon": -73.9299701
+     },
+     "last_node": {
+      "id": 11570004635,
+      "lat": 40.819098,
+      "lon": -73.930082
+     }
+    },
+    {
+     "id": 1443528567,
+     "role": "traffic island, ends on a slip road",
+     "tags": {
+      "highway": "footway",
+      "footway": "traffic_island"
+     },
+     "length_m": 8,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 13246259571,
+      "lat": 40.8194402,
+      "lon": -73.9301812
+     },
+     "last_node": {
+      "id": 13246259572,
+      "lat": 40.8195078,
+      "lon": -73.9301556
+     }
+    },
+    {
+     "id": 1443528568,
+     "role": "traffic island, ends on a slip road",
+     "tags": {
+      "highway": "footway",
+      "footway": "traffic_island"
+     },
+     "length_m": 11,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 11570004636,
+      "lat": 40.819445,
+      "lon": -73.9302761
+     },
+     "last_node": {
+      "id": 13246259574,
+      "lat": 40.8195455,
+      "lon": -73.9302862
+     }
+    },
+    {
+     "id": 552614410,
+     "role": "slip road the crossing 1244669273 ends on",
+     "tags": {
+      "highway": "secondary_link",
+      "oneway": "yes",
+      "sidewalk": "right"
+     },
+     "length_m": 71,
+     "pipeline": "dropped by Stage 3 (schema_map._classify_osm_edge)",
+     "in_built_graph": "absent",
+     "first_node": {
+      "id": 9903127437,
+      "lat": 40.8191488,
+      "lon": -73.9293411
+     },
+     "last_node": {
+      "id": 7557695123,
+      "lat": 40.8194814,
+      "lon": -73.9300638
+     }
+    },
+    {
+     "id": 1430145125,
+     "role": "slip road the traffic islands end on",
+     "tags": {
+      "highway": "secondary_link",
+      "oneway": "yes"
+     },
+     "length_m": 34,
+     "pipeline": "dropped by Stage 3 (schema_map._classify_osm_edge)",
+     "in_built_graph": "absent",
+     "first_node": {
+      "id": 7557695123,
+      "lat": 40.8194814,
+      "lon": -73.9300638
+     },
+     "last_node": {
+      "id": 13146413879,
+      "lat": 40.8195903,
+      "lon": -73.9304419
+     }
+    },
+    {
+     "id": 5699290,
+     "role": "East 149th Street eastbound, sidewalk=right, no separate sidewalk way",
+     "tags": {
+      "highway": "secondary",
+      "oneway": "yes",
+      "sidewalk": "right",
+      "name": "East 149th Street"
+     },
+     "length_m": 73,
+     "pipeline": "kept as a street edge (not pedestrian)",
+     "in_built_graph": "street",
+     "first_node": {
+      "id": 9903127431,
+      "lat": 40.8192304,
+      "lon": -73.9300584
+     },
+     "last_node": {
+      "id": 42734149,
+      "lat": 40.8190183,
+      "lon": -73.9292342
+     }
+    },
+    {
+     "id": 1453525595,
+     "role": "nearest Bronx sidewalk, north side of East 149th Street at Gerard Avenue",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk"
+     },
+     "length_m": 5,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 13329984714,
+      "lat": 40.8191911,
+      "lon": -73.9292377
+     },
+     "last_node": {
+      "id": 13329984717,
+      "lat": 40.819179,
+      "lon": -73.9292707
+     }
+    },
+    {
+     "id": 1419059059,
+     "role": "nearest Bronx sidewalk, south side of East 149th Street at Gerard Avenue",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk"
+     },
+     "length_m": 140,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 13330007003,
+      "lat": 40.8177716,
+      "lon": -73.9298197
+     },
+     "last_node": {
+      "id": 13329984704,
+      "lat": 40.8189763,
+      "lon": -73.9293457
+     }
+    },
+    {
+     "id": 1454347058,
+     "role": "nearest Bronx sidewalk to the north, East 150th Street at the east side of River Avenue",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk"
+     },
+     "length_m": 68,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 13337724671,
+      "lat": 40.8199754,
+      "lon": -73.9289357
+     },
+     "last_node": {
+      "id": 13337724672,
+      "lat": 40.8201829,
+      "lon": -73.929694
+     }
+    },
+    {
+     "id": 1454347072,
+     "role": "sidewalk on the west side of River Avenue at East 150th Street (the test's Bronx anchor)",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk"
+     },
+     "length_m": 6,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 13337724673,
+      "lat": 40.8202171,
+      "lon": -73.9298525
+     },
+     "last_node": {
+      "id": 13337724689,
+      "lat": 40.8202537,
+      "lon": -73.9298743
+     }
+    }
+   ],
+   "break_points": [
+    {
+     "node": 9903127443,
+     "lat": 40.8194383,
+     "lon": -73.9299701,
+     "missing": "north end of crossing 1244669273, on slip road 552614410. No sidewalk way on the north side of East 149th Street from here to node 13329984702 (40.8191991, -73.9292627), 65 m east, and none on the east side of River Avenue to node 13337724672 (40.8201829, -73.9296940), 86 m north."
+    },
+    {
+     "node": 11570004635,
+     "lat": 40.819098,
+     "lon": -73.930082,
+     "missing": "south-east corner where crossings 1244669272 and 1244669273 meet. No sidewalk way on the south side of East 149th Street to node 13329984704 (40.8189763, -73.9293457), 64 m east."
+    },
+    {
+     "node": 13246259572,
+     "lat": 40.8195078,
+     "lon": -73.9301556,
+     "missing": "dead end of traffic island 1443528567 on slip road 1430145125. No sidewalk way on the west side of River Avenue to node 13337724673 (40.8202171, -73.9298525), 83 m north."
+    },
+    {
+     "node": 13246259574,
+     "lat": 40.8195455,
+     "lon": -73.9302862,
+     "missing": "dead end of traffic island 1443528568 on slip road 1430145125"
+    }
+   ],
+   "pipeline_rule": null,
+   "proposed_change": "None in the pipeline. In OSM, add the three sidewalk ways listed in osm_mapper_notes.md.",
+   "sources": [
+    {
+     "url": "https://data.cityofnewyork.us/resource/ufzp-rrqu.json",
+     "publisher": "NYC DOT Pedestrian Ramp Locations (ufzp-rrqu), within_circle queries in ramps_near.py",
+     "sentence": "16 surveyed kerb ramps within 70 m of the intersection, including ramp 201524 at 40.819473, -73.92995 (north-east corner) and ramps 201530 and 201526 (south-east corner)."
+    }
+   ]
+  },
+  "Broadway Bridge": {
+   "verdict": "OSM",
+   "summary": "Both bridge sidewalks are mapped, kept, and joined to sidewalks on both banks. The detour comes from two missing links next to the bridge: no crossing of 9th Avenue at Broadway on the south bank, and an open sidewalk corner at Broadway and West 225th Street on the north bank. The release test's landfalls sit on the far side of each.",
+   "release_test": {
+    "anchor_a": {
+     "osm_node": 9561125937,
+     "lat": 40.8725112,
+     "lon": -73.9115204,
+     "snap_m": 2
+    },
+    "anchor_b": {
+     "osm_node": 7578364023,
+     "lat": 40.8744626,
+     "lon": -73.910558,
+     "snap_m": 6
+    },
+    "straight_line_m": 232,
+    "built_pedestrian_path_m": 1284,
+    "built_path_with_street_edges_m": 579,
+    "osm_path_on_ways_the_rules_keep_as_pedestrian_m": 1284,
+    "pedestrian_path_with_proposed_fix_m": 394
+   },
+   "deck": {
+    "from_node": 7779712807,
+    "to_node": 7779712804,
+    "straight_line_m": 146,
+    "pedestrian_path_m": 146,
+    "ratio": 1.0
+   },
+   "deck_east": {
+    "from_node": 13068327320,
+    "to_node": 10128431605,
+    "straight_line_m": 164,
+    "pedestrian_path_m": 165,
+    "ratio": 1.0
+   },
+   "osm_ways": [
+    {
+     "id": 833386640,
+     "role": "west sidewalk, south approach",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk",
+      "bicycle": "yes",
+      "name": "Broadway Sidewalk (west side)",
+      "segregated": "no"
+     },
+     "length_m": 302,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 9675601640,
+      "lat": 40.8713114,
+      "lon": -73.9141813
+     },
+     "last_node": {
+      "id": 7779712807,
+      "lat": 40.8732943,
+      "lon": -73.9117384
+     }
+    },
+    {
+     "id": 833386642,
+     "role": "west sidewalk, bridge",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk",
+      "bicycle": "yes",
+      "bridge": "yes",
+      "layer": "1",
+      "name": "Broadway Sidewalk (west side)",
+      "segregated": "no"
+     },
+     "length_m": 14,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 7779712807,
+      "lat": 40.8732943,
+      "lon": -73.9117384
+     },
+     "last_node": {
+      "id": 9084730001,
+      "lat": 40.8733842,
+      "lon": -73.9116269
+     }
+    },
+    {
+     "id": 982319752,
+     "role": "west sidewalk, lift span",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk",
+      "bicycle": "yes",
+      "bridge": "movable",
+      "layer": "1",
+      "name": "Broadway Sidewalk (west side)",
+      "segregated": "no"
+     },
+     "length_m": 91,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 9084730001,
+      "lat": 40.8733842,
+      "lon": -73.9116269
+     },
+     "last_node": {
+      "id": 9084730000,
+      "lat": 40.8739769,
+      "lon": -73.9108912
+     }
+    },
+    {
+     "id": 982319751,
+     "role": "west sidewalk, bridge",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk",
+      "bicycle": "yes",
+      "bridge": "yes",
+      "layer": "1",
+      "name": "Broadway Sidewalk (west side)",
+      "segregated": "no"
+     },
+     "length_m": 42,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 9084730000,
+      "lat": 40.8739769,
+      "lon": -73.9108912
+     },
+     "last_node": {
+      "id": 7779712804,
+      "lat": 40.8742509,
+      "lon": -73.9105511
+     }
+    },
+    {
+     "id": 833386641,
+     "role": "west sidewalk, north approach, ends on the West 225th Street roadway node",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk",
+      "bicycle": "yes",
+      "name": "Broadway Sidewalk (west side)",
+      "segregated": "no"
+     },
+     "length_m": 14,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 7779712804,
+      "lat": 40.8742509,
+      "lon": -73.9105511
+     },
+     "last_node": {
+      "id": 7779712806,
+      "lat": 40.874336,
+      "lon": -73.9104341
+     }
+    },
+    {
+     "id": 1421992530,
+     "role": "east sidewalk, south approach",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk"
+     },
+     "length_m": 30,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 13068327320,
+      "lat": 40.8731451,
+      "lon": -73.9115065
+     },
+     "last_node": {
+      "id": 9561125969,
+      "lat": 40.8729311,
+      "lon": -73.9116972
+     }
+    },
+    {
+     "id": 1421992527,
+     "role": "east sidewalk, bridge",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk",
+      "bridge": "yes",
+      "layer": "1"
+     },
+     "length_m": 131,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 13068327321,
+      "lat": 40.8739866,
+      "lon": -73.9104298
+     },
+     "last_node": {
+      "id": 13068327320,
+      "lat": 40.8731451,
+      "lon": -73.9115065
+     }
+    },
+    {
+     "id": 1421992529,
+     "role": "east sidewalk, bridge",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk",
+      "bridge": "yes",
+      "layer": "1"
+     },
+     "length_m": 9,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 13068327316,
+      "lat": 40.8740433,
+      "lon": -73.9103588
+     },
+     "last_node": {
+      "id": 13068327321,
+      "lat": 40.8739866,
+      "lon": -73.9104298
+     }
+    },
+    {
+     "id": 1421992528,
+     "role": "east sidewalk, bridge",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk",
+      "bridge": "yes",
+      "layer": "1"
+     },
+     "length_m": 26,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 10128431605,
+      "lat": 40.8741676,
+      "lon": -73.9101046
+     },
+     "last_node": {
+      "id": 13068327316,
+      "lat": 40.8740433,
+      "lon": -73.9103588
+     }
+    },
+    {
+     "id": 1016658473,
+     "role": "east sidewalk, north approach",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk"
+     },
+     "length_m": 144,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 10128431605,
+      "lat": 40.8741676,
+      "lon": -73.9101046
+     },
+     "last_node": {
+      "id": 10128431617,
+      "lat": 40.8738154,
+      "lon": -73.9094892
+     }
+    },
+    {
+     "id": 799505579,
+     "role": "roadway, lift span",
+     "tags": {
+      "highway": "primary",
+      "bridge": "movable",
+      "layer": "1",
+      "oneway": "yes",
+      "sidewalk:left": "no",
+      "sidewalk:right": "separate",
+      "name": "Broadway"
+     },
+     "length_m": 90,
+     "pipeline": "kept as a street edge (not pedestrian)",
+     "in_built_graph": "street",
+     "first_node": {
+      "id": 7477194676,
+      "lat": 40.8732622,
+      "lon": -73.9114601
+     },
+     "last_node": {
+      "id": 7477194670,
+      "lat": 40.8738382,
+      "lon": -73.9107065
+     }
+    },
+    {
+     "id": 1246891608,
+     "role": "sidewalk on the west side of 9th Avenue (south anchor)",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk"
+     },
+     "length_m": 158,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 9680673196,
+      "lat": 40.8722424,
+      "lon": -73.9124568
+     },
+     "last_node": {
+      "id": 9561125952,
+      "lat": 40.8722063,
+      "lon": -73.9112947
+     }
+    },
+    {
+     "id": 1038066215,
+     "role": "sidewalk on the east side of 9th Avenue, joined to the east bridge sidewalk",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk"
+     },
+     "length_m": 443,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 9561125969,
+      "lat": 40.8729311,
+      "lon": -73.9116972
+     },
+     "last_node": {
+      "id": 9675601673,
+      "lat": 40.8694515,
+      "lon": -73.9127243
+     }
+    },
+    {
+     "id": 1168603228,
+     "role": "sidewalk on the north side of West 225th Street (north anchor)",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk"
+     },
+     "length_m": 698,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 7578364023,
+      "lat": 40.8744626,
+      "lon": -73.910558
+     },
+     "last_node": {
+      "id": 10584748986,
+      "lat": 40.8747853,
+      "lon": -73.9097321
+     }
+    },
+    {
+     "id": 1135504587,
+     "role": "Broadway west sidewalk north of West 225th Street",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk"
+     },
+     "length_m": 54,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 10584748985,
+      "lat": 40.8746351,
+      "lon": -73.9099323
+     },
+     "last_node": {
+      "id": 7779712806,
+      "lat": 40.874336,
+      "lon": -73.9104341
+     }
+    },
+    {
+     "id": 1168603221,
+     "role": "sidewalk on the south side of West 225th Street",
+     "tags": {
+      "highway": "footway",
+      "footway": "sidewalk"
+     },
+     "length_m": 427,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 10868086940,
+      "lat": 40.8760887,
+      "lon": -73.9134332
+     },
+     "last_node": {
+      "id": 10868086968,
+      "lat": 40.8742973,
+      "lon": -73.9104873
+     }
+    }
+   ],
+   "break_points": [
+    {
+     "node": 9561125933,
+     "lat": 40.872763,
+     "lon": -73.9118034,
+     "missing": "corner of sidewalk 1246891608. No crossing of 9th Avenue to node 9561125969 (40.8729311, -73.9116972), 21 m away, where sidewalk 1038066215 meets the east bridge sidewalk 1421992530. Pedestrian distance between the two today: 1,039 m."
+    },
+    {
+     "node": 7578364023,
+     "lat": 40.8744626,
+     "lon": -73.910558,
+     "missing": "end of sidewalk 1168603228 at the foot of station steps 1016658468. Not joined to Broadway west sidewalk 1135504587, 12 m east. Pedestrian distance from the west bridge sidewalk (node 7779712804) today: 521 m."
+    },
+    {
+     "node": 7779712807,
+     "lat": 40.8732943,
+     "lon": -73.9117384,
+     "missing": "south end of the west bridge sidewalk. No mapped crossing of Broadway to the east sidewalk (node 13068327320, 26 m): 460 m on pedestrian ways. Whether a crosswalk exists here was not determined."
+    }
+   ],
+   "pipeline_rule": null,
+   "proposed_change": "None in the pipeline. In OSM, add the 9th Avenue crossing and join the sidewalk corner, as in osm_mapper_notes.md.",
+   "sources": [
+    {
+     "url": "https://data.cityofnewyork.us/resource/ufzp-rrqu.json",
+     "publisher": "NYC DOT Pedestrian Ramp Locations (ufzp-rrqu), within_circle queries in ramps_near.py",
+     "sentence": "Ramp 310604 on 9 Avenue at 40.872766, -73.911794, 1 m from node 9561125933. Ramps 79304 and 79300 on West 225 Street at Broadway."
+    }
+   ]
+  },
+  "Randall's Island Connector": {
+   "verdict": "none of the three: the Connector is joined on pedestrian edges",
+   "summary": "The Connector (ways 892827324, 892827325, 892827323) is mapped as cycleway with foot=designated, kept as pedestrian edges, and joined at both ends. The release test's two landfalls for this row are under the RFK Bronx span, 200 m west of the Connector, so that row measured the RFK defect.",
+   "release_test": {
+    "anchor_a": {
+     "osm_node": 4159724355,
+     "lat": 40.7985485,
+     "lon": -73.918568,
+     "snap_m": 69
+    },
+    "anchor_b": {
+     "osm_node": 11683884305,
+     "lat": 40.8020871,
+     "lon": -73.9160799,
+     "snap_m": 46
+    },
+    "straight_line_m": 446,
+    "built_pedestrian_path_m": 1302,
+    "built_path_with_street_edges_m": 1019,
+    "osm_path_on_ways_the_rules_keep_as_pedestrian_m": 1302,
+    "pedestrian_path_with_proposed_fix_m": 958
+   },
+   "deck": {
+    "from_node": 3843180753,
+    "to_node": 11042720484,
+    "straight_line_m": 404,
+    "pedestrian_path_m": 404,
+    "ratio": 1.0
+   },
+   "osm_ways": [
+    {
+     "id": 892827324,
+     "role": "Connector, Randall's Island approach",
+     "tags": {
+      "highway": "cycleway",
+      "foot": "designated",
+      "bicycle": "yes",
+      "oneway": "no",
+      "name": "Randall's Island Connector",
+      "segregated": "yes"
+     },
+     "length_m": 27,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 3843180753,
+      "lat": 40.7975383,
+      "lon": -73.9166611
+     },
+     "last_node": {
+      "id": 8298142935,
+      "lat": 40.7976968,
+      "lon": -73.9164227
+     }
+    },
+    {
+     "id": 892827325,
+     "role": "Connector, bridge over the Bronx Kill",
+     "tags": {
+      "highway": "cycleway",
+      "foot": "designated",
+      "bicycle": "yes",
+      "bridge": "yes",
+      "layer": "1",
+      "oneway": "no",
+      "name": "Randall's Island Connector",
+      "segregated": "yes"
+     },
+     "length_m": 27,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 8298142935,
+      "lat": 40.7976968,
+      "lon": -73.9164227
+     },
+     "last_node": {
+      "id": 8298142936,
+      "lat": 40.7978568,
+      "lon": -73.9161821
+     }
+    },
+    {
+     "id": 892827323,
+     "role": "Connector, Bronx approach under the Hell Gate viaduct",
+     "tags": {
+      "highway": "cycleway",
+      "foot": "designated",
+      "bicycle": "yes",
+      "oneway": "no",
+      "name": "Randall's Island Connector",
+      "segregated": "yes"
+     },
+     "length_m": 344,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 8298142936,
+      "lat": 40.7978568,
+      "lon": -73.9161821
+     },
+     "last_node": {
+      "id": 42772993,
+      "lat": 40.7999189,
+      "lon": -73.913154
+     }
+    },
+    {
+     "id": 1189211370,
+     "role": "crossing of East 132nd Street at the Bronx end",
+     "tags": {
+      "highway": "cycleway",
+      "foot": "designated",
+      "bicycle": "yes",
+      "oneway": "no",
+      "crossing": "uncontrolled"
+     },
+     "length_m": 7,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 42772993,
+      "lat": 40.7999189,
+      "lon": -73.913154
+     },
+     "last_node": {
+      "id": 11042720484,
+      "lat": 40.7999648,
+      "lon": -73.9130958
+     }
+    },
+    {
+     "id": 440887346,
+     "role": "East 132nd Street, highway=unclassified",
+     "tags": {
+      "highway": "unclassified",
+      "oneway": "no",
+      "name": "East 132nd Street"
+     },
+     "length_m": 118,
+     "pipeline": "dropped by the Stage 1 filter (config/sources.yaml custom_filter, acquire._way_passes)",
+     "in_built_graph": "absent",
+     "first_node": {
+      "id": 42772993,
+      "lat": 40.7999189,
+      "lon": -73.913154
+     },
+     "last_node": {
+      "id": 42772998,
+      "lat": 40.799258,
+      "lon": -73.91206
+     }
+    }
+   ],
+   "break_points": [],
+   "pipeline_rule": null,
+   "proposed_change": "Correct the landfalls in research_notes/release/city/bridges.py to about (40.7975, -73.9167) and (40.7999, -73.9131).",
+   "sources": []
+  },
+  "RFK Triborough Bridge, Bronx span": {
+   "verdict": "pipeline, with an OSM tagging part",
+   "summary": "Both walkways over the Bronx Kill are mapped, kept, and joined to Bronx sidewalks. On Randall's Island both ramps meet the island paths only through way 1414563386, a cycleway with bicycle=designated and no foot tag. Stage 3 drops it, so the deck is reachable from the Bronx only.",
+   "release_test": {
+    "anchor_a": {
+     "osm_node": 401787692,
+     "lat": 40.7992783,
+     "lon": -73.9215591,
+     "snap_m": 118
+    },
+    "anchor_b": {
+     "osm_node": 11427300047,
+     "lat": 40.8043709,
+     "lon": -73.9193605,
+     "snap_m": 19
+    },
+    "straight_line_m": 597,
+    "built_pedestrian_path_m": 2486,
+    "built_path_with_street_edges_m": 2478,
+    "osm_path_on_ways_the_rules_keep_as_pedestrian_m": 2486,
+    "pedestrian_path_with_proposed_fix_m": 1201
+   },
+   "deck": {
+    "from_node": 3640160377,
+    "to_node": 12842351865,
+    "straight_line_m": 533,
+    "pedestrian_path_m": 1286,
+    "ratio": 2.41
+   },
+   "deck_with_fix": {
+    "from_node": 3640160377,
+    "to_node": 12842351865,
+    "straight_line_m": 533,
+    "pedestrian_path_m": 633,
+    "ratio": 1.19
+   },
+   "osm_ways": [
+    {
+     "id": 1287205186,
+     "role": "shared path, Randall's Island ramp foot",
+     "tags": {
+      "highway": "cycleway",
+      "foot": "designated",
+      "bicycle": "designated",
+      "oneway": "no",
+      "segregated": "no"
+     },
+     "length_m": 46,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 12715806360,
+      "lat": 40.7978933,
+      "lon": -73.9198145
+     },
+     "last_node": {
+      "id": 11938167519,
+      "lat": 40.7982521,
+      "lon": -73.9195428
+     }
+    },
+    {
+     "id": 1287205187,
+     "role": "shared path, ramp",
+     "tags": {
+      "highway": "cycleway",
+      "foot": "designated",
+      "bicycle": "designated",
+      "bridge": "yes",
+      "layer": "1",
+      "oneway": "no",
+      "segregated": "no"
+     },
+     "length_m": 219,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 11938167519,
+      "lat": 40.7982521,
+      "lon": -73.9195428
+     },
+     "last_node": {
+      "id": 401793322,
+      "lat": 40.7990764,
+      "lon": -73.9191142
+     }
+    },
+    {
+     "id": 46627101,
+     "role": "shared path, bridge",
+     "tags": {
+      "highway": "cycleway",
+      "foot": "designated",
+      "bicycle": "designated",
+      "bridge": "yes",
+      "layer": "2",
+      "oneway": "no",
+      "segregated": "no"
+     },
+     "length_m": 337,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 401793322,
+      "lat": 40.7990764,
+      "lon": -73.9191142
+     },
+     "last_node": {
+      "id": 401793338,
+      "lat": 40.8017232,
+      "lon": -73.9171774
+     }
+    },
+    {
+     "id": 1432305134,
+     "role": "shared path, Bronx ramp",
+     "tags": {
+      "highway": "cycleway",
+      "foot": "designated",
+      "bicycle": "designated",
+      "bridge": "yes",
+      "layer": "2",
+      "oneway": "no",
+      "segregated": "no"
+     },
+     "length_m": 71,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 13165319956,
+      "lat": 40.8017665,
+      "lon": -73.9171399
+     },
+     "last_node": {
+      "id": 401793338,
+      "lat": 40.8017232,
+      "lon": -73.9171774
+     }
+    },
+    {
+     "id": 1432305133,
+     "role": "shared path, Bronx ramp",
+     "tags": {
+      "highway": "cycleway",
+      "foot": "designated",
+      "bicycle": "designated",
+      "bridge": "yes",
+      "layer": "1",
+      "oneway": "no",
+      "segregated": "no"
+     },
+     "length_m": 63,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 13165319952,
+      "lat": 40.8017604,
+      "lon": -73.9171699
+     },
+     "last_node": {
+      "id": 13165319956,
+      "lat": 40.8017665,
+      "lon": -73.9171399
+     }
+    },
+    {
+     "id": 46663499,
+     "role": "shared path, Bronx ramp foot",
+     "tags": {
+      "highway": "cycleway",
+      "foot": "designated",
+      "bicycle": "designated",
+      "oneway": "no",
+      "segregated": "no"
+     },
+     "length_m": 60,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 9156976063,
+      "lat": 40.8022366,
+      "lon": -73.9168335
+     },
+     "last_node": {
+      "id": 13165319952,
+      "lat": 40.8017604,
+      "lon": -73.9171699
+     }
+    },
+    {
+     "id": 1387307964,
+     "role": "crossing of Cypress Avenue",
+     "tags": {
+      "highway": "cycleway",
+      "foot": "designated",
+      "bicycle": "designated",
+      "oneway": "no",
+      "crossing": "marked",
+      "segregated": "no"
+     },
+     "length_m": 6,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 9156976063,
+      "lat": 40.8022366,
+      "lon": -73.9168335
+     },
+     "last_node": {
+      "id": 9156976064,
+      "lat": 40.8022639,
+      "lon": -73.916899
+     }
+    },
+    {
+     "id": 46627099,
+     "role": "older walkway, Randall's Island foot",
+     "tags": {
+      "highway": "path",
+      "foot": "yes",
+      "bicycle": "no"
+     },
+     "length_m": 33,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 595804251,
+      "lat": 40.7981299,
+      "lon": -73.9195648
+     },
+     "last_node": {
+      "id": 595806636,
+      "lat": 40.7978698,
+      "lon": -73.9197578
+     }
+    },
+    {
+     "id": 46627098,
+     "role": "older walkway, ramp",
+     "tags": {
+      "highway": "footway",
+      "foot": "yes",
+      "bicycle": "no",
+      "bridge": "yes",
+      "layer": "1"
+     },
+     "length_m": 58,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 595804250,
+      "lat": 40.7985805,
+      "lon": -73.919231
+     },
+     "last_node": {
+      "id": 595804251,
+      "lat": 40.7981299,
+      "lon": -73.9195648
+     }
+    },
+    {
+     "id": 46627100,
+     "role": "older walkway, ramp",
+     "tags": {
+      "highway": "footway",
+      "bicycle": "no",
+      "bridge": "yes",
+      "layer": "1"
+     },
+     "length_m": 69,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 595804249,
+      "lat": 40.7989223,
+      "lon": -73.918753
+     },
+     "last_node": {
+      "id": 595804250,
+      "lat": 40.7985805,
+      "lon": -73.919231
+     }
+    },
+    {
+     "id": 46627097,
+     "role": "older walkway, bridge",
+     "tags": {
+      "highway": "footway",
+      "bicycle": "no",
+      "bridge": "yes",
+      "layer": "2"
+     },
+     "length_m": 338,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 595800950,
+      "lat": 40.8015835,
+      "lon": -73.9168234
+     },
+     "last_node": {
+      "id": 595804249,
+      "lat": 40.7989223,
+      "lon": -73.918753
+     }
+    },
+    {
+     "id": 1559136285,
+     "role": "older walkway, Bronx steps",
+     "tags": {
+      "highway": "steps",
+      "bicycle": "no"
+     },
+     "length_m": 14,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 14183328565,
+      "lat": 40.8016947,
+      "lon": -73.9167356
+     },
+     "last_node": {
+      "id": 595800950,
+      "lat": 40.8015835,
+      "lon": -73.9168234
+     }
+    },
+    {
+     "id": 1414563386,
+     "role": "island path that both ramps join: the missing link",
+     "tags": {
+      "highway": "cycleway",
+      "bicycle": "designated"
+     },
+     "length_m": 368,
+     "pipeline": "dropped by Stage 3 (schema_map._classify_osm_edge)",
+     "in_built_graph": "absent",
+     "first_node": {
+      "id": 3843180752,
+      "lat": 40.7967687,
+      "lon": -73.9178023
+     },
+     "last_node": {
+      "id": 12998503219,
+      "lat": 40.798888,
+      "lon": -73.9211141
+     }
+    },
+    {
+     "id": 1414563387,
+     "role": "next segment of the same path, foot=designated",
+     "tags": {
+      "highway": "cycleway",
+      "foot": "designated",
+      "bicycle": "designated",
+      "crossing": "uncontrolled"
+     },
+     "length_m": 7,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 12998503219,
+      "lat": 40.798888,
+      "lon": -73.9211141
+     },
+     "last_node": {
+      "id": 12998503220,
+      "lat": 40.7989389,
+      "lon": -73.9211671
+     }
+    },
+    {
+     "id": 299906173,
+     "role": "next segment of the same path, foot=designated",
+     "tags": {
+      "highway": "cycleway",
+      "foot": "designated",
+      "bicycle": "designated"
+     },
+     "length_m": 424,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 12998503220,
+      "lat": 40.7989389,
+      "lon": -73.9211671
+     },
+     "last_node": {
+      "id": 3640160571,
+      "lat": 40.8001031,
+      "lon": -73.9255947
+     }
+    },
+    {
+     "id": 375160033,
+     "role": "Bronx Shore Road, where both ramps end",
+     "tags": {
+      "highway": "unclassified",
+      "oneway": "yes",
+      "sidewalk:left": "no",
+      "sidewalk:right": "separate",
+      "name": "Bronx Shore Road"
+     },
+     "length_m": 370,
+     "pipeline": "dropped by the Stage 1 filter (config/sources.yaml custom_filter, acquire._way_passes)",
+     "in_built_graph": "absent",
+     "first_node": {
+      "id": 3039386415,
+      "lat": 40.7969764,
+      "lon": -73.9185887
+     },
+     "last_node": {
+      "id": 7937558690,
+      "lat": 40.7992407,
+      "lon": -73.9216636
+     }
+    },
+    {
+     "id": 5699313,
+     "role": "roadway, foot=no",
+     "tags": {
+      "highway": "motorway",
+      "foot": "no",
+      "bicycle": "no",
+      "bridge": "yes",
+      "layer": "2",
+      "oneway": "yes",
+      "name": "Robert F. Kennedy Bridge"
+     },
+     "length_m": 194,
+     "pipeline": "dropped by the Stage 1 filter (config/sources.yaml custom_filter, acquire._way_passes)",
+     "in_built_graph": "absent",
+     "first_node": {
+      "id": 100659881,
+      "lat": 40.8015595,
+      "lon": -73.9171513
+     },
+     "last_node": {
+      "id": 9902723841,
+      "lat": 40.8000377,
+      "lon": -73.9182621
+     }
+    }
+   ],
+   "break_points": [
+    {
+     "node": 11938167518,
+     "lat": 40.7979764,
+     "lon": -73.9197503,
+     "missing": "shared path 1287205186 meets way 1414563386, which the built graph lacks"
+    },
+    {
+     "node": 4186937127,
+     "lat": 40.7979535,
+     "lon": -73.9196941,
+     "missing": "older walkway 46627099 meets way 1414563386, which the built graph lacks"
+    },
+    {
+     "node": 12715806360,
+     "lat": 40.7978933,
+     "lon": -73.9198145,
+     "missing": "end of 1287205186 on Bronx Shore Road (way 375160033, highway=unclassified, not requested by Stage 1)"
+    },
+    {
+     "node": 595806636,
+     "lat": 40.7978698,
+     "lon": -73.9197578,
+     "missing": "end of 46627099 on Bronx Shore Road (way 375160033)"
+    }
+   ],
+   "pipeline_rule": "Stage 3, schema_map._classify_osm_edge: highway in SHARED_TYPES (cycleway, track) is kept only when foot is in FOOT_ALLOWED (yes, designated, permissive). Way 1414563386 has no foot tag.",
+   "proposed_change": "Preferred: add foot=designated to OSM way 1414563386 and move the pin to a newer extract. No rule change. If the pipeline must fix it against the pinned extract, add an allow list of way IDs read by _classify_osm_edge with the single entry 1414563386. Do not relax the foot rule (see side_effects).",
+   "sources": [
+    {
+     "url": "https://www.mta.info/press-release/mta-celebrates-new-bike-and-pedestrian-paths-robert-f-kennedy-henry-hudson-and-cross",
+     "archived": "http://web.archive.org/web/20260518022516/https://www.mta.info/press-release/mta-celebrates-new-bike-and-pedestrian-paths-robert-f-kennedy-henry-hudson-and-cross",
+     "publisher": "MTA press release, May 12, 2025 (mta.info returns 403 to scripts; read from the Wayback Machine copy)",
+     "sentence": "The MTA replaced pedestrian-only paths on the RFK Manhattan and Bronx spans, both connecting to Randalls Island with new bike/pedestrian paths that are fully compliant with the Americans with Disabilities Act (ADA)."
+    },
+    {
+     "url": "https://wiki.openstreetmap.org/wiki/OSM_tags_for_routing/Access_restrictions",
+     "publisher": "OpenStreetMap wiki, default access tables",
+     "sentence": "United States of America table, row cycleway: bicycle Designated, foot yes. Worldwide table, row cycleway: foot no, with the note that all routers on osm.org regard highway=cycleway without foot tags as routable by foot."
+    }
+   ]
+  },
+  "Henry Hudson Bridge": {
+   "verdict": "none of the three: the bridge is joined on pedestrian edges",
+   "summary": "The lower level walkway (way 246164306, cycleway with foot=designated) is mapped, kept, and joined at both ends. The walkway runs south-west to north-east and lands 230 m east of the test's north landfall and inside Inwood Hill Park on the south. Deck end to deck end the ratio is 1.0.",
+   "release_test": {
+    "anchor_a": {
+     "osm_node": 1760596682,
+     "lat": 40.8756066,
+     "lon": -73.9227265,
+     "snap_m": 23
+    },
+    "anchor_b": {
+     "osm_node": 10130977024,
+     "lat": 40.8803958,
+     "lon": -73.9221571,
+     "snap_m": 18
+    },
+    "straight_line_m": 535,
+    "built_pedestrian_path_m": 1526,
+    "built_path_with_street_edges_m": 1519,
+    "osm_path_on_ways_the_rules_keep_as_pedestrian_m": 1526
+   },
+   "deck": {
+    "from_node": 1760596448,
+    "to_node": 2532396929,
+    "straight_line_m": 548,
+    "pedestrian_path_m": 551,
+    "ratio": 1.01
+   },
+   "bank_to_bank": {
+    "from_node": 1760604368,
+    "to_node": 12321483875,
+    "straight_line_m": 639,
+    "pedestrian_path_m": 910,
+    "ratio": 1.42
+   },
+   "osm_ways": [
+    {
+     "id": 246164306,
+     "role": "walkway, bridge",
+     "tags": {
+      "highway": "cycleway",
+      "foot": "designated",
+      "bicycle": "designated",
+      "bridge": "yes",
+      "layer": "1",
+      "oneway": "no",
+      "segregated": "no"
+     },
+     "length_m": 584,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 2532396929,
+      "lat": 40.8794561,
+      "lon": -73.919758
+     },
+     "last_node": {
+      "id": 12063751144,
+      "lat": 40.8762174,
+      "lon": -73.9251396
+     }
+    },
+    {
+     "id": 932513548,
+     "role": "south link into Inwood Hill Park",
+     "tags": {
+      "highway": "path",
+      "bicycle": "no"
+     },
+     "length_m": 156,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 1760596448,
+      "lat": 40.8763656,
+      "lon": -73.9248079
+     },
+     "last_node": {
+      "id": 1760604368,
+      "lat": 40.8764487,
+      "lon": -73.9231731
+     }
+    },
+    {
+     "id": 164422607,
+     "role": "south link, park path",
+     "tags": {
+      "highway": "path",
+      "bicycle": "designated"
+     },
+     "length_m": 497,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 12474414553,
+      "lat": 40.8737186,
+      "lon": -73.928981
+     },
+     "last_node": {
+      "id": 12063751144,
+      "lat": 40.8762174,
+      "lon": -73.9251396
+     }
+    },
+    {
+     "id": 246164304,
+     "role": "north approach",
+     "tags": {
+      "highway": "cycleway",
+      "foot": "designated",
+      "bicycle": "designated",
+      "oneway": "no",
+      "segregated": "no"
+     },
+     "length_m": 61,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 2532396919,
+      "lat": 40.8798332,
+      "lon": -73.9192369
+     },
+     "last_node": {
+      "id": 2532396929,
+      "lat": 40.8794561,
+      "lon": -73.919758
+     }
+    },
+    {
+     "id": 246164303,
+     "role": "north approach",
+     "tags": {
+      "highway": "cycleway",
+      "foot": "designated",
+      "bicycle": "designated",
+      "oneway": "no",
+      "segregated": "no"
+     },
+     "length_m": 88,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 14047324072,
+      "lat": 40.880403,
+      "lon": -73.9185128
+     },
+     "last_node": {
+      "id": 2532396919,
+      "lat": 40.8798332,
+      "lon": -73.9192369
+     }
+    },
+    {
+     "id": 1544290735,
+     "role": "north approach, bridge",
+     "tags": {
+      "highway": "cycleway",
+      "foot": "designated",
+      "bicycle": "designated",
+      "bridge": "yes",
+      "layer": "1",
+      "oneway": "no",
+      "segregated": "no"
+     },
+     "length_m": 26,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 14047324070,
+      "lat": 40.8805881,
+      "lon": -73.9183164
+     },
+     "last_node": {
+      "id": 14047324072,
+      "lat": 40.880403,
+      "lon": -73.9185128
+     }
+    },
+    {
+     "id": 1544290734,
+     "role": "north approach",
+     "tags": {
+      "highway": "cycleway",
+      "foot": "designated",
+      "bicycle": "designated",
+      "oneway": "no",
+      "segregated": "no"
+     },
+     "length_m": 27,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 12321483875,
+      "lat": 40.8807793,
+      "lon": -73.9182113
+     },
+     "last_node": {
+      "id": 14047324070,
+      "lat": 40.8805881,
+      "lon": -73.9183164
+     }
+    },
+    {
+     "id": 1347387854,
+     "role": "crossing at Henry Hudson Parkway West",
+     "tags": {
+      "highway": "footway",
+      "footway": "crossing",
+      "bicycle": "no",
+      "oneway": "no",
+      "crossing": "uncontrolled"
+     },
+     "length_m": 3,
+     "pipeline": "kept as a pedestrian edge",
+     "in_built_graph": "pedestrian",
+     "first_node": {
+      "id": 13041409051,
+      "lat": 40.8807985,
+      "lon": -73.9182422
+     },
+     "last_node": {
+      "id": 12321483875,
+      "lat": 40.8807793,
+      "lon": -73.9182113
+     }
+    },
+    {
+     "id": 9764584,
+     "role": "roadway, upper level",
+     "tags": {
+      "highway": "motorway",
+      "bridge": "yes",
+      "layer": "2",
+      "oneway": "yes",
+      "name": "Henry Hudson Parkway"
+     },
+     "length_m": 680,
+     "pipeline": "dropped by the Stage 1 filter (config/sources.yaml custom_filter, acquire._way_passes)",
+     "in_built_graph": "absent",
+     "first_node": {
+      "id": 8584784524,
+      "lat": 40.8758059,
+      "lon": -73.9251568
+     },
+     "last_node": {
+      "id": 3966664768,
+      "lat": 40.8797735,
+      "lon": -73.9190307
+     }
+    },
+    {
+     "id": 8119396,
+     "role": "roadway, lower level",
+     "tags": {
+      "highway": "motorway",
+      "bridge": "yes",
+      "layer": "1",
+      "oneway": "yes",
+      "name": "Henry Hudson Parkway"
+     },
+     "length_m": 504,
+     "pipeline": "dropped by the Stage 1 filter (config/sources.yaml custom_filter, acquire._way_passes)",
+     "in_built_graph": "absent",
+     "first_node": {
+      "id": 252128124,
+      "lat": 40.8794064,
+      "lon": -73.9196995
+     },
+     "last_node": {
+      "id": 60915166,
+      "lat": 40.8764453,
+      "lon": -73.9242206
+     }
+    }
+   ],
+   "break_points": [],
+   "pipeline_rule": null,
+   "proposed_change": "Correct the landfalls in research_notes/release/city/bridges.py to about (40.8764, -73.9232) and (40.8808, -73.9182).",
+   "sources": [
+    {
+     "url": "https://www.mta.info/press-release/mta-celebrates-new-bike-and-pedestrian-paths-robert-f-kennedy-henry-hudson-and-cross",
+     "archived": "http://web.archive.org/web/20260518022516/https://www.mta.info/press-release/mta-celebrates-new-bike-and-pedestrian-paths-robert-f-kennedy-henry-hudson-and-cross",
+     "publisher": "MTA press release, May 12, 2025 (mta.info returns 403 to scripts; read from the Wayback Machine copy)",
+     "sentence": "The MTA widened the lower-level sidewalk and built ADA-compliant connections at both ends of the Henry Hudson Bridge, resulting in a fully accessible bike/pedestrian path across the entire bridge, and improving accessibility between Spuyten Duyvil and Inwood Hill Park at the northern end of Manhattan. The new walkway, opened in December 2024, was completed on time and within budget."
+    }
+   ]
+  }
+ },
+ "side_effects_of_rule_changes": {
+  "box": "lat 40.49 to 40.92, lon -74.26 to -73.69, ways with at least one node inside",
+  "A_admit_every_cycleway_without_a_foot_tag": {
+   "ways_added": 627,
+   "km": 37.0,
+   "of_which_oneway_yes": 218,
+   "most_common_names": [
+    [
+     "Hudson River Greenway",
+     28
+    ],
+    [
+     "Ocean Parkway Bike Path",
+     20
+    ],
+    [
+     "Tillary Street",
+     11
+    ],
+    [
+     "Bloomingdale Park Greenway",
+     10
+    ],
+    [
+     "East River Esplanade",
+     10
+    ],
+    [
+     "Laurelton Greenway",
+     10
+    ],
+    [
+     "Broadway",
+     9
+    ],
+    [
+     "Pike Street",
+     9
+    ]
+   ]
+  },
+  "B_admit_only_two_way_non_crossing_cycleways_with_both_ends_on_kept_pedestrian_ways_and_no_node_on_a_street": {
+   "ways_added": 53,
+   "km": 6.7,
+   "includes_way_1414563386": true,
+   "of_which_named_Ocean_Parkway_Bike_Path_or_Hudson_River_Greenway": 25,
+   "names": [
+    [
+     "Ocean Parkway Bike Path",
+     18
+    ],
+    [
+     "(no name)",
+     11
+    ],
+    [
+     "Hudson River Greenway",
+     7
+    ],
+    [
+     "Laurelton Greenway",
+     3
+    ],
+    [
+     "Mosholu-Pelham Greenway",
+     3
+    ],
+    [
+     "East River Esplanade",
+     2
+    ],
+    [
+     "Bloomingdale Park Greenway",
+     2
+    ],
+    [
+     "Randalls Island Greenway",
+     1
+    ],
+    [
+     "2nd Street",
+     1
+    ],
+    [
+     "Belt Parkway Bike Path",
+     1
+    ],
+    [
+     "Johnson Street",
+     1
+    ],
+    [
+     "Goethals Road North",
+     1
+    ],
+    [
+     "Tech Place",
+     1
+    ],
+    [
+     "Eastern Parkway South Mall",
+     1
+    ]
+   ]
+  },
+  "C_allow_list_of_one_way_id_1414563386": {
+   "ways_added": 1,
+   "km": 0.4
+  },
+  "D_add_unclassified_to_the_stage_1_filter_as_street_edges": {
+   "ways_added": 2052,
+   "km": 259
+  },
+  "E_link_roads_that_pass_stage_1_and_are_dropped_by_stage_3": {
+   "ways": 970,
+   "km": 50
+  }
+ },
+ "ramp_survey_points": {
+  "Broadway Bridge south: 9th Avenue at Broadway": [
+   {
+    "lat": 40.872766,
+    "lon": -73.911794,
+    "ramp_id": "310604",
+    "corner_id": "1000153",
+    "on": "9 AVENUE",
+    "street": "9 AVENUE"
+   }
+  ],
+  "Broadway Bridge north: West 225th Street at Broadway": [
+   {
+    "lat": 40.874356,
+    "lon": -73.910392,
+    "ramp_id": "79304",
+    "corner_id": "1175081",
+    "on": "WEST 225 STREET",
+    "street": "WEST 225 STREET"
+   },
+   {
+    "lat": 40.874293,
+    "lon": -73.910497,
+    "ramp_id": "79300",
+    "corner_id": "1175080",
+    "on": "WEST 225 STREET",
+    "street": "WEST 225 STREET"
+   }
+  ],
+  "145th Street Bridge Bronx end: East 149th Street at River Avenue and Exterior Street": [
+   {
+    "lat": 40.819259,
+    "lon": -73.930019,
+    "ramp_id": "199866",
+    "corner_id": "1020836",
+    "on": "EAST 149 STREET",
+    "street": "EAST 149 STREET"
+   },
+   {
+    "lat": 40.819394,
+    "lon": -73.929983,
+    "ramp_id": "199862",
+    "corner_id": "1020839",
+    "on": "EAST 149 STREET",
+    "street": "EAST 149 STREET"
+   },
+   {
+    "lat": 40.819129,
+    "lon": -73.930292,
+    "ramp_id": "199869",
+    "corner_id": "1186098",
+    "on": "MAJOR DEEGAN EXPWY ET 4 NB",
+    "street": "MAJOR DEEGAN EXPWY ET 4 NB"
+   },
+   {
+    "lat": 40.819464,
+    "lon": -73.930552,
+    "ramp_id": "190381",
+    "corner_id": "1020796",
+    "on": "EXTERIOR STREET, MAJOR DEEGAN EXPRESSWAY",
+    "street": "EXTERIOR STREET"
+   },
+   {
+    "lat": 40.819386,
+    "lon": -73.930001,
+    "ramp_id": "199860",
+    "corner_id": "1020839",
+    "on": "RIVER AVENUE",
+    "street": "EAST 149 STREET"
+   },
+   {
+    "lat": 40.819131,
+    "lon": -73.930298,
+    "ramp_id": "199868",
+    "corner_id": "1186098",
+    "on": "EXTERIOR STREET",
+    "street": "MAJOR DEEGAN EXPWY ET 4 NB"
+   },
+   {
+    "lat": 40.81937,
+    "lon": -73.929986,
+    "ramp_id": "199859",
+    "corner_id": "1020839",
+    "on": "RIVER AVENUE",
+    "street": "EAST 149 STREET"
+   },
+   {
+    "lat": 40.81925,
+    "lon": -73.930023,
+    "ramp_id": "199864",
+    "corner_id": "1020836",
+    "on": "EXTERIOR STREET",
+    "street": "EAST 149 STREET"
+   },
+   {
+    "lat": 40.819498,
+    "lon": -73.930237,
+    "ramp_id": "201512",
+    "corner_id": "1020838",
+    "on": "EXTERIOR STREET",
+    "street": "EAST 149 STREET"
+   },
+   {
+    "lat": 40.819136,
+    "lon": -73.930059,
+    "ramp_id": "201530",
+    "corner_id": "1022630",
+    "on": "EAST 149 STREET",
+    "street": "EXTERIOR STREET"
+   },
+   {
+    "lat": 40.819162,
+    "lon": -73.930421,
+    "ramp_id": "200751",
+    "corner_id": "1020793",
+    "on": "EXTERIOR STREET",
+    "street": "EXTERIOR STREET"
+   },
+   {
+    "lat": 40.819091,
+    "lon": -73.930097,
+    "ramp_id": "201526",
+    "corner_id": "1022630",
+    "on": "EXTERIOR STREET",
+    "street": "EXTERIOR STREET"
+   },
+   {
+    "lat": 40.819431,
+    "lon": -73.930466,
+    "ramp_id": "199858",
+    "corner_id": "1015208",
+    "on": "EXTERIOR STREET",
+    "street": "EXTERIOR STREET"
+   },
+   {
+    "lat": 40.819473,
+    "lon": -73.92995,
+    "ramp_id": "201524",
+    "corner_id": "1020794",
+    "on": "EAST 149 STREET, RIVER AVENUE",
+    "street": "EAST 149 STREET"
+   },
+   {
+    "lat": 40.819502,
+    "lon": -73.930166,
+    "ramp_id": "201514",
+    "corner_id": "1020838",
+    "on": "EAST 149 STREET",
+    "street": "EAST 149 STREET"
+   },
+   {
+    "lat": 40.819429,
+    "lon": -73.930445,
+    "ramp_id": "199856",
+    "corner_id": "1015208",
+    "on": "EAST 149 STREET",
+    "street": "EXTERIOR STREET"
+   }
+  ]
+ }
+}

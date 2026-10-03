@@ -1,0 +1,3 @@
+Snapping a trip end to the nearest graph node puts it up to half a block from where a routing engine starts, because engines snap to the nearest point on an edge.
+
+With node snapping, close to half of the Brownsville pairs had ends more than 25 m from OpenRouteService's snapped ends and had to be set aside, although both routers were on the same sidewalk (196 of 420 in the first run, whose table was later overwritten; with edge snapping it is 58). `Graph.route` in compare/graph.py now snaps to the nearest point on an edge the profile can use and trims the first and last edge; tests/test_compare_measures.py covers both directions along one edge. The node-snapped results are kept as routes/ours_node_snap.pkl.

@@ -1,0 +1,52 @@
+{
+ "random/BK": {
+  "ORS only | passable by this profile": 64,
+  "ORS only | uses an edge over this profile's incline limits": 25,
+  "different route | passable by this profile": 3,
+  "different route | uses a crossing this graph calls unramped": 5,
+  "different route | uses an edge over this profile's incline limits": 49
+ },
+ "random/BX": {
+  "ORS only | passable by this profile": 31,
+  "ORS only | uses a crossing this graph calls unramped": 8,
+  "ORS only | uses an edge over this profile's incline limits": 95,
+  "different route | passable by this profile": 1,
+  "different route | uses a crossing this graph calls unramped": 2,
+  "different route | uses an edge over this profile's incline limits": 299
+ },
+ "random/MN": {
+  "ORS only | passable by this profile": 23,
+  "ORS only | uses an edge over this profile's incline limits": 73,
+  "different route | passable by this profile": 2,
+  "different route | uses a crossing this graph calls unramped": 9,
+  "different route | uses an edge over this profile's incline limits": 122
+ },
+ "random/QN": {
+  "ORS only | passable by this profile": 69,
+  "ORS only | uses an edge over this profile's incline limits": 45,
+  "different route | passable by this profile": 10,
+  "different route | uses a crossing this graph calls unramped": 12,
+  "different route | uses an edge over this profile's incline limits": 254
+ },
+ "random/SI": {
+  "ORS only | passable by this profile": 28,
+  "ORS only | uses a crossing this graph calls unramped": 2,
+  "ORS only | uses an edge over this profile's incline limits": 110,
+  "different route | passable by this profile": 18,
+  "different route | uses an edge over this profile's incline limits": 424
+ },
+ "random/citywide": {
+  "ORS only | passable by this profile": 32,
+  "ORS only | uses a crossing this graph calls unramped": 1,
+  "ORS only | uses an edge over this profile's incline limits": 52,
+  "different route | passable by this profile": 6,
+  "different route | uses a crossing this graph calls unramped": 3,
+  "different route | uses an edge over this profile's incline limits": 171
+ },
+ "landmark/hand-checked": {
+  "different route | uses an edge over this profile's incline limits": 1
+ },
+ "brownsville/BK16": {
+  "different route | uses an edge over this profile's incline limits": 2
+ }
+}

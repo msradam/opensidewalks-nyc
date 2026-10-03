@@ -1,0 +1,395 @@
+{
+ "ends_rated": 388,
+ "ends_unclear": 12,
+ "ends_missing": 0,
+ "ends_yes_share": 0.894,
+ "crossings": {
+  "yes": 164,
+  "no": 27,
+  "unclear": 9
+ },
+ "seen_in_imagery": {
+  "cannot_tell": 379,
+  "ramp": 9
+ },
+ "end_type": {
+  "corner": 351,
+  "median": 16,
+  "other": 15,
+  "midblock": 6
+ },
+ "ends_yes_by_borough": {
+  "BK": 0.92,
+  "BX": 0.872,
+  "MN": 0.896,
+  "QN": 0.936,
+  "SI": 0.85
+ },
+ "rules": {
+  "strict: end node is a curb node": {
+   "per_end": {
+    "tp": 257,
+    "fp": 0,
+    "fn": 90,
+    "precision": 1.0,
+    "recall": 0.741,
+    "f1": 0.851,
+    "says_yes": 257
+   },
+   "per_crossing": {
+    "tp": 91,
+    "fp": 0,
+    "fn": 73,
+    "precision": 1.0,
+    "recall": 0.555,
+    "f1": 0.714,
+    "says_yes": 91
+   }
+  },
+  "graph curb node within 2 m": {
+   "per_end": {
+    "tp": 309,
+    "fp": 0,
+    "fn": 38,
+    "precision": 1.0,
+    "recall": 0.89,
+    "f1": 0.942,
+    "says_yes": 309
+   },
+   "per_crossing": {
+    "tp": 129,
+    "fp": 0,
+    "fn": 35,
+    "precision": 1.0,
+    "recall": 0.787,
+    "f1": 0.881,
+    "says_yes": 129
+   }
+  },
+  "graph curb node within 3 m": {
+   "per_end": {
+    "tp": 345,
+    "fp": 1,
+    "fn": 2,
+    "precision": 0.997,
+    "recall": 0.994,
+    "f1": 0.996,
+    "says_yes": 346
+   },
+   "per_crossing": {
+    "tp": 162,
+    "fp": 1,
+    "fn": 2,
+    "precision": 0.994,
+    "recall": 0.988,
+    "f1": 0.991,
+    "says_yes": 163
+   }
+  },
+  "graph curb node within 5 m (v0.3.2)": {
+   "per_end": {
+    "tp": 347,
+    "fp": 2,
+    "fn": 0,
+    "precision": 0.994,
+    "recall": 1.0,
+    "f1": 0.997,
+    "says_yes": 349
+   },
+   "per_crossing": {
+    "tp": 164,
+    "fp": 2,
+    "fn": 0,
+    "precision": 0.988,
+    "recall": 1.0,
+    "f1": 0.994,
+    "says_yes": 166
+   }
+  },
+  "graph curb node within 8 m": {
+   "per_end": {
+    "tp": 347,
+    "fp": 3,
+    "fn": 0,
+    "precision": 0.991,
+    "recall": 1.0,
+    "f1": 0.996,
+    "says_yes": 350
+   },
+   "per_crossing": {
+    "tp": 164,
+    "fp": 3,
+    "fn": 0,
+    "precision": 0.982,
+    "recall": 1.0,
+    "f1": 0.991,
+    "says_yes": 167
+   }
+  },
+  "surveyed ramp within 3 m": {
+   "per_end": {
+    "tp": 341,
+    "fp": 0,
+    "fn": 6,
+    "precision": 1.0,
+    "recall": 0.983,
+    "f1": 0.991,
+    "says_yes": 341
+   },
+   "per_crossing": {
+    "tp": 159,
+    "fp": 0,
+    "fn": 5,
+    "precision": 1.0,
+    "recall": 0.97,
+    "f1": 0.985,
+    "says_yes": 159
+   }
+  },
+  "surveyed ramp within 5 m": {
+   "per_end": {
+    "tp": 346,
+    "fp": 2,
+    "fn": 1,
+    "precision": 0.994,
+    "recall": 0.997,
+    "f1": 0.996,
+    "says_yes": 348
+   },
+   "per_crossing": {
+    "tp": 163,
+    "fp": 2,
+    "fn": 1,
+    "precision": 0.988,
+    "recall": 0.994,
+    "f1": 0.991,
+    "says_yes": 165
+   }
+  },
+  "surveyed ramp within 8 m": {
+   "per_end": {
+    "tp": 347,
+    "fp": 3,
+    "fn": 0,
+    "precision": 0.991,
+    "recall": 1.0,
+    "f1": 0.996,
+    "says_yes": 350
+   },
+   "per_crossing": {
+    "tp": 164,
+    "fp": 3,
+    "fn": 0,
+    "precision": 0.982,
+    "recall": 1.0,
+    "f1": 0.991,
+    "says_yes": 167
+   }
+  },
+  "surveyed ramp within 10 m": {
+   "per_end": {
+    "tp": 347,
+    "fp": 5,
+    "fn": 0,
+    "precision": 0.986,
+    "recall": 1.0,
+    "f1": 0.993,
+    "says_yes": 352
+   },
+   "per_crossing": {
+    "tp": 164,
+    "fp": 5,
+    "fn": 0,
+    "precision": 0.97,
+    "recall": 1.0,
+    "f1": 0.985,
+    "says_yes": 169
+   }
+  },
+  "surveyed ramp within 8 m and within 3 m of the crossing's axis": {
+   "per_end": {
+    "tp": 347,
+    "fp": 3,
+    "fn": 0,
+    "precision": 0.991,
+    "recall": 1.0,
+    "f1": 0.996,
+    "says_yes": 350
+   },
+   "per_crossing": {
+    "tp": 164,
+    "fp": 3,
+    "fn": 0,
+    "precision": 0.982,
+    "recall": 1.0,
+    "f1": 0.991,
+    "says_yes": 167
+   }
+  },
+  "surveyed ramp within 8 m and within 4 m of the axis": {
+   "per_end": {
+    "tp": 347,
+    "fp": 3,
+    "fn": 0,
+    "precision": 0.991,
+    "recall": 1.0,
+    "f1": 0.996,
+    "says_yes": 350
+   },
+   "per_crossing": {
+    "tp": 164,
+    "fp": 3,
+    "fn": 0,
+    "precision": 0.982,
+    "recall": 1.0,
+    "f1": 0.991,
+    "says_yes": 167
+   }
+  },
+  "surveyed ramp within 10 m and within 3 m of the axis": {
+   "per_end": {
+    "tp": 347,
+    "fp": 5,
+    "fn": 0,
+    "precision": 0.986,
+    "recall": 1.0,
+    "f1": 0.993,
+    "says_yes": 352
+   },
+   "per_crossing": {
+    "tp": 164,
+    "fp": 5,
+    "fn": 0,
+    "precision": 0.97,
+    "recall": 1.0,
+    "f1": 0.985,
+    "says_yes": 169
+   }
+  },
+  "surveyed ramp within 10 m and within 4 m of the axis": {
+   "per_end": {
+    "tp": 347,
+    "fp": 5,
+    "fn": 0,
+    "precision": 0.986,
+    "recall": 1.0,
+    "f1": 0.993,
+    "says_yes": 352
+   },
+   "per_crossing": {
+    "tp": 164,
+    "fp": 5,
+    "fn": 0,
+    "precision": 0.97,
+    "recall": 1.0,
+    "f1": 0.985,
+    "says_yes": 169
+   }
+  },
+  "surveyed ramp within 12 m and within 4 m of the axis": {
+   "per_end": {
+    "tp": 347,
+    "fp": 6,
+    "fn": 0,
+    "precision": 0.983,
+    "recall": 1.0,
+    "f1": 0.991,
+    "says_yes": 353
+   },
+   "per_crossing": {
+    "tp": 164,
+    "fp": 6,
+    "fn": 0,
+    "precision": 0.965,
+    "recall": 1.0,
+    "f1": 0.982,
+    "says_yes": 170
+   }
+  },
+  "surveyed ramp within 8 m on the crossed street (RAMP_ONSTR)": {
+   "per_end": {
+    "tp": 270,
+    "fp": 0,
+    "fn": 77,
+    "precision": 1.0,
+    "recall": 0.778,
+    "f1": 0.875,
+    "says_yes": 270
+   },
+   "per_crossing": {
+    "tp": 120,
+    "fp": 0,
+    "fn": 44,
+    "precision": 1.0,
+    "recall": 0.732,
+    "f1": 0.845,
+    "says_yes": 120
+   }
+  },
+  "surveyed ramp within 10 m on the crossed street": {
+   "per_end": {
+    "tp": 272,
+    "fp": 2,
+    "fn": 75,
+    "precision": 0.993,
+    "recall": 0.784,
+    "f1": 0.876,
+    "says_yes": 274
+   },
+   "per_crossing": {
+    "tp": 122,
+    "fp": 2,
+    "fn": 42,
+    "precision": 0.984,
+    "recall": 0.744,
+    "f1": 0.847,
+    "says_yes": 124
+   }
+  },
+  "surveyed ramp within 10 m, axis 4 m, or on the crossed street within 8 m": {
+   "per_end": {
+    "tp": 347,
+    "fp": 5,
+    "fn": 0,
+    "precision": 0.986,
+    "recall": 1.0,
+    "f1": 0.993,
+    "says_yes": 352
+   },
+   "per_crossing": {
+    "tp": 164,
+    "fp": 5,
+    "fn": 0,
+    "precision": 0.97,
+    "recall": 1.0,
+    "f1": 0.985,
+    "says_yes": 169
+   }
+  }
+ },
+ "agreement": {
+  "ends_rated_by_both": 132,
+  "observed_agreement_3_classes": 0.962,
+  "kappa_3_classes": 0.805,
+  "ends_both_yes_or_no": 125,
+  "observed_agreement_yes_no": 1.0,
+  "kappa_yes_no": 1.0,
+  "confusion": {
+   "no": {
+    "no": 9,
+    "unclear": 0,
+    "yes": 0
+   },
+   "unclear": {
+    "no": 1,
+    "unclear": 2,
+    "yes": 1
+   },
+   "yes": {
+    "no": 0,
+    "unclear": 3,
+    "yes": 116
+   }
+  }
+ }
+}

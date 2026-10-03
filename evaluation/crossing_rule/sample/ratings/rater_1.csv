@@ -1,0 +1,101 @@
+n,end,ramp_serves,seen_in_imagery,end_type,marked,note
+1,A,yes,cannot_tell,corner,yes,
+1,B,yes,cannot_tell,corner,yes,
+2,A,yes,cannot_tell,corner,yes,faint stripes
+2,B,yes,cannot_tell,corner,yes,
+3,A,yes,cannot_tell,median,yes,A on nose of sidewalk strip beside parking
+3,B,yes,cannot_tell,corner,yes,
+4,A,yes,cannot_tell,corner,yes,
+4,B,yes,cannot_tell,corner,yes,
+5,A,yes,cannot_tell,corner,yes,
+5,B,yes,cannot_tell,corner,yes,
+6,A,yes,cannot_tell,corner,yes,
+6,B,yes,cannot_tell,corner,yes,
+7,A,no,cannot_tell,corner,yes,no squares at either end
+7,B,no,cannot_tell,corner,yes,B in building shadow
+8,A,yes,cannot_tell,corner,yes,
+8,B,yes,cannot_tell,corner,yes,
+9,A,yes,cannot_tell,corner,yes,
+9,B,no,cannot_tell,corner,yes,no square near B
+10,A,yes,cannot_tell,corner,yes,
+10,B,yes,cannot_tell,corner,yes,
+11,A,yes,cannot_tell,corner,yes,
+11,B,yes,cannot_tell,corner,yes,
+12,A,yes,cannot_tell,corner,no,narrow side street
+12,B,yes,cannot_tell,corner,no,square on corner apex
+13,A,yes,cannot_tell,corner,no,
+13,B,unclear,cannot_tell,corner,no,B under elevated rail structure
+14,A,yes,cannot_tell,corner,yes,
+14,B,yes,cannot_tell,corner,yes,square at corner apex
+15,A,yes,cannot_tell,corner,yes,
+15,B,yes,cannot_tell,corner,yes,
+16,A,yes,cannot_tell,corner,yes,
+16,B,yes,cannot_tell,corner,yes,square at corner apex
+17,A,yes,cannot_tell,corner,no,
+17,B,yes,cannot_tell,midblock,no,B under tree canopy
+18,A,yes,cannot_tell,corner,yes,
+18,B,yes,cannot_tell,corner,yes,
+19,A,yes,cannot_tell,corner,no,
+19,B,yes,cannot_tell,corner,no,
+20,A,unclear,cannot_tell,other,yes,A is in the roadway 2 m from B inside the crosswalk
+20,B,yes,cannot_tell,corner,yes,2 m stub crossing
+21,A,yes,cannot_tell,corner,yes,
+21,B,yes,cannot_tell,corner,yes,
+22,A,yes,cannot_tell,corner,yes,
+22,B,yes,cannot_tell,corner,yes,
+23,A,yes,cannot_tell,corner,no,
+23,B,yes,cannot_tell,corner,no,
+24,A,yes,cannot_tell,corner,yes,
+24,B,yes,cannot_tell,corner,yes,B in shadow
+25,A,yes,ramp,corner,yes,orange pad visible
+25,B,yes,ramp,corner,yes,orange pad visible
+26,A,yes,cannot_tell,corner,yes,
+26,B,yes,cannot_tell,corner,yes,
+27,A,yes,cannot_tell,corner,yes,
+27,B,yes,cannot_tell,corner,yes,
+28,A,unclear,cannot_tell,median,no,wide boulevard painted median no kerb no square
+28,B,yes,cannot_tell,median,no,two squares at lane edge no visible kerb
+29,A,yes,cannot_tell,corner,yes,
+29,B,yes,cannot_tell,corner,yes,
+30,A,yes,cannot_tell,corner,yes,
+30,B,yes,cannot_tell,corner,yes,
+31,A,yes,cannot_tell,corner,yes,
+31,B,yes,cannot_tell,corner,yes,
+32,A,yes,cannot_tell,corner,yes,
+32,B,yes,cannot_tell,corner,yes,
+33,A,yes,cannot_tell,corner,yes,
+33,B,yes,cannot_tell,corner,yes,
+34,A,no,cannot_tell,corner,no,no square at A
+34,B,yes,cannot_tell,corner,no,square on corner apex about 2 m from crossing line
+35,A,yes,cannot_tell,corner,no,
+35,B,yes,cannot_tell,corner,no,
+36,A,yes,cannot_tell,corner,yes,
+36,B,yes,cannot_tell,corner,yes,
+37,A,yes,cannot_tell,corner,yes,
+37,B,yes,cannot_tell,corner,yes,
+38,A,no,cannot_tell,midblock,no,unmarked crossing to a median nose beside construction
+38,B,no,cannot_tell,median,no,
+39,A,unclear,cannot_tell,corner,no,4 m stub into a parking lane; nearest square 3 m away on corner
+39,B,unclear,cannot_tell,other,no,B is in the roadway with no kerb
+40,A,yes,cannot_tell,corner,no,
+40,B,yes,cannot_tell,corner,no,
+41,A,no,cannot_tell,midblock,yes,no squares on sheet
+41,B,no,cannot_tell,midblock,yes,
+42,A,yes,cannot_tell,corner,no,boulevard with median gap
+42,B,yes,cannot_tell,midblock,no,
+43,A,yes,cannot_tell,median,yes,A on median nose
+43,B,yes,cannot_tell,median,yes,B on triangular island
+44,A,yes,cannot_tell,corner,yes,
+44,B,yes,cannot_tell,corner,yes,
+45,A,no,cannot_tell,other,yes,park road with paved pad and grass verge; no squares
+45,B,no,cannot_tell,other,yes,
+46,A,yes,cannot_tell,corner,yes,faint stripes
+46,B,yes,cannot_tell,corner,yes,
+47,A,yes,cannot_tell,corner,yes,
+47,B,yes,cannot_tell,corner,yes,
+48,A,yes,cannot_tell,corner,yes,
+48,B,yes,cannot_tell,corner,yes,
+49,A,yes,cannot_tell,corner,yes,A partly under tree
+49,B,yes,cannot_tell,corner,yes,
+50,A,yes,cannot_tell,corner,yes,
+50,B,yes,cannot_tell,corner,yes,

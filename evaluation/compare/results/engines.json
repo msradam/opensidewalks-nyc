@@ -1,0 +1,72 @@
+{
+ "machine": "Apple Silicon Mac, 32 GB; Docker (OrbStack) 29.4.0, VM memory 16819609600 bytes",
+ "power": "Now drawing from 'AC Power'",
+ "osm_extract": {
+  "file": "new-york-261001.osm.pbf",
+  "sha256": "1214968b2c988e13ee6a6bde6b9c9891337a588475b7fd2ac1939e175073d8b7",
+  "clip": "osmium extract --bbox=-74.28,40.48,-73.68,40.93 --strategy=complete_ways (osmium 1.15.0, libosmium 2.18.0, Debian bookworm image)",
+  "clip_file": "engines/osm/nyc-261001.osm.pbf",
+  "clip_sha256": "4fd1d8ac0dea4e8e84e8f0a248235fab96fb6d30681ed0530ba68c1ae13ee33b",
+  "clip_bytes": 102037544
+ },
+ "openrouteservice": {
+  "version": "10.0.1",
+  "image": "openrouteservice/openrouteservice@sha256:b2f66b5e33949e86a279f3de654ef99e2964eb9112d16fb52788c6bb63ff941c",
+  "profiles": [
+   "wheelchair",
+   "foot-walking"
+  ],
+  "elevation": false,
+  "kerbs_on_crossings": true,
+  "maximum_snapping_radius_m": 400,
+  "config_files": {
+   "armA": "engines/ors/armA/config/ors-config.yml",
+   "armB_strict": "engines/ors/armB_strict/config/ors-config.yml",
+   "armB_known": "engines/ors/armB_known/config/ors-config.yml",
+   "armC": "engines/ors/armC/config/ors-config.yml"
+  },
+  "graph_build_seconds": {
+   "armA (raw OSM clip)": 37.156,
+   "armB_strict": 66.619,
+   "armB_known": 67.214,
+   "armC (this graph, pedestrian edges only)": 69.164
+  },
+  "heap": "armA XMX 7g, arm B XMX 4g each"
+ },
+ "valhalla": {
+  "version": "3.9.0 (pyvalhalla wheel, macOS arm64, Python 3.12)",
+  "config": "engines/valhalla/valhalla.json (pyvalhalla defaults; service_limits.pedestrian.max_distance 250000)",
+  "tile_build_seconds": 14,
+  "costing": "pedestrian; foot as shipped; wheelchair: type wheelchair, use_hills 0, max_distance 200000"
+ },
+ "unweaver": {
+  "commit": "66352c181582d08a032a2af12dc14fd2415a7294 (2022-11-02)",
+  "image": "engines/unweaver/Dockerfile (python:3.8-bookworm, libsqlite3-mod-spatialite, libgdal-dev)",
+  "pins": [
+   "Fiona==1.8.22",
+   "Flask==2.2.2",
+   "networkx==2.8.7",
+   "Shapely==1.8.5.post1"
+  ],
+  "build": "unweaver build PROJECT --changes-sign incline",
+  "build_seconds": {
+   "Brownsville clip (28,682 features)": 4.6,
+   "city (2,881,148 features)": 4302
+  },
+  "cost_function": "unweaver-project/cost-wheelchair.py, unweaver-project/cost-distance.py, unchanged"
+ },
+ "osm_osw_reformatter": {
+  "version": "0.4.2",
+  "image": "armB/reformatter/Dockerfile (debian:bookworm-slim, linux/amd64 under emulation: osmium 3.6 has no arm64 wheel)",
+  "result": "armB/roundtrip_reformatter.json"
+ },
+ "public_routing_apis_used": "none",
+ "arm_b_conversion": {
+  "converter": "scripts/osw_to_osm.py",
+  "strict": "armB/strict/nyc-osw-strict.osm.pbf (1,186,910 nodes, 1,437,615 ways; unramped crossing ends kerb=raised kerb:height=0.14)",
+  "known": "armB/known/nyc-osw-known.osm.pbf (same; unramped ends untagged)",
+  "pedestrian (arm C)": "armB/pedestrian/nyc-osw-pedestrian.osm.pbf (1,186,910 nodes, 962,691 ways, converted after the coincident-ways fix)",
+  "note": "Strict and known were converted before the converter kept coincident ways of different classes: they lack 286 of 1,437,901 ways. Arm C was rebuilt after the fix.",
+  "conversion_seconds": 46.7
+ }
+}

@@ -1,0 +1,3 @@
+Incline computed from the elevation of two nodes a few metres apart is mostly DEM noise, at any tile resolution.
+
+In a Midtown window (median edge 5.7 m) 6.5 percent of pedestrian edges exceed 8.33 percent at 1.1 m per pixel and 7.3 percent at 7 m per pixel, but only a third of the edges over the limit at one resolution are over it at the other. A per-edge slope limit therefore blocks the wrong edges; it cut wheelchair reachability in that window from 50 to 18 percent. Measure incline over a longer baseline before using it as a routing constraint. Evidence: research_notes/release/dem/coarse_vs_fine_mn.json.

@@ -1,0 +1,3 @@
+Two OSM ways can lie on the same line between the same nodes (a flight of steps and the path beside it, a street under a sidewalk's line), so geometry alone cannot say which one a route used or whether two edges are one.
+
+It bit twice in the router comparison. Matching routes to this graph's edges by geometry counted steps for ORS's wheelchair profile on a fifth of Manhattan routes; ORS's own way ids show none in 12,182 routes. And the OSW to OSM converter took such a pair for opposite directions of one edge and dropped 286 of 1,437,901 ways. Match by the engine's way ids where it gives them, and key any "same edge" test on class or way id as well as on coordinates. Evidence: compare/measures.py (`Matcher.match`), scripts/osw_to_osm.py, tests for both.

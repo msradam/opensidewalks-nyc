@@ -1,0 +1,3 @@
+A filter that drops access=no also drops walkways tagged access=no with foot=designated, and one that drops highway=cycleway drops shared bridge paths.
+
+OSM's mode tags (foot=*) override access=*. The Queensboro Bridge walkway is access=no, foot=designated, and the Williamsburg, Third Avenue and Kosciuszko bridge paths are cycleways with foot allowed, so each bridge was cut for walkers after the borough seam was fixed. A component count did not show it, because every borough still joined the largest component somewhere. Test each bridge end to end. Evidence: research_notes/release/city/access_override.json, cycleway_test.json, bridges.json.

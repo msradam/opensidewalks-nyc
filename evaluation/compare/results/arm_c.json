@@ -1,0 +1,186 @@
+{
+ "i10_k6": {
+  "random/BK": {
+   "both": 1772,
+   "ours_only": 52,
+   "ors_only": 89,
+   "neither": 87,
+   "found_agreement": 0.9295,
+   "same_route_share_of_both_found": 0.9678,
+   "median_length_ratio_ors_over_ours": 1.0,
+   "share_within_1pct_length": 0.9769
+  },
+  "random/BX": {
+   "both": 925,
+   "ours_only": 91,
+   "ors_only": 134,
+   "neither": 850,
+   "found_agreement": 0.8875,
+   "same_route_share_of_both_found": 0.6732,
+   "median_length_ratio_ors_over_ours": 1.0,
+   "share_within_1pct_length": 0.7435
+  },
+  "random/MN": {
+   "both": 1190,
+   "ours_only": 90,
+   "ors_only": 96,
+   "neither": 624,
+   "found_agreement": 0.907,
+   "same_route_share_of_both_found": 0.8882,
+   "median_length_ratio_ors_over_ours": 1.0,
+   "share_within_1pct_length": 0.9462
+  },
+  "random/QN": {
+   "both": 1322,
+   "ours_only": 35,
+   "ors_only": 114,
+   "neither": 529,
+   "found_agreement": 0.9255,
+   "same_route_share_of_both_found": 0.7912,
+   "median_length_ratio_ors_over_ours": 1.0,
+   "share_within_1pct_length": 0.8737
+  },
+  "random/SI": {
+   "both": 936,
+   "ours_only": 70,
+   "ors_only": 140,
+   "neither": 854,
+   "found_agreement": 0.895,
+   "same_route_share_of_both_found": 0.5278,
+   "median_length_ratio_ors_over_ours": 0.9987,
+   "share_within_1pct_length": 0.6859
+  },
+  "random/citywide": {
+   "both": 855,
+   "ours_only": 48,
+   "ors_only": 85,
+   "neither": 1012,
+   "found_agreement": 0.9335,
+   "same_route_share_of_both_found": 0.7895,
+   "median_length_ratio_ors_over_ours": 1.0,
+   "share_within_1pct_length": 0.9018
+  },
+  "landmark/hand-checked": {
+   "both": 8,
+   "ours_only": 0,
+   "ors_only": 0,
+   "neither": 0,
+   "found_agreement": 1.0,
+   "same_route_share_of_both_found": 0.875,
+   "median_length_ratio_ors_over_ours": 1.0,
+   "share_within_1pct_length": 1.0
+  },
+  "landmark/structure": {
+   "both": 7,
+   "ours_only": 1,
+   "ors_only": 0,
+   "neither": 1,
+   "found_agreement": 0.8889,
+   "same_route_share_of_both_found": 1.0,
+   "median_length_ratio_ors_over_ours": 1.0,
+   "share_within_1pct_length": 1.0
+  },
+  "brownsville/BK16": {
+   "both": 420,
+   "ours_only": 0,
+   "ors_only": 0,
+   "neither": 0,
+   "found_agreement": 1.0,
+   "same_route_share_of_both_found": 0.9952,
+   "median_length_ratio_ors_over_ours": 1.0,
+   "share_within_1pct_length": 0.981
+  }
+ },
+ "rec_i10_k6": {
+  "random/BK": {
+   "both": 1772,
+   "ours_only": 52,
+   "ors_only": 89,
+   "neither": 87,
+   "found_agreement": 0.9295,
+   "same_route_share_of_both_found": 0.2568,
+   "median_length_ratio_ors_over_ours": 1.0014,
+   "share_within_1pct_length": 0.9481
+  },
+  "random/BX": {
+   "both": 925,
+   "ours_only": 91,
+   "ors_only": 134,
+   "neither": 850,
+   "found_agreement": 0.8875,
+   "same_route_share_of_both_found": 0.2413,
+   "median_length_ratio_ors_over_ours": 1.0004,
+   "share_within_1pct_length": 0.7446
+  },
+  "random/MN": {
+   "both": 1190,
+   "ours_only": 90,
+   "ors_only": 96,
+   "neither": 624,
+   "found_agreement": 0.907,
+   "same_route_share_of_both_found": 0.2034,
+   "median_length_ratio_ors_over_ours": 1.0027,
+   "share_within_1pct_length": 0.879
+  },
+  "random/QN": {
+   "both": 1322,
+   "ours_only": 35,
+   "ors_only": 114,
+   "neither": 529,
+   "found_agreement": 0.9255,
+   "same_route_share_of_both_found": 0.1936,
+   "median_length_ratio_ors_over_ours": 1.0015,
+   "share_within_1pct_length": 0.857
+  },
+  "random/SI": {
+   "both": 936,
+   "ours_only": 70,
+   "ors_only": 140,
+   "neither": 854,
+   "found_agreement": 0.895,
+   "same_route_share_of_both_found": 0.1944,
+   "median_length_ratio_ors_over_ours": 1.0,
+   "share_within_1pct_length": 0.7041
+  },
+  "random/citywide": {
+   "both": 855,
+   "ours_only": 48,
+   "ors_only": 85,
+   "neither": 1012,
+   "found_agreement": 0.9335,
+   "same_route_share_of_both_found": 0.1064,
+   "median_length_ratio_ors_over_ours": 1.002,
+   "share_within_1pct_length": 0.9029
+  },
+  "landmark/hand-checked": {
+   "both": 8,
+   "ours_only": 0,
+   "ors_only": 0,
+   "neither": 0,
+   "found_agreement": 1.0,
+   "same_route_share_of_both_found": 0.5,
+   "median_length_ratio_ors_over_ours": 1.0005,
+   "share_within_1pct_length": 0.875
+  },
+  "landmark/structure": {
+   "both": 7,
+   "ours_only": 1,
+   "ors_only": 0,
+   "neither": 1,
+   "found_agreement": 0.8889,
+   "same_route_share_of_both_found": 0.2857,
+   "median_length_ratio_ors_over_ours": 1.0038,
+   "share_within_1pct_length": 0.8571
+  },
+  "brownsville/BK16": {
+   "both": 420,
+   "ours_only": 0,
+   "ors_only": 0,
+   "neither": 0,
+   "found_agreement": 1.0,
+   "same_route_share_of_both_found": 0.519,
+   "median_length_ratio_ors_over_ours": 1.0005,
+   "share_within_1pct_length": 0.9452
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "polygons": 1912,
+ "nodes": 14402,
+ "all lifted nodes": {
+  "nodes": 14402,
+  "share_in_a_structure_polygon": 0.5925
+ },
+ "lifted 2 m or more above the terrain model": {
+  "nodes": 8192,
+  "share_in_a_structure_polygon": 0.7357
+ },
+ "lifted 2 m or more, on OSM-tagged structure": {
+  "nodes": 6612,
+  "share_in_a_structure_polygon": 0.7836
+ },
+ "lifted 2 m or more, untagged approach": {
+  "nodes": 1580,
+  "share_in_a_structure_polygon": 0.5354
+ },
+ "within 2 m of the terrain model": {
+  "nodes": 6176,
+  "share_in_a_structure_polygon": 0.404
+ }
+}

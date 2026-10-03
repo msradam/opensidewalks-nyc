@@ -1,0 +1,139 @@
+{
+ "old": "research_notes/next/v032_tables.pkl",
+ "new": "research_notes/next/final/tables.pkl",
+ "root": {
+  "$schema": "https://sidewalks.washington.edu/opensidewalks/0.3/schema.json",
+  "type": "FeatureCollection",
+  "dataSource": {
+   "name": "opensidewalks-nyc pipeline",
+   "url": "https://github.com/msradam/opensidewalks-nyc",
+   "license": "ODbL-1.0",
+   "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
+   "attribution": "Pedestrian network derived from opensidewalks-nyc (ODbL-1.0). \u00a9 OpenStreetMap contributors, NYC Open Data, NYS GIS.",
+   "osmExtract": {
+    "url": "https://download.geofabrik.de/north-america/us/new-york-261001.osm.pbf",
+    "sha256": "1214968b2c988e13ee6a6bde6b9c9891337a588475b7fd2ac1939e175073d8b7",
+    "dataTimestamp": "2026-10-01T20:22:06Z"
+   }
+  },
+  "dataTimestamp": "2026-10-03T01:31:26.557395+00:00",
+  "pipelineVersion": {
+   "version": "0.3.3+nyc.1",
+   "gitSHA": "2442db2",
+   "builtAt": "2026-10-03T01:31:26.557395+00:00"
+  }
+ },
+ "edges": {
+  "old": 2684681,
+  "new": 2881148,
+  "same_id": 2682363,
+  "only_old": 2318,
+  "only_new": 198785,
+  "only_old_by_cause": {
+   "gap-fill sidewalks moved to the sidecar (0966fcc)": 2318,
+   "other": 0
+  },
+  "only_new_by_cause": {
+   "highway=unclassified roads, both directions (cea2b9d)": 21042,
+   "reverse of one-way street edges (8041c82)": 177743,
+   "pedestrian edges (endpoint merge or dedup differences)": 0
+  },
+  "shared_edges": {
+   "incline changed (1cd3fd4 2 m tiles, 799f9c0 smoothing, 876545d deck heights)": 2647469,
+   "incline gained": 13210,
+   "incline lost": 901,
+   "ext:structure changed (b7a481c elevated)": 4915,
+   "ext:structure values new": {
+    "NaN": 2661581,
+    "bridge": 13327,
+    "elevated": 4915,
+    "tunnel": 2540
+   },
+   "endpoint reference changed (endpoint merge decided differently with more edges)": 29,
+   "width changed": 0,
+   "ext:pipeline_version old -> new": [
+    "0.1.0",
+    "0.3.3+nyc.1"
+   ],
+   "ext:source_timestamp changed (new download)": 2682363,
+   "other_property_changes": {
+    "highway": 0,
+    "ext:source": 0,
+    "ext:borough": 0,
+    "surface": 0,
+    "name": 0,
+    "ext:osm_id": 0,
+    "footway": 0,
+    "ext:osm_highway": 0,
+    "crossing:markings": 0
+   },
+   "geometry_changed": 29
+  },
+  "by_highway_old": {
+   "footway": 1917610,
+   "residential": 320860,
+   "service": 265538,
+   "secondary": 67937,
+   "tertiary": 58056,
+   "primary": 38557,
+   "steps": 15470,
+   "living_street": 653
+  },
+  "by_highway_new": {
+   "footway": 1915292,
+   "residential": 418875,
+   "service": 289376,
+   "secondary": 89629,
+   "tertiary": 71654,
+   "primary": 58632,
+   "unclassified": 21042,
+   "steps": 15470,
+   "living_street": 1178
+  }
+ },
+ "nodes": {
+  "old": 1189651,
+  "new": 1186910,
+  "same_id": 1179386,
+  "only_old": 10265,
+  "only_new": 7524,
+  "only_old_by_cause": {
+   "OSM nodes no edge referenced (688b6c0)": 8007,
+   "gap-fill endpoints (0966fcc)": 2252,
+   "other": 6
+  },
+  "only_new_by_source": {
+   "osm_walk": 7331,
+   "nyc_dot_ramps": 193
+  },
+  "shared_nodes": {
+   "elevation changed (1cd3fd4 2 m tiles; 876545d deck heights)": 699578,
+   "elevation unchanged": 479808,
+   "elevation removed (structure node with no deck height, 876545d)": 48,
+   "elevation gained": 0,
+   "abs change median m": 0.1,
+   "abs change p90 m": 0.2,
+   "ext:elevation_source new": {
+    "NaN": 1165281,
+    "lidar_2017": 13651,
+    "interpolated": 409,
+    "lidar_2014": 45
+   },
+   "geometry changed": 0,
+   "other_property_changes": {
+    "ext:borough": 0,
+    "ext:source": 0,
+    "barrier": 35,
+    "kerb": 35,
+    "tactile_paving": 35,
+    "ext:ramp_id": 37,
+    "ext:corner_id": 35,
+    "ext:street_1": 34,
+    "ext:street_2": 31,
+    "ext:running_slope_pct": 26,
+    "ext:cross_slope_pct": 26,
+    "ext:counter_slope_pct": 26
+   }
+  }
+ }
+}

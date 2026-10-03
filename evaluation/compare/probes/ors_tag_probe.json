@@ -1,0 +1,155 @@
+{
+ "no tags": {
+  "none given": "passes",
+  "kerb 0.03": "passes",
+  "kerb 0.06": "passes",
+  "kerb 0.1": "passes",
+  "incline 6": "passes",
+  "incline 10": "passes",
+  "width 0.9": "passes"
+ },
+ "kerb=lowered": {
+  "none given": "passes",
+  "kerb 0.03": "blocked",
+  "kerb 0.06": "passes",
+  "kerb 0.1": "passes",
+  "incline 6": "passes",
+  "incline 10": "passes",
+  "width 0.9": "passes"
+ },
+ "kerb=flush": {
+  "none given": "passes",
+  "kerb 0.03": "passes",
+  "kerb 0.06": "passes",
+  "kerb 0.1": "passes",
+  "incline 6": "passes",
+  "incline 10": "passes",
+  "width 0.9": "passes"
+ },
+ "kerb=raised": {
+  "none given": "passes",
+  "kerb 0.03": "passes",
+  "kerb 0.06": "passes",
+  "kerb 0.1": "passes",
+  "incline 6": "passes",
+  "incline 10": "passes",
+  "width 0.9": "passes"
+ },
+ "kerb=no": {
+  "none given": "passes",
+  "kerb 0.03": "blocked",
+  "kerb 0.06": "blocked",
+  "kerb 0.1": "blocked",
+  "incline 6": "passes",
+  "incline 10": "passes",
+  "width 0.9": "passes"
+ },
+ "kerb=raised kerb:height=0.14": {
+  "none given": "passes",
+  "kerb 0.03": "blocked",
+  "kerb 0.06": "blocked",
+  "kerb 0.1": "blocked",
+  "incline 6": "passes",
+  "incline 10": "passes",
+  "width 0.9": "passes"
+ },
+ "kerb=raised kerb:height=0.15": {
+  "none given": "passes",
+  "kerb 0.03": "passes",
+  "kerb 0.06": "passes",
+  "kerb 0.1": "passes",
+  "incline 6": "passes",
+  "incline 10": "passes",
+  "width 0.9": "passes"
+ },
+ "kerb=raised kerb:height=0.18": {
+  "none given": "passes",
+  "kerb 0.03": "passes",
+  "kerb 0.06": "passes",
+  "kerb 0.1": "passes",
+  "incline 6": "passes",
+  "incline 10": "passes",
+  "width 0.9": "passes"
+ },
+ "incline=0.083 (a ratio)": {
+  "none given": "passes",
+  "kerb 0.03": "passes",
+  "kerb 0.06": "passes",
+  "kerb 0.1": "passes",
+  "incline 6": "passes",
+  "incline 10": "passes",
+  "width 0.9": "passes"
+ },
+ "incline=-0.0039;0.0039": {
+  "none given": "passes",
+  "kerb 0.03": "passes",
+  "kerb 0.06": "passes",
+  "kerb 0.1": "passes",
+  "incline 6": "passes",
+  "incline 10": "passes",
+  "width 0.9": "passes"
+ },
+ "incline=6.4%": {
+  "none given": "passes",
+  "kerb 0.03": "passes",
+  "kerb 0.06": "passes",
+  "kerb 0.1": "passes",
+  "incline 6": "passes",
+  "incline 10": "passes",
+  "width 0.9": "passes"
+ },
+ "incline=6.6%": {
+  "none given": "passes",
+  "kerb 0.03": "passes",
+  "kerb 0.06": "passes",
+  "kerb 0.1": "passes",
+  "incline 6": "blocked",
+  "incline 10": "passes",
+  "width 0.9": "passes"
+ },
+ "incline=-8.3%": {
+  "none given": "passes",
+  "kerb 0.03": "passes",
+  "kerb 0.06": "passes",
+  "kerb 0.1": "passes",
+  "incline 6": "blocked",
+  "incline 10": "passes",
+  "width 0.9": "passes"
+ },
+ "incline=10.4%": {
+  "none given": "passes",
+  "kerb 0.03": "passes",
+  "kerb 0.06": "passes",
+  "kerb 0.1": "passes",
+  "incline 6": "blocked",
+  "incline 10": "passes",
+  "width 0.9": "passes"
+ },
+ "incline=10.6%": {
+  "none given": "passes",
+  "kerb 0.03": "passes",
+  "kerb 0.06": "passes",
+  "kerb 0.1": "passes",
+  "incline 6": "blocked",
+  "incline 10": "blocked",
+  "width 0.9": "passes"
+ },
+ "width=0.8": {
+  "none given": "passes",
+  "kerb 0.03": "passes",
+  "kerb 0.06": "passes",
+  "kerb 0.1": "passes",
+  "incline 6": "passes",
+  "incline 10": "passes",
+  "width 0.9": "blocked"
+ },
+ "width=1.2": {
+  "none given": "passes",
+  "kerb 0.03": "passes",
+  "kerb 0.06": "passes",
+  "kerb 0.1": "passes",
+  "incline 6": "passes",
+  "incline 10": "passes",
+  "width 0.9": "passes"
+ }
+}

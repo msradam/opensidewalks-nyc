@@ -1,0 +1,3 @@
+A zero-error validator run says the file is well formed, not that its values are true.
+
+v0.3.1-nyc.1 passed python-osw-validation 0.4.4 with 80% of node elevations at a spurious 0.0, tactile_paving=yes on every ramp and the Bronx disconnected. The validator checks schema, IDs, references, geometry validity, endpoint coordinates and (from 0.5.0) coordinate precision. After any build, also check: zero-elevation share by borough, components by borough, tactile_paving against the raw survey, attached curb nodes, median sidewalk width, and a few gap-fill edges over imagery. Evidence: research_notes/evidence/release_topology.json, release_elevation_zero.json.

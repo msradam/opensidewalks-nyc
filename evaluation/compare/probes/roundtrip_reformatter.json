@@ -1,0 +1,70 @@
+{
+ "converter": "osm-osw-reformatter 0.4.2, osw2osm, Brownsville clip",
+ "osw": {
+  "nodes": 10794,
+  "edges_directed": 28682,
+  "kerb_nodes": 2978,
+  "edges_with_incline": 28650,
+  "edges_with_width": 9850,
+  "edges_steeper_than_6.5pct": 200,
+  "crossing_edges": 6194,
+  "crossing_edges_ramped_by_5m_rule": 5714
+ },
+ "osm": {
+  "nodes": 10794,
+  "ways": 14337,
+  "nodes_with_kerb": 2978,
+  "kerb_values": {
+   "lowered": 2978
+  },
+  "ways_with_incline": 14321,
+  "incline_examples": [
+   "-0.0039;0.0039",
+   "0.0042;-0.0042",
+   "0.0237;-0.0237",
+   "-0.0319;0.0319",
+   "0.0476;-0.0476"
+  ],
+  "incline_values_joined_with_semicolon": 14318,
+  "ways_ors_reads_as_steeper_than_6pct": 0,
+  "ways_with_width": 4925,
+  "width_examples": [
+   "3.3",
+   "3.3",
+   "4.19"
+  ],
+  "crossing_ways": 3097,
+  "crossing_ways_with_a_kerb_tagged_node": 2176,
+  "way_tag_keys": {
+   "_id": 14337,
+   "ext:borough": 14337,
+   "highway": 14337,
+   "ext:source": 14337,
+   "ext:pipeline_version": 14337,
+   "ext:source_timestamp": 14337,
+   "ext:osm_id": 14337,
+   "incline": 14321,
+   "footway": 8417,
+   "surface": 8280,
+   "width": 4925,
+   "name": 3604,
+   "crossing:markings": 2807,
+   "ext:structure": 41,
+   "ext:osm_highway": 10
+  },
+  "node_tag_keys": {
+   "_id": 10794,
+   "ext:borough": 10794,
+   "ext:source": 10794,
+   "ext:pipeline_version": 10794,
+   "ext:elevation_m": 10784,
+   "barrier": 2978,
+   "kerb": 2978,
+   "tactile_paving": 2978,
+   "ext:ramp_id": 2978,
+   "ext:corner_id": 2978,
+   "ext:street_1": 2978,
+   "ext:street_2": 2969
+  }
+ }
+}

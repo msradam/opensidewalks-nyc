@@ -1,0 +1,83 @@
+Sources for the ramp backlog (evaluation/ramp_backlog/)
+
+Every document below is public. Copies were downloaded for the analysis and are
+not redistributed here. Where METHOD.md or dot_code_documentation.md names a
+file under sources/ or raw/, that file is a saved copy of one of these URLs.
+Retrieved 2026-10-01 to 2026-10-03.
+
+NYC Open Data (Socrata), NYC Open Data terms of use
+https://data.cityofnewyork.us/d/ufzp-rrqu   Pedestrian ramp locations and survey (2018 to 2019)
+https://data.cityofnewyork.us/d/e7gc-ub6z   Pedestrian ramp programme progress (per corner)
+https://data.cityofnewyork.us/api/views/ufzp-rrqu.json   metadata (socrata_ufzp-rrqu_views.json)
+https://data.cityofnewyork.us/api/views/e7gc-ub6z.json   metadata and attached data dictionary (socrata_e7gc-ub6z_*)
+https://data.cityofnewyork.us/d/jagj-gttd   Pedestrian ramp complaints (related, metadata only)
+https://data.cityofnewyork.us/d/u7ws-2dus   related dataset, metadata only
+https://data.cityofnewyork.us/d/r94j-3cph   related dataset, metadata only
+https://data.cityofnewyork.us/d/5crt-au7u   Community districts (DCP)
+https://data.cityofnewyork.us/d/872g-cjhh   City Council districts (DCP)
+
+NYC DOT ArcGIS services and items (raw/compliance/ was paged from the first)
+https://services.arcgis.com/wmZOI9vyUBq1zTZx/arcgis/rest/services/CMT_SURVEY_COMPLIANCY_TOLERANCE_PROD/FeatureServer/0
+https://www.arcgis.com/sharing/rest/content/items/996cb79f2b964b269577e2db17008651
+https://services.arcgis.com/wmZOI9vyUBq1zTZx/arcgis/rest/services/RAMPS_SURVEY_2019/FeatureServer   item ea60914e85224a189015c853a045bf0a
+https://services.arcgis.com/wmZOI9vyUBq1zTZx/arcgis/rest/services/CORNERS_SURVEY_2019/FeatureServer   item 10b95b8dbe4f4fd58a2c6f7f0957b5c2
+https://services.arcgis.com/wmZOI9vyUBq1zTZx/arcgis/rest/services/PRP_Corner_Activity/FeatureServer   item 52e964da1f364d2ca51e8ad38208e370
+https://services.arcgis.com/wmZOI9vyUBq1zTZx/arcgis/rest/services/PRP_Corner_Activity_View/FeatureServer   item c822f4de79af47018a4b95443a6ffc86
+https://services.arcgis.com/wmZOI9vyUBq1zTZx/arcgis/rest/services/PRP_Corner_Activity_Test/FeatureServer   item e3e49295f82a45d9bdeaf4a442c7c34f
+https://services.arcgis.com/wmZOI9vyUBq1zTZx/arcgis/rest/services/   organisation service list
+https://www.arcgis.com/sharing/rest/content/items/8fead0169a11485fb25ca5c1f8e0c03f   PRP Pedestrian Ramp Report dashboard
+https://www.arcgis.com/sharing/rest/content/items/1a502027f475450d9cb8acbf7add1399   Corner Construction Report web map
+https://a841-dotweb01.nyc.gov/arcgis/rest/services/PRP/Corner_Construction_Report/MapServer/0
+
+nycpedramps.info pages and scripts
+https://www.nycpedramps.info/
+https://www.nycpedramps.info/survey
+https://www.nycpedramps.info/program-progress
+https://www.nycpedramps.info/faqs
+https://www.nycpedramps.info/about-program
+https://www.nycpedramps.info/resources
+https://www.nycpedramps.info/themes/DOT/js/module4.js
+Wayback Machine captures of https://www.nycpedramps.info/survey dated 2020-11-26 and 2021-01-25 (https://web.archive.org/)
+
+Settlement, transition plan and standards
+https://www.nycpedramps.info/sites/default/files/2019-07/Pedestrian%20Ramp%20Settlement%20Agreement--Final%20Approved%207-23-2019.pdf
+https://www.nycpedramps.info/sites/default/files/2023-07/transition-plan-pedestrian-ramps-2023.pdf
+https://www.nycpedramps.info/sites/default/files/2021-12/Appendix-A-Transition-Plan-Pedestrian-Ramps_0.pdf
+https://www.nycpedramps.info/sites/default/files/2022-08/TB_22-001%20-%20Revision%20to%20NYC%20DOT%20Standard%20Detail%20of%20Construction%20H-1011%20-%20signed.pdf
+https://www1.nyc.gov/assets/ddc/downloads/publications/scops/SB22-004-NYCDOTSTANDARDDETAILSOFCONSTRUCTION_2022-06-06.pdf
+
+Court records
+CourtListener docket 6785197 (EPVA v. City of New York, S.D.N.Y. 1:94-cv-00435): https://www.courtlistener.com/docket/6785197/
+CourtListener docket 6792663 (CIDNY v. City of New York): https://www.courtlistener.com/docket/6792663/
+https://dralegal.org/case/center-independence-disabled-new-york-cidny-et-al-v-city-new-york-et-al/
+
+NYC DOT progress reports and guidance (PDF)
+https://www.nycpedramps.info/sites/default/files/2021-11/PedRampDesignGuidance.pdf
+https://www.nycpedramps.info/sites/default/files/2021-11/PRP_Program%20Overview.pdf
+https://www.nycpedramps.info/sites/default/files/2022-03/PedestrianRampConstructionTriggers_Web_3-3-22.pdf
+https://www.nycpedramps.info/sites/default/files/2022-08/TI_22-001%20Supplemental%20Guidance%20on%20Technical%20Infeasibilities.pdf
+https://www.nycpedramps.info/sites/default/files/2023-03/PRISM_Quick_Guide.pdf
+https://www.nycpedramps.info/sites/default/files/2023-03/TI_23-001_Pedestrian_Ramp_Inspection_Application_PRISM.pdf
+https://www.nycpedramps.info/sites/default/files/2023-07/PedestrianRampConstructionTriggers_Web_3-3-22.pdf
+https://www.nycpedramps.info/sites/default/files/2023-08/Ped_Ramp_Annual_Report_FY23.pdf
+https://www.nycpedramps.info/sites/default/files/2023-08/Ped_Ramp_Semi_Annual_Report_FY23_Pt1.pdf
+https://www.nycpedramps.info/sites/default/files/2023-08/Ped_Ramp_Semi_Annual_Report_FY23_Pt2.pdf
+https://www.nycpedramps.info/sites/default/files/2024-02/Ped_Ramp_Annual_Report_FY21.pdf
+https://www.nycpedramps.info/sites/default/files/2024-02/Ped_Ramp_Annual_Report_FY22.pdf
+https://www.nycpedramps.info/sites/default/files/2024-02/Ped_Ramp_Annual_Report%20FY20.pdf
+https://www.nycpedramps.info/sites/default/files/2024-02/Ped_Ramp_Semi_Annual_Report_FY20_Pt1.pdf
+https://www.nycpedramps.info/sites/default/files/2024-02/Ped_Ramp_Semi_Annual_Report_FY20_Pt2.pdf
+https://www.nycpedramps.info/sites/default/files/2024-02/Ped_Ramp_Semi_Annual_Report_FY21_Pt1.pdf
+https://www.nycpedramps.info/sites/default/files/2024-02/Ped_Ramp_Semi_Annual_Report_FY21_Pt2.pdf
+https://www.nycpedramps.info/sites/default/files/2024-02/Ped_Ramp_Semi_Annual_Report_FY22_Pt1.pdf
+https://www.nycpedramps.info/sites/default/files/2024-02/Ped_Ramp_Semi_Annual_Report_FY22_Pt2.pdf
+https://www.nycpedramps.info/sites/default/files/2024-02/Ped_Ramp_Semi_Annual_Report_FY24_Pt1.pdf
+https://www.nycpedramps.info/sites/default/files/2024-08/Ped_Ramp_Annual_Report_FY24.pdf
+https://www.nycpedramps.info/sites/default/files/2024-08/Ped_Ramp_Semi_Annual_Report_FY24_Pt2.pdf
+https://www.nycpedramps.info/sites/default/files/2024-09/Ped%20Ramps%20Frequently%20Asked%20Questions_09052024.pdf
+https://www.nycpedramps.info/sites/default/files/2025-02/Ped_Ramp_Semi_Annual_Report_FY25_Pt1.pdf
+https://www.nycpedramps.info/sites/default/files/2025-08/Ped_Ramp_Annual_Report_FY25.pdf
+https://www.nycpedramps.info/sites/default/files/2025-08/Ped_Ramp_Semi_Annual_Report_FY25_Pt2.pdf
+https://www.nycpedramps.info/sites/default/files/2026-02/Ped_Ramp_Semi_Annual_Report_FY26_Pt1_0.pdf
+https://www.nycpedramps.info/sites/default/files/2026-08/Ped_Ramp_Annual_Report_FY26.pdf
+https://www.nycpedramps.info/sites/default/files/2026-08/Ped_Ramp_Semi_Annual_Report_FY26_Pt2.pdf

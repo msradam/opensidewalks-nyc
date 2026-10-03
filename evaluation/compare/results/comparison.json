@@ -1,0 +1,5816 @@
+{
+ "random/BK": {
+  "pairs": 2000,
+  "pairs_with_snaps_over_25m_apart": 50,
+  "pairs_measured": 1950,
+  "found": {
+   "ours_wheelchair": 0.9262,
+   "ours_walk": 0.9621,
+   "ours_wheelchair_as_drawn": 0.8626,
+   "ours_wheelchair_no_incline_as_drawn": 0.8908,
+   "ors_a_foot": 1.0,
+   "ors_a_no_limits": 0.9913,
+   "ors_a_rec_i10_k6": 0.9897,
+   "ors_a_rec_i6_k6": 0.9856,
+   "ors_a_shortest_i10_k6": 0.9897,
+   "ors_b_strict_foot": 1.0,
+   "ors_b_strict_rec_i10_k6": 0.9564,
+   "ors_b_strict_rec_i6_k6": 0.9154,
+   "ors_b_strict_shortest_i10_k6": 0.9564,
+   "ors_b_known_rec_i10_k6": 0.9749,
+   "ors_b_known_shortest_i10_k6": 0.9749,
+   "valhalla_foot": 1.0,
+   "valhalla_wheelchair": 0.9913
+  },
+  "found_all_pairs": {
+   "ours_wheelchair": 0.912,
+   "ours_walk": 0.9475,
+   "ours_wheelchair_as_drawn": 0.848,
+   "ours_wheelchair_no_incline_as_drawn": 0.8775,
+   "ors_a_foot": 1.0,
+   "ors_a_no_limits": 0.9895,
+   "ors_a_rec_i10_k6": 0.988,
+   "ors_a_rec_i6_k6": 0.9835,
+   "ors_a_shortest_i10_k6": 0.988,
+   "ors_b_strict_foot": 1.0,
+   "ors_b_strict_rec_i10_k6": 0.954,
+   "ors_b_strict_rec_i6_k6": 0.912,
+   "ors_b_strict_shortest_i10_k6": 0.954,
+   "ors_b_known_rec_i10_k6": 0.9735,
+   "ors_b_known_shortest_i10_k6": 0.9735,
+   "valhalla_foot": 1.0,
+   "valhalla_wheelchair": 0.982
+  },
+  "agreement_with_ours": {
+   "ours_walk": {
+    "both": 1806,
+    "ours_only": 0,
+    "theirs_only": 70,
+    "neither": 74
+   },
+   "ours_wheelchair_as_drawn": {
+    "both": 1681,
+    "ours_only": 125,
+    "theirs_only": 1,
+    "neither": 143
+   },
+   "ours_wheelchair_no_incline_as_drawn": {
+    "both": 1700,
+    "ours_only": 106,
+    "theirs_only": 37,
+    "neither": 107
+   },
+   "ors_a_foot": {
+    "both": 1806,
+    "ours_only": 0,
+    "theirs_only": 144,
+    "neither": 0
+   },
+   "ors_a_no_limits": {
+    "both": 1798,
+    "ours_only": 8,
+    "theirs_only": 135,
+    "neither": 9
+   },
+   "ors_a_rec_i10_k6": {
+    "both": 1796,
+    "ours_only": 10,
+    "theirs_only": 134,
+    "neither": 10
+   },
+   "ors_a_rec_i6_k6": {
+    "both": 1790,
+    "ours_only": 16,
+    "theirs_only": 132,
+    "neither": 12
+   },
+   "ors_a_shortest_i10_k6": {
+    "both": 1796,
+    "ours_only": 10,
+    "theirs_only": 134,
+    "neither": 10
+   },
+   "ors_b_strict_foot": {
+    "both": 1806,
+    "ours_only": 0,
+    "theirs_only": 144,
+    "neither": 0
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "both": 1769,
+    "ours_only": 37,
+    "theirs_only": 96,
+    "neither": 48
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "both": 1729,
+    "ours_only": 77,
+    "theirs_only": 56,
+    "neither": 88
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "both": 1769,
+    "ours_only": 37,
+    "theirs_only": 96,
+    "neither": 48
+   },
+   "ors_b_known_rec_i10_k6": {
+    "both": 1789,
+    "ours_only": 17,
+    "theirs_only": 112,
+    "neither": 32
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "both": 1789,
+    "ours_only": 17,
+    "theirs_only": 112,
+    "neither": 32
+   },
+   "valhalla_foot": {
+    "both": 1806,
+    "ours_only": 0,
+    "theirs_only": 144,
+    "neither": 0
+   },
+   "valhalla_wheelchair": {
+    "both": 1796,
+    "ours_only": 10,
+    "theirs_only": 137,
+    "neither": 7
+   }
+  },
+  "detour_over_own_foot_route": {
+   "ours_wheelchair": {
+    "pairs": 1806,
+    "median": 1.012,
+    "p90": 1.053,
+    "share_over_1.5": 0.005
+   },
+   "ors_a_no_limits": {
+    "pairs": 1933,
+    "median": 1.006,
+    "p90": 1.021,
+    "share_over_1.5": 0.001
+   },
+   "ors_a_rec_i10_k6": {
+    "pairs": 1930,
+    "median": 1.007,
+    "p90": 1.022,
+    "share_over_1.5": 0.001
+   },
+   "ors_a_rec_i6_k6": {
+    "pairs": 1922,
+    "median": 1.007,
+    "p90": 1.026,
+    "share_over_1.5": 0.001
+   },
+   "ors_a_shortest_i10_k6": {
+    "pairs": 1930,
+    "median": 0.999,
+    "p90": 1.002,
+    "share_over_1.5": 0.001
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "pairs": 1865,
+    "median": 1.017,
+    "p90": 1.049,
+    "share_over_1.5": 0.001
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "pairs": 1785,
+    "median": 1.019,
+    "p90": 1.055,
+    "share_over_1.5": 0.002
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "pairs": 1865,
+    "median": 1.0,
+    "p90": 1.013,
+    "share_over_1.5": 0.001
+   },
+   "ors_b_known_rec_i10_k6": {
+    "pairs": 1901,
+    "median": 1.006,
+    "p90": 1.023,
+    "share_over_1.5": 0.001
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "pairs": 1901,
+    "median": 0.999,
+    "p90": 1.008,
+    "share_over_1.5": 0.001
+   },
+   "valhalla_wheelchair": {
+    "pairs": 1933,
+    "median": 1.0,
+    "p90": 1.002,
+    "share_over_1.5": 0.001
+   }
+  },
+  "overlap_with_ours": {
+   "ours_walk": {
+    "both_found": 1806,
+    "median": 0.571,
+    "share_same_route": 0.184
+   },
+   "ours_wheelchair_as_drawn": {
+    "both_found": 1681,
+    "median": 1.0,
+    "share_same_route": 1.0
+   },
+   "ours_wheelchair_no_incline_as_drawn": {
+    "both_found": 1700,
+    "median": 1.0,
+    "share_same_route": 0.822
+   },
+   "ors_a_foot": {
+    "both_found": 1806,
+    "median": 0.517,
+    "share_same_route": 0.092
+   },
+   "ors_a_no_limits": {
+    "both_found": 1798,
+    "median": 0.453,
+    "share_same_route": 0.052
+   },
+   "ors_a_rec_i10_k6": {
+    "both_found": 1796,
+    "median": 0.455,
+    "share_same_route": 0.052
+   },
+   "ors_a_rec_i6_k6": {
+    "both_found": 1790,
+    "median": 0.453,
+    "share_same_route": 0.051
+   },
+   "ors_a_shortest_i10_k6": {
+    "both_found": 1796,
+    "median": 0.457,
+    "share_same_route": 0.07
+   },
+   "ors_b_strict_foot": {
+    "both_found": 1806,
+    "median": 0.526,
+    "share_same_route": 0.101
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "both_found": 1769,
+    "median": 0.734,
+    "share_same_route": 0.227
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "both_found": 1729,
+    "median": 0.695,
+    "share_same_route": 0.193
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "both_found": 1769,
+    "median": 0.529,
+    "share_same_route": 0.099
+   },
+   "ors_b_known_rec_i10_k6": {
+    "both_found": 1789,
+    "median": 0.483,
+    "share_same_route": 0.065
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "both_found": 1789,
+    "median": 0.494,
+    "share_same_route": 0.075
+   },
+   "valhalla_foot": {
+    "both_found": 1806,
+    "median": 0.338,
+    "share_same_route": 0.041
+   },
+   "valhalla_wheelchair": {
+    "both_found": 1796,
+    "median": 0.342,
+    "share_same_route": 0.043
+   }
+  },
+  "audit_against_this_graph": {
+   "ours_wheelchair": {
+    "routes": 1806,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.0,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.0,
+    "unramped_crossings_per_km": 0.0,
+    "median_share_off_this_graph": 0.0
+   },
+   "ours_walk": {
+    "routes": 1876,
+    "with_steps": 0.1748,
+    "with_a_crossing_without_a_surveyed_ramp": 0.8811,
+    "with_an_edge_over_the_incline_limits": 0.3454,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.9083,
+    "unramped_crossings_per_km": 0.697,
+    "median_share_off_this_graph": 0.0
+   },
+   "ours_wheelchair_as_drawn": {
+    "routes": 1682,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.0,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.0,
+    "unramped_crossings_per_km": 0.0,
+    "median_share_off_this_graph": 0.0
+   },
+   "ours_wheelchair_no_incline_as_drawn": {
+    "routes": 1737,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.0,
+    "with_an_edge_over_the_incline_limits": 0.285,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.285,
+    "unramped_crossings_per_km": 0.0,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_a_foot": {
+    "routes": 1950,
+    "with_steps": 0.1882,
+    "with_a_crossing_without_a_surveyed_ramp": 0.8641,
+    "with_an_edge_over_the_incline_limits": 0.3667,
+    "with_over_10m_of_street_centreline": 0.8579,
+    "with_any_of_these": 0.9826,
+    "unramped_crossings_per_km": 0.63,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_a_no_limits": {
+    "routes": 1933,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.8883,
+    "with_an_edge_over_the_incline_limits": 0.3337,
+    "with_over_10m_of_street_centreline": 0.1309,
+    "with_any_of_these": 0.9208,
+    "unramped_crossings_per_km": 0.807,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_a_rec_i10_k6": {
+    "routes": 1930,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.8762,
+    "with_an_edge_over_the_incline_limits": 0.3435,
+    "with_over_10m_of_street_centreline": 0.1337,
+    "with_any_of_these": 0.9135,
+    "unramped_crossings_per_km": 0.765,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_a_rec_i6_k6": {
+    "routes": 1922,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.8777,
+    "with_an_edge_over_the_incline_limits": 0.334,
+    "with_over_10m_of_street_centreline": 0.1348,
+    "with_any_of_these": 0.9121,
+    "unramped_crossings_per_km": 0.766,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_a_shortest_i10_k6": {
+    "routes": 1930,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.7943,
+    "with_an_edge_over_the_incline_limits": 0.2601,
+    "with_over_10m_of_street_centreline": 0.9731,
+    "with_any_of_these": 0.9902,
+    "unramped_crossings_per_km": 0.366,
+    "median_share_off_this_graph": 0.001
+   },
+   "ors_b_strict_foot": {
+    "routes": 1950,
+    "with_steps": 0.2067,
+    "with_a_crossing_without_a_surveyed_ramp": 0.8697,
+    "with_an_edge_over_the_incline_limits": 0.3431,
+    "with_over_10m_of_street_centreline": 0.8687,
+    "with_any_of_these": 0.9831,
+    "unramped_crossings_per_km": 0.671,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "routes": 1865,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.1405,
+    "with_an_edge_over_the_incline_limits": 0.0767,
+    "with_over_10m_of_street_centreline": 0.2391,
+    "with_any_of_these": 0.2917,
+    "unramped_crossings_per_km": 0.024,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "routes": 1785,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.1535,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.2538,
+    "with_any_of_these": 0.2739,
+    "unramped_crossings_per_km": 0.029,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "routes": 1865,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.4032,
+    "with_an_edge_over_the_incline_limits": 0.0472,
+    "with_over_10m_of_street_centreline": 0.9882,
+    "with_any_of_these": 0.9898,
+    "unramped_crossings_per_km": 0.072,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_known_rec_i10_k6": {
+    "routes": 1901,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.8922,
+    "with_an_edge_over_the_incline_limits": 0.1094,
+    "with_over_10m_of_street_centreline": 0.0842,
+    "with_any_of_these": 0.9027,
+    "unramped_crossings_per_km": 0.799,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "routes": 1901,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.7849,
+    "with_an_edge_over_the_incline_limits": 0.061,
+    "with_over_10m_of_street_centreline": 0.98,
+    "with_any_of_these": 0.9905,
+    "unramped_crossings_per_km": 0.313,
+    "median_share_off_this_graph": 0.0
+   },
+   "valhalla_foot": {
+    "routes": 1950,
+    "with_steps": 0.1026,
+    "with_a_crossing_without_a_surveyed_ramp": 0.6995,
+    "with_an_edge_over_the_incline_limits": 0.2887,
+    "with_over_10m_of_street_centreline": 0.8877,
+    "with_any_of_these": 0.9626,
+    "unramped_crossings_per_km": 0.234,
+    "median_share_off_this_graph": 0.0
+   },
+   "valhalla_wheelchair": {
+    "routes": 1933,
+    "with_steps": 0.0445,
+    "with_a_crossing_without_a_surveyed_ramp": 0.6896,
+    "with_an_edge_over_the_incline_limits": 0.2737,
+    "with_over_10m_of_street_centreline": 0.8955,
+    "with_any_of_these": 0.9638,
+    "unramped_crossings_per_km": 0.228,
+    "median_share_off_this_graph": 0.0
+   }
+  },
+  "audit_against_raw_osm": {
+   "ours_wheelchair": {
+    "routes": 1806,
+    "with_incline": 0.0244,
+    "with_kerb=raised": 0.2752,
+    "with_smoothness": 0.1794,
+    "with_surface": 0.1202,
+    "with_wheelchair=no": 0.0006,
+    "with_any": 0.4374
+   },
+   "ours_walk": {
+    "routes": 1876,
+    "with_incline": 0.2122,
+    "with_kerb=raised": 0.4819,
+    "with_smoothness": 0.21,
+    "with_steps": 0.1748,
+    "with_surface": 0.153,
+    "with_wheelchair=no": 0.0187,
+    "with_any": 0.6493
+   },
+   "ours_wheelchair_as_drawn": {
+    "routes": 1682,
+    "with_incline": 0.0226,
+    "with_kerb=raised": 0.2759,
+    "with_smoothness": 0.179,
+    "with_surface": 0.1153,
+    "with_wheelchair=no": 0.0006,
+    "with_any": 0.4316
+   },
+   "ours_wheelchair_no_incline_as_drawn": {
+    "routes": 1737,
+    "with_incline": 0.0409,
+    "with_kerb=raised": 0.2752,
+    "with_smoothness": 0.1877,
+    "with_surface": 0.1382,
+    "with_wheelchair=no": 0.0017,
+    "with_any": 0.4462
+   },
+   "ors_a_foot": {
+    "routes": 1950,
+    "with_incline": 0.2072,
+    "with_kerb=raised": 0.4405,
+    "with_smoothness": 0.1872,
+    "with_steps": 0.1882,
+    "with_surface": 0.1744,
+    "with_wheelchair=no": 0.0179,
+    "with_any": 0.6333
+   },
+   "ors_a_no_limits": {
+    "routes": 1933,
+    "with_incline": 0.0481,
+    "with_kerb=raised": 0.5479,
+    "with_smoothness": 0.1619,
+    "with_surface": 0.0869,
+    "with_any": 0.6291
+   },
+   "ors_a_rec_i10_k6": {
+    "routes": 1930,
+    "with_incline": 0.0477,
+    "with_kerb=raised": 0.513,
+    "with_smoothness": 0.1658,
+    "with_surface": 0.085,
+    "with_any": 0.6078
+   },
+   "ors_a_rec_i6_k6": {
+    "routes": 1922,
+    "with_kerb=raised": 0.5177,
+    "with_smoothness": 0.1623,
+    "with_surface": 0.0708,
+    "with_any": 0.5994
+   },
+   "ors_a_shortest_i10_k6": {
+    "routes": 1930,
+    "with_incline": 0.0663,
+    "with_kerb=raised": 0.315,
+    "with_smoothness": 0.129,
+    "with_surface": 0.1078,
+    "with_any": 0.4487
+   },
+   "ors_b_strict_foot": {
+    "routes": 1950,
+    "with_incline": 0.2205,
+    "with_kerb=raised": 0.4528,
+    "with_smoothness": 0.1892,
+    "with_steps": 0.2067,
+    "with_surface": 0.1544,
+    "with_wheelchair=no": 0.0195,
+    "with_any": 0.6318
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "routes": 1865,
+    "with_incline": 0.0231,
+    "with_kerb=raised": 0.2836,
+    "with_smoothness": 0.1775,
+    "with_surface": 0.0912,
+    "with_wheelchair=no": 0.0005,
+    "with_any": 0.4461
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "routes": 1785,
+    "with_incline": 0.0095,
+    "with_kerb=raised": 0.2947,
+    "with_smoothness": 0.1826,
+    "with_surface": 0.0672,
+    "with_wheelchair=no": 0.0006,
+    "with_any": 0.4409
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "routes": 1865,
+    "with_incline": 0.0295,
+    "with_kerb=raised": 0.2134,
+    "with_smoothness": 0.0912,
+    "with_surface": 0.0879,
+    "with_wheelchair=no": 0.0005,
+    "with_any": 0.3298
+   },
+   "ors_b_known_rec_i10_k6": {
+    "routes": 1901,
+    "with_incline": 0.0331,
+    "with_kerb=raised": 0.5297,
+    "with_smoothness": 0.1689,
+    "with_surface": 0.0857,
+    "with_wheelchair=no": 0.0005,
+    "with_any": 0.6191
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "routes": 1901,
+    "with_incline": 0.0337,
+    "with_kerb=raised": 0.3356,
+    "with_smoothness": 0.0926,
+    "with_surface": 0.0952,
+    "with_wheelchair=no": 0.0005,
+    "with_any": 0.4387
+   },
+   "valhalla_foot": {
+    "routes": 1950,
+    "with_incline": 0.1087,
+    "with_kerb=raised": 0.261,
+    "with_smoothness": 0.0733,
+    "with_steps": 0.1026,
+    "with_surface": 0.1585,
+    "with_wheelchair=no": 0.0046,
+    "with_any": 0.4405
+   },
+   "valhalla_wheelchair": {
+    "routes": 1933,
+    "with_incline": 0.0647,
+    "with_kerb=raised": 0.2561,
+    "with_smoothness": 0.0802,
+    "with_steps": 0.0445,
+    "with_surface": 0.1061,
+    "with_wheelchair=no": 0.0005,
+    "with_any": 0.3921
+   }
+  },
+  "ors_setting_matrix_found": {
+   "ors_armA": {
+    "default": 0.9895,
+    "foot": 1.0,
+    "foot_rec": 1.0,
+    "i10_k3": 0.421,
+    "i10_k3_w90": 0.421,
+    "i10_k6": 0.988,
+    "i10_k6_w90": 0.988,
+    "i6_k3": 0.418,
+    "i6_k3_w90": 0.418,
+    "i6_k6": 0.9835,
+    "i6_k6_w90": 0.9835,
+    "rec_i10_k6": 0.988,
+    "rec_i6_k6": 0.9835
+   },
+   "ors_armB_known": {
+    "default": 1.0,
+    "foot": 1.0,
+    "i10_k3": 0.3865,
+    "i10_k3_w90": 0.3865,
+    "i10_k6": 0.9735,
+    "i10_k6_w90": 0.9735,
+    "i6_k3": 0.3565,
+    "i6_k3_w90": 0.3565,
+    "i6_k6": 0.9325,
+    "i6_k6_w90": 0.9325,
+    "rec_i10_k6": 0.9735,
+    "rec_i6_k6": 0.9325
+   },
+   "ors_armB_strict": {
+    "default": 1.0,
+    "foot": 1.0,
+    "foot_rec": 1.0,
+    "i10_k3": 0.2775,
+    "i10_k3_w90": 0.2775,
+    "i10_k6": 0.954,
+    "i10_k6_w90": 0.954,
+    "i6_k3": 0.2505,
+    "i6_k3_w90": 0.2505,
+    "i6_k6": 0.912,
+    "i6_k6_w90": 0.912,
+    "rec_i10_k6": 0.954,
+    "rec_i6_k6": 0.912
+   }
+  },
+  "ours_against_reference": {
+   "reference": "ors_a_rec_i10_k6",
+   "status": {
+    "different route": 1703,
+    "reference only": 134,
+    "same route": 93,
+    "neither": 10,
+    "ours only": 10
+   },
+   "causes_of_disagreement": {
+    "kerb data": 1417,
+    "incline data": 201,
+    "connectivity": 104,
+    "rule": 106,
+    "structure": 19
+   },
+   "arm_b_strict_matches_ours": 0.1144
+  }
+ },
+ "random/BX": {
+  "pairs": 2000,
+  "pairs_with_snaps_over_25m_apart": 198,
+  "pairs_measured": 1802,
+  "found": {
+   "ours_wheelchair": 0.5472,
+   "ours_walk": 0.8102,
+   "ours_wheelchair_as_drawn": 0.4739,
+   "ours_wheelchair_no_incline_as_drawn": 0.6304,
+   "ors_a_foot": 0.9983,
+   "ors_a_no_limits": 0.9661,
+   "ors_a_rec_i10_k6": 0.9661,
+   "ors_a_rec_i6_k6": 0.9634,
+   "ors_a_shortest_i10_k6": 0.9661,
+   "ors_b_strict_foot": 0.9978,
+   "ors_b_strict_rec_i10_k6": 0.8746,
+   "ors_b_strict_rec_i6_k6": 0.7614,
+   "ors_b_strict_shortest_i10_k6": 0.8746,
+   "ors_b_known_rec_i10_k6": 0.9245,
+   "ors_b_known_shortest_i10_k6": 0.9245,
+   "valhalla_foot": 1.0,
+   "valhalla_wheelchair": 0.9806
+  },
+  "found_all_pairs": {
+   "ours_wheelchair": 0.508,
+   "ours_walk": 0.7515,
+   "ours_wheelchair_as_drawn": 0.437,
+   "ours_wheelchair_no_incline_as_drawn": 0.586,
+   "ors_a_foot": 0.9955,
+   "ors_a_no_limits": 0.966,
+   "ors_a_rec_i10_k6": 0.966,
+   "ors_a_rec_i6_k6": 0.964,
+   "ors_a_shortest_i10_k6": 0.966,
+   "ors_b_strict_foot": 0.9645,
+   "ors_b_strict_rec_i10_k6": 0.842,
+   "ors_b_strict_rec_i6_k6": 0.729,
+   "ors_b_strict_shortest_i10_k6": 0.842,
+   "ors_b_known_rec_i10_k6": 0.8885,
+   "ors_b_known_shortest_i10_k6": 0.8885,
+   "valhalla_foot": 0.996,
+   "valhalla_wheelchair": 0.9705
+  },
+  "agreement_with_ours": {
+   "ours_walk": {
+    "both": 986,
+    "ours_only": 0,
+    "theirs_only": 474,
+    "neither": 342
+   },
+   "ours_wheelchair_as_drawn": {
+    "both": 853,
+    "ours_only": 133,
+    "theirs_only": 1,
+    "neither": 815
+   },
+   "ours_wheelchair_no_incline_as_drawn": {
+    "both": 892,
+    "ours_only": 94,
+    "theirs_only": 244,
+    "neither": 572
+   },
+   "ors_a_foot": {
+    "both": 986,
+    "ours_only": 0,
+    "theirs_only": 813,
+    "neither": 3
+   },
+   "ors_a_no_limits": {
+    "both": 956,
+    "ours_only": 30,
+    "theirs_only": 785,
+    "neither": 31
+   },
+   "ors_a_rec_i10_k6": {
+    "both": 956,
+    "ours_only": 30,
+    "theirs_only": 785,
+    "neither": 31
+   },
+   "ors_a_rec_i6_k6": {
+    "both": 954,
+    "ours_only": 32,
+    "theirs_only": 782,
+    "neither": 34
+   },
+   "ors_a_shortest_i10_k6": {
+    "both": 956,
+    "ours_only": 30,
+    "theirs_only": 785,
+    "neither": 31
+   },
+   "ors_b_strict_foot": {
+    "both": 986,
+    "ours_only": 0,
+    "theirs_only": 812,
+    "neither": 4
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "both": 927,
+    "ours_only": 59,
+    "theirs_only": 649,
+    "neither": 167
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "both": 852,
+    "ours_only": 134,
+    "theirs_only": 520,
+    "neither": 296
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "both": 927,
+    "ours_only": 59,
+    "theirs_only": 649,
+    "neither": 167
+   },
+   "ors_b_known_rec_i10_k6": {
+    "both": 956,
+    "ours_only": 30,
+    "theirs_only": 710,
+    "neither": 106
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "both": 956,
+    "ours_only": 30,
+    "theirs_only": 710,
+    "neither": 106
+   },
+   "valhalla_foot": {
+    "both": 986,
+    "ours_only": 0,
+    "theirs_only": 816,
+    "neither": 0
+   },
+   "valhalla_wheelchair": {
+    "both": 979,
+    "ours_only": 7,
+    "theirs_only": 788,
+    "neither": 28
+   }
+  },
+  "detour_over_own_foot_route": {
+   "ours_wheelchair": {
+    "pairs": 986,
+    "median": 1.088,
+    "p90": 1.359,
+    "share_over_1.5": 0.054
+   },
+   "ors_a_no_limits": {
+    "pairs": 1738,
+    "median": 1.067,
+    "p90": 1.211,
+    "share_over_1.5": 0.019
+   },
+   "ors_a_rec_i10_k6": {
+    "pairs": 1738,
+    "median": 1.068,
+    "p90": 1.211,
+    "share_over_1.5": 0.019
+   },
+   "ors_a_rec_i6_k6": {
+    "pairs": 1733,
+    "median": 1.07,
+    "p90": 1.215,
+    "share_over_1.5": 0.021
+   },
+   "ors_a_shortest_i10_k6": {
+    "pairs": 1738,
+    "median": 0.993,
+    "p90": 1.053,
+    "share_over_1.5": 0.004
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "pairs": 1576,
+    "median": 1.122,
+    "p90": 1.339,
+    "share_over_1.5": 0.035
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "pairs": 1372,
+    "median": 1.158,
+    "p90": 1.461,
+    "share_over_1.5": 0.087
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "pairs": 1576,
+    "median": 1.001,
+    "p90": 1.114,
+    "share_over_1.5": 0.009
+   },
+   "ors_b_known_rec_i10_k6": {
+    "pairs": 1666,
+    "median": 1.067,
+    "p90": 1.218,
+    "share_over_1.5": 0.011
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "pairs": 1666,
+    "median": 0.996,
+    "p90": 1.051,
+    "share_over_1.5": 0.004
+   },
+   "valhalla_wheelchair": {
+    "pairs": 1767,
+    "median": 1.0,
+    "p90": 1.026,
+    "share_over_1.5": 0.002
+   }
+  },
+  "overlap_with_ours": {
+   "ours_walk": {
+    "both_found": 985,
+    "median": 0.377,
+    "share_same_route": 0.056
+   },
+   "ours_wheelchair_as_drawn": {
+    "both_found": 853,
+    "median": 1.0,
+    "share_same_route": 0.999
+   },
+   "ours_wheelchair_no_incline_as_drawn": {
+    "both_found": 891,
+    "median": 0.844,
+    "share_same_route": 0.406
+   },
+   "ors_a_foot": {
+    "both_found": 985,
+    "median": 0.195,
+    "share_same_route": 0.036
+   },
+   "ors_a_no_limits": {
+    "both_found": 955,
+    "median": 0.251,
+    "share_same_route": 0.026
+   },
+   "ors_a_rec_i10_k6": {
+    "both_found": 955,
+    "median": 0.254,
+    "share_same_route": 0.026
+   },
+   "ors_a_rec_i6_k6": {
+    "both_found": 953,
+    "median": 0.254,
+    "share_same_route": 0.026
+   },
+   "ors_a_shortest_i10_k6": {
+    "both_found": 955,
+    "median": 0.134,
+    "share_same_route": 0.015
+   },
+   "ors_b_strict_foot": {
+    "both_found": 985,
+    "median": 0.201,
+    "share_same_route": 0.034
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "both_found": 926,
+    "median": 0.597,
+    "share_same_route": 0.125
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "both_found": 851,
+    "median": 0.365,
+    "share_same_route": 0.047
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "both_found": 926,
+    "median": 0.157,
+    "share_same_route": 0.025
+   },
+   "ors_b_known_rec_i10_k6": {
+    "both_found": 955,
+    "median": 0.351,
+    "share_same_route": 0.04
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "both_found": 955,
+    "median": 0.149,
+    "share_same_route": 0.022
+   },
+   "valhalla_foot": {
+    "both_found": 985,
+    "median": 0.108,
+    "share_same_route": 0.015
+   },
+   "valhalla_wheelchair": {
+    "both_found": 978,
+    "median": 0.121,
+    "share_same_route": 0.016
+   }
+  },
+  "audit_against_this_graph": {
+   "ours_wheelchair": {
+    "routes": 986,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.0,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.0,
+    "unramped_crossings_per_km": 0.0,
+    "median_share_off_this_graph": 0.0
+   },
+   "ours_walk": {
+    "routes": 1460,
+    "with_steps": 0.4596,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9527,
+    "with_an_edge_over_the_incline_limits": 0.8178,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.9801,
+    "unramped_crossings_per_km": 1.083,
+    "median_share_off_this_graph": 0.0
+   },
+   "ours_wheelchair_as_drawn": {
+    "routes": 854,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.0,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.0,
+    "unramped_crossings_per_km": 0.0,
+    "median_share_off_this_graph": 0.0
+   },
+   "ours_wheelchair_no_incline_as_drawn": {
+    "routes": 1136,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.0,
+    "with_an_edge_over_the_incline_limits": 0.8521,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.8521,
+    "unramped_crossings_per_km": 0.0,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_a_foot": {
+    "routes": 1799,
+    "with_steps": 0.3991,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9155,
+    "with_an_edge_over_the_incline_limits": 0.7282,
+    "with_over_10m_of_street_centreline": 0.9411,
+    "with_any_of_these": 0.9933,
+    "unramped_crossings_per_km": 0.895,
+    "median_share_off_this_graph": 0.002
+   },
+   "ors_a_no_limits": {
+    "routes": 1741,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9512,
+    "with_an_edge_over_the_incline_limits": 0.7702,
+    "with_over_10m_of_street_centreline": 0.6956,
+    "with_any_of_these": 0.9816,
+    "unramped_crossings_per_km": 1.048,
+    "median_share_off_this_graph": 0.002
+   },
+   "ors_a_rec_i10_k6": {
+    "routes": 1741,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9512,
+    "with_an_edge_over_the_incline_limits": 0.7702,
+    "with_over_10m_of_street_centreline": 0.6956,
+    "with_any_of_these": 0.9816,
+    "unramped_crossings_per_km": 1.022,
+    "median_share_off_this_graph": 0.002
+   },
+   "ors_a_rec_i6_k6": {
+    "routes": 1736,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.951,
+    "with_an_edge_over_the_incline_limits": 0.7725,
+    "with_over_10m_of_street_centreline": 0.6947,
+    "with_any_of_these": 0.9816,
+    "unramped_crossings_per_km": 0.973,
+    "median_share_off_this_graph": 0.002
+   },
+   "ors_a_shortest_i10_k6": {
+    "routes": 1741,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.811,
+    "with_an_edge_over_the_incline_limits": 0.5049,
+    "with_over_10m_of_street_centreline": 0.9897,
+    "with_any_of_these": 0.9977,
+    "unramped_crossings_per_km": 0.435,
+    "median_share_off_this_graph": 0.006
+   },
+   "ors_b_strict_foot": {
+    "routes": 1798,
+    "with_steps": 0.4071,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9149,
+    "with_an_edge_over_the_incline_limits": 0.7364,
+    "with_over_10m_of_street_centreline": 0.9394,
+    "with_any_of_these": 0.9933,
+    "unramped_crossings_per_km": 0.872,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "routes": 1576,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.4099,
+    "with_an_edge_over_the_incline_limits": 0.578,
+    "with_over_10m_of_street_centreline": 0.7195,
+    "with_any_of_these": 0.8553,
+    "unramped_crossings_per_km": 0.096,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "routes": 1372,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.6603,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.898,
+    "with_any_of_these": 0.9001,
+    "unramped_crossings_per_km": 0.161,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "routes": 1576,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.4816,
+    "with_an_edge_over_the_incline_limits": 0.2303,
+    "with_over_10m_of_street_centreline": 0.9918,
+    "with_any_of_these": 0.993,
+    "unramped_crossings_per_km": 0.109,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_known_rec_i10_k6": {
+    "routes": 1666,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9574,
+    "with_an_edge_over_the_incline_limits": 0.5186,
+    "with_over_10m_of_street_centreline": 0.4976,
+    "with_any_of_these": 0.9772,
+    "unramped_crossings_per_km": 1.146,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "routes": 1666,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.8427,
+    "with_an_edge_over_the_incline_limits": 0.2635,
+    "with_over_10m_of_street_centreline": 0.9886,
+    "with_any_of_these": 0.994,
+    "unramped_crossings_per_km": 0.453,
+    "median_share_off_this_graph": 0.0
+   },
+   "valhalla_foot": {
+    "routes": 1802,
+    "with_steps": 0.1532,
+    "with_a_crossing_without_a_surveyed_ramp": 0.7214,
+    "with_an_edge_over_the_incline_limits": 0.5017,
+    "with_over_10m_of_street_centreline": 0.9684,
+    "with_any_of_these": 0.9933,
+    "unramped_crossings_per_km": 0.321,
+    "median_share_off_this_graph": 0.0
+   },
+   "valhalla_wheelchair": {
+    "routes": 1767,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.7301,
+    "with_an_edge_over_the_incline_limits": 0.4873,
+    "with_over_10m_of_street_centreline": 0.9706,
+    "with_any_of_these": 0.9938,
+    "unramped_crossings_per_km": 0.328,
+    "median_share_off_this_graph": 0.0
+   }
+  },
+  "audit_against_raw_osm": {
+   "ours_wheelchair": {
+    "routes": 986,
+    "with_incline": 0.0477,
+    "with_kerb=raised": 0.0284,
+    "with_smoothness": 0.1755,
+    "with_surface": 0.0558,
+    "with_any": 0.2617
+   },
+   "ours_walk": {
+    "routes": 1460,
+    "with_incline": 0.4103,
+    "with_kerb=raised": 0.111,
+    "with_smoothness": 0.3575,
+    "with_steps": 0.4596,
+    "with_surface": 0.1171,
+    "with_wheelchair=no": 0.0007,
+    "with_any": 0.7082
+   },
+   "ours_wheelchair_as_drawn": {
+    "routes": 854,
+    "with_incline": 0.0445,
+    "with_kerb=raised": 0.0258,
+    "with_smoothness": 0.178,
+    "with_surface": 0.0597,
+    "with_any": 0.2623
+   },
+   "ours_wheelchair_no_incline_as_drawn": {
+    "routes": 1136,
+    "with_incline": 0.0915,
+    "with_kerb=raised": 0.0308,
+    "with_smoothness": 0.1866,
+    "with_surface": 0.0854,
+    "with_any": 0.2975
+   },
+   "ors_a_foot": {
+    "routes": 1799,
+    "with_incline": 0.3558,
+    "with_kerb=raised": 0.0734,
+    "with_smoothness": 0.3691,
+    "with_steps": 0.3991,
+    "with_surface": 0.1951,
+    "with_wheelchair=no": 0.0339,
+    "with_any": 0.7004
+   },
+   "ors_a_no_limits": {
+    "routes": 1741,
+    "with_incline": 0.0867,
+    "with_kerb=raised": 0.081,
+    "with_smoothness": 0.2039,
+    "with_surface": 0.0793,
+    "with_any": 0.2935
+   },
+   "ors_a_rec_i10_k6": {
+    "routes": 1741,
+    "with_incline": 0.0867,
+    "with_kerb=raised": 0.0804,
+    "with_smoothness": 0.2062,
+    "with_surface": 0.0793,
+    "with_any": 0.2947
+   },
+   "ors_a_rec_i6_k6": {
+    "routes": 1736,
+    "with_kerb=raised": 0.0806,
+    "with_smoothness": 0.1757,
+    "with_surface": 0.0795,
+    "with_any": 0.2581
+   },
+   "ors_a_shortest_i10_k6": {
+    "routes": 1741,
+    "with_incline": 0.1264,
+    "with_kerb=raised": 0.0109,
+    "with_smoothness": 0.1941,
+    "with_surface": 0.0505,
+    "with_any": 0.2734
+   },
+   "ors_b_strict_foot": {
+    "routes": 1798,
+    "with_incline": 0.3715,
+    "with_kerb=raised": 0.0467,
+    "with_smoothness": 0.3571,
+    "with_steps": 0.4071,
+    "with_surface": 0.1969,
+    "with_wheelchair=no": 0.0328,
+    "with_any": 0.7097
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "routes": 1576,
+    "with_incline": 0.0558,
+    "with_kerb=raised": 0.0451,
+    "with_smoothness": 0.2221,
+    "with_surface": 0.0673,
+    "with_wheelchair=no": 0.0006,
+    "with_any": 0.3223
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "routes": 1372,
+    "with_incline": 0.0146,
+    "with_kerb=raised": 0.0343,
+    "with_smoothness": 0.2398,
+    "with_surface": 0.0306,
+    "with_wheelchair=no": 0.0007,
+    "with_any": 0.2872
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "routes": 1576,
+    "with_incline": 0.1415,
+    "with_kerb=raised": 0.0063,
+    "with_smoothness": 0.4638,
+    "with_surface": 0.0635,
+    "with_wheelchair=no": 0.0006,
+    "with_any": 0.5266
+   },
+   "ors_b_known_rec_i10_k6": {
+    "routes": 1666,
+    "with_incline": 0.057,
+    "with_kerb=raised": 0.0654,
+    "with_smoothness": 0.3439,
+    "with_surface": 0.039,
+    "with_wheelchair=no": 0.0006,
+    "with_any": 0.3818
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "routes": 1666,
+    "with_incline": 0.1242,
+    "with_kerb=raised": 0.0378,
+    "with_smoothness": 0.5072,
+    "with_surface": 0.0558,
+    "with_wheelchair=no": 0.0006,
+    "with_any": 0.5582
+   },
+   "valhalla_foot": {
+    "routes": 1802,
+    "with_incline": 0.1909,
+    "with_kerb=raised": 0.0105,
+    "with_smoothness": 0.4284,
+    "with_steps": 0.1532,
+    "with_surface": 0.1299,
+    "with_wheelchair=no": 0.0144,
+    "with_any": 0.5749
+   },
+   "valhalla_wheelchair": {
+    "routes": 1767,
+    "with_incline": 0.1024,
+    "with_kerb=raised": 0.0102,
+    "with_smoothness": 0.3928,
+    "with_surface": 0.0475,
+    "with_any": 0.4426
+   }
+  },
+  "ors_setting_matrix_found": {
+   "ors_armA": {
+    "default": 0.966,
+    "foot": 0.9955,
+    "foot_rec": 0.9955,
+    "i10_k3": 0.9035,
+    "i10_k3_w90": 0.9035,
+    "i10_k6": 0.966,
+    "i10_k6_w90": 0.966,
+    "i6_k3": 0.9005,
+    "i6_k3_w90": 0.9005,
+    "i6_k6": 0.964,
+    "i6_k6_w90": 0.964,
+    "rec_i10_k6": 0.966,
+    "rec_i6_k6": 0.964
+   },
+   "ors_armB_known": {
+    "default": 0.966,
+    "foot": 0.9645,
+    "i10_k3": 0.4285,
+    "i10_k3_w90": 0.4285,
+    "i10_k6": 0.8885,
+    "i10_k6_w90": 0.8885,
+    "i6_k3": 0.359,
+    "i6_k3_w90": 0.359,
+    "i6_k6": 0.7745,
+    "i6_k6_w90": 0.7745,
+    "rec_i10_k6": 0.8885,
+    "rec_i6_k6": 0.7745
+   },
+   "ors_armB_strict": {
+    "default": 0.966,
+    "foot": 0.9645,
+    "foot_rec": 0.9645,
+    "i10_k3": 0.3005,
+    "i10_k3_w90": 0.3005,
+    "i10_k6": 0.842,
+    "i10_k6_w90": 0.842,
+    "i6_k3": 0.2375,
+    "i6_k3_w90": 0.2375,
+    "i6_k6": 0.729,
+    "i6_k6_w90": 0.729,
+    "rec_i10_k6": 0.842,
+    "rec_i6_k6": 0.729
+   }
+  },
+  "ours_against_reference": {
+   "reference": "ors_a_rec_i10_k6",
+   "status": {
+    "different route": 931,
+    "reference only": 785,
+    "neither": 31,
+    "ours only": 30,
+    "same route": 25
+   },
+   "causes_of_disagreement": {
+    "kerb data": 830,
+    "structure": 24,
+    "connectivity": 407,
+    "incline data": 466,
+    "rule": 19
+   },
+   "arm_b_strict_matches_ours": 0.1054
+  }
+ },
+ "random/MN": {
+  "pairs": 2000,
+  "pairs_with_snaps_over_25m_apart": 71,
+  "pairs_measured": 1929,
+  "found": {
+   "ours_wheelchair": 0.6589,
+   "ours_walk": 0.8134,
+   "ours_wheelchair_as_drawn": 0.549,
+   "ours_wheelchair_no_incline_as_drawn": 0.6952,
+   "ors_a_foot": 1.0,
+   "ors_a_no_limits": 0.9793,
+   "ors_a_rec_i10_k6": 0.9793,
+   "ors_a_rec_i6_k6": 0.9596,
+   "ors_a_shortest_i10_k6": 0.9793,
+   "ors_b_strict_foot": 0.8175,
+   "ors_b_strict_rec_i10_k6": 0.6724,
+   "ors_b_strict_rec_i6_k6": 0.5583,
+   "ors_b_strict_shortest_i10_k6": 0.6724,
+   "ors_b_known_rec_i10_k6": 0.704,
+   "ors_b_known_shortest_i10_k6": 0.704,
+   "valhalla_foot": 1.0,
+   "valhalla_wheelchair": 0.9471
+  },
+  "found_all_pairs": {
+   "ours_wheelchair": 0.64,
+   "ours_walk": 0.8075,
+   "ours_wheelchair_as_drawn": 0.53,
+   "ours_wheelchair_no_incline_as_drawn": 0.681,
+   "ors_a_foot": 1.0,
+   "ors_a_no_limits": 0.977,
+   "ors_a_rec_i10_k6": 0.977,
+   "ors_a_rec_i6_k6": 0.9585,
+   "ors_a_shortest_i10_k6": 0.977,
+   "ors_b_strict_foot": 0.821,
+   "ors_b_strict_rec_i10_k6": 0.6695,
+   "ors_b_strict_rec_i6_k6": 0.5565,
+   "ors_b_strict_shortest_i10_k6": 0.6695,
+   "ors_b_known_rec_i10_k6": 0.7015,
+   "ors_b_known_shortest_i10_k6": 0.7015,
+   "valhalla_foot": 1.0,
+   "valhalla_wheelchair": 0.9415
+  },
+  "agreement_with_ours": {
+   "ours_walk": {
+    "both": 1271,
+    "ours_only": 0,
+    "theirs_only": 298,
+    "neither": 360
+   },
+   "ours_wheelchair_as_drawn": {
+    "both": 1058,
+    "ours_only": 213,
+    "theirs_only": 1,
+    "neither": 657
+   },
+   "ours_wheelchair_no_incline_as_drawn": {
+    "both": 1133,
+    "ours_only": 138,
+    "theirs_only": 208,
+    "neither": 450
+   },
+   "ors_a_foot": {
+    "both": 1271,
+    "ours_only": 0,
+    "theirs_only": 658,
+    "neither": 0
+   },
+   "ors_a_no_limits": {
+    "both": 1256,
+    "ours_only": 15,
+    "theirs_only": 633,
+    "neither": 25
+   },
+   "ors_a_rec_i10_k6": {
+    "both": 1256,
+    "ours_only": 15,
+    "theirs_only": 633,
+    "neither": 25
+   },
+   "ors_a_rec_i6_k6": {
+    "both": 1234,
+    "ours_only": 37,
+    "theirs_only": 617,
+    "neither": 41
+   },
+   "ors_a_shortest_i10_k6": {
+    "both": 1256,
+    "ours_only": 15,
+    "theirs_only": 633,
+    "neither": 25
+   },
+   "ors_b_strict_foot": {
+    "both": 1271,
+    "ours_only": 0,
+    "theirs_only": 306,
+    "neither": 352
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "both": 1193,
+    "ours_only": 78,
+    "theirs_only": 104,
+    "neither": 554
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "both": 1046,
+    "ours_only": 225,
+    "theirs_only": 31,
+    "neither": 627
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "both": 1193,
+    "ours_only": 78,
+    "theirs_only": 104,
+    "neither": 554
+   },
+   "ors_b_known_rec_i10_k6": {
+    "both": 1218,
+    "ours_only": 53,
+    "theirs_only": 140,
+    "neither": 518
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "both": 1218,
+    "ours_only": 53,
+    "theirs_only": 140,
+    "neither": 518
+   },
+   "valhalla_foot": {
+    "both": 1271,
+    "ours_only": 0,
+    "theirs_only": 658,
+    "neither": 0
+   },
+   "valhalla_wheelchair": {
+    "both": 1255,
+    "ours_only": 16,
+    "theirs_only": 572,
+    "neither": 86
+   }
+  },
+  "detour_over_own_foot_route": {
+   "ours_wheelchair": {
+    "pairs": 1271,
+    "median": 1.036,
+    "p90": 1.126,
+    "share_over_1.5": 0.02
+   },
+   "ors_a_no_limits": {
+    "pairs": 1889,
+    "median": 1.006,
+    "p90": 1.107,
+    "share_over_1.5": 0.051
+   },
+   "ors_a_rec_i10_k6": {
+    "pairs": 1889,
+    "median": 1.006,
+    "p90": 1.109,
+    "share_over_1.5": 0.052
+   },
+   "ors_a_rec_i6_k6": {
+    "pairs": 1851,
+    "median": 1.006,
+    "p90": 1.122,
+    "share_over_1.5": 0.054
+   },
+   "ors_a_shortest_i10_k6": {
+    "pairs": 1889,
+    "median": 0.998,
+    "p90": 1.073,
+    "share_over_1.5": 0.049
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "pairs": 1297,
+    "median": 1.032,
+    "p90": 1.129,
+    "share_over_1.5": 0.015
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "pairs": 1077,
+    "median": 1.034,
+    "p90": 1.127,
+    "share_over_1.5": 0.021
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "pairs": 1297,
+    "median": 1.007,
+    "p90": 1.084,
+    "share_over_1.5": 0.014
+   },
+   "ors_b_known_rec_i10_k6": {
+    "pairs": 1358,
+    "median": 1.01,
+    "p90": 1.056,
+    "share_over_1.5": 0.006
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "pairs": 1358,
+    "median": 1.0,
+    "p90": 1.043,
+    "share_over_1.5": 0.006
+   },
+   "valhalla_wheelchair": {
+    "pairs": 1827,
+    "median": 1.0,
+    "p90": 1.018,
+    "share_over_1.5": 0.013
+   }
+  },
+  "overlap_with_ours": {
+   "ours_walk": {
+    "both_found": 1271,
+    "median": 0.331,
+    "share_same_route": 0.062
+   },
+   "ours_wheelchair_as_drawn": {
+    "both_found": 1058,
+    "median": 1.0,
+    "share_same_route": 1.0
+   },
+   "ours_wheelchair_no_incline_as_drawn": {
+    "both_found": 1133,
+    "median": 1.0,
+    "share_same_route": 0.674
+   },
+   "ors_a_foot": {
+    "both_found": 1271,
+    "median": 0.244,
+    "share_same_route": 0.047
+   },
+   "ors_a_no_limits": {
+    "both_found": 1256,
+    "median": 0.322,
+    "share_same_route": 0.03
+   },
+   "ors_a_rec_i10_k6": {
+    "both_found": 1256,
+    "median": 0.325,
+    "share_same_route": 0.03
+   },
+   "ors_a_rec_i6_k6": {
+    "both_found": 1234,
+    "median": 0.323,
+    "share_same_route": 0.03
+   },
+   "ors_a_shortest_i10_k6": {
+    "both_found": 1256,
+    "median": 0.26,
+    "share_same_route": 0.036
+   },
+   "ors_b_strict_foot": {
+    "both_found": 1271,
+    "median": 0.329,
+    "share_same_route": 0.058
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "both_found": 1193,
+    "median": 0.689,
+    "share_same_route": 0.158
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "both_found": 1046,
+    "median": 0.649,
+    "share_same_route": 0.131
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "both_found": 1193,
+    "median": 0.318,
+    "share_same_route": 0.07
+   },
+   "ors_b_known_rec_i10_k6": {
+    "both_found": 1218,
+    "median": 0.394,
+    "share_same_route": 0.04
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "both_found": 1218,
+    "median": 0.288,
+    "share_same_route": 0.045
+   },
+   "valhalla_foot": {
+    "both_found": 1271,
+    "median": 0.111,
+    "share_same_route": 0.017
+   },
+   "valhalla_wheelchair": {
+    "both_found": 1255,
+    "median": 0.117,
+    "share_same_route": 0.02
+   }
+  },
+  "audit_against_this_graph": {
+   "ours_wheelchair": {
+    "routes": 1271,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.0,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.0,
+    "unramped_crossings_per_km": 0.0,
+    "median_share_off_this_graph": 0.0
+   },
+   "ours_walk": {
+    "routes": 1569,
+    "with_steps": 0.4876,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9503,
+    "with_an_edge_over_the_incline_limits": 0.6552,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.979,
+    "unramped_crossings_per_km": 1.033,
+    "median_share_off_this_graph": 0.0
+   },
+   "ours_wheelchair_as_drawn": {
+    "routes": 1059,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.0,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.0,
+    "unramped_crossings_per_km": 0.0,
+    "median_share_off_this_graph": 0.0
+   },
+   "ours_wheelchair_no_incline_as_drawn": {
+    "routes": 1341,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.0,
+    "with_an_edge_over_the_incline_limits": 0.5876,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.5876,
+    "unramped_crossings_per_km": 0.0,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_a_foot": {
+    "routes": 1929,
+    "with_steps": 0.5168,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9171,
+    "with_an_edge_over_the_incline_limits": 0.7429,
+    "with_over_10m_of_street_centreline": 0.6656,
+    "with_any_of_these": 0.9855,
+    "unramped_crossings_per_km": 0.62,
+    "median_share_off_this_graph": 0.011
+   },
+   "ors_a_no_limits": {
+    "routes": 1889,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9365,
+    "with_an_edge_over_the_incline_limits": 0.6564,
+    "with_over_10m_of_street_centreline": 0.3462,
+    "with_any_of_these": 0.9693,
+    "unramped_crossings_per_km": 1.097,
+    "median_share_off_this_graph": 0.004
+   },
+   "ors_a_rec_i10_k6": {
+    "routes": 1889,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9349,
+    "with_an_edge_over_the_incline_limits": 0.6517,
+    "with_over_10m_of_street_centreline": 0.3462,
+    "with_any_of_these": 0.9688,
+    "unramped_crossings_per_km": 1.094,
+    "median_share_off_this_graph": 0.004
+   },
+   "ors_a_rec_i6_k6": {
+    "routes": 1851,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9352,
+    "with_an_edge_over_the_incline_limits": 0.6478,
+    "with_over_10m_of_street_centreline": 0.3485,
+    "with_any_of_these": 0.967,
+    "unramped_crossings_per_km": 1.103,
+    "median_share_off_this_graph": 0.004
+   },
+   "ors_a_shortest_i10_k6": {
+    "routes": 1889,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9079,
+    "with_an_edge_over_the_incline_limits": 0.5929,
+    "with_over_10m_of_street_centreline": 0.9158,
+    "with_any_of_these": 0.9868,
+    "unramped_crossings_per_km": 0.648,
+    "median_share_off_this_graph": 0.009
+   },
+   "ors_b_strict_foot": {
+    "routes": 1577,
+    "with_steps": 0.532,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9474,
+    "with_an_edge_over_the_incline_limits": 0.6525,
+    "with_over_10m_of_street_centreline": 0.6062,
+    "with_any_of_these": 0.9841,
+    "unramped_crossings_per_km": 1.027,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "routes": 1297,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.2498,
+    "with_an_edge_over_the_incline_limits": 0.2236,
+    "with_over_10m_of_street_centreline": 0.3261,
+    "with_any_of_these": 0.4857,
+    "unramped_crossings_per_km": 0.055,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "routes": 1077,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.2637,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.3435,
+    "with_any_of_these": 0.3686,
+    "unramped_crossings_per_km": 0.059,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "routes": 1297,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.542,
+    "with_an_edge_over_the_incline_limits": 0.1904,
+    "with_over_10m_of_street_centreline": 0.9699,
+    "with_any_of_these": 0.9761,
+    "unramped_crossings_per_km": 0.122,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_known_rec_i10_k6": {
+    "routes": 1358,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9396,
+    "with_an_edge_over_the_incline_limits": 0.1856,
+    "with_over_10m_of_street_centreline": 0.0449,
+    "with_any_of_these": 0.947,
+    "unramped_crossings_per_km": 1.015,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "routes": 1358,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9124,
+    "with_an_edge_over_the_incline_limits": 0.2283,
+    "with_over_10m_of_street_centreline": 0.9359,
+    "with_any_of_these": 0.9801,
+    "unramped_crossings_per_km": 0.822,
+    "median_share_off_this_graph": 0.0
+   },
+   "valhalla_foot": {
+    "routes": 1929,
+    "with_steps": 0.2431,
+    "with_a_crossing_without_a_surveyed_ramp": 0.8009,
+    "with_an_edge_over_the_incline_limits": 0.6376,
+    "with_over_10m_of_street_centreline": 0.8455,
+    "with_any_of_these": 0.987,
+    "unramped_crossings_per_km": 0.298,
+    "median_share_off_this_graph": 0.032
+   },
+   "valhalla_wheelchair": {
+    "routes": 1827,
+    "with_steps": 0.0799,
+    "with_a_crossing_without_a_surveyed_ramp": 0.8035,
+    "with_an_edge_over_the_incline_limits": 0.6256,
+    "with_over_10m_of_street_centreline": 0.8418,
+    "with_any_of_these": 0.9825,
+    "unramped_crossings_per_km": 0.302,
+    "median_share_off_this_graph": 0.015
+   }
+  },
+  "audit_against_raw_osm": {
+   "ours_wheelchair": {
+    "routes": 1271,
+    "with_incline": 0.0708,
+    "with_kerb=raised": 0.2415,
+    "with_smoothness": 0.2864,
+    "with_surface": 0.2423,
+    "with_wheelchair=no": 0.0008,
+    "with_any": 0.5688
+   },
+   "ours_walk": {
+    "routes": 1569,
+    "with_incline": 0.4302,
+    "with_kerb=raised": 0.4965,
+    "with_smoothness": 0.2868,
+    "with_steps": 0.4876,
+    "with_surface": 0.3168,
+    "with_wheelchair=no": 0.007,
+    "with_any": 0.8005
+   },
+   "ours_wheelchair_as_drawn": {
+    "routes": 1059,
+    "with_incline": 0.0642,
+    "with_kerb=raised": 0.2446,
+    "with_smoothness": 0.2927,
+    "with_surface": 0.2417,
+    "with_any": 0.5703
+   },
+   "ours_wheelchair_no_incline_as_drawn": {
+    "routes": 1341,
+    "with_incline": 0.088,
+    "with_kerb=raised": 0.2401,
+    "with_smoothness": 0.2707,
+    "with_surface": 0.3065,
+    "with_wheelchair=no": 0.003,
+    "with_any": 0.6197
+   },
+   "ors_a_foot": {
+    "routes": 1929,
+    "with_incline": 0.465,
+    "with_kerb=raised": 0.3722,
+    "with_smoothness": 0.1203,
+    "with_steps": 0.5168,
+    "with_surface": 0.3955,
+    "with_wheelchair=no": 0.0062,
+    "with_any": 0.8191
+   },
+   "ors_a_no_limits": {
+    "routes": 1889,
+    "with_incline": 0.2054,
+    "with_kerb=raised": 0.5469,
+    "with_smoothness": 0.2234,
+    "with_surface": 0.3086,
+    "with_any": 0.7141
+   },
+   "ors_a_rec_i10_k6": {
+    "routes": 1889,
+    "with_incline": 0.2054,
+    "with_kerb=raised": 0.5469,
+    "with_smoothness": 0.2234,
+    "with_surface": 0.3086,
+    "with_any": 0.7136
+   },
+   "ors_a_rec_i6_k6": {
+    "routes": 1851,
+    "with_kerb=raised": 0.5451,
+    "with_smoothness": 0.2247,
+    "with_surface": 0.3085,
+    "with_any": 0.6937
+   },
+   "ors_a_shortest_i10_k6": {
+    "routes": 1889,
+    "with_incline": 0.1466,
+    "with_kerb=raised": 0.4013,
+    "with_smoothness": 0.2128,
+    "with_surface": 0.3346,
+    "with_any": 0.6707
+   },
+   "ors_b_strict_foot": {
+    "routes": 1577,
+    "with_incline": 0.4572,
+    "with_kerb=raised": 0.48,
+    "with_smoothness": 0.2854,
+    "with_steps": 0.532,
+    "with_surface": 0.3583,
+    "with_wheelchair=no": 0.0114,
+    "with_any": 0.8066
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "routes": 1297,
+    "with_incline": 0.0686,
+    "with_kerb=raised": 0.3416,
+    "with_smoothness": 0.2267,
+    "with_surface": 0.212,
+    "with_wheelchair=no": 0.0054,
+    "with_any": 0.5251
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "routes": 1077,
+    "with_incline": 0.0511,
+    "with_kerb=raised": 0.363,
+    "with_smoothness": 0.2089,
+    "with_surface": 0.2117,
+    "with_any": 0.5181
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "routes": 1297,
+    "with_incline": 0.0925,
+    "with_kerb=raised": 0.1434,
+    "with_smoothness": 0.2529,
+    "with_surface": 0.239,
+    "with_wheelchair=no": 0.0062,
+    "with_any": 0.4911
+   },
+   "ors_b_known_rec_i10_k6": {
+    "routes": 1358,
+    "with_incline": 0.0928,
+    "with_kerb=raised": 0.5324,
+    "with_smoothness": 0.299,
+    "with_surface": 0.2378,
+    "with_wheelchair=no": 0.0052,
+    "with_any": 0.6951
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "routes": 1358,
+    "with_incline": 0.0884,
+    "with_kerb=raised": 0.3306,
+    "with_smoothness": 0.2518,
+    "with_surface": 0.2408,
+    "with_wheelchair=no": 0.0052,
+    "with_any": 0.6053
+   },
+   "valhalla_foot": {
+    "routes": 1929,
+    "with_incline": 0.2556,
+    "with_kerb=raised": 0.1747,
+    "with_smoothness": 0.1286,
+    "with_steps": 0.2431,
+    "with_surface": 0.3872,
+    "with_wheelchair=no": 0.0036,
+    "with_any": 0.6397
+   },
+   "valhalla_wheelchair": {
+    "routes": 1827,
+    "with_incline": 0.1303,
+    "with_kerb=raised": 0.1067,
+    "with_smoothness": 0.1259,
+    "with_steps": 0.0799,
+    "with_surface": 0.3175,
+    "with_any": 0.5057
+   }
+  },
+  "ors_setting_matrix_found": {
+   "ors_armA": {
+    "default": 0.977,
+    "foot": 1.0,
+    "foot_rec": 1.0,
+    "i10_k3": 0.735,
+    "i10_k3_w90": 0.735,
+    "i10_k6": 0.977,
+    "i10_k6_w90": 0.977,
+    "i6_k3": 0.723,
+    "i6_k3_w90": 0.723,
+    "i6_k6": 0.9585,
+    "i6_k6_w90": 0.9585,
+    "rec_i10_k6": 0.977,
+    "rec_i6_k6": 0.9585
+   },
+   "ors_armB_known": {
+    "default": 0.821,
+    "foot": 0.821,
+    "i10_k3": 0.4085,
+    "i10_k3_w90": 0.4085,
+    "i10_k6": 0.7015,
+    "i10_k6_w90": 0.7015,
+    "i6_k3": 0.327,
+    "i6_k3_w90": 0.327,
+    "i6_k6": 0.59,
+    "i6_k6_w90": 0.59,
+    "rec_i10_k6": 0.7015,
+    "rec_i6_k6": 0.59
+   },
+   "ors_armB_strict": {
+    "default": 0.821,
+    "foot": 0.821,
+    "foot_rec": 0.821,
+    "i10_k3": 0.24,
+    "i10_k3_w90": 0.24,
+    "i10_k6": 0.6695,
+    "i10_k6_w90": 0.6695,
+    "i6_k3": 0.1795,
+    "i6_k3_w90": 0.1795,
+    "i6_k6": 0.5565,
+    "i6_k6_w90": 0.5565,
+    "rec_i10_k6": 0.6695,
+    "rec_i6_k6": 0.5565
+   }
+  },
+  "ours_against_reference": {
+   "reference": "ors_a_rec_i10_k6",
+   "status": {
+    "reference only": 633,
+    "different route": 1218,
+    "same route": 38,
+    "neither": 25,
+    "ours only": 15
+   },
+   "causes_of_disagreement": {
+    "incline data": 542,
+    "kerb data": 1170,
+    "rule": 30,
+    "connectivity": 99,
+    "structure": 25
+   },
+   "arm_b_strict_matches_ours": 0.3307
+  }
+ },
+ "random/QN": {
+  "pairs": 2000,
+  "pairs_with_snaps_over_25m_apart": 126,
+  "pairs_measured": 1874,
+  "found": {
+   "ours_wheelchair": 0.7129,
+   "ours_walk": 0.7684,
+   "ours_wheelchair_as_drawn": 0.6644,
+   "ours_wheelchair_no_incline_as_drawn": 0.6937,
+   "ors_a_foot": 0.9883,
+   "ors_a_no_limits": 0.9808,
+   "ors_a_rec_i10_k6": 0.9808,
+   "ors_a_rec_i6_k6": 0.9808,
+   "ors_a_shortest_i10_k6": 0.9808,
+   "ors_b_strict_foot": 0.9845,
+   "ors_b_strict_rec_i10_k6": 0.8175,
+   "ors_b_strict_rec_i6_k6": 0.7801,
+   "ors_b_strict_shortest_i10_k6": 0.8175,
+   "ors_b_known_rec_i10_k6": 0.8394,
+   "ors_b_known_shortest_i10_k6": 0.8394,
+   "valhalla_foot": 0.9877,
+   "valhalla_wheelchair": 0.9851
+  },
+  "found_all_pairs": {
+   "ours_wheelchair": 0.6785,
+   "ours_walk": 0.743,
+   "ours_wheelchair_as_drawn": 0.6295,
+   "ours_wheelchair_no_incline_as_drawn": 0.6695,
+   "ors_a_foot": 0.9885,
+   "ors_a_no_limits": 0.981,
+   "ors_a_rec_i10_k6": 0.981,
+   "ors_a_rec_i6_k6": 0.9805,
+   "ors_a_shortest_i10_k6": 0.981,
+   "ors_b_strict_foot": 0.982,
+   "ors_b_strict_rec_i10_k6": 0.815,
+   "ors_b_strict_rec_i6_k6": 0.7715,
+   "ors_b_strict_shortest_i10_k6": 0.815,
+   "ors_b_known_rec_i10_k6": 0.8355,
+   "ors_b_known_shortest_i10_k6": 0.8355,
+   "valhalla_foot": 0.988,
+   "valhalla_wheelchair": 0.968
+  },
+  "agreement_with_ours": {
+   "ours_walk": {
+    "both": 1335,
+    "ours_only": 1,
+    "theirs_only": 105,
+    "neither": 433
+   },
+   "ours_wheelchair_as_drawn": {
+    "both": 1245,
+    "ours_only": 91,
+    "theirs_only": 0,
+    "neither": 538
+   },
+   "ours_wheelchair_no_incline_as_drawn": {
+    "both": 1256,
+    "ours_only": 80,
+    "theirs_only": 44,
+    "neither": 494
+   },
+   "ors_a_foot": {
+    "both": 1336,
+    "ours_only": 0,
+    "theirs_only": 516,
+    "neither": 22
+   },
+   "ors_a_no_limits": {
+    "both": 1335,
+    "ours_only": 1,
+    "theirs_only": 503,
+    "neither": 35
+   },
+   "ors_a_rec_i10_k6": {
+    "both": 1335,
+    "ours_only": 1,
+    "theirs_only": 503,
+    "neither": 35
+   },
+   "ors_a_rec_i6_k6": {
+    "both": 1335,
+    "ours_only": 1,
+    "theirs_only": 503,
+    "neither": 35
+   },
+   "ors_a_shortest_i10_k6": {
+    "both": 1335,
+    "ours_only": 1,
+    "theirs_only": 503,
+    "neither": 35
+   },
+   "ors_b_strict_foot": {
+    "both": 1336,
+    "ours_only": 0,
+    "theirs_only": 509,
+    "neither": 29
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "both": 1312,
+    "ours_only": 24,
+    "theirs_only": 220,
+    "neither": 318
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "both": 1271,
+    "ours_only": 65,
+    "theirs_only": 191,
+    "neither": 347
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "both": 1312,
+    "ours_only": 24,
+    "theirs_only": 220,
+    "neither": 318
+   },
+   "ors_b_known_rec_i10_k6": {
+    "both": 1328,
+    "ours_only": 8,
+    "theirs_only": 245,
+    "neither": 293
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "both": 1328,
+    "ours_only": 8,
+    "theirs_only": 245,
+    "neither": 293
+   },
+   "valhalla_foot": {
+    "both": 1335,
+    "ours_only": 1,
+    "theirs_only": 516,
+    "neither": 22
+   },
+   "valhalla_wheelchair": {
+    "both": 1335,
+    "ours_only": 1,
+    "theirs_only": 511,
+    "neither": 27
+   }
+  },
+  "detour_over_own_foot_route": {
+   "ours_wheelchair": {
+    "pairs": 1335,
+    "median": 1.029,
+    "p90": 1.141,
+    "share_over_1.5": 0.014
+   },
+   "ors_a_no_limits": {
+    "pairs": 1838,
+    "median": 1.014,
+    "p90": 1.118,
+    "share_over_1.5": 0.011
+   },
+   "ors_a_rec_i10_k6": {
+    "pairs": 1838,
+    "median": 1.014,
+    "p90": 1.119,
+    "share_over_1.5": 0.011
+   },
+   "ors_a_rec_i6_k6": {
+    "pairs": 1838,
+    "median": 1.014,
+    "p90": 1.118,
+    "share_over_1.5": 0.011
+   },
+   "ors_a_shortest_i10_k6": {
+    "pairs": 1838,
+    "median": 0.996,
+    "p90": 1.011,
+    "share_over_1.5": 0.007
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "pairs": 1532,
+    "median": 1.029,
+    "p90": 1.114,
+    "share_over_1.5": 0.001
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "pairs": 1462,
+    "median": 1.047,
+    "p90": 1.164,
+    "share_over_1.5": 0.001
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "pairs": 1532,
+    "median": 0.999,
+    "p90": 1.023,
+    "share_over_1.5": 0.001
+   },
+   "ors_b_known_rec_i10_k6": {
+    "pairs": 1573,
+    "median": 1.013,
+    "p90": 1.059,
+    "share_over_1.5": 0.001
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "pairs": 1573,
+    "median": 0.998,
+    "p90": 1.014,
+    "share_over_1.5": 0.0
+   },
+   "valhalla_wheelchair": {
+    "pairs": 1845,
+    "median": 1.0,
+    "p90": 1.0,
+    "share_over_1.5": 0.004
+   }
+  },
+  "overlap_with_ours": {
+   "ours_walk": {
+    "both_found": 1335,
+    "median": 0.451,
+    "share_same_route": 0.119
+   },
+   "ours_wheelchair_as_drawn": {
+    "both_found": 1245,
+    "median": 1.0,
+    "share_same_route": 1.0
+   },
+   "ours_wheelchair_no_incline_as_drawn": {
+    "both_found": 1256,
+    "median": 0.972,
+    "share_same_route": 0.6
+   },
+   "ors_a_foot": {
+    "both_found": 1336,
+    "median": 0.383,
+    "share_same_route": 0.059
+   },
+   "ors_a_no_limits": {
+    "both_found": 1335,
+    "median": 0.38,
+    "share_same_route": 0.032
+   },
+   "ors_a_rec_i10_k6": {
+    "both_found": 1335,
+    "median": 0.381,
+    "share_same_route": 0.032
+   },
+   "ors_a_rec_i6_k6": {
+    "both_found": 1335,
+    "median": 0.38,
+    "share_same_route": 0.032
+   },
+   "ors_a_shortest_i10_k6": {
+    "both_found": 1335,
+    "median": 0.341,
+    "share_same_route": 0.043
+   },
+   "ors_b_strict_foot": {
+    "both_found": 1336,
+    "median": 0.375,
+    "share_same_route": 0.06
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "both_found": 1312,
+    "median": 0.679,
+    "share_same_route": 0.119
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "both_found": 1271,
+    "median": 0.646,
+    "share_same_route": 0.094
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "both_found": 1312,
+    "median": 0.401,
+    "share_same_route": 0.066
+   },
+   "ors_b_known_rec_i10_k6": {
+    "both_found": 1328,
+    "median": 0.395,
+    "share_same_route": 0.041
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "both_found": 1328,
+    "median": 0.372,
+    "share_same_route": 0.053
+   },
+   "valhalla_foot": {
+    "both_found": 1335,
+    "median": 0.314,
+    "share_same_route": 0.038
+   },
+   "valhalla_wheelchair": {
+    "both_found": 1335,
+    "median": 0.319,
+    "share_same_route": 0.039
+   }
+  },
+  "audit_against_this_graph": {
+   "ours_wheelchair": {
+    "routes": 1336,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.0,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.0,
+    "unramped_crossings_per_km": 0.0,
+    "median_share_off_this_graph": 0.0
+   },
+   "ours_walk": {
+    "routes": 1440,
+    "with_steps": 0.2451,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9215,
+    "with_an_edge_over_the_incline_limits": 0.6472,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.9444,
+    "unramped_crossings_per_km": 0.62,
+    "median_share_off_this_graph": 0.0
+   },
+   "ours_wheelchair_as_drawn": {
+    "routes": 1245,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.0,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.0,
+    "unramped_crossings_per_km": 0.0,
+    "median_share_off_this_graph": 0.0
+   },
+   "ours_wheelchair_no_incline_as_drawn": {
+    "routes": 1300,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.0,
+    "with_an_edge_over_the_incline_limits": 0.5923,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.5923,
+    "unramped_crossings_per_km": 0.0,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_a_foot": {
+    "routes": 1852,
+    "with_steps": 0.2819,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9325,
+    "with_an_edge_over_the_incline_limits": 0.6371,
+    "with_over_10m_of_street_centreline": 0.9476,
+    "with_any_of_these": 0.9935,
+    "unramped_crossings_per_km": 0.619,
+    "median_share_off_this_graph": 0.001
+   },
+   "ors_a_no_limits": {
+    "routes": 1838,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9461,
+    "with_an_edge_over_the_incline_limits": 0.6567,
+    "with_over_10m_of_street_centreline": 0.3863,
+    "with_any_of_these": 0.9668,
+    "unramped_crossings_per_km": 0.773,
+    "median_share_off_this_graph": 0.001
+   },
+   "ors_a_rec_i10_k6": {
+    "routes": 1838,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9467,
+    "with_an_edge_over_the_incline_limits": 0.6556,
+    "with_over_10m_of_street_centreline": 0.3966,
+    "with_any_of_these": 0.9674,
+    "unramped_crossings_per_km": 0.779,
+    "median_share_off_this_graph": 0.001
+   },
+   "ors_a_rec_i6_k6": {
+    "routes": 1838,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9467,
+    "with_an_edge_over_the_incline_limits": 0.6556,
+    "with_over_10m_of_street_centreline": 0.3966,
+    "with_any_of_these": 0.9674,
+    "unramped_crossings_per_km": 0.782,
+    "median_share_off_this_graph": 0.001
+   },
+   "ors_a_shortest_i10_k6": {
+    "routes": 1838,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.7987,
+    "with_an_edge_over_the_incline_limits": 0.4331,
+    "with_over_10m_of_street_centreline": 0.9897,
+    "with_any_of_these": 0.9978,
+    "unramped_crossings_per_km": 0.237,
+    "median_share_off_this_graph": 0.001
+   },
+   "ors_b_strict_foot": {
+    "routes": 1845,
+    "with_steps": 0.278,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9322,
+    "with_an_edge_over_the_incline_limits": 0.6846,
+    "with_over_10m_of_street_centreline": 0.9474,
+    "with_any_of_these": 0.9935,
+    "unramped_crossings_per_km": 0.635,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "routes": 1532,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.3368,
+    "with_an_edge_over_the_incline_limits": 0.327,
+    "with_over_10m_of_street_centreline": 0.5359,
+    "with_any_of_these": 0.6899,
+    "unramped_crossings_per_km": 0.06,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "routes": 1462,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.3598,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.5431,
+    "with_any_of_these": 0.565,
+    "unramped_crossings_per_km": 0.066,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "routes": 1532,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.4014,
+    "with_an_edge_over_the_incline_limits": 0.1292,
+    "with_over_10m_of_street_centreline": 0.9954,
+    "with_any_of_these": 0.9954,
+    "unramped_crossings_per_km": 0.06,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_known_rec_i10_k6": {
+    "routes": 1573,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9371,
+    "with_an_edge_over_the_incline_limits": 0.2708,
+    "with_over_10m_of_street_centreline": 0.281,
+    "with_any_of_these": 0.9536,
+    "unramped_crossings_per_km": 0.715,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "routes": 1573,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.7839,
+    "with_an_edge_over_the_incline_limits": 0.1494,
+    "with_over_10m_of_street_centreline": 0.9911,
+    "with_any_of_these": 0.9962,
+    "unramped_crossings_per_km": 0.252,
+    "median_share_off_this_graph": 0.0
+   },
+   "valhalla_foot": {
+    "routes": 1851,
+    "with_steps": 0.0465,
+    "with_a_crossing_without_a_surveyed_ramp": 0.6942,
+    "with_an_edge_over_the_incline_limits": 0.3739,
+    "with_over_10m_of_street_centreline": 0.9627,
+    "with_any_of_these": 0.9881,
+    "unramped_crossings_per_km": 0.164,
+    "median_share_off_this_graph": 0.0
+   },
+   "valhalla_wheelchair": {
+    "routes": 1846,
+    "with_steps": 0.0027,
+    "with_a_crossing_without_a_surveyed_ramp": 0.6934,
+    "with_an_edge_over_the_incline_limits": 0.3678,
+    "with_over_10m_of_street_centreline": 0.9615,
+    "with_any_of_these": 0.9881,
+    "unramped_crossings_per_km": 0.159,
+    "median_share_off_this_graph": 0.0
+   }
+  },
+  "audit_against_raw_osm": {
+   "ours_wheelchair": {
+    "routes": 1336,
+    "with_incline": 0.0539,
+    "with_kerb=raised": 0.0382,
+    "with_smoothness": 0.0569,
+    "with_surface": 0.1579,
+    "with_wheelchair=no": 0.0449,
+    "with_any": 0.256
+   },
+   "ours_walk": {
+    "routes": 1440,
+    "with_incline": 0.1653,
+    "with_kerb=raised": 0.1639,
+    "with_smoothness": 0.0688,
+    "with_steps": 0.2451,
+    "with_surface": 0.1944,
+    "with_wheelchair=no": 0.0229,
+    "with_any": 0.4396
+   },
+   "ours_wheelchair_as_drawn": {
+    "routes": 1245,
+    "with_incline": 0.0538,
+    "with_kerb=raised": 0.0386,
+    "with_smoothness": 0.0562,
+    "with_surface": 0.1598,
+    "with_wheelchair=no": 0.0426,
+    "with_any": 0.2562
+   },
+   "ours_wheelchair_no_incline_as_drawn": {
+    "routes": 1300,
+    "with_incline": 0.0546,
+    "with_kerb=raised": 0.0469,
+    "with_smoothness": 0.0615,
+    "with_surface": 0.1415,
+    "with_wheelchair=no": 0.0315,
+    "with_any": 0.2454
+   },
+   "ors_a_foot": {
+    "routes": 1852,
+    "with_incline": 0.2133,
+    "with_kerb=raised": 0.2246,
+    "with_smoothness": 0.0632,
+    "with_steps": 0.2819,
+    "with_surface": 0.1695,
+    "with_wheelchair=no": 0.0205,
+    "with_any": 0.5016
+   },
+   "ors_a_no_limits": {
+    "routes": 1838,
+    "with_incline": 0.0767,
+    "with_kerb=raised": 0.2666,
+    "with_smoothness": 0.0555,
+    "with_surface": 0.0996,
+    "with_any": 0.3515
+   },
+   "ors_a_rec_i10_k6": {
+    "routes": 1838,
+    "with_incline": 0.0767,
+    "with_kerb=raised": 0.2519,
+    "with_smoothness": 0.055,
+    "with_surface": 0.0996,
+    "with_any": 0.3373
+   },
+   "ors_a_rec_i6_k6": {
+    "routes": 1838,
+    "with_kerb=raised": 0.2514,
+    "with_smoothness": 0.055,
+    "with_surface": 0.0974,
+    "with_any": 0.3308
+   },
+   "ors_a_shortest_i10_k6": {
+    "routes": 1838,
+    "with_incline": 0.019,
+    "with_kerb=raised": 0.0675,
+    "with_smoothness": 0.0811,
+    "with_surface": 0.0598,
+    "with_any": 0.2106
+   },
+   "ors_b_strict_foot": {
+    "routes": 1845,
+    "with_incline": 0.264,
+    "with_kerb=raised": 0.2136,
+    "with_smoothness": 0.0862,
+    "with_steps": 0.278,
+    "with_surface": 0.2049,
+    "with_wheelchair=no": 0.0352,
+    "with_any": 0.5431
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "routes": 1532,
+    "with_incline": 0.1031,
+    "with_kerb=raised": 0.0822,
+    "with_smoothness": 0.0685,
+    "with_surface": 0.1913,
+    "with_wheelchair=no": 0.0392,
+    "with_any": 0.3107
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "routes": 1462,
+    "with_incline": 0.0055,
+    "with_kerb=raised": 0.0787,
+    "with_smoothness": 0.0568,
+    "with_surface": 0.078,
+    "with_wheelchair=no": 0.0349,
+    "with_any": 0.2319
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "routes": 1532,
+    "with_incline": 0.0372,
+    "with_kerb=raised": 0.0196,
+    "with_smoothness": 0.0568,
+    "with_surface": 0.0503,
+    "with_wheelchair=no": 0.0137,
+    "with_any": 0.1449
+   },
+   "ors_b_known_rec_i10_k6": {
+    "routes": 1573,
+    "with_incline": 0.0585,
+    "with_kerb=raised": 0.2117,
+    "with_smoothness": 0.0648,
+    "with_surface": 0.1017,
+    "with_wheelchair=no": 0.0223,
+    "with_any": 0.3172
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "routes": 1573,
+    "with_incline": 0.0623,
+    "with_kerb=raised": 0.0687,
+    "with_smoothness": 0.0668,
+    "with_surface": 0.0941,
+    "with_wheelchair=no": 0.0134,
+    "with_any": 0.2333
+   },
+   "valhalla_foot": {
+    "routes": 1851,
+    "with_incline": 0.1037,
+    "with_kerb=raised": 0.0529,
+    "with_smoothness": 0.0286,
+    "with_steps": 0.0465,
+    "with_surface": 0.0827,
+    "with_wheelchair=no": 0.0054,
+    "with_any": 0.2312
+   },
+   "valhalla_wheelchair": {
+    "routes": 1846,
+    "with_incline": 0.0731,
+    "with_kerb=raised": 0.0385,
+    "with_smoothness": 0.0249,
+    "with_steps": 0.0027,
+    "with_surface": 0.0325,
+    "with_any": 0.1544
+   }
+  },
+  "ors_setting_matrix_found": {
+   "ors_armA": {
+    "default": 0.981,
+    "foot": 0.9885,
+    "foot_rec": 0.9885,
+    "i10_k3": 0.8685,
+    "i10_k3_w90": 0.8685,
+    "i10_k6": 0.981,
+    "i10_k6_w90": 0.981,
+    "i6_k3": 0.8685,
+    "i6_k3_w90": 0.8685,
+    "i6_k6": 0.9805,
+    "i6_k6_w90": 0.9805,
+    "rec_i10_k6": 0.981,
+    "rec_i6_k6": 0.9805
+   },
+   "ors_armB_known": {
+    "default": 0.98,
+    "foot": 0.982,
+    "i10_k3": 0.3305,
+    "i10_k3_w90": 0.3305,
+    "i10_k6": 0.8355,
+    "i10_k6_w90": 0.8355,
+    "i6_k3": 0.3,
+    "i6_k3_w90": 0.3,
+    "i6_k6": 0.797,
+    "i6_k6_w90": 0.797,
+    "rec_i10_k6": 0.8355,
+    "rec_i6_k6": 0.797
+   },
+   "ors_armB_strict": {
+    "default": 0.98,
+    "foot": 0.982,
+    "foot_rec": 0.982,
+    "i10_k3": 0.2515,
+    "i10_k3_w90": 0.2515,
+    "i10_k6": 0.815,
+    "i10_k6_w90": 0.815,
+    "i6_k3": 0.227,
+    "i6_k3_w90": 0.227,
+    "i6_k6": 0.7715,
+    "i6_k6_w90": 0.7715,
+    "rec_i10_k6": 0.815,
+    "rec_i6_k6": 0.7715
+   }
+  },
+  "ours_against_reference": {
+   "reference": "ors_a_rec_i10_k6",
+   "status": {
+    "different route": 1292,
+    "reference only": 503,
+    "neither": 35,
+    "same route": 43,
+    "ours only": 1
+   },
+   "causes_of_disagreement": {
+    "kerb data": 1307,
+    "rule": 30,
+    "connectivity": 227,
+    "incline data": 216,
+    "structure": 16
+   },
+   "arm_b_strict_matches_ours": 0.2161
+  }
+ },
+ "random/SI": {
+  "pairs": 2000,
+  "pairs_with_snaps_over_25m_apart": 139,
+  "pairs_measured": 1861,
+  "found": {
+   "ours_wheelchair": 0.533,
+   "ours_walk": 0.7088,
+   "ours_wheelchair_as_drawn": 0.4578,
+   "ours_wheelchair_no_incline_as_drawn": 0.5406,
+   "ors_a_foot": 1.0,
+   "ors_a_no_limits": 0.9839,
+   "ors_a_rec_i10_k6": 0.9839,
+   "ors_a_rec_i6_k6": 0.9796,
+   "ors_a_shortest_i10_k6": 0.9839,
+   "ors_b_strict_foot": 1.0,
+   "ors_b_strict_rec_i10_k6": 0.8366,
+   "ors_b_strict_rec_i6_k6": 0.6905,
+   "ors_b_strict_shortest_i10_k6": 0.8366,
+   "ors_b_known_rec_i10_k6": 0.9237,
+   "ors_b_known_shortest_i10_k6": 0.9237,
+   "valhalla_foot": 1.0,
+   "valhalla_wheelchair": 0.9844
+  },
+  "found_all_pairs": {
+   "ours_wheelchair": 0.503,
+   "ours_walk": 0.694,
+   "ours_wheelchair_as_drawn": 0.4305,
+   "ours_wheelchair_no_incline_as_drawn": 0.523,
+   "ors_a_foot": 1.0,
+   "ors_a_no_limits": 0.9825,
+   "ors_a_rec_i10_k6": 0.9825,
+   "ors_a_rec_i6_k6": 0.9785,
+   "ors_a_shortest_i10_k6": 0.9825,
+   "ors_b_strict_foot": 0.9885,
+   "ors_b_strict_rec_i10_k6": 0.8095,
+   "ors_b_strict_rec_i6_k6": 0.662,
+   "ors_b_strict_shortest_i10_k6": 0.8095,
+   "ors_b_known_rec_i10_k6": 0.8965,
+   "ors_b_known_shortest_i10_k6": 0.8965,
+   "valhalla_foot": 1.0,
+   "valhalla_wheelchair": 0.9765
+  },
+  "agreement_with_ours": {
+   "ours_walk": {
+    "both": 991,
+    "ours_only": 1,
+    "theirs_only": 328,
+    "neither": 541
+   },
+   "ours_wheelchair_as_drawn": {
+    "both": 851,
+    "ours_only": 141,
+    "theirs_only": 1,
+    "neither": 868
+   },
+   "ours_wheelchair_no_incline_as_drawn": {
+    "both": 883,
+    "ours_only": 109,
+    "theirs_only": 123,
+    "neither": 746
+   },
+   "ors_a_foot": {
+    "both": 992,
+    "ours_only": 0,
+    "theirs_only": 869,
+    "neither": 0
+   },
+   "ors_a_no_limits": {
+    "both": 985,
+    "ours_only": 7,
+    "theirs_only": 846,
+    "neither": 23
+   },
+   "ors_a_rec_i10_k6": {
+    "both": 985,
+    "ours_only": 7,
+    "theirs_only": 846,
+    "neither": 23
+   },
+   "ors_a_rec_i6_k6": {
+    "both": 982,
+    "ours_only": 10,
+    "theirs_only": 841,
+    "neither": 28
+   },
+   "ors_a_shortest_i10_k6": {
+    "both": 985,
+    "ours_only": 7,
+    "theirs_only": 846,
+    "neither": 23
+   },
+   "ors_b_strict_foot": {
+    "both": 992,
+    "ours_only": 0,
+    "theirs_only": 869,
+    "neither": 0
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "both": 949,
+    "ours_only": 43,
+    "theirs_only": 608,
+    "neither": 261
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "both": 857,
+    "ours_only": 135,
+    "theirs_only": 428,
+    "neither": 441
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "both": 949,
+    "ours_only": 43,
+    "theirs_only": 608,
+    "neither": 261
+   },
+   "ors_b_known_rec_i10_k6": {
+    "both": 975,
+    "ours_only": 17,
+    "theirs_only": 744,
+    "neither": 125
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "both": 975,
+    "ours_only": 17,
+    "theirs_only": 744,
+    "neither": 125
+   },
+   "valhalla_foot": {
+    "both": 992,
+    "ours_only": 0,
+    "theirs_only": 869,
+    "neither": 0
+   },
+   "valhalla_wheelchair": {
+    "both": 985,
+    "ours_only": 7,
+    "theirs_only": 847,
+    "neither": 22
+   }
+  },
+  "detour_over_own_foot_route": {
+   "ours_wheelchair": {
+    "pairs": 991,
+    "median": 1.076,
+    "p90": 1.371,
+    "share_over_1.5": 0.061
+   },
+   "ors_a_no_limits": {
+    "pairs": 1831,
+    "median": 1.027,
+    "p90": 1.143,
+    "share_over_1.5": 0.004
+   },
+   "ors_a_rec_i10_k6": {
+    "pairs": 1831,
+    "median": 1.027,
+    "p90": 1.143,
+    "share_over_1.5": 0.004
+   },
+   "ors_a_rec_i6_k6": {
+    "pairs": 1823,
+    "median": 1.028,
+    "p90": 1.145,
+    "share_over_1.5": 0.004
+   },
+   "ors_a_shortest_i10_k6": {
+    "pairs": 1831,
+    "median": 0.98,
+    "p90": 1.0,
+    "share_over_1.5": 0.001
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "pairs": 1557,
+    "median": 1.072,
+    "p90": 1.293,
+    "share_over_1.5": 0.042
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "pairs": 1285,
+    "median": 1.109,
+    "p90": 1.414,
+    "share_over_1.5": 0.079
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "pairs": 1557,
+    "median": 0.992,
+    "p90": 1.054,
+    "share_over_1.5": 0.003
+   },
+   "ors_b_known_rec_i10_k6": {
+    "pairs": 1719,
+    "median": 1.057,
+    "p90": 1.254,
+    "share_over_1.5": 0.032
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "pairs": 1719,
+    "median": 0.988,
+    "p90": 1.043,
+    "share_over_1.5": 0.003
+   },
+   "valhalla_wheelchair": {
+    "pairs": 1832,
+    "median": 1.0,
+    "p90": 1.006,
+    "share_over_1.5": 0.001
+   }
+  },
+  "overlap_with_ours": {
+   "ours_walk": {
+    "both_found": 991,
+    "median": 0.38,
+    "share_same_route": 0.067
+   },
+   "ours_wheelchair_as_drawn": {
+    "both_found": 851,
+    "median": 1.0,
+    "share_same_route": 1.0
+   },
+   "ours_wheelchair_no_incline_as_drawn": {
+    "both_found": 883,
+    "median": 0.788,
+    "share_same_route": 0.299
+   },
+   "ors_a_foot": {
+    "both_found": 992,
+    "median": 0.191,
+    "share_same_route": 0.021
+   },
+   "ors_a_no_limits": {
+    "both_found": 985,
+    "median": 0.273,
+    "share_same_route": 0.027
+   },
+   "ors_a_rec_i10_k6": {
+    "both_found": 985,
+    "median": 0.272,
+    "share_same_route": 0.027
+   },
+   "ors_a_rec_i6_k6": {
+    "both_found": 982,
+    "median": 0.273,
+    "share_same_route": 0.027
+   },
+   "ors_a_shortest_i10_k6": {
+    "both_found": 985,
+    "median": 0.111,
+    "share_same_route": 0.016
+   },
+   "ors_b_strict_foot": {
+    "both_found": 992,
+    "median": 0.182,
+    "share_same_route": 0.02
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "both_found": 949,
+    "median": 0.583,
+    "share_same_route": 0.099
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "both_found": 857,
+    "median": 0.53,
+    "share_same_route": 0.07
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "both_found": 949,
+    "median": 0.136,
+    "share_same_route": 0.023
+   },
+   "ors_b_known_rec_i10_k6": {
+    "both_found": 975,
+    "median": 0.372,
+    "share_same_route": 0.037
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "both_found": 975,
+    "median": 0.133,
+    "share_same_route": 0.018
+   },
+   "valhalla_foot": {
+    "both_found": 992,
+    "median": 0.112,
+    "share_same_route": 0.026
+   },
+   "valhalla_wheelchair": {
+    "both_found": 985,
+    "median": 0.114,
+    "share_same_route": 0.026
+   }
+  },
+  "audit_against_this_graph": {
+   "ours_wheelchair": {
+    "routes": 992,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.0,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.0,
+    "unramped_crossings_per_km": 0.0,
+    "median_share_off_this_graph": 0.0
+   },
+   "ours_walk": {
+    "routes": 1319,
+    "with_steps": 0.0561,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9212,
+    "with_an_edge_over_the_incline_limits": 0.8764,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.9674,
+    "unramped_crossings_per_km": 0.887,
+    "median_share_off_this_graph": 0.0
+   },
+   "ours_wheelchair_as_drawn": {
+    "routes": 852,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.0,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.0,
+    "unramped_crossings_per_km": 0.0,
+    "median_share_off_this_graph": 0.0
+   },
+   "ours_wheelchair_no_incline_as_drawn": {
+    "routes": 1006,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.0,
+    "with_an_edge_over_the_incline_limits": 0.8757,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.8757,
+    "unramped_crossings_per_km": 0.0,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_a_foot": {
+    "routes": 1861,
+    "with_steps": 0.1145,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9124,
+    "with_an_edge_over_the_incline_limits": 0.8205,
+    "with_over_10m_of_street_centreline": 0.9753,
+    "with_any_of_these": 0.9962,
+    "unramped_crossings_per_km": 0.781,
+    "median_share_off_this_graph": 0.006
+   },
+   "ors_a_no_limits": {
+    "routes": 1831,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9454,
+    "with_an_edge_over_the_incline_limits": 0.8684,
+    "with_over_10m_of_street_centreline": 0.7226,
+    "with_any_of_these": 0.9814,
+    "unramped_crossings_per_km": 0.961,
+    "median_share_off_this_graph": 0.009
+   },
+   "ors_a_rec_i10_k6": {
+    "routes": 1831,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9443,
+    "with_an_edge_over_the_incline_limits": 0.8684,
+    "with_over_10m_of_street_centreline": 0.7258,
+    "with_any_of_these": 0.9814,
+    "unramped_crossings_per_km": 0.961,
+    "median_share_off_this_graph": 0.009
+   },
+   "ors_a_rec_i6_k6": {
+    "routes": 1823,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9435,
+    "with_an_edge_over_the_incline_limits": 0.8662,
+    "with_over_10m_of_street_centreline": 0.7389,
+    "with_any_of_these": 0.9813,
+    "unramped_crossings_per_km": 0.96,
+    "median_share_off_this_graph": 0.009
+   },
+   "ors_a_shortest_i10_k6": {
+    "routes": 1831,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.752,
+    "with_an_edge_over_the_incline_limits": 0.5516,
+    "with_over_10m_of_street_centreline": 0.994,
+    "with_any_of_these": 0.9973,
+    "unramped_crossings_per_km": 0.225,
+    "median_share_off_this_graph": 0.003
+   },
+   "ors_b_strict_foot": {
+    "routes": 1861,
+    "with_steps": 0.1171,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9092,
+    "with_an_edge_over_the_incline_limits": 0.8506,
+    "with_over_10m_of_street_centreline": 0.9758,
+    "with_any_of_these": 0.9968,
+    "unramped_crossings_per_km": 0.778,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "routes": 1557,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.4451,
+    "with_an_edge_over_the_incline_limits": 0.7026,
+    "with_over_10m_of_street_centreline": 0.7996,
+    "with_any_of_these": 0.9268,
+    "unramped_crossings_per_km": 0.076,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "routes": 1285,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.5922,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.923,
+    "with_any_of_these": 0.923,
+    "unramped_crossings_per_km": 0.103,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "routes": 1557,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.2852,
+    "with_an_edge_over_the_incline_limits": 0.2755,
+    "with_over_10m_of_street_centreline": 0.9949,
+    "with_any_of_these": 0.9961,
+    "unramped_crossings_per_km": 0.046,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_known_rec_i10_k6": {
+    "routes": 1719,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.936,
+    "with_an_edge_over_the_incline_limits": 0.7126,
+    "with_over_10m_of_street_centreline": 0.6736,
+    "with_any_of_these": 0.9744,
+    "unramped_crossings_per_km": 0.916,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "routes": 1719,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.7487,
+    "with_an_edge_over_the_incline_limits": 0.3153,
+    "with_over_10m_of_street_centreline": 0.9948,
+    "with_any_of_these": 0.9965,
+    "unramped_crossings_per_km": 0.233,
+    "median_share_off_this_graph": 0.0
+   },
+   "valhalla_foot": {
+    "routes": 1861,
+    "with_steps": 0.0258,
+    "with_a_crossing_without_a_surveyed_ramp": 0.6652,
+    "with_an_edge_over_the_incline_limits": 0.5137,
+    "with_over_10m_of_street_centreline": 0.9807,
+    "with_any_of_these": 0.9914,
+    "unramped_crossings_per_km": 0.165,
+    "median_share_off_this_graph": 0.0
+   },
+   "valhalla_wheelchair": {
+    "routes": 1832,
+    "with_steps": 0.0016,
+    "with_a_crossing_without_a_surveyed_ramp": 0.6097,
+    "with_an_edge_over_the_incline_limits": 0.4416,
+    "with_over_10m_of_street_centreline": 0.9793,
+    "with_any_of_these": 0.9913,
+    "unramped_crossings_per_km": 0.144,
+    "median_share_off_this_graph": 0.0
+   }
+  },
+  "audit_against_raw_osm": {
+   "ours_wheelchair": {
+    "routes": 992,
+    "with_incline": 0.003,
+    "with_kerb=raised": 0.2359,
+    "with_smoothness": 0.125,
+    "with_surface": 0.1512,
+    "with_wheelchair=no": 0.002,
+    "with_any": 0.38
+   },
+   "ours_walk": {
+    "routes": 1319,
+    "with_incline": 0.0895,
+    "with_kerb=raised": 0.3844,
+    "with_smoothness": 0.1774,
+    "with_steps": 0.0561,
+    "with_surface": 0.4079,
+    "with_wheelchair=no": 0.0334,
+    "with_any": 0.7255
+   },
+   "ours_wheelchair_as_drawn": {
+    "routes": 852,
+    "with_incline": 0.0035,
+    "with_kerb=raised": 0.2336,
+    "with_smoothness": 0.1209,
+    "with_surface": 0.142,
+    "with_wheelchair=no": 0.0012,
+    "with_any": 0.3685
+   },
+   "ours_wheelchair_no_incline_as_drawn": {
+    "routes": 1006,
+    "with_incline": 0.0547,
+    "with_kerb=raised": 0.2465,
+    "with_smoothness": 0.2058,
+    "with_surface": 0.1769,
+    "with_wheelchair=no": 0.001,
+    "with_any": 0.4761
+   },
+   "ors_a_foot": {
+    "routes": 1861,
+    "with_incline": 0.1365,
+    "with_kerb=raised": 0.3686,
+    "with_smoothness": 0.1069,
+    "with_steps": 0.1145,
+    "with_surface": 0.467,
+    "with_wheelchair=no": 0.0344,
+    "with_any": 0.7281
+   },
+   "ors_a_no_limits": {
+    "routes": 1831,
+    "with_incline": 0.0557,
+    "with_kerb=raised": 0.4511,
+    "with_smoothness": 0.2092,
+    "with_surface": 0.0814,
+    "with_any": 0.5696
+   },
+   "ors_a_rec_i10_k6": {
+    "routes": 1831,
+    "with_incline": 0.0535,
+    "with_kerb=raised": 0.4495,
+    "with_smoothness": 0.2092,
+    "with_surface": 0.0819,
+    "with_any": 0.5685
+   },
+   "ors_a_rec_i6_k6": {
+    "routes": 1823,
+    "with_kerb=raised": 0.4443,
+    "with_smoothness": 0.209,
+    "with_surface": 0.0823,
+    "with_any": 0.5628
+   },
+   "ors_a_shortest_i10_k6": {
+    "routes": 1831,
+    "with_incline": 0.0431,
+    "with_kerb=raised": 0.1398,
+    "with_smoothness": 0.0186,
+    "with_surface": 0.1054,
+    "with_any": 0.2507
+   },
+   "ors_b_strict_foot": {
+    "routes": 1861,
+    "with_incline": 0.1381,
+    "with_kerb=raised": 0.3246,
+    "with_smoothness": 0.1048,
+    "with_steps": 0.1171,
+    "with_surface": 0.5535,
+    "with_wheelchair=no": 0.0322,
+    "with_any": 0.7415
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "routes": 1557,
+    "with_incline": 0.0083,
+    "with_kerb=raised": 0.2241,
+    "with_smoothness": 0.1663,
+    "with_surface": 0.0796,
+    "with_wheelchair=no": 0.0019,
+    "with_any": 0.4046
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "routes": 1285,
+    "with_incline": 0.0047,
+    "with_kerb=raised": 0.2374,
+    "with_smoothness": 0.0467,
+    "with_surface": 0.0358,
+    "with_any": 0.3035
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "routes": 1557,
+    "with_incline": 0.0103,
+    "with_kerb=raised": 0.0841,
+    "with_smoothness": 0.0026,
+    "with_surface": 0.0873,
+    "with_wheelchair=no": 0.0019,
+    "with_any": 0.1586
+   },
+   "ors_b_known_rec_i10_k6": {
+    "routes": 1719,
+    "with_incline": 0.0093,
+    "with_kerb=raised": 0.4235,
+    "with_smoothness": 0.1571,
+    "with_surface": 0.089,
+    "with_wheelchair=no": 0.1035,
+    "with_any": 0.58
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "routes": 1719,
+    "with_incline": 0.0116,
+    "with_kerb=raised": 0.0861,
+    "with_smoothness": 0.0029,
+    "with_surface": 0.1239,
+    "with_wheelchair=no": 0.014,
+    "with_any": 0.2094
+   },
+   "valhalla_foot": {
+    "routes": 1861,
+    "with_incline": 0.0548,
+    "with_kerb=raised": 0.0876,
+    "with_smoothness": 0.0113,
+    "with_steps": 0.0258,
+    "with_surface": 0.2407,
+    "with_wheelchair=no": 0.0075,
+    "with_any": 0.3364
+   },
+   "valhalla_wheelchair": {
+    "routes": 1832,
+    "with_incline": 0.0448,
+    "with_kerb=raised": 0.0857,
+    "with_smoothness": 0.0104,
+    "with_steps": 0.0016,
+    "with_surface": 0.0273,
+    "with_any": 0.1348
+   }
+  },
+  "ors_setting_matrix_found": {
+   "ors_armA": {
+    "default": 0.9825,
+    "foot": 1.0,
+    "foot_rec": 1.0,
+    "i10_k3": 0.8715,
+    "i10_k3_w90": 0.8625,
+    "i10_k6": 0.9825,
+    "i10_k6_w90": 0.971,
+    "i6_k3": 0.8675,
+    "i6_k3_w90": 0.8585,
+    "i6_k6": 0.9785,
+    "i6_k6_w90": 0.967,
+    "rec_i10_k6": 0.9825,
+    "rec_i6_k6": 0.9785
+   },
+   "ors_armB_known": {
+    "default": 0.9885,
+    "foot": 0.9885,
+    "i10_k3": 0.3615,
+    "i10_k3_w90": 0.3625,
+    "i10_k6": 0.8965,
+    "i10_k6_w90": 0.895,
+    "i6_k3": 0.2715,
+    "i6_k3_w90": 0.2715,
+    "i6_k6": 0.7445,
+    "i6_k6_w90": 0.745,
+    "rec_i10_k6": 0.8965,
+    "rec_i6_k6": 0.7445
+   },
+   "ors_armB_strict": {
+    "default": 0.9885,
+    "foot": 0.9885,
+    "foot_rec": 0.9885,
+    "i10_k3": 0.2245,
+    "i10_k3_w90": 0.2245,
+    "i10_k6": 0.8095,
+    "i10_k6_w90": 0.808,
+    "i6_k3": 0.1675,
+    "i6_k3_w90": 0.167,
+    "i6_k6": 0.662,
+    "i6_k6_w90": 0.6625,
+    "rec_i10_k6": 0.8095,
+    "rec_i6_k6": 0.662
+   }
+  },
+  "ours_against_reference": {
+   "reference": "ors_a_rec_i10_k6",
+   "status": {
+    "different route": 958,
+    "reference only": 846,
+    "same route": 27,
+    "neither": 23,
+    "ours only": 7
+   },
+   "causes_of_disagreement": {
+    "kerb data": 892,
+    "incline data": 539,
+    "connectivity": 359,
+    "rule": 18,
+    "structure": 3
+   },
+   "arm_b_strict_matches_ours": 0.1521
+  }
+ },
+ "random/citywide": {
+  "pairs": 2000,
+  "pairs_with_snaps_over_25m_apart": 112,
+  "pairs_measured": 1888,
+  "found": {
+   "ours_wheelchair": 0.4709,
+   "ours_walk": 0.545,
+   "ours_wheelchair_as_drawn": 0.4237,
+   "ours_wheelchair_no_incline_as_drawn": 0.4693,
+   "ors_a_foot": 0.9974,
+   "ors_a_no_limits": 0.9793,
+   "ors_a_rec_i10_k6": 0.9788,
+   "ors_a_rec_i6_k6": 0.9746,
+   "ors_a_shortest_i10_k6": 0.9788,
+   "ors_b_strict_foot": 0.6414,
+   "ors_b_strict_rec_i10_k6": 0.5519,
+   "ors_b_strict_rec_i6_k6": 0.2971,
+   "ors_b_strict_shortest_i10_k6": 0.5519,
+   "ors_b_known_rec_i10_k6": 0.5683,
+   "ors_b_known_shortest_i10_k6": 0.5683,
+   "valhalla_foot": 0.9974,
+   "valhalla_wheelchair": 0.9783
+  },
+  "found_all_pairs": {
+   "ours_wheelchair": 0.4515,
+   "ours_walk": 0.5295,
+   "ours_wheelchair_as_drawn": 0.4055,
+   "ours_wheelchair_no_incline_as_drawn": 0.455,
+   "ors_a_foot": 0.9975,
+   "ors_a_no_limits": 0.979,
+   "ors_a_rec_i10_k6": 0.9785,
+   "ors_a_rec_i6_k6": 0.974,
+   "ors_a_shortest_i10_k6": 0.9785,
+   "ors_b_strict_foot": 0.643,
+   "ors_b_strict_rec_i10_k6": 0.549,
+   "ors_b_strict_rec_i6_k6": 0.292,
+   "ors_b_strict_shortest_i10_k6": 0.549,
+   "ors_b_known_rec_i10_k6": 0.566,
+   "ors_b_known_shortest_i10_k6": 0.566,
+   "valhalla_foot": 0.9975,
+   "valhalla_wheelchair": 0.9665
+  },
+  "agreement_with_ours": {
+   "ours_walk": {
+    "both": 889,
+    "ours_only": 0,
+    "theirs_only": 140,
+    "neither": 859
+   },
+   "ours_wheelchair_as_drawn": {
+    "both": 798,
+    "ours_only": 91,
+    "theirs_only": 2,
+    "neither": 997
+   },
+   "ours_wheelchair_no_incline_as_drawn": {
+    "both": 823,
+    "ours_only": 66,
+    "theirs_only": 63,
+    "neither": 936
+   },
+   "ors_a_foot": {
+    "both": 889,
+    "ours_only": 0,
+    "theirs_only": 994,
+    "neither": 5
+   },
+   "ors_a_no_limits": {
+    "both": 882,
+    "ours_only": 7,
+    "theirs_only": 967,
+    "neither": 32
+   },
+   "ors_a_rec_i10_k6": {
+    "both": 882,
+    "ours_only": 7,
+    "theirs_only": 966,
+    "neither": 33
+   },
+   "ors_a_rec_i6_k6": {
+    "both": 880,
+    "ours_only": 9,
+    "theirs_only": 960,
+    "neither": 39
+   },
+   "ors_a_shortest_i10_k6": {
+    "both": 882,
+    "ours_only": 7,
+    "theirs_only": 966,
+    "neither": 33
+   },
+   "ors_b_strict_foot": {
+    "both": 889,
+    "ours_only": 0,
+    "theirs_only": 322,
+    "neither": 677
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "both": 853,
+    "ours_only": 36,
+    "theirs_only": 189,
+    "neither": 810
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "both": 482,
+    "ours_only": 407,
+    "theirs_only": 79,
+    "neither": 920
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "both": 853,
+    "ours_only": 36,
+    "theirs_only": 189,
+    "neither": 810
+   },
+   "ors_b_known_rec_i10_k6": {
+    "both": 866,
+    "ours_only": 23,
+    "theirs_only": 207,
+    "neither": 792
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "both": 866,
+    "ours_only": 23,
+    "theirs_only": 207,
+    "neither": 792
+   },
+   "valhalla_foot": {
+    "both": 889,
+    "ours_only": 0,
+    "theirs_only": 994,
+    "neither": 5
+   },
+   "valhalla_wheelchair": {
+    "both": 887,
+    "ours_only": 2,
+    "theirs_only": 960,
+    "neither": 39
+   }
+  },
+  "detour_over_own_foot_route": {
+   "ours_wheelchair": {
+    "pairs": 889,
+    "median": 1.068,
+    "p90": 1.522,
+    "share_over_1.5": 0.111
+   },
+   "ors_a_no_limits": {
+    "pairs": 1849,
+    "median": 1.008,
+    "p90": 1.131,
+    "share_over_1.5": 0.012
+   },
+   "ors_a_rec_i10_k6": {
+    "pairs": 1848,
+    "median": 1.009,
+    "p90": 1.133,
+    "share_over_1.5": 0.012
+   },
+   "ors_a_rec_i6_k6": {
+    "pairs": 1840,
+    "median": 1.009,
+    "p90": 1.133,
+    "share_over_1.5": 0.012
+   },
+   "ors_a_shortest_i10_k6": {
+    "pairs": 1848,
+    "median": 0.991,
+    "p90": 1.086,
+    "share_over_1.5": 0.009
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "pairs": 1042,
+    "median": 1.067,
+    "p90": 1.574,
+    "share_over_1.5": 0.124
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "pairs": 561,
+    "median": 1.045,
+    "p90": 1.181,
+    "share_over_1.5": 0.018
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "pairs": 1042,
+    "median": 1.014,
+    "p90": 1.504,
+    "share_over_1.5": 0.102
+   },
+   "ors_b_known_rec_i10_k6": {
+    "pairs": 1073,
+    "median": 1.038,
+    "p90": 1.518,
+    "share_over_1.5": 0.105
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "pairs": 1073,
+    "median": 1.008,
+    "p90": 1.478,
+    "share_over_1.5": 0.096
+   },
+   "valhalla_wheelchair": {
+    "pairs": 1847,
+    "median": 1.0,
+    "p90": 1.008,
+    "share_over_1.5": 0.019
+   }
+  },
+  "overlap_with_ours": {
+   "ours_walk": {
+    "both_found": 889,
+    "median": 0.222,
+    "share_same_route": 0.051
+   },
+   "ours_wheelchair_as_drawn": {
+    "both_found": 798,
+    "median": 1.0,
+    "share_same_route": 1.0
+   },
+   "ours_wheelchair_no_incline_as_drawn": {
+    "both_found": 823,
+    "median": 0.611,
+    "share_same_route": 0.346
+   },
+   "ors_a_foot": {
+    "both_found": 889,
+    "median": 0.146,
+    "share_same_route": 0.017
+   },
+   "ors_a_no_limits": {
+    "both_found": 882,
+    "median": 0.242,
+    "share_same_route": 0.011
+   },
+   "ors_a_rec_i10_k6": {
+    "both_found": 882,
+    "median": 0.246,
+    "share_same_route": 0.011
+   },
+   "ors_a_rec_i6_k6": {
+    "both_found": 880,
+    "median": 0.246,
+    "share_same_route": 0.011
+   },
+   "ors_a_shortest_i10_k6": {
+    "both_found": 882,
+    "median": 0.157,
+    "share_same_route": 0.01
+   },
+   "ors_b_strict_foot": {
+    "both_found": 889,
+    "median": 0.169,
+    "share_same_route": 0.02
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "both_found": 853,
+    "median": 0.686,
+    "share_same_route": 0.075
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "both_found": 482,
+    "median": 0.616,
+    "share_same_route": 0.071
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "both_found": 853,
+    "median": 0.336,
+    "share_same_route": 0.014
+   },
+   "ors_b_known_rec_i10_k6": {
+    "both_found": 866,
+    "median": 0.371,
+    "share_same_route": 0.013
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "both_found": 866,
+    "median": 0.314,
+    "share_same_route": 0.009
+   },
+   "valhalla_foot": {
+    "both_found": 889,
+    "median": 0.064,
+    "share_same_route": 0.007
+   },
+   "valhalla_wheelchair": {
+    "both_found": 887,
+    "median": 0.066,
+    "share_same_route": 0.009
+   }
+  },
+  "audit_against_this_graph": {
+   "ours_wheelchair": {
+    "routes": 889,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.0,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.0,
+    "unramped_crossings_per_km": 0.0,
+    "median_share_off_this_graph": 0.0
+   },
+   "ours_walk": {
+    "routes": 1029,
+    "with_steps": 0.5462,
+    "with_a_crossing_without_a_surveyed_ramp": 0.967,
+    "with_an_edge_over_the_incline_limits": 0.8056,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.9796,
+    "unramped_crossings_per_km": 0.763,
+    "median_share_off_this_graph": 0.0
+   },
+   "ours_wheelchair_as_drawn": {
+    "routes": 800,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.0,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.0,
+    "unramped_crossings_per_km": 0.0,
+    "median_share_off_this_graph": 0.0
+   },
+   "ours_wheelchair_no_incline_as_drawn": {
+    "routes": 886,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.0,
+    "with_an_edge_over_the_incline_limits": 0.7641,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.7641,
+    "unramped_crossings_per_km": 0.0,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_a_foot": {
+    "routes": 1883,
+    "with_steps": 0.581,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9713,
+    "with_an_edge_over_the_incline_limits": 0.8683,
+    "with_over_10m_of_street_centreline": 0.9649,
+    "with_any_of_these": 0.9989,
+    "unramped_crossings_per_km": 0.508,
+    "median_share_off_this_graph": 0.115
+   },
+   "ors_a_no_limits": {
+    "routes": 1849,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9832,
+    "with_an_edge_over_the_incline_limits": 0.8486,
+    "with_over_10m_of_street_centreline": 0.4981,
+    "with_any_of_these": 0.9908,
+    "unramped_crossings_per_km": 0.724,
+    "median_share_off_this_graph": 0.006
+   },
+   "ors_a_rec_i10_k6": {
+    "routes": 1848,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9832,
+    "with_an_edge_over_the_incline_limits": 0.8528,
+    "with_over_10m_of_street_centreline": 0.5216,
+    "with_any_of_these": 0.9908,
+    "unramped_crossings_per_km": 0.708,
+    "median_share_off_this_graph": 0.006
+   },
+   "ors_a_rec_i6_k6": {
+    "routes": 1840,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9832,
+    "with_an_edge_over_the_incline_limits": 0.8495,
+    "with_over_10m_of_street_centreline": 0.5147,
+    "with_any_of_these": 0.9908,
+    "unramped_crossings_per_km": 0.707,
+    "median_share_off_this_graph": 0.006
+   },
+   "ors_a_shortest_i10_k6": {
+    "routes": 1848,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9405,
+    "with_an_edge_over_the_incline_limits": 0.7776,
+    "with_over_10m_of_street_centreline": 0.9946,
+    "with_any_of_these": 0.9995,
+    "unramped_crossings_per_km": 0.253,
+    "median_share_off_this_graph": 0.057
+   },
+   "ors_b_strict_foot": {
+    "routes": 1211,
+    "with_steps": 0.55,
+    "with_a_crossing_without_a_surveyed_ramp": 0.962,
+    "with_an_edge_over_the_incline_limits": 0.8051,
+    "with_over_10m_of_street_centreline": 0.9612,
+    "with_any_of_these": 0.9967,
+    "unramped_crossings_per_km": 0.75,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "routes": 1042,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.3436,
+    "with_an_edge_over_the_incline_limits": 0.3925,
+    "with_over_10m_of_street_centreline": 0.5988,
+    "with_any_of_these": 0.7553,
+    "unramped_crossings_per_km": 0.029,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "routes": 561,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.3565,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.6096,
+    "with_any_of_these": 0.6257,
+    "unramped_crossings_per_km": 0.046,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "routes": 1042,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.6775,
+    "with_an_edge_over_the_incline_limits": 0.1516,
+    "with_over_10m_of_street_centreline": 0.999,
+    "with_any_of_these": 0.999,
+    "unramped_crossings_per_km": 0.074,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_known_rec_i10_k6": {
+    "routes": 1073,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9767,
+    "with_an_edge_over_the_incline_limits": 0.3681,
+    "with_over_10m_of_street_centreline": 0.3737,
+    "with_any_of_these": 0.9823,
+    "unramped_crossings_per_km": 0.891,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "routes": 1073,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.9199,
+    "with_an_edge_over_the_incline_limits": 0.2106,
+    "with_over_10m_of_street_centreline": 0.9972,
+    "with_any_of_these": 0.9991,
+    "unramped_crossings_per_km": 0.384,
+    "median_share_off_this_graph": 0.0
+   },
+   "valhalla_foot": {
+    "routes": 1883,
+    "with_steps": 0.1439,
+    "with_a_crossing_without_a_surveyed_ramp": 0.8816,
+    "with_an_edge_over_the_incline_limits": 0.7706,
+    "with_over_10m_of_street_centreline": 0.9734,
+    "with_any_of_these": 0.9952,
+    "unramped_crossings_per_km": 0.123,
+    "median_share_off_this_graph": 0.369
+   },
+   "valhalla_wheelchair": {
+    "routes": 1847,
+    "with_steps": 0.0379,
+    "with_a_crossing_without_a_surveyed_ramp": 0.8766,
+    "with_an_edge_over_the_incline_limits": 0.7656,
+    "with_over_10m_of_street_centreline": 0.9767,
+    "with_any_of_these": 0.9951,
+    "unramped_crossings_per_km": 0.115,
+    "median_share_off_this_graph": 0.391
+   }
+  },
+  "audit_against_raw_osm": {
+   "ours_wheelchair": {
+    "routes": 889,
+    "with_incline": 0.036,
+    "with_kerb=raised": 0.2947,
+    "with_smoothness": 0.1969,
+    "with_surface": 0.4871,
+    "with_wheelchair=no": 0.027,
+    "with_any": 0.6524
+   },
+   "ours_walk": {
+    "routes": 1029,
+    "with_incline": 0.5394,
+    "with_kerb=raised": 0.6103,
+    "with_smoothness": 0.2964,
+    "with_steps": 0.5462,
+    "with_surface": 0.3576,
+    "with_wheelchair=no": 0.1846,
+    "with_any": 0.8163
+   },
+   "ours_wheelchair_as_drawn": {
+    "routes": 800,
+    "with_incline": 0.0338,
+    "with_kerb=raised": 0.29,
+    "with_smoothness": 0.1938,
+    "with_surface": 0.4763,
+    "with_wheelchair=no": 0.0288,
+    "with_any": 0.6475
+   },
+   "ours_wheelchair_no_incline_as_drawn": {
+    "routes": 886,
+    "with_incline": 0.1727,
+    "with_kerb=raised": 0.36,
+    "with_smoothness": 0.1479,
+    "with_surface": 0.2009,
+    "with_wheelchair=no": 0.0124,
+    "with_any": 0.5869
+   },
+   "ors_a_foot": {
+    "routes": 1883,
+    "with_incline": 0.5688,
+    "with_kerb=raised": 0.5348,
+    "with_smoothness": 0.3091,
+    "with_steps": 0.581,
+    "with_surface": 0.4371,
+    "with_wheelchair=no": 0.077,
+    "with_any": 0.8704
+   },
+   "ors_a_no_limits": {
+    "routes": 1849,
+    "with_incline": 0.1531,
+    "with_kerb=raised": 0.6739,
+    "with_smoothness": 0.3597,
+    "with_surface": 0.1833,
+    "with_any": 0.7994
+   },
+   "ors_a_rec_i10_k6": {
+    "routes": 1848,
+    "with_incline": 0.1564,
+    "with_kerb=raised": 0.6667,
+    "with_smoothness": 0.3615,
+    "with_surface": 0.1802,
+    "with_any": 0.796
+   },
+   "ors_a_rec_i6_k6": {
+    "routes": 1840,
+    "with_kerb=raised": 0.6652,
+    "with_smoothness": 0.3609,
+    "with_surface": 0.1761,
+    "with_any": 0.7761
+   },
+   "ors_a_shortest_i10_k6": {
+    "routes": 1848,
+    "with_incline": 0.1445,
+    "with_kerb=raised": 0.395,
+    "with_smoothness": 0.2381,
+    "with_surface": 0.2186,
+    "with_any": 0.6515
+   },
+   "ors_b_strict_foot": {
+    "routes": 1211,
+    "with_incline": 0.5557,
+    "with_kerb=raised": 0.5227,
+    "with_smoothness": 0.2502,
+    "with_steps": 0.55,
+    "with_surface": 0.3749,
+    "with_wheelchair=no": 0.2238,
+    "with_any": 0.8249
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "routes": 1042,
+    "with_incline": 0.0355,
+    "with_kerb=raised": 0.3225,
+    "with_smoothness": 0.215,
+    "with_surface": 0.4894,
+    "with_wheelchair=no": 0.0192,
+    "with_any": 0.666
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "routes": 561,
+    "with_incline": 0.0089,
+    "with_kerb=raised": 0.2264,
+    "with_smoothness": 0.1319,
+    "with_surface": 0.0802,
+    "with_wheelchair=no": 0.0285,
+    "with_any": 0.3815
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "routes": 1042,
+    "with_incline": 0.0345,
+    "with_kerb=raised": 0.1574,
+    "with_smoothness": 0.2438,
+    "with_surface": 0.4635,
+    "with_wheelchair=no": 0.0528,
+    "with_any": 0.5921
+   },
+   "ors_b_known_rec_i10_k6": {
+    "routes": 1073,
+    "with_incline": 0.096,
+    "with_kerb=raised": 0.5722,
+    "with_smoothness": 0.261,
+    "with_surface": 0.4744,
+    "with_wheelchair=no": 0.028,
+    "with_any": 0.7605
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "routes": 1073,
+    "with_incline": 0.0839,
+    "with_kerb=raised": 0.4604,
+    "with_smoothness": 0.2414,
+    "with_surface": 0.4856,
+    "with_wheelchair=no": 0.0475,
+    "with_any": 0.6617
+   },
+   "valhalla_foot": {
+    "routes": 1883,
+    "with_incline": 0.2889,
+    "with_kerb=raised": 0.1705,
+    "with_smoothness": 0.1753,
+    "with_steps": 0.1439,
+    "with_surface": 0.3277,
+    "with_wheelchair=no": 0.0244,
+    "with_any": 0.6352
+   },
+   "valhalla_wheelchair": {
+    "routes": 1847,
+    "with_incline": 0.2296,
+    "with_kerb=raised": 0.1446,
+    "with_smoothness": 0.1765,
+    "with_steps": 0.0379,
+    "with_surface": 0.2133,
+    "with_wheelchair=no": 0.0016,
+    "with_any": 0.5474
+   }
+  },
+  "ors_setting_matrix_found": {
+   "ors_armA": {
+    "default": 0.979,
+    "foot": 0.9975,
+    "foot_rec": 0.9975,
+    "i10_k3": 0.7545,
+    "i10_k3_w90": 0.753,
+    "i10_k6": 0.9785,
+    "i10_k6_w90": 0.9765,
+    "i6_k3": 0.7495,
+    "i6_k3_w90": 0.748,
+    "i6_k6": 0.974,
+    "i6_k6_w90": 0.972,
+    "rec_i10_k6": 0.9785,
+    "rec_i6_k6": 0.974
+   },
+   "ors_armB_known": {
+    "default": 0.6425,
+    "foot": 0.643,
+    "i10_k3": 0.1445,
+    "i10_k3_w90": 0.145,
+    "i10_k6": 0.566,
+    "i10_k6_w90": 0.5665,
+    "i6_k3": 0.1225,
+    "i6_k3_w90": 0.123,
+    "i6_k6": 0.3055,
+    "i6_k6_w90": 0.306,
+    "rec_i10_k6": 0.566,
+    "rec_i6_k6": 0.3055
+   },
+   "ors_armB_strict": {
+    "default": 0.6425,
+    "foot": 0.643,
+    "foot_rec": 0.643,
+    "i10_k3": 0.1025,
+    "i10_k3_w90": 0.103,
+    "i10_k6": 0.549,
+    "i10_k6_w90": 0.5495,
+    "i6_k3": 0.085,
+    "i6_k3_w90": 0.0855,
+    "i6_k6": 0.292,
+    "i6_k6_w90": 0.2925,
+    "rec_i10_k6": 0.549,
+    "rec_i6_k6": 0.292
+   }
+  },
+  "ours_against_reference": {
+   "reference": "ors_a_rec_i10_k6",
+   "status": {
+    "different route": 872,
+    "reference only": 966,
+    "neither": 33,
+    "same route": 10,
+    "ours only": 7
+   },
+   "causes_of_disagreement": {
+    "structure": 23,
+    "kerb data": 1215,
+    "incline data": 361,
+    "rule": 18,
+    "connectivity": 228
+   },
+   "arm_b_strict_matches_ours": 0.4354
+  }
+ },
+ "landmark/hand-checked": {
+  "pairs": 8,
+  "pairs_with_snaps_over_25m_apart": 1,
+  "pairs_measured": 7,
+  "found": {
+   "ours_wheelchair": 1.0,
+   "ours_walk": 1.0,
+   "ors_a_foot": 1.0,
+   "ors_a_no_limits": 1.0,
+   "ors_a_rec_i10_k6": 1.0,
+   "ors_a_rec_i6_k6": 1.0,
+   "ors_a_shortest_i10_k6": 1.0,
+   "ors_b_strict_foot": 1.0,
+   "ors_b_strict_rec_i10_k6": 1.0,
+   "ors_b_strict_rec_i6_k6": 0.8571,
+   "ors_b_strict_shortest_i10_k6": 1.0,
+   "ors_b_known_rec_i10_k6": 1.0,
+   "ors_b_known_shortest_i10_k6": 1.0,
+   "valhalla_foot": 1.0,
+   "valhalla_wheelchair": 1.0
+  },
+  "found_all_pairs": {
+   "ours_wheelchair": 1.0,
+   "ours_walk": 1.0,
+   "ors_a_foot": 1.0,
+   "ors_a_no_limits": 1.0,
+   "ors_a_rec_i10_k6": 1.0,
+   "ors_a_rec_i6_k6": 1.0,
+   "ors_a_shortest_i10_k6": 1.0,
+   "ors_b_strict_foot": 1.0,
+   "ors_b_strict_rec_i10_k6": 1.0,
+   "ors_b_strict_rec_i6_k6": 0.875,
+   "ors_b_strict_shortest_i10_k6": 1.0,
+   "ors_b_known_rec_i10_k6": 1.0,
+   "ors_b_known_shortest_i10_k6": 1.0,
+   "valhalla_foot": 1.0,
+   "valhalla_wheelchair": 1.0
+  },
+  "agreement_with_ours": {
+   "ours_walk": {
+    "both": 7,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "ors_a_foot": {
+    "both": 7,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "ors_a_no_limits": {
+    "both": 7,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "ors_a_rec_i10_k6": {
+    "both": 7,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "ors_a_rec_i6_k6": {
+    "both": 7,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "ors_a_shortest_i10_k6": {
+    "both": 7,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "ors_b_strict_foot": {
+    "both": 7,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "both": 7,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "both": 6,
+    "ours_only": 1,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "both": 7,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "ors_b_known_rec_i10_k6": {
+    "both": 7,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "both": 7,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "valhalla_foot": {
+    "both": 7,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "valhalla_wheelchair": {
+    "both": 7,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   }
+  },
+  "detour_over_own_foot_route": {
+   "ours_wheelchair": {
+    "pairs": 7,
+    "median": 1.104,
+    "p90": 1.266,
+    "share_over_1.5": 0.0
+   },
+   "ors_a_no_limits": {
+    "pairs": 7,
+    "median": 1.007,
+    "p90": 1.052,
+    "share_over_1.5": 0.0
+   },
+   "ors_a_rec_i10_k6": {
+    "pairs": 7,
+    "median": 1.008,
+    "p90": 1.052,
+    "share_over_1.5": 0.0
+   },
+   "ors_a_rec_i6_k6": {
+    "pairs": 7,
+    "median": 1.008,
+    "p90": 1.053,
+    "share_over_1.5": 0.0
+   },
+   "ors_a_shortest_i10_k6": {
+    "pairs": 7,
+    "median": 1.0,
+    "p90": 1.017,
+    "share_over_1.5": 0.0
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "pairs": 7,
+    "median": 1.053,
+    "p90": 1.248,
+    "share_over_1.5": 0.0
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "pairs": 6,
+    "median": 1.069,
+    "p90": 1.208,
+    "share_over_1.5": 0.0
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "pairs": 7,
+    "median": 1.024,
+    "p90": 1.181,
+    "share_over_1.5": 0.0
+   },
+   "ors_b_known_rec_i10_k6": {
+    "pairs": 7,
+    "median": 1.017,
+    "p90": 1.11,
+    "share_over_1.5": 0.0
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "pairs": 7,
+    "median": 1.0,
+    "p90": 1.081,
+    "share_over_1.5": 0.0
+   },
+   "valhalla_wheelchair": {
+    "pairs": 7,
+    "median": 1.0,
+    "p90": 1.006,
+    "share_over_1.5": 0.0
+   }
+  },
+  "overlap_with_ours": {
+   "ours_walk": {
+    "both_found": 7,
+    "median": 0.611,
+    "share_same_route": 0.0
+   },
+   "ors_a_foot": {
+    "both_found": 7,
+    "median": 0.605,
+    "share_same_route": 0.0
+   },
+   "ors_a_no_limits": {
+    "both_found": 7,
+    "median": 0.452,
+    "share_same_route": 0.0
+   },
+   "ors_a_rec_i10_k6": {
+    "both_found": 7,
+    "median": 0.452,
+    "share_same_route": 0.0
+   },
+   "ors_a_rec_i6_k6": {
+    "both_found": 7,
+    "median": 0.452,
+    "share_same_route": 0.0
+   },
+   "ors_a_shortest_i10_k6": {
+    "both_found": 7,
+    "median": 0.58,
+    "share_same_route": 0.0
+   },
+   "ors_b_strict_foot": {
+    "both_found": 7,
+    "median": 0.611,
+    "share_same_route": 0.0
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "both_found": 7,
+    "median": 0.812,
+    "share_same_route": 0.286
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "both_found": 6,
+    "median": 0.841,
+    "share_same_route": 0.333
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "both_found": 7,
+    "median": 0.449,
+    "share_same_route": 0.286
+   },
+   "ors_b_known_rec_i10_k6": {
+    "both_found": 7,
+    "median": 0.504,
+    "share_same_route": 0.0
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "both_found": 7,
+    "median": 0.611,
+    "share_same_route": 0.0
+   },
+   "valhalla_foot": {
+    "both_found": 7,
+    "median": 0.61,
+    "share_same_route": 0.0
+   },
+   "valhalla_wheelchair": {
+    "both_found": 7,
+    "median": 0.661,
+    "share_same_route": 0.0
+   }
+  },
+  "audit_against_this_graph": {
+   "ours_wheelchair": {
+    "routes": 7,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.0,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.0,
+    "unramped_crossings_per_km": 0.0,
+    "median_share_off_this_graph": 0.0
+   },
+   "ours_walk": {
+    "routes": 7,
+    "with_steps": 0.1429,
+    "with_a_crossing_without_a_surveyed_ramp": 1.0,
+    "with_an_edge_over_the_incline_limits": 0.2857,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 1.0,
+    "unramped_crossings_per_km": 2.219,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_a_foot": {
+    "routes": 7,
+    "with_steps": 0.1429,
+    "with_a_crossing_without_a_surveyed_ramp": 1.0,
+    "with_an_edge_over_the_incline_limits": 0.2857,
+    "with_over_10m_of_street_centreline": 0.4286,
+    "with_any_of_these": 1.0,
+    "unramped_crossings_per_km": 2.406,
+    "median_share_off_this_graph": 0.022
+   },
+   "ors_a_no_limits": {
+    "routes": 7,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 1.0,
+    "with_an_edge_over_the_incline_limits": 0.4286,
+    "with_over_10m_of_street_centreline": 0.1429,
+    "with_any_of_these": 1.0,
+    "unramped_crossings_per_km": 2.152,
+    "median_share_off_this_graph": 0.017
+   },
+   "ors_a_rec_i10_k6": {
+    "routes": 7,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 1.0,
+    "with_an_edge_over_the_incline_limits": 0.4286,
+    "with_over_10m_of_street_centreline": 0.1429,
+    "with_any_of_these": 1.0,
+    "unramped_crossings_per_km": 2.085,
+    "median_share_off_this_graph": 0.017
+   },
+   "ors_a_rec_i6_k6": {
+    "routes": 7,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 1.0,
+    "with_an_edge_over_the_incline_limits": 0.4286,
+    "with_over_10m_of_street_centreline": 0.1429,
+    "with_any_of_these": 1.0,
+    "unramped_crossings_per_km": 2.084,
+    "median_share_off_this_graph": 0.015
+   },
+   "ors_a_shortest_i10_k6": {
+    "routes": 7,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 1.0,
+    "with_an_edge_over_the_incline_limits": 0.2857,
+    "with_over_10m_of_street_centreline": 0.7143,
+    "with_any_of_these": 1.0,
+    "unramped_crossings_per_km": 1.585,
+    "median_share_off_this_graph": 0.055
+   },
+   "ors_b_strict_foot": {
+    "routes": 7,
+    "with_steps": 0.1429,
+    "with_a_crossing_without_a_surveyed_ramp": 1.0,
+    "with_an_edge_over_the_incline_limits": 0.2857,
+    "with_over_10m_of_street_centreline": 0.2857,
+    "with_any_of_these": 1.0,
+    "unramped_crossings_per_km": 2.343,
+    "median_share_off_this_graph": 0.013
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "routes": 7,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.5714,
+    "with_an_edge_over_the_incline_limits": 0.1429,
+    "with_over_10m_of_street_centreline": 0.5714,
+    "with_any_of_these": 0.5714,
+    "unramped_crossings_per_km": 0.273,
+    "median_share_off_this_graph": 0.01
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "routes": 6,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.5,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.5,
+    "with_any_of_these": 0.5,
+    "unramped_crossings_per_km": 0.379,
+    "median_share_off_this_graph": 0.035
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "routes": 7,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.4286,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 1.0,
+    "with_any_of_these": 1.0,
+    "unramped_crossings_per_km": 0.225,
+    "median_share_off_this_graph": 0.011
+   },
+   "ors_b_known_rec_i10_k6": {
+    "routes": 7,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 1.0,
+    "with_an_edge_over_the_incline_limits": 0.1429,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 1.0,
+    "unramped_crossings_per_km": 2.481,
+    "median_share_off_this_graph": 0.01
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "routes": 7,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 1.0,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.5714,
+    "with_any_of_these": 1.0,
+    "unramped_crossings_per_km": 1.43,
+    "median_share_off_this_graph": 0.011
+   },
+   "valhalla_foot": {
+    "routes": 7,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.7143,
+    "with_an_edge_over_the_incline_limits": 0.2857,
+    "with_over_10m_of_street_centreline": 0.4286,
+    "with_any_of_these": 1.0,
+    "unramped_crossings_per_km": 0.697,
+    "median_share_off_this_graph": 0.086
+   },
+   "valhalla_wheelchair": {
+    "routes": 7,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.7143,
+    "with_an_edge_over_the_incline_limits": 0.2857,
+    "with_over_10m_of_street_centreline": 0.5714,
+    "with_any_of_these": 1.0,
+    "unramped_crossings_per_km": 0.536,
+    "median_share_off_this_graph": 0.086
+   }
+  },
+  "audit_against_raw_osm": {
+   "ours_wheelchair": {
+    "routes": 7,
+    "with_incline": 0.1429,
+    "with_smoothness": 0.1429,
+    "with_surface": 0.2857,
+    "with_any": 0.4286
+   },
+   "ours_walk": {
+    "routes": 7,
+    "with_incline": 0.2857,
+    "with_kerb=raised": 0.2857,
+    "with_smoothness": 0.1429,
+    "with_steps": 0.1429,
+    "with_surface": 0.1429,
+    "with_any": 0.4286
+   },
+   "ors_a_foot": {
+    "routes": 7,
+    "with_incline": 0.2857,
+    "with_kerb=raised": 0.2857,
+    "with_smoothness": 0.1429,
+    "with_steps": 0.1429,
+    "with_surface": 0.4286,
+    "with_any": 0.5714
+   },
+   "ors_a_no_limits": {
+    "routes": 7,
+    "with_incline": 0.2857,
+    "with_kerb=raised": 0.4286,
+    "with_smoothness": 0.2857,
+    "with_surface": 0.2857,
+    "with_any": 0.5714
+   },
+   "ors_a_rec_i10_k6": {
+    "routes": 7,
+    "with_incline": 0.2857,
+    "with_kerb=raised": 0.4286,
+    "with_smoothness": 0.2857,
+    "with_surface": 0.2857,
+    "with_any": 0.5714
+   },
+   "ors_a_rec_i6_k6": {
+    "routes": 7,
+    "with_kerb=raised": 0.4286,
+    "with_smoothness": 0.2857,
+    "with_surface": 0.2857,
+    "with_any": 0.5714
+   },
+   "ors_a_shortest_i10_k6": {
+    "routes": 7,
+    "with_incline": 0.2857,
+    "with_kerb=raised": 0.1429,
+    "with_smoothness": 0.1429,
+    "with_surface": 0.4286,
+    "with_any": 0.5714
+   },
+   "ors_b_strict_foot": {
+    "routes": 7,
+    "with_incline": 0.2857,
+    "with_kerb=raised": 0.2857,
+    "with_smoothness": 0.1429,
+    "with_steps": 0.1429,
+    "with_surface": 0.4286,
+    "with_any": 0.5714
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "routes": 7,
+    "with_incline": 0.1429,
+    "with_smoothness": 0.2857,
+    "with_surface": 0.2857,
+    "with_any": 0.5714
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "routes": 6,
+    "with_incline": 0.1667,
+    "with_smoothness": 0.3333,
+    "with_any": 0.5
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "routes": 7,
+    "with_incline": 0.1429,
+    "with_smoothness": 0.2857,
+    "with_surface": 0.2857,
+    "with_any": 0.5714
+   },
+   "ors_b_known_rec_i10_k6": {
+    "routes": 7,
+    "with_incline": 0.1429,
+    "with_kerb=raised": 0.4286,
+    "with_smoothness": 0.2857,
+    "with_surface": 0.2857,
+    "with_any": 0.5714
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "routes": 7,
+    "with_incline": 0.1429,
+    "with_kerb=raised": 0.1429,
+    "with_smoothness": 0.1429,
+    "with_surface": 0.4286,
+    "with_any": 0.5714
+   },
+   "valhalla_foot": {
+    "routes": 7,
+    "with_smoothness": 0.1429,
+    "with_surface": 0.2857,
+    "with_any": 0.2857
+   },
+   "valhalla_wheelchair": {
+    "routes": 7,
+    "with_smoothness": 0.1429,
+    "with_surface": 0.2857,
+    "with_any": 0.2857
+   }
+  },
+  "ors_setting_matrix_found": {
+   "ors_armA": {
+    "default": 1.0,
+    "foot": 1.0,
+    "foot_rec": 1.0,
+    "i10_k3": 0.75,
+    "i10_k3_w90": 0.75,
+    "i10_k6": 1.0,
+    "i10_k6_w90": 1.0,
+    "i6_k3": 0.75,
+    "i6_k3_w90": 0.75,
+    "i6_k6": 1.0,
+    "i6_k6_w90": 1.0,
+    "rec_i10_k6": 1.0,
+    "rec_i6_k6": 1.0
+   },
+   "ors_armB_known": {
+    "default": 1.0,
+    "foot": 1.0,
+    "i10_k3": 0.75,
+    "i10_k3_w90": 0.75,
+    "i10_k6": 1.0,
+    "i10_k6_w90": 1.0,
+    "i6_k3": 0.75,
+    "i6_k3_w90": 0.75,
+    "i6_k6": 0.875,
+    "i6_k6_w90": 0.875,
+    "rec_i10_k6": 1.0,
+    "rec_i6_k6": 0.875
+   },
+   "ors_armB_strict": {
+    "default": 1.0,
+    "foot": 1.0,
+    "foot_rec": 1.0,
+    "i10_k3": 0.25,
+    "i10_k3_w90": 0.25,
+    "i10_k6": 1.0,
+    "i10_k6_w90": 1.0,
+    "i6_k3": 0.25,
+    "i6_k3_w90": 0.25,
+    "i6_k6": 0.875,
+    "i6_k6_w90": 0.875,
+    "rec_i10_k6": 1.0,
+    "rec_i6_k6": 0.875
+   }
+  },
+  "ours_against_reference": {
+   "reference": "ors_a_rec_i10_k6",
+   "status": {
+    "different route": 7
+   },
+   "causes_of_disagreement": {
+    "kerb data": 6,
+    "incline data": 1
+   },
+   "arm_b_strict_matches_ours": 0.2857
+  }
+ },
+ "landmark/structure": {
+  "pairs": 9,
+  "pairs_with_snaps_over_25m_apart": 1,
+  "pairs_measured": 8,
+  "found": {
+   "ours_wheelchair": 0.875,
+   "ours_walk": 1.0,
+   "ors_a_foot": 1.0,
+   "ors_a_no_limits": 0.875,
+   "ors_a_rec_i10_k6": 0.875,
+   "ors_a_rec_i6_k6": 0.875,
+   "ors_a_shortest_i10_k6": 0.875,
+   "ors_b_strict_foot": 1.0,
+   "ors_b_strict_rec_i10_k6": 0.875,
+   "ors_b_strict_rec_i6_k6": 0.375,
+   "ors_b_strict_shortest_i10_k6": 0.875,
+   "ors_b_known_rec_i10_k6": 0.875,
+   "ors_b_known_shortest_i10_k6": 0.875,
+   "valhalla_foot": 1.0,
+   "valhalla_wheelchair": 1.0
+  },
+  "found_all_pairs": {
+   "ours_wheelchair": 0.8889,
+   "ours_walk": 1.0,
+   "ors_a_foot": 1.0,
+   "ors_a_no_limits": 0.8889,
+   "ors_a_rec_i10_k6": 0.8889,
+   "ors_a_rec_i6_k6": 0.8889,
+   "ors_a_shortest_i10_k6": 0.8889,
+   "ors_b_strict_foot": 1.0,
+   "ors_b_strict_rec_i10_k6": 0.8889,
+   "ors_b_strict_rec_i6_k6": 0.4444,
+   "ors_b_strict_shortest_i10_k6": 0.8889,
+   "ors_b_known_rec_i10_k6": 0.8889,
+   "ors_b_known_shortest_i10_k6": 0.8889,
+   "valhalla_foot": 1.0,
+   "valhalla_wheelchair": 1.0
+  },
+  "agreement_with_ours": {
+   "ours_walk": {
+    "both": 7,
+    "ours_only": 0,
+    "theirs_only": 1,
+    "neither": 0
+   },
+   "ors_a_foot": {
+    "both": 7,
+    "ours_only": 0,
+    "theirs_only": 1,
+    "neither": 0
+   },
+   "ors_a_no_limits": {
+    "both": 7,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 1
+   },
+   "ors_a_rec_i10_k6": {
+    "both": 7,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 1
+   },
+   "ors_a_rec_i6_k6": {
+    "both": 7,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 1
+   },
+   "ors_a_shortest_i10_k6": {
+    "both": 7,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 1
+   },
+   "ors_b_strict_foot": {
+    "both": 7,
+    "ours_only": 0,
+    "theirs_only": 1,
+    "neither": 0
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "both": 6,
+    "ours_only": 1,
+    "theirs_only": 1,
+    "neither": 0
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "both": 3,
+    "ours_only": 4,
+    "theirs_only": 0,
+    "neither": 1
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "both": 6,
+    "ours_only": 1,
+    "theirs_only": 1,
+    "neither": 0
+   },
+   "ors_b_known_rec_i10_k6": {
+    "both": 6,
+    "ours_only": 1,
+    "theirs_only": 1,
+    "neither": 0
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "both": 6,
+    "ours_only": 1,
+    "theirs_only": 1,
+    "neither": 0
+   },
+   "valhalla_foot": {
+    "both": 7,
+    "ours_only": 0,
+    "theirs_only": 1,
+    "neither": 0
+   },
+   "valhalla_wheelchair": {
+    "both": 7,
+    "ours_only": 0,
+    "theirs_only": 1,
+    "neither": 0
+   }
+  },
+  "detour_over_own_foot_route": {
+   "ours_wheelchair": {
+    "pairs": 7,
+    "median": 3.165,
+    "p90": 9.633,
+    "share_over_1.5": 0.857
+   },
+   "ors_a_no_limits": {
+    "pairs": 7,
+    "median": 1.008,
+    "p90": 2.074,
+    "share_over_1.5": 0.286
+   },
+   "ors_a_rec_i10_k6": {
+    "pairs": 7,
+    "median": 1.01,
+    "p90": 2.074,
+    "share_over_1.5": 0.286
+   },
+   "ors_a_rec_i6_k6": {
+    "pairs": 7,
+    "median": 1.01,
+    "p90": 2.075,
+    "share_over_1.5": 0.286
+   },
+   "ors_a_shortest_i10_k6": {
+    "pairs": 7,
+    "median": 1.004,
+    "p90": 1.991,
+    "share_over_1.5": 0.286
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "pairs": 7,
+    "median": 3.202,
+    "p90": 9.072,
+    "share_over_1.5": 0.714
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "pairs": 3,
+    "median": 1.056,
+    "p90": 7.931,
+    "share_over_1.5": 0.333
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "pairs": 7,
+    "median": 3.06,
+    "p90": 7.958,
+    "share_over_1.5": 0.714
+   },
+   "ors_b_known_rec_i10_k6": {
+    "pairs": 7,
+    "median": 2.807,
+    "p90": 7.607,
+    "share_over_1.5": 0.714
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "pairs": 7,
+    "median": 2.803,
+    "p90": 7.425,
+    "share_over_1.5": 0.714
+   },
+   "valhalla_wheelchair": {
+    "pairs": 8,
+    "median": 1.0,
+    "p90": 1.498,
+    "share_over_1.5": 0.125
+   }
+  },
+  "overlap_with_ours": {
+   "ours_walk": {
+    "both_found": 7,
+    "median": 0.012,
+    "share_same_route": 0.0
+   },
+   "ors_a_foot": {
+    "both_found": 7,
+    "median": 0.012,
+    "share_same_route": 0.0
+   },
+   "ors_a_no_limits": {
+    "both_found": 7,
+    "median": 0.011,
+    "share_same_route": 0.0
+   },
+   "ors_a_rec_i10_k6": {
+    "both_found": 7,
+    "median": 0.007,
+    "share_same_route": 0.0
+   },
+   "ors_a_rec_i6_k6": {
+    "both_found": 7,
+    "median": 0.007,
+    "share_same_route": 0.0
+   },
+   "ors_a_shortest_i10_k6": {
+    "both_found": 7,
+    "median": 0.011,
+    "share_same_route": 0.0
+   },
+   "ors_b_strict_foot": {
+    "both_found": 7,
+    "median": 0.012,
+    "share_same_route": 0.0
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "both_found": 6,
+    "median": 0.603,
+    "share_same_route": 0.167
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "both_found": 3,
+    "median": 0.388,
+    "share_same_route": 0.0
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "both_found": 6,
+    "median": 0.508,
+    "share_same_route": 0.0
+   },
+   "ors_b_known_rec_i10_k6": {
+    "both_found": 6,
+    "median": 0.451,
+    "share_same_route": 0.0
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "both_found": 6,
+    "median": 0.449,
+    "share_same_route": 0.0
+   },
+   "valhalla_foot": {
+    "both_found": 7,
+    "median": 0.012,
+    "share_same_route": 0.0
+   },
+   "valhalla_wheelchair": {
+    "both_found": 7,
+    "median": 0.012,
+    "share_same_route": 0.0
+   }
+  },
+  "audit_against_this_graph": {
+   "ours_wheelchair": {
+    "routes": 7,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.0,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.0,
+    "unramped_crossings_per_km": 0.0,
+    "median_share_off_this_graph": 0.0
+   },
+   "ours_walk": {
+    "routes": 8,
+    "with_steps": 0.25,
+    "with_a_crossing_without_a_surveyed_ramp": 0.75,
+    "with_an_edge_over_the_incline_limits": 0.875,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 1.0,
+    "unramped_crossings_per_km": 0.815,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_a_foot": {
+    "routes": 8,
+    "with_steps": 0.375,
+    "with_a_crossing_without_a_surveyed_ramp": 0.75,
+    "with_an_edge_over_the_incline_limits": 0.875,
+    "with_over_10m_of_street_centreline": 0.625,
+    "with_any_of_these": 1.0,
+    "unramped_crossings_per_km": 0.748,
+    "median_share_off_this_graph": 0.024
+   },
+   "ors_a_no_limits": {
+    "routes": 7,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 1.0,
+    "with_an_edge_over_the_incline_limits": 0.8571,
+    "with_over_10m_of_street_centreline": 0.2857,
+    "with_any_of_these": 1.0,
+    "unramped_crossings_per_km": 1.129,
+    "median_share_off_this_graph": 0.014
+   },
+   "ors_a_rec_i10_k6": {
+    "routes": 7,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.8571,
+    "with_an_edge_over_the_incline_limits": 0.8571,
+    "with_over_10m_of_street_centreline": 0.2857,
+    "with_any_of_these": 1.0,
+    "unramped_crossings_per_km": 1.021,
+    "median_share_off_this_graph": 0.014
+   },
+   "ors_a_rec_i6_k6": {
+    "routes": 7,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.8571,
+    "with_an_edge_over_the_incline_limits": 0.8571,
+    "with_over_10m_of_street_centreline": 0.2857,
+    "with_any_of_these": 1.0,
+    "unramped_crossings_per_km": 1.021,
+    "median_share_off_this_graph": 0.011
+   },
+   "ors_a_shortest_i10_k6": {
+    "routes": 7,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.8571,
+    "with_an_edge_over_the_incline_limits": 0.8571,
+    "with_over_10m_of_street_centreline": 0.8571,
+    "with_any_of_these": 1.0,
+    "unramped_crossings_per_km": 0.452,
+    "median_share_off_this_graph": 0.063
+   },
+   "ors_b_strict_foot": {
+    "routes": 8,
+    "with_steps": 0.375,
+    "with_a_crossing_without_a_surveyed_ramp": 0.75,
+    "with_an_edge_over_the_incline_limits": 0.875,
+    "with_over_10m_of_street_centreline": 0.625,
+    "with_any_of_these": 1.0,
+    "unramped_crossings_per_km": 0.816,
+    "median_share_off_this_graph": 0.017
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "routes": 7,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.1429,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.5714,
+    "with_any_of_these": 0.5714,
+    "unramped_crossings_per_km": 0.018,
+    "median_share_off_this_graph": 0.003
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "routes": 3,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.3333,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.6667,
+    "with_any_of_these": 0.6667,
+    "unramped_crossings_per_km": 0.066,
+    "median_share_off_this_graph": 0.012
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "routes": 7,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.5714,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 1.0,
+    "with_any_of_these": 1.0,
+    "unramped_crossings_per_km": 0.154,
+    "median_share_off_this_graph": 0.004
+   },
+   "ors_b_known_rec_i10_k6": {
+    "routes": 7,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 1.0,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.1429,
+    "with_any_of_these": 1.0,
+    "unramped_crossings_per_km": 1.327,
+    "median_share_off_this_graph": 0.004
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "routes": 7,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.8571,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 1.0,
+    "with_any_of_these": 1.0,
+    "unramped_crossings_per_km": 0.662,
+    "median_share_off_this_graph": 0.004
+   },
+   "valhalla_foot": {
+    "routes": 8,
+    "with_steps": 0.25,
+    "with_a_crossing_without_a_surveyed_ramp": 0.625,
+    "with_an_edge_over_the_incline_limits": 0.75,
+    "with_over_10m_of_street_centreline": 0.625,
+    "with_any_of_these": 1.0,
+    "unramped_crossings_per_km": 0.407,
+    "median_share_off_this_graph": 0.021
+   },
+   "valhalla_wheelchair": {
+    "routes": 8,
+    "with_steps": 0.125,
+    "with_a_crossing_without_a_surveyed_ramp": 0.75,
+    "with_an_edge_over_the_incline_limits": 0.875,
+    "with_over_10m_of_street_centreline": 0.625,
+    "with_any_of_these": 1.0,
+    "unramped_crossings_per_km": 0.594,
+    "median_share_off_this_graph": 0.071
+   }
+  },
+  "audit_against_raw_osm": {
+   "ours_wheelchair": {
+    "routes": 7,
+    "with_incline": 0.1429,
+    "with_kerb=raised": 0.1429,
+    "with_surface": 0.5714,
+    "with_any": 0.7143
+   },
+   "ours_walk": {
+    "routes": 8,
+    "with_incline": 0.25,
+    "with_steps": 0.25,
+    "with_surface": 0.375,
+    "with_any": 0.375
+   },
+   "ors_a_foot": {
+    "routes": 8,
+    "with_incline": 0.5,
+    "with_steps": 0.375,
+    "with_surface": 0.5,
+    "with_wheelchair=no": 0.125,
+    "with_any": 0.625
+   },
+   "ors_a_no_limits": {
+    "routes": 7,
+    "with_incline": 0.2857,
+    "with_kerb=raised": 0.2857,
+    "with_surface": 0.2857,
+    "with_any": 0.4286
+   },
+   "ors_a_rec_i10_k6": {
+    "routes": 7,
+    "with_incline": 0.2857,
+    "with_kerb=raised": 0.2857,
+    "with_surface": 0.2857,
+    "with_any": 0.4286
+   },
+   "ors_a_rec_i6_k6": {
+    "routes": 7,
+    "with_kerb=raised": 0.2857,
+    "with_surface": 0.2857,
+    "with_any": 0.4286
+   },
+   "ors_a_shortest_i10_k6": {
+    "routes": 7,
+    "with_incline": 0.1429,
+    "with_surface": 0.2857,
+    "with_any": 0.2857
+   },
+   "ors_b_strict_foot": {
+    "routes": 8,
+    "with_incline": 0.375,
+    "with_steps": 0.375,
+    "with_surface": 0.5,
+    "with_wheelchair=no": 0.125,
+    "with_any": 0.625
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "routes": 7,
+    "with_incline": 0.1429,
+    "with_kerb=raised": 0.1429,
+    "with_surface": 0.7143,
+    "with_any": 0.7143
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "routes": 3,
+    "with_surface": 0.6667,
+    "with_any": 0.6667
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "routes": 7,
+    "with_incline": 0.1429,
+    "with_surface": 0.7143,
+    "with_any": 0.7143
+   },
+   "ors_b_known_rec_i10_k6": {
+    "routes": 7,
+    "with_incline": 0.1429,
+    "with_kerb=raised": 0.4286,
+    "with_surface": 0.7143,
+    "with_any": 0.7143
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "routes": 7,
+    "with_incline": 0.1429,
+    "with_kerb=raised": 0.2857,
+    "with_surface": 0.5714,
+    "with_any": 0.5714
+   },
+   "valhalla_foot": {
+    "routes": 8,
+    "with_incline": 0.25,
+    "with_steps": 0.25,
+    "with_surface": 0.375,
+    "with_wheelchair=no": 0.125,
+    "with_any": 0.5
+   },
+   "valhalla_wheelchair": {
+    "routes": 8,
+    "with_incline": 0.125,
+    "with_steps": 0.125,
+    "with_surface": 0.5,
+    "with_wheelchair=no": 0.125,
+    "with_any": 0.625
+   }
+  },
+  "ors_setting_matrix_found": {
+   "ors_armA": {
+    "default": 0.8889,
+    "foot": 1.0,
+    "foot_rec": 1.0,
+    "i10_k3": 0.5556,
+    "i10_k3_w90": 0.5556,
+    "i10_k6": 0.8889,
+    "i10_k6_w90": 0.8889,
+    "i6_k3": 0.5556,
+    "i6_k3_w90": 0.5556,
+    "i6_k6": 0.8889,
+    "i6_k6_w90": 0.8889,
+    "rec_i10_k6": 0.8889,
+    "rec_i6_k6": 0.8889
+   },
+   "ors_armB_known": {
+    "default": 1.0,
+    "foot": 1.0,
+    "i10_k3": 0.5556,
+    "i10_k3_w90": 0.5556,
+    "i10_k6": 0.8889,
+    "i10_k6_w90": 0.8889,
+    "i6_k3": 0.4444,
+    "i6_k3_w90": 0.4444,
+    "i6_k6": 0.4444,
+    "i6_k6_w90": 0.4444,
+    "rec_i10_k6": 0.8889,
+    "rec_i6_k6": 0.4444
+   },
+   "ors_armB_strict": {
+    "default": 1.0,
+    "foot": 1.0,
+    "foot_rec": 1.0,
+    "i10_k3": 0.5556,
+    "i10_k3_w90": 0.5556,
+    "i10_k6": 0.8889,
+    "i10_k6_w90": 0.8889,
+    "i6_k3": 0.4444,
+    "i6_k3_w90": 0.4444,
+    "i6_k6": 0.4444,
+    "i6_k6_w90": 0.4444,
+    "rec_i10_k6": 0.8889,
+    "rec_i6_k6": 0.4444
+   }
+  },
+  "ours_against_reference": {
+   "reference": "ors_a_rec_i10_k6",
+   "status": {
+    "different route": 7,
+    "neither": 1
+   },
+   "causes_of_disagreement": {
+    "kerb data": 4,
+    "incline data": 2,
+    "structure": 1
+   },
+   "arm_b_strict_matches_ours": 0.0
+  }
+ },
+ "brownsville/BK16": {
+  "pairs": 420,
+  "pairs_with_snaps_over_25m_apart": 58,
+  "pairs_measured": 362,
+  "found": {
+   "ours_wheelchair": 1.0,
+   "ours_walk": 1.0,
+   "ors_a_foot": 1.0,
+   "ors_a_no_limits": 1.0,
+   "ors_a_rec_i10_k6": 1.0,
+   "ors_a_rec_i6_k6": 1.0,
+   "ors_a_shortest_i10_k6": 1.0,
+   "ors_b_strict_foot": 1.0,
+   "ors_b_strict_rec_i10_k6": 1.0,
+   "ors_b_strict_rec_i6_k6": 0.9724,
+   "ors_b_strict_shortest_i10_k6": 1.0,
+   "ors_b_known_rec_i10_k6": 1.0,
+   "ors_b_known_shortest_i10_k6": 1.0,
+   "valhalla_foot": 1.0,
+   "valhalla_wheelchair": 1.0
+  },
+  "found_all_pairs": {
+   "ours_wheelchair": 1.0,
+   "ours_walk": 1.0,
+   "ors_a_foot": 1.0,
+   "ors_a_no_limits": 1.0,
+   "ors_a_rec_i10_k6": 1.0,
+   "ors_a_rec_i6_k6": 1.0,
+   "ors_a_shortest_i10_k6": 1.0,
+   "ors_b_strict_foot": 1.0,
+   "ors_b_strict_rec_i10_k6": 1.0,
+   "ors_b_strict_rec_i6_k6": 0.9762,
+   "ors_b_strict_shortest_i10_k6": 1.0,
+   "ors_b_known_rec_i10_k6": 1.0,
+   "ors_b_known_shortest_i10_k6": 1.0,
+   "valhalla_foot": 1.0,
+   "valhalla_wheelchair": 1.0
+  },
+  "agreement_with_ours": {
+   "ours_walk": {
+    "both": 362,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "ors_a_foot": {
+    "both": 362,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "ors_a_no_limits": {
+    "both": 362,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "ors_a_rec_i10_k6": {
+    "both": 362,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "ors_a_rec_i6_k6": {
+    "both": 362,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "ors_a_shortest_i10_k6": {
+    "both": 362,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "ors_b_strict_foot": {
+    "both": 362,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "both": 362,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "both": 352,
+    "ours_only": 10,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "both": 362,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "ors_b_known_rec_i10_k6": {
+    "both": 362,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "both": 362,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "valhalla_foot": {
+    "both": 362,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   },
+   "valhalla_wheelchair": {
+    "both": 362,
+    "ours_only": 0,
+    "theirs_only": 0,
+    "neither": 0
+   }
+  },
+  "detour_over_own_foot_route": {
+   "ours_wheelchair": {
+    "pairs": 362,
+    "median": 1.0,
+    "p90": 1.062,
+    "share_over_1.5": 0.022
+   },
+   "ors_a_no_limits": {
+    "pairs": 362,
+    "median": 1.002,
+    "p90": 1.019,
+    "share_over_1.5": 0.022
+   },
+   "ors_a_rec_i10_k6": {
+    "pairs": 362,
+    "median": 1.002,
+    "p90": 1.019,
+    "share_over_1.5": 0.022
+   },
+   "ors_a_rec_i6_k6": {
+    "pairs": 362,
+    "median": 1.002,
+    "p90": 1.019,
+    "share_over_1.5": 0.022
+   },
+   "ors_a_shortest_i10_k6": {
+    "pairs": 362,
+    "median": 1.0,
+    "p90": 1.0,
+    "share_over_1.5": 0.019
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "pairs": 362,
+    "median": 1.004,
+    "p90": 1.059,
+    "share_over_1.5": 0.025
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "pairs": 352,
+    "median": 1.006,
+    "p90": 1.09,
+    "share_over_1.5": 0.031
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "pairs": 362,
+    "median": 1.0,
+    "p90": 1.021,
+    "share_over_1.5": 0.022
+   },
+   "ors_b_known_rec_i10_k6": {
+    "pairs": 362,
+    "median": 1.002,
+    "p90": 1.02,
+    "share_over_1.5": 0.022
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "pairs": 362,
+    "median": 1.0,
+    "p90": 1.0,
+    "share_over_1.5": 0.019
+   },
+   "valhalla_wheelchair": {
+    "pairs": 362,
+    "median": 1.0,
+    "p90": 1.0,
+    "share_over_1.5": 0.019
+   }
+  },
+  "overlap_with_ours": {
+   "ours_walk": {
+    "both_found": 362,
+    "median": 1.0,
+    "share_same_route": 0.624
+   },
+   "ors_a_foot": {
+    "both_found": 362,
+    "median": 0.897,
+    "share_same_route": 0.497
+   },
+   "ors_a_no_limits": {
+    "both_found": 362,
+    "median": 0.797,
+    "share_same_route": 0.359
+   },
+   "ors_a_rec_i10_k6": {
+    "both_found": 362,
+    "median": 0.797,
+    "share_same_route": 0.359
+   },
+   "ors_a_rec_i6_k6": {
+    "both_found": 362,
+    "median": 0.797,
+    "share_same_route": 0.359
+   },
+   "ors_a_shortest_i10_k6": {
+    "both_found": 362,
+    "median": 0.875,
+    "share_same_route": 0.464
+   },
+   "ors_b_strict_foot": {
+    "both_found": 362,
+    "median": 0.93,
+    "share_same_route": 0.528
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "both_found": 362,
+    "median": 0.896,
+    "share_same_route": 0.497
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "both_found": 352,
+    "median": 0.844,
+    "share_same_route": 0.435
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "both_found": 362,
+    "median": 0.977,
+    "share_same_route": 0.674
+   },
+   "ors_b_known_rec_i10_k6": {
+    "both_found": 362,
+    "median": 0.792,
+    "share_same_route": 0.378
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "both_found": 362,
+    "median": 0.919,
+    "share_same_route": 0.528
+   },
+   "valhalla_foot": {
+    "both_found": 362,
+    "median": 0.806,
+    "share_same_route": 0.406
+   },
+   "valhalla_wheelchair": {
+    "both_found": 362,
+    "median": 0.821,
+    "share_same_route": 0.412
+   }
+  },
+  "audit_against_this_graph": {
+   "ours_wheelchair": {
+    "routes": 362,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.0,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.0,
+    "unramped_crossings_per_km": 0.0,
+    "median_share_off_this_graph": 0.0
+   },
+   "ours_walk": {
+    "routes": 362,
+    "with_steps": 0.0801,
+    "with_a_crossing_without_a_surveyed_ramp": 0.4088,
+    "with_an_edge_over_the_incline_limits": 0.0304,
+    "with_over_10m_of_street_centreline": 0.0,
+    "with_any_of_these": 0.4724,
+    "unramped_crossings_per_km": 0.713,
+    "median_share_off_this_graph": 0.0
+   },
+   "ors_a_foot": {
+    "routes": 362,
+    "with_steps": 0.0746,
+    "with_a_crossing_without_a_surveyed_ramp": 0.4365,
+    "with_an_edge_over_the_incline_limits": 0.0414,
+    "with_over_10m_of_street_centreline": 0.5331,
+    "with_any_of_these": 0.7486,
+    "unramped_crossings_per_km": 0.751,
+    "median_share_off_this_graph": 0.048
+   },
+   "ors_a_no_limits": {
+    "routes": 362,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.4171,
+    "with_an_edge_over_the_incline_limits": 0.0249,
+    "with_over_10m_of_street_centreline": 0.0193,
+    "with_any_of_these": 0.442,
+    "unramped_crossings_per_km": 0.669,
+    "median_share_off_this_graph": 0.04
+   },
+   "ors_a_rec_i10_k6": {
+    "routes": 362,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.4171,
+    "with_an_edge_over_the_incline_limits": 0.0249,
+    "with_over_10m_of_street_centreline": 0.0193,
+    "with_any_of_these": 0.442,
+    "unramped_crossings_per_km": 0.669,
+    "median_share_off_this_graph": 0.04
+   },
+   "ors_a_rec_i6_k6": {
+    "routes": 362,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.4171,
+    "with_an_edge_over_the_incline_limits": 0.0249,
+    "with_over_10m_of_street_centreline": 0.0193,
+    "with_any_of_these": 0.442,
+    "unramped_crossings_per_km": 0.669,
+    "median_share_off_this_graph": 0.04
+   },
+   "ors_a_shortest_i10_k6": {
+    "routes": 362,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.4392,
+    "with_an_edge_over_the_incline_limits": 0.0331,
+    "with_over_10m_of_street_centreline": 0.7099,
+    "with_any_of_these": 0.7873,
+    "unramped_crossings_per_km": 0.668,
+    "median_share_off_this_graph": 0.044
+   },
+   "ors_b_strict_foot": {
+    "routes": 362,
+    "with_steps": 0.0746,
+    "with_a_crossing_without_a_surveyed_ramp": 0.4282,
+    "with_an_edge_over_the_incline_limits": 0.0552,
+    "with_over_10m_of_street_centreline": 0.547,
+    "with_any_of_these": 0.7486,
+    "unramped_crossings_per_km": 0.739,
+    "median_share_off_this_graph": 0.046
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "routes": 362,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.0193,
+    "with_an_edge_over_the_incline_limits": 0.0138,
+    "with_over_10m_of_street_centreline": 0.0193,
+    "with_any_of_these": 0.0525,
+    "unramped_crossings_per_km": 0.014,
+    "median_share_off_this_graph": 0.038
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "routes": 352,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.0199,
+    "with_an_edge_over_the_incline_limits": 0.0,
+    "with_over_10m_of_street_centreline": 0.0483,
+    "with_any_of_these": 0.0682,
+    "unramped_crossings_per_km": 0.014,
+    "median_share_off_this_graph": 0.038
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "routes": 362,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.174,
+    "with_an_edge_over_the_incline_limits": 0.0138,
+    "with_over_10m_of_street_centreline": 0.7624,
+    "with_any_of_these": 0.7624,
+    "unramped_crossings_per_km": 0.17,
+    "median_share_off_this_graph": 0.04
+   },
+   "ors_b_known_rec_i10_k6": {
+    "routes": 362,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.4116,
+    "with_an_edge_over_the_incline_limits": 0.0138,
+    "with_over_10m_of_street_centreline": 0.0193,
+    "with_any_of_these": 0.4227,
+    "unramped_crossings_per_km": 0.699,
+    "median_share_off_this_graph": 0.04
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "routes": 362,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.4392,
+    "with_an_edge_over_the_incline_limits": 0.0138,
+    "with_over_10m_of_street_centreline": 0.7044,
+    "with_any_of_these": 0.7762,
+    "unramped_crossings_per_km": 0.667,
+    "median_share_off_this_graph": 0.041
+   },
+   "valhalla_foot": {
+    "routes": 362,
+    "with_steps": 0.0497,
+    "with_a_crossing_without_a_surveyed_ramp": 0.3398,
+    "with_an_edge_over_the_incline_limits": 0.0746,
+    "with_over_10m_of_street_centreline": 0.3315,
+    "with_any_of_these": 0.5331,
+    "unramped_crossings_per_km": 0.431,
+    "median_share_off_this_graph": 0.042
+   },
+   "valhalla_wheelchair": {
+    "routes": 362,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.3591,
+    "with_an_edge_over_the_incline_limits": 0.0829,
+    "with_over_10m_of_street_centreline": 0.3536,
+    "with_any_of_these": 0.5304,
+    "unramped_crossings_per_km": 0.483,
+    "median_share_off_this_graph": 0.038
+   }
+  },
+  "audit_against_raw_osm": {
+   "ours_wheelchair": {
+    "routes": 362,
+    "with_kerb=raised": 0.0829,
+    "with_any": 0.0829
+   },
+   "ours_walk": {
+    "routes": 362,
+    "with_incline": 0.0801,
+    "with_kerb=raised": 0.2017,
+    "with_steps": 0.0801,
+    "with_any": 0.2652
+   },
+   "ors_a_foot": {
+    "routes": 362,
+    "with_incline": 0.0746,
+    "with_kerb=raised": 0.1989,
+    "with_steps": 0.0746,
+    "with_any": 0.2624
+   },
+   "ors_a_no_limits": {
+    "routes": 362,
+    "with_kerb=raised": 0.2099,
+    "with_any": 0.2099
+   },
+   "ors_a_rec_i10_k6": {
+    "routes": 362,
+    "with_kerb=raised": 0.2099,
+    "with_any": 0.2099
+   },
+   "ors_a_rec_i6_k6": {
+    "routes": 362,
+    "with_kerb=raised": 0.2099,
+    "with_any": 0.2099
+   },
+   "ors_a_shortest_i10_k6": {
+    "routes": 362,
+    "with_kerb=raised": 0.232,
+    "with_any": 0.232
+   },
+   "ors_b_strict_foot": {
+    "routes": 362,
+    "with_incline": 0.0746,
+    "with_kerb=raised": 0.2044,
+    "with_steps": 0.0746,
+    "with_any": 0.268
+   },
+   "ors_b_strict_rec_i10_k6": {
+    "routes": 362,
+    "with_kerb=raised": 0.1381,
+    "with_any": 0.1381
+   },
+   "ors_b_strict_rec_i6_k6": {
+    "routes": 352,
+    "with_kerb=raised": 0.1364,
+    "with_any": 0.1364
+   },
+   "ors_b_strict_shortest_i10_k6": {
+    "routes": 362,
+    "with_kerb=raised": 0.1436,
+    "with_any": 0.1436
+   },
+   "ors_b_known_rec_i10_k6": {
+    "routes": 362,
+    "with_kerb=raised": 0.2017,
+    "with_any": 0.2017
+   },
+   "ors_b_known_shortest_i10_k6": {
+    "routes": 362,
+    "with_kerb=raised": 0.2265,
+    "with_any": 0.2265
+   },
+   "valhalla_foot": {
+    "routes": 362,
+    "with_incline": 0.0497,
+    "with_kerb=raised": 0.1464,
+    "with_steps": 0.0497,
+    "with_any": 0.1934
+   },
+   "valhalla_wheelchair": {
+    "routes": 362,
+    "with_kerb=raised": 0.1851,
+    "with_any": 0.1851
+   }
+  },
+  "ors_setting_matrix_found": {
+   "ors_armA": {
+    "default": 1.0,
+    "foot": 1.0,
+    "foot_rec": 1.0,
+    "i10_k3": 0.3905,
+    "i10_k3_w90": 0.3905,
+    "i10_k6": 1.0,
+    "i10_k6_w90": 1.0,
+    "i6_k3": 0.3905,
+    "i6_k3_w90": 0.3905,
+    "i6_k6": 1.0,
+    "i6_k6_w90": 1.0,
+    "rec_i10_k6": 1.0,
+    "rec_i6_k6": 1.0
+   },
+   "ors_armB_known": {
+    "default": 1.0,
+    "foot": 1.0,
+    "i10_k3": 0.431,
+    "i10_k3_w90": 0.431,
+    "i10_k6": 1.0,
+    "i10_k6_w90": 1.0,
+    "i6_k3": 0.4,
+    "i6_k3_w90": 0.4,
+    "i6_k6": 0.9762,
+    "i6_k6_w90": 0.9762,
+    "rec_i10_k6": 1.0,
+    "rec_i6_k6": 0.9762
+   },
+   "ors_armB_strict": {
+    "default": 1.0,
+    "foot": 1.0,
+    "foot_rec": 1.0,
+    "i10_k3": 0.3143,
+    "i10_k3_w90": 0.3143,
+    "i10_k6": 1.0,
+    "i10_k6_w90": 1.0,
+    "i6_k3": 0.2881,
+    "i6_k3_w90": 0.2881,
+    "i6_k6": 0.9762,
+    "i6_k6_w90": 0.9762,
+    "rec_i10_k6": 1.0,
+    "rec_i6_k6": 0.9762
+   }
+  },
+  "ours_against_reference": {
+   "reference": "ors_a_rec_i10_k6",
+   "status": {
+    "same route": 130,
+    "different route": 232
+   },
+   "causes_of_disagreement": {
+    "connectivity": 40,
+    "rule": 46,
+    "kerb data": 141,
+    "incline data": 5
+   },
+   "arm_b_strict_matches_ours": 0.674
+  }
+ }
+}

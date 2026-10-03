@@ -1,0 +1,22 @@
+{
+ "seed": 20261002,
+ "per_borough": 40,
+ "frame": "v0.3.2 crossings with exactly two ends",
+ "frame_size_by_borough": {
+  "QN": 37566,
+  "BK": 32097,
+  "MN": 13730,
+  "SI": 10436,
+  "BX": 9793
+ },
+ "all_crossings": 106295,
+ "crossings_by_end_count": {
+  "0": 320,
+  "1": 2259,
+  "2": 103622,
+  "3": 81,
+  "4": 13
+ },
+ "imagery": "https://maps.nyc.gov/xyz/1.0.0/photo/2018/{z}/{x}/{y}.png8",
+ "zoom": 20
+}

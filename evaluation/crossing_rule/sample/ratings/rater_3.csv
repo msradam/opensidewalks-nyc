@@ -1,0 +1,101 @@
+n,end,ramp_serves,seen_in_imagery,end_type,marked,note
+101,A,yes,cannot_tell,corner,yes,
+101,B,yes,cannot_tell,corner,yes,
+102,A,yes,cannot_tell,corner,yes,
+102,B,yes,cannot_tell,corner,yes,
+103,A,yes,cannot_tell,corner,yes,heavy building shadow
+103,B,yes,cannot_tell,corner,yes,heavy building shadow
+104,A,yes,cannot_tell,corner,yes,very dark shadow
+104,B,no,cannot_tell,median,yes,end sits on painted channelization; nearest square about 7 m away
+105,A,yes,cannot_tell,corner,yes,
+105,B,no,cannot_tell,corner,yes,nearest square is at the start of the N-S crosswalk about 5 m south
+106,A,yes,cannot_tell,corner,yes,street under elevated rail
+106,B,yes,cannot_tell,corner,yes,
+107,A,yes,cannot_tell,corner,yes,
+107,B,yes,cannot_tell,corner,yes,
+108,A,yes,cannot_tell,corner,yes,
+108,B,yes,cannot_tell,corner,yes,
+109,A,yes,cannot_tell,corner,yes,
+109,B,yes,cannot_tell,corner,yes,
+110,A,yes,cannot_tell,corner,yes,
+110,B,yes,cannot_tell,corner,yes,
+111,A,yes,cannot_tell,corner,yes,
+111,B,yes,cannot_tell,corner,yes,
+112,A,yes,cannot_tell,corner,yes,two-line crosswalk faint in shadow
+112,B,yes,cannot_tell,corner,yes,in shadow
+113,A,yes,cannot_tell,corner,yes,
+113,B,yes,cannot_tell,corner,yes,
+114,A,yes,cannot_tell,corner,yes,very short crossing; both ends at the same corner
+114,B,yes,cannot_tell,corner,yes,very short crossing; both ends at the same corner
+115,A,yes,cannot_tell,corner,yes,
+115,B,yes,cannot_tell,corner,yes,
+116,A,yes,cannot_tell,corner,yes,
+116,B,yes,cannot_tell,corner,yes,
+117,A,yes,cannot_tell,corner,yes,two-line crosswalk; trees over the west kerb
+117,B,yes,cannot_tell,corner,yes,
+118,A,no,cannot_tell,midblock,no,no squares on sheet
+118,B,no,cannot_tell,median,no,end on a painted island outline
+119,A,yes,cannot_tell,corner,yes,very short crossing stub at east end of crosswalk
+119,B,yes,cannot_tell,corner,yes,very short crossing stub at east end of crosswalk
+120,A,yes,cannot_tell,corner,yes,
+120,B,yes,cannot_tell,corner,yes,
+121,A,yes,cannot_tell,corner,yes,
+121,B,yes,cannot_tell,corner,yes,
+122,A,unclear,cannot_tell,midblock,no,elevated rail hides the street; no kerb line to judge
+122,B,unclear,cannot_tell,median,no,under elevated rail
+123,A,yes,cannot_tell,corner,yes,
+123,B,yes,cannot_tell,corner,yes,
+124,A,no,cannot_tell,corner,yes,no square at the north end
+124,B,yes,cannot_tell,corner,yes,
+125,A,yes,cannot_tell,corner,yes,two-line crosswalk
+125,B,yes,cannot_tell,corner,yes,
+126,A,yes,cannot_tell,corner,yes,tree cover
+126,B,yes,cannot_tell,corner,yes,tree cover
+127,A,no,cannot_tell,corner,yes,nearest square is on the E-W crosswalk about 5 m south
+127,B,yes,cannot_tell,corner,yes,
+128,A,yes,cannot_tell,corner,yes,
+128,B,yes,cannot_tell,corner,yes,under tree
+129,A,yes,cannot_tell,corner,no,
+129,B,yes,cannot_tell,corner,no,
+130,A,yes,cannot_tell,corner,no,
+130,B,yes,cannot_tell,corner,no,
+131,A,yes,ramp,corner,yes,red warning pad visible
+131,B,yes,ramp,corner,yes,red warning pad visible
+132,A,yes,cannot_tell,corner,no,
+132,B,yes,cannot_tell,corner,no,
+133,A,yes,cannot_tell,corner,no,car parked over the crossing
+133,B,yes,cannot_tell,corner,no,
+134,A,yes,cannot_tell,corner,yes,
+134,B,yes,cannot_tell,corner,yes,
+135,A,yes,cannot_tell,corner,no,
+135,B,yes,cannot_tell,corner,no,
+136,A,yes,cannot_tell,corner,no,
+136,B,yes,cannot_tell,corner,no,
+137,A,yes,cannot_tell,corner,yes,
+137,B,yes,cannot_tell,corner,yes,
+138,A,yes,cannot_tell,corner,yes,
+138,B,yes,cannot_tell,corner,yes,square about 2 m from crosswalk edge
+139,A,yes,cannot_tell,corner,no,
+139,B,yes,cannot_tell,corner,no,
+140,A,yes,cannot_tell,corner,yes,
+140,B,yes,cannot_tell,corner,yes,
+141,A,yes,cannot_tell,corner,no,elevated rail hides the roadway
+141,B,yes,cannot_tell,corner,no,elevated rail hides the roadway
+142,A,yes,cannot_tell,corner,yes,
+142,B,yes,cannot_tell,corner,yes,
+143,A,yes,cannot_tell,corner,no,
+143,B,yes,cannot_tell,corner,no,
+144,A,yes,cannot_tell,corner,no,
+144,B,yes,cannot_tell,corner,no,
+145,A,no,cannot_tell,median,no,end on painted chevron gore; no squares there
+145,B,yes,cannot_tell,corner,no,
+146,A,yes,cannot_tell,corner,no,
+146,B,yes,cannot_tell,corner,no,tree shadow
+147,A,yes,cannot_tell,corner,no,
+147,B,yes,cannot_tell,corner,no,
+148,A,yes,cannot_tell,corner,no,
+148,B,yes,cannot_tell,corner,no,
+149,A,yes,cannot_tell,corner,yes,two-line crosswalk faint
+149,B,yes,cannot_tell,corner,yes,
+150,A,yes,cannot_tell,corner,no,
+150,B,yes,cannot_tell,corner,no,

@@ -1,0 +1,56 @@
+{
+ "tables": "research_notes/next/final/tables.pkl",
+ "nodes_off_the_terrain_model": 14402,
+ "by_source": {
+  "lidar_2017": 13943,
+  "interpolated": 414,
+  "lidar_2014": 45
+ },
+ "method": "height from the 2017 survey against the nearest surface (cluster of returns within 2 m, 0.5 m height gap) in the 2014 survey",
+ "lidar_2017_vs_2014": {
+  "all": {
+   "nodes_with_2014_surface": 13930,
+   "median_abs_diff_m": 0.05,
+   "mean_diff_m": 0.077,
+   "within_0.25_m": 0.8342,
+   "within_0.5_m": 0.8616,
+   "within_1_m": 0.9163,
+   "over_2_m": 801
+  },
+  "on_osm_tagged_structure": {
+   "nodes_with_2014_surface": 11631,
+   "median_abs_diff_m": 0.05,
+   "mean_diff_m": 0.072,
+   "within_0.25_m": 0.8359,
+   "within_0.5_m": 0.8648,
+   "within_1_m": 0.924,
+   "over_2_m": 577
+  },
+  "on_untagged_approach": {
+   "nodes_with_2014_surface": 2299,
+   "median_abs_diff_m": 0.05,
+   "mean_diff_m": 0.103,
+   "within_0.25_m": 0.826,
+   "within_0.5_m": 0.8456,
+   "within_1_m": 0.8773,
+   "over_2_m": 224
+  },
+  "no_2014_surface": 13
+ },
+ "lidar_2014_nodes_not_checkable_this_way": 45,
+ "interpolated_vs_2014": {
+  "nodes_with_2014_surface": 413,
+  "median_abs_diff_m": 0.72,
+  "mean_diff_m": -3.168,
+  "within_0.25_m": 0.3753,
+  "within_0.5_m": 0.4552,
+  "within_1_m": 0.5303,
+  "over_2_m": 167
+ },
+ "height_above_terrain_model_m": {
+  "median": 3.22,
+  "over_2_m": 8011,
+  "over_10_m": 1631,
+  "below_minus_2_m": 28
+ }
+}

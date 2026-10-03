@@ -1,0 +1,3 @@
+The share of edges that read as too steep should be the same whatever their length, because a mapper's choice of vertex spacing does not change the slope of the ground; a share that rises for short edges measures survey noise, not hills.
+
+In a study area at 1 m resolution 6.6% of footway edges under 2 m read as steeper than the wheelchair limits against 1.0% of edges of 10 to 25 m. Averaging each node's height with its neighbours' along the path, weighted 1 - length / 5 m, twice, and never across a step of 0.5 m or more, brings every length band to about 1.3%. Use the flatness of that profile to pick the smoothing, not any single edge. Evidence: research_notes/next/structure/steep_by_length_bb.json.

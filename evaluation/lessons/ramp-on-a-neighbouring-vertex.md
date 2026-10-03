@@ -1,0 +1,3 @@
+A ramp snapped to the nearest graph vertex is as often on a sidewalk vertex beside a crossing as on the crossing itself, so "the crossing edge ends on a curb node" badly understates which crossings have ramps.
+
+By node identity 43 percent of crossing edges were on a crossing with a ramp at each end, and a wheelchair route existed for 1 percent of random pairs in Queens. Counting a surveyed ramp within 5 m of each end of the whole crossing gives 88 percent and 60 percent. Report reachability under both rules and say which the profile uses. Evidence: research_notes/release/routing/reach_rule_comparison.json.

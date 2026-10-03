@@ -1,0 +1,1106 @@
+[
+ {
+  "sheet": 1,
+  "id": "random-MN-1988",
+  "area": "MN",
+  "status": "reference only",
+  "cause": "structure",
+  "detail": "reference takes an edge over the incline limits on a bridge, tunnel or raised way",
+  "at": [
+   -73.985064,
+   40.715582
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 4320,
+   "why": "over_incline",
+   "xy": [
+    -73.985064,
+    40.715582
+   ],
+   "osm_way": 613508233,
+   "structure": true
+  }
+ },
+ {
+  "sheet": 2,
+  "id": "landmark-11",
+  "area": "structure",
+  "status": "different route",
+  "cause": "incline data",
+  "detail": "reference takes an edge over the incline limits",
+  "at": [
+   -73.963043,
+   40.76025
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 1522324,
+   "why": "over_incline",
+   "xy": [
+    -73.963043,
+    40.76025
+   ],
+   "osm_way": 1386281772,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 3,
+  "id": "random-SI-0319",
+  "area": "SI",
+  "status": "reference only",
+  "cause": "connectivity",
+  "detail": "reference follows a street centreline; no sidewalk is mapped there",
+  "at": [
+   -74.095904,
+   40.575666
+  ],
+  "arm_b_matches_ours": true,
+  "first_barrier": {
+   "edge": 2690148,
+   "why": "street",
+   "xy": [
+    -74.095904,
+    40.575666
+   ],
+   "osm_way": 5714261,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 4,
+  "id": "random-BK-1791",
+  "area": "BK",
+  "status": "different route",
+  "cause": "connectivity",
+  "detail": "reference follows a street centreline; no sidewalk is mapped there",
+  "at": [
+   -73.941476,
+   40.608704
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 2729797,
+   "why": "street",
+   "xy": [
+    -73.941476,
+    40.608704
+   ],
+   "osm_way": 5676906,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 5,
+  "id": "random-BX-1269",
+  "area": "BX",
+  "status": "reference only",
+  "cause": "incline data",
+  "detail": "reference takes an edge over the incline limits",
+  "at": [
+   -73.885384,
+   40.86412
+  ],
+  "arm_b_matches_ours": true,
+  "first_barrier": {
+   "edge": 1790217,
+   "why": "over_incline",
+   "xy": [
+    -73.885384,
+    40.86412
+   ],
+   "osm_way": 326405380,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 6,
+  "id": "random-SI-0482",
+  "area": "SI",
+  "status": "reference only",
+  "cause": "structure",
+  "detail": "reference takes an edge over the incline limits on a bridge, tunnel or raised way",
+  "at": [
+   -74.113184,
+   40.597674
+  ],
+  "arm_b_matches_ours": true,
+  "first_barrier": {
+   "edge": 1880103,
+   "why": "over_incline",
+   "xy": [
+    -74.113184,
+    40.597674
+   ],
+   "osm_way": 1059381039,
+   "structure": true
+  }
+ },
+ {
+  "sheet": 7,
+  "id": "landmark-12",
+  "area": "structure",
+  "status": "different route",
+  "cause": "structure",
+  "detail": "reference takes an edge over the incline limits on a bridge, tunnel or raised way",
+  "at": [
+   -74.007886,
+   40.74145
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 1392644,
+   "why": "over_incline",
+   "xy": [
+    -74.007886,
+    40.74145
+   ],
+   "osm_way": 277885774,
+   "structure": true
+  }
+ },
+ {
+  "sheet": 8,
+  "id": "brownsville-0217",
+  "area": "BK16",
+  "status": "different route",
+  "cause": "connectivity",
+  "detail": "reference follows a street centreline; no sidewalk is mapped there",
+  "at": [
+   -73.90174,
+   40.67228
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 2105275,
+   "why": "street",
+   "xy": [
+    -73.90174,
+    40.67228
+   ],
+   "osm_way": 901356584,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 9,
+  "id": "landmark-02",
+  "area": "hand-checked",
+  "status": "different route",
+  "cause": "kerb data",
+  "detail": "reference crosses where no surveyed ramp is within reach",
+  "at": [
+   -73.992833,
+   40.734018
+  ],
+  "arm_b_matches_ours": true,
+  "first_barrier": {
+   "edge": 955860,
+   "why": "crossing_no_ramp",
+   "xy": [
+    -73.992833,
+    40.734018
+   ],
+   "osm_way": 894036120,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 10,
+  "id": "random-BX-0105",
+  "area": "BX",
+  "status": "different route",
+  "cause": "structure",
+  "detail": "reference takes an edge over the incline limits on a bridge, tunnel or raised way",
+  "at": [
+   -73.893626,
+   40.84258
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 665316,
+   "why": "over_incline",
+   "xy": [
+    -73.893626,
+    40.84258
+   ],
+   "osm_way": 1230914494,
+   "structure": true
+  }
+ },
+ {
+  "sheet": 11,
+  "id": "random-BK-1934",
+  "area": "BK",
+  "status": "different route",
+  "cause": "kerb data",
+  "detail": "reference crosses where no surveyed ramp is within reach",
+  "at": [
+   -73.973659,
+   40.655684
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 1116016,
+   "why": "crossing_no_ramp",
+   "xy": [
+    -73.973659,
+    40.655684
+   ],
+   "osm_way": 1358691993,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 12,
+  "id": "random-MN-1727",
+  "area": "MN",
+  "status": "reference only",
+  "cause": "kerb data",
+  "detail": "reference crosses where no surveyed ramp is within reach",
+  "at": [
+   -73.976387,
+   40.755
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 967903,
+   "why": "crossing_no_ramp",
+   "xy": [
+    -73.976387,
+    40.755
+   ],
+   "osm_way": 1222344919,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 13,
+  "id": "random-SI-0839",
+  "area": "SI",
+  "status": "reference only",
+  "cause": "structure",
+  "detail": "reference takes an edge over the incline limits on a bridge, tunnel or raised way",
+  "at": [
+   -74.10186,
+   40.645008
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 1902571,
+   "why": "over_incline",
+   "xy": [
+    -74.10186,
+    40.645008
+   ],
+   "osm_way": 1193223375,
+   "structure": true
+  }
+ },
+ {
+  "sheet": 14,
+  "id": "random-BX-1308",
+  "area": "BX",
+  "status": "different route",
+  "cause": "connectivity",
+  "detail": "reference follows a street centreline; no sidewalk is mapped there",
+  "at": [
+   -73.854695,
+   40.806083
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 2463426,
+   "why": "street",
+   "xy": [
+    -73.854695,
+    40.806083
+   ],
+   "osm_way": 282104835,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 15,
+  "id": "random-citywide-0341",
+  "area": "citywide",
+  "status": "reference only",
+  "cause": "kerb data",
+  "detail": "reference crosses where no surveyed ramp is within reach",
+  "at": [
+   -73.833182,
+   40.762904
+  ],
+  "arm_b_matches_ours": true,
+  "first_barrier": {
+   "edge": 1254965,
+   "why": "crossing_no_ramp",
+   "xy": [
+    -73.833182,
+    40.762904
+   ],
+   "osm_way": 865688596,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 16,
+  "id": "random-MN-0890",
+  "area": "MN",
+  "status": "reference only",
+  "cause": "structure",
+  "detail": "reference takes an edge over the incline limits on a bridge, tunnel or raised way",
+  "at": [
+   -73.976882,
+   40.714475
+  ],
+  "arm_b_matches_ours": true,
+  "first_barrier": {
+   "edge": 1546036,
+   "why": "over_incline",
+   "xy": [
+    -73.976882,
+    40.714475
+   ],
+   "osm_way": 908825267,
+   "structure": true
+  }
+ },
+ {
+  "sheet": 17,
+  "id": "random-BX-0378",
+  "area": "BX",
+  "status": "reference only",
+  "cause": "incline data",
+  "detail": "reference takes an edge over the incline limits",
+  "at": [
+   -73.911042,
+   40.861551
+  ],
+  "arm_b_matches_ours": true,
+  "first_barrier": {
+   "edge": 698261,
+   "why": "over_incline",
+   "xy": [
+    -73.911042,
+    40.861551
+   ],
+   "osm_way": 1418862457,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 18,
+  "id": "random-citywide-0887",
+  "area": "citywide",
+  "status": "reference only",
+  "cause": "structure",
+  "detail": "reference takes an edge over the incline limits on a bridge, tunnel or raised way",
+  "at": [
+   -73.949137,
+   40.835729
+  ],
+  "arm_b_matches_ours": true,
+  "first_barrier": {
+   "edge": 80919,
+   "why": "over_incline",
+   "xy": [
+    -73.949137,
+    40.835729
+   ],
+   "osm_way": 1084278334,
+   "structure": true
+  }
+ },
+ {
+  "sheet": 19,
+  "id": "brownsville-0148",
+  "area": "BK16",
+  "status": "different route",
+  "cause": "incline data",
+  "detail": "reference takes an edge over the incline limits",
+  "at": [
+   -73.903873,
+   40.678363
+  ],
+  "arm_b_matches_ours": true,
+  "first_barrier": {
+   "edge": 1647296,
+   "why": "over_incline",
+   "xy": [
+    -73.903873,
+    40.678363
+   ],
+   "osm_way": 1556698181,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 20,
+  "id": "random-QN-1916",
+  "area": "QN",
+  "status": "different route",
+  "cause": "incline data",
+  "detail": "reference takes an edge over the incline limits",
+  "at": [
+   -73.859924,
+   40.695286
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 433122,
+   "why": "over_incline",
+   "xy": [
+    -73.859924,
+    40.695286
+   ],
+   "osm_way": 1206704112,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 21,
+  "id": "random-QN-0921",
+  "area": "QN",
+  "status": "different route",
+  "cause": "structure",
+  "detail": "reference takes an edge over the incline limits on a bridge, tunnel or raised way",
+  "at": [
+   -73.924411,
+   40.734309
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 1650102,
+   "why": "over_incline",
+   "xy": [
+    -73.924411,
+    40.734309
+   ],
+   "osm_way": 46723289,
+   "structure": true
+  }
+ },
+ {
+  "sheet": 22,
+  "id": "random-BK-0528",
+  "area": "BK",
+  "status": "different route",
+  "cause": "incline data",
+  "detail": "reference takes an edge over the incline limits",
+  "at": [
+   -73.963384,
+   40.637305
+  ],
+  "arm_b_matches_ours": true,
+  "first_barrier": {
+   "edge": 175004,
+   "why": "over_incline",
+   "xy": [
+    -73.963384,
+    40.637305
+   ],
+   "osm_way": 1149672609,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 23,
+  "id": "random-BX-0315",
+  "area": "BX",
+  "status": "reference only",
+  "cause": "connectivity",
+  "detail": "reference follows a street centreline; no sidewalk is mapped there",
+  "at": [
+   -73.85282,
+   40.841018
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 2532020,
+   "why": "street",
+   "xy": [
+    -73.85282,
+    40.841018
+   ],
+   "osm_way": 45488626,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 24,
+  "id": "random-citywide-1791",
+  "area": "citywide",
+  "status": "reference only",
+  "cause": "connectivity",
+  "detail": "reference follows a street centreline; no sidewalk is mapped there",
+  "at": [
+   -74.191872,
+   40.526561
+  ],
+  "arm_b_matches_ours": true,
+  "first_barrier": {
+   "edge": 2694338,
+   "why": "street",
+   "xy": [
+    -74.191872,
+    40.526561
+   ],
+   "osm_way": 588912485,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 25,
+  "id": "random-MN-0679",
+  "area": "MN",
+  "status": "reference only",
+  "cause": "connectivity",
+  "detail": "reference follows a street centreline; no sidewalk is mapped there",
+  "at": [
+   -73.925828,
+   40.782449
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 1943363,
+   "why": "street",
+   "xy": [
+    -73.925828,
+    40.782449
+   ],
+   "osm_way": 577946577,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 26,
+  "id": "landmark-03",
+  "area": "structure",
+  "status": "different route",
+  "cause": "kerb data",
+  "detail": "reference crosses where no surveyed ramp is within reach",
+  "at": [
+   -74.002547,
+   40.71152
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 951963,
+   "why": "crossing_no_ramp",
+   "xy": [
+    -74.002547,
+    40.71152
+   ],
+   "osm_way": 888695692,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 27,
+  "id": "random-QN-0354",
+  "area": "QN",
+  "status": "different route",
+  "cause": "structure",
+  "detail": "reference takes an edge over the incline limits on a bridge, tunnel or raised way",
+  "at": [
+   -73.73389,
+   40.673506
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 406374,
+   "why": "over_incline",
+   "xy": [
+    -73.73389,
+    40.673506
+   ],
+   "osm_way": 496498006,
+   "structure": true
+  }
+ },
+ {
+  "sheet": 28,
+  "id": "random-QN-0796",
+  "area": "QN",
+  "status": "different route",
+  "cause": "kerb data",
+  "detail": "reference crosses where no surveyed ramp is within reach",
+  "at": [
+   -73.890741,
+   40.728299
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 1174275,
+   "why": "crossing_no_ramp",
+   "xy": [
+    -73.890741,
+    40.728299
+   ],
+   "osm_way": 1081733366,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 29,
+  "id": "brownsville-0065",
+  "area": "BK16",
+  "status": "different route",
+  "cause": "incline data",
+  "detail": "reference takes an edge over the incline limits",
+  "at": [
+   -73.903873,
+   40.678363
+  ],
+  "arm_b_matches_ours": true,
+  "first_barrier": {
+   "edge": 1647296,
+   "why": "over_incline",
+   "xy": [
+    -73.903873,
+    40.678363
+   ],
+   "osm_way": 1556698181,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 30,
+  "id": "brownsville-0360",
+  "area": "BK16",
+  "status": "different route",
+  "cause": "kerb data",
+  "detail": "reference crosses where no surveyed ramp is within reach",
+  "at": [
+   -73.922641,
+   40.681996
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 1004109,
+   "why": "crossing_no_ramp",
+   "xy": [
+    -73.922641,
+    40.681996
+   ],
+   "osm_way": 1051366612,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 31,
+  "id": "random-SI-0596",
+  "area": "SI",
+  "status": "reference only",
+  "cause": "kerb data",
+  "detail": "reference crosses where no surveyed ramp is within reach",
+  "at": [
+   -74.092063,
+   40.607524
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 1350701,
+   "why": "crossing_no_ramp",
+   "xy": [
+    -74.092063,
+    40.607524
+   ],
+   "osm_way": 1375963372,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 32,
+  "id": "random-BK-1542",
+  "area": "BK",
+  "status": "different route",
+  "cause": "incline data",
+  "detail": "reference takes an edge over the incline limits",
+  "at": [
+   -73.906205,
+   40.678151
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 303320,
+   "why": "over_incline",
+   "xy": [
+    -73.906205,
+    40.678151
+   ],
+   "osm_way": 1313883913,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 33,
+  "id": "random-QN-0026",
+  "area": "QN",
+  "status": "reference only",
+  "cause": "connectivity",
+  "detail": "reference follows a street centreline; no sidewalk is mapped there",
+  "at": [
+   -73.807213,
+   40.708084
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 2786604,
+   "why": "street",
+   "xy": [
+    -73.807213,
+    40.708084
+   ],
+   "osm_way": 5709405,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 34,
+  "id": "random-BK-0197",
+  "area": "BK",
+  "status": "different route",
+  "cause": "connectivity",
+  "detail": "reference follows a street centreline; no sidewalk is mapped there",
+  "at": [
+   -73.95229,
+   40.615033
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 2728306,
+   "why": "street",
+   "xy": [
+    -73.95229,
+    40.615033
+   ],
+   "osm_way": 5676105,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 35,
+  "id": "brownsville-0341",
+  "area": "BK16",
+  "status": "different route",
+  "cause": "kerb data",
+  "detail": "reference crosses where no surveyed ramp is within reach",
+  "at": [
+   -73.917323,
+   40.676575
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 1007645,
+   "why": "crossing_no_ramp",
+   "xy": [
+    -73.917323,
+    40.676575
+   ],
+   "osm_way": 1059968131,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 36,
+  "id": "random-BX-1094",
+  "area": "BX",
+  "status": "different route",
+  "cause": "kerb data",
+  "detail": "reference crosses where no surveyed ramp is within reach",
+  "at": [
+   -73.884607,
+   40.868835
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 1294661,
+   "why": "crossing_no_ramp",
+   "xy": [
+    -73.884607,
+    40.868835
+   ],
+   "osm_way": 1257488095,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 37,
+  "id": "random-citywide-1055",
+  "area": "citywide",
+  "status": "reference only",
+  "cause": "incline data",
+  "detail": "reference takes an edge over the incline limits",
+  "at": [
+   -74.210771,
+   40.52479
+  ],
+  "arm_b_matches_ours": true,
+  "first_barrier": {
+   "edge": 1888833,
+   "why": "over_incline",
+   "xy": [
+    -74.210771,
+    40.52479
+   ],
+   "osm_way": 1118102744,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 38,
+  "id": "random-MN-1359",
+  "area": "MN",
+  "status": "reference only",
+  "cause": "connectivity",
+  "detail": "reference follows a street centreline; no sidewalk is mapped there",
+  "at": [
+   -74.006735,
+   40.744793
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 1944029,
+   "why": "street",
+   "xy": [
+    -74.006735,
+    40.744793
+   ],
+   "osm_way": 194923794,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 39,
+  "id": "random-BK-1667",
+  "area": "BK",
+  "status": "different route",
+  "cause": "structure",
+  "detail": "reference takes an edge over the incline limits on a bridge, tunnel or raised way",
+  "at": [
+   -73.957228,
+   40.629376
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 106583,
+   "why": "over_incline",
+   "xy": [
+    -73.957228,
+    40.629376
+   ],
+   "osm_way": 1053141434,
+   "structure": true
+  }
+ },
+ {
+  "sheet": 40,
+  "id": "random-BK-0147",
+  "area": "BK",
+  "status": "reference only",
+  "cause": "kerb data",
+  "detail": "reference crosses where no surveyed ramp is within reach",
+  "at": [
+   -73.988752,
+   40.574129
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 1036828,
+   "why": "crossing_no_ramp",
+   "xy": [
+    -73.988752,
+    40.574129
+   ],
+   "osm_way": 1116395765,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 41,
+  "id": "random-BX-0290",
+  "area": "BX",
+  "status": "different route",
+  "cause": "kerb data",
+  "detail": "reference crosses where no surveyed ramp is within reach",
+  "at": [
+   -73.890701,
+   40.856011
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 1275776,
+   "why": "crossing_no_ramp",
+   "xy": [
+    -73.890701,
+    40.856011
+   ],
+   "osm_way": 723979984,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 42,
+  "id": "landmark-09",
+  "area": "hand-checked",
+  "status": "different route",
+  "cause": "incline data",
+  "detail": "reference takes an edge over the incline limits",
+  "at": [
+   -73.978356,
+   40.752544
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 2220,
+   "why": "over_incline",
+   "xy": [
+    -73.978356,
+    40.752544
+   ],
+   "osm_way": 1238700047,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 43,
+  "id": "random-MN-0030",
+  "area": "MN",
+  "status": "different route",
+  "cause": "incline data",
+  "detail": "reference takes an edge over the incline limits",
+  "at": [
+   -73.940781,
+   40.832259
+  ],
+  "arm_b_matches_ours": true,
+  "first_barrier": {
+   "edge": 61678,
+   "why": "over_incline",
+   "xy": [
+    -73.940781,
+    40.832259
+   ],
+   "osm_way": 1218616801,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 44,
+  "id": "random-BX-0999",
+  "area": "BX",
+  "status": "different route",
+  "cause": "structure",
+  "detail": "reference takes an edge over the incline limits on a bridge, tunnel or raised way",
+  "at": [
+   -73.906658,
+   40.873278
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 708715,
+   "why": "over_incline",
+   "xy": [
+    -73.906658,
+    40.873278
+   ],
+   "osm_way": 1418856893,
+   "structure": true
+  }
+ },
+ {
+  "sheet": 45,
+  "id": "random-SI-0031",
+  "area": "SI",
+  "status": "reference only",
+  "cause": "incline data",
+  "detail": "reference takes an edge over the incline limits",
+  "at": [
+   -74.101328,
+   40.622062
+  ],
+  "arm_b_matches_ours": true,
+  "first_barrier": {
+   "edge": 1878665,
+   "why": "over_incline",
+   "xy": [
+    -74.101328,
+    40.622062
+   ],
+   "osm_way": 1053393525,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 46,
+  "id": "brownsville-0387",
+  "area": "BK16",
+  "status": "reference only",
+  "cause": "connectivity",
+  "detail": "reference follows a street centreline; no sidewalk is mapped there",
+  "at": [
+   -73.90174,
+   40.67228
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 2105275,
+   "why": "street",
+   "xy": [
+    -73.90174,
+    40.67228
+   ],
+   "osm_way": 901356584,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 47,
+  "id": "random-QN-1166",
+  "area": "QN",
+  "status": "different route",
+  "cause": "connectivity",
+  "detail": "reference follows a street centreline; no sidewalk is mapped there",
+  "at": [
+   -73.817727,
+   40.757074
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 2304706,
+   "why": "street",
+   "xy": [
+    -73.817727,
+    40.757074
+   ],
+   "osm_way": 275281192,
+   "structure": false
+  }
+ },
+ {
+  "sheet": 48,
+  "id": "random-BK-1927",
+  "area": "BK",
+  "status": "different route",
+  "cause": "structure",
+  "detail": "reference takes an edge over the incline limits on a bridge, tunnel or raised way",
+  "at": [
+   -73.957284,
+   40.629671
+  ],
+  "arm_b_matches_ours": false,
+  "first_barrier": {
+   "edge": 106581,
+   "why": "over_incline",
+   "xy": [
+    -73.957284,
+    40.629671
+   ],
+   "osm_way": 1053141434,
+   "structure": true
+  }
+ }
+]

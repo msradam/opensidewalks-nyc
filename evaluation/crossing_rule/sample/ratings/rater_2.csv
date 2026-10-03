@@ -1,0 +1,101 @@
+n,end,ramp_serves,seen_in_imagery,end_type,marked,note
+51,A,yes,cannot_tell,corner,yes,
+51,B,yes,cannot_tell,corner,yes,
+52,A,yes,cannot_tell,corner,no,
+52,B,yes,cannot_tell,corner,no,
+53,A,no,cannot_tell,corner,yes,no squares on sheet
+53,B,no,cannot_tell,median,yes,crossing to traffic island
+54,A,yes,cannot_tell,corner,yes,
+54,B,yes,cannot_tell,corner,yes,
+55,A,yes,cannot_tell,corner,yes,
+55,B,yes,cannot_tell,corner,yes,
+56,A,yes,cannot_tell,corner,yes,
+56,B,yes,cannot_tell,corner,yes,
+57,A,yes,cannot_tell,corner,no,
+57,B,yes,cannot_tell,corner,no,
+58,A,yes,cannot_tell,corner,yes,
+58,B,yes,cannot_tell,corner,yes,
+59,A,yes,cannot_tell,corner,yes,
+59,B,yes,cannot_tell,corner,yes,
+60,A,yes,cannot_tell,corner,yes,
+60,B,no,cannot_tell,corner,yes,no square at this corner
+61,A,yes,cannot_tell,corner,yes,
+61,B,yes,cannot_tell,corner,yes,square at corner apex
+62,A,yes,cannot_tell,corner,yes,kerb under tree shadow; square on crosswalk line
+62,B,yes,cannot_tell,corner,yes,
+63,A,yes,cannot_tell,corner,yes,square at corner apex
+63,B,yes,ramp,corner,yes,reddish pad visible at kerb
+64,A,yes,cannot_tell,corner,no,tree shadow
+64,B,yes,cannot_tell,corner,no,
+65,A,yes,cannot_tell,corner,yes,
+65,B,yes,cannot_tell,corner,yes,
+66,A,yes,cannot_tell,corner,no,tree shadow
+66,B,yes,cannot_tell,corner,no,T junction through side
+67,A,yes,cannot_tell,corner,no,square at corner apex
+67,B,yes,cannot_tell,corner,no,
+68,A,yes,cannot_tell,corner,no,
+68,B,yes,cannot_tell,corner,no,
+69,A,yes,cannot_tell,corner,yes,
+69,B,yes,cannot_tell,corner,yes,
+70,A,yes,cannot_tell,corner,yes,
+70,B,yes,cannot_tell,corner,yes,
+71,A,yes,cannot_tell,corner,yes,
+71,B,yes,cannot_tell,corner,yes,
+72,A,no,cannot_tell,other,no,rail platform crossing not a street; no squares
+72,B,no,cannot_tell,other,no,rail platform crossing not a street; no squares
+73,A,no,cannot_tell,median,yes,end on painted median mid-avenue; no kerb; no square
+73,B,yes,cannot_tell,corner,yes,
+74,A,yes,cannot_tell,corner,yes,
+74,B,yes,ramp,corner,yes,reddish pad visible at corner
+75,A,yes,cannot_tell,corner,no,
+75,B,yes,cannot_tell,corner,no,
+76,A,yes,cannot_tell,corner,no,
+76,B,unclear,cannot_tell,corner,no,deep building shadow; kerb not visible
+77,A,yes,cannot_tell,corner,yes,two-line crosswalk
+77,B,yes,cannot_tell,corner,yes,
+78,A,yes,cannot_tell,corner,yes,
+78,B,yes,cannot_tell,corner,yes,
+79,A,yes,cannot_tell,corner,yes,
+79,B,yes,cannot_tell,corner,yes,
+80,A,unclear,cannot_tell,other,yes,end is mid-road 3 m from kerb; short stub segment
+80,B,yes,cannot_tell,corner,yes,
+81,A,yes,cannot_tell,corner,yes,
+81,B,yes,cannot_tell,corner,yes,
+82,A,yes,cannot_tell,corner,yes,
+82,B,yes,cannot_tell,corner,yes,shadow
+83,A,yes,cannot_tell,corner,yes,
+83,B,yes,cannot_tell,corner,yes,
+84,A,unclear,cannot_tell,corner,no,sheet almost black; nothing visible
+84,B,unclear,cannot_tell,corner,no,sheet almost black; nothing visible
+85,A,yes,cannot_tell,corner,yes,dark; faint stripes
+85,B,yes,cannot_tell,corner,yes,dark
+86,A,no,cannot_tell,corner,no,no squares on sheet
+86,B,no,cannot_tell,corner,no,no squares on sheet
+87,A,yes,cannot_tell,corner,yes,
+87,B,yes,cannot_tell,corner,yes,
+88,A,yes,cannot_tell,corner,yes,
+88,B,yes,cannot_tell,corner,yes,
+89,A,yes,cannot_tell,corner,yes,
+89,B,yes,cannot_tell,median,yes,
+90,A,yes,cannot_tell,corner,yes,
+90,B,yes,cannot_tell,corner,yes,shadow
+91,A,yes,cannot_tell,corner,yes,
+91,B,yes,cannot_tell,corner,yes,
+92,A,yes,cannot_tell,corner,yes,
+92,B,yes,cannot_tell,median,yes,island nose
+93,A,yes,cannot_tell,median,no,3 m link from corner to island; rings overlap
+93,B,yes,cannot_tell,corner,no,3 m link from corner to island; rings overlap
+94,A,yes,cannot_tell,corner,yes,shadow
+94,B,yes,cannot_tell,corner,yes,
+95,A,yes,cannot_tell,corner,yes,
+95,B,yes,cannot_tell,median,yes,
+96,A,yes,cannot_tell,corner,no,
+96,B,yes,cannot_tell,corner,no,
+97,A,yes,cannot_tell,corner,no,area between ends may be a plaza
+97,B,yes,cannot_tell,corner,no,
+98,A,yes,cannot_tell,corner,no,
+98,B,unclear,cannot_tell,corner,no,deep shadow; kerb not visible
+99,A,yes,cannot_tell,corner,yes,very dark; square on crosswalk line
+99,B,yes,cannot_tell,corner,yes,very dark; square on crosswalk line
+100,A,no,cannot_tell,corner,yes,no square at this corner
+100,B,no,cannot_tell,other,yes,end mid-road inside crosswalk; no kerb; no square

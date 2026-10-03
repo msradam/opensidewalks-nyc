@@ -1,0 +1,3 @@
+A union-find merge of all points within 2 m chains along closely spaced vertices and moves endpoints far more than 2 m.
+
+On Staten Island 23% of edges collapsed and were dropped, 2,309 endpoints moved more than 5 m and the largest move was 33 m. Anything keyed on a pre-merge ID (the curb nodes) must be carried through the remap. Fixed 2026-10-02 (commit 7a4174b): only dead ends and component bridges move, nearest first, and a moved node is never a target. A component count alone flatters the chaining merge, because it deletes small components by collapsing all their edges; list the pieces left apart instead (research_notes/release/merge/residual_si.json). Evidence: research_notes/evidence/repro_si/merge_effects.json.

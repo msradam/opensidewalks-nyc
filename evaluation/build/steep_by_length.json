@@ -1,0 +1,86 @@
+{
+ "limits": "incline > 0.083 or < -0.1",
+ "edges": "highway=footway, not steps",
+ "builds": {
+  "v0.3.2": {
+   "overall_share": 0.0265,
+   "bands": [
+    {
+     "band_m": "0 to 2",
+     "edges": 331754,
+     "with_incline": 330682,
+     "steep": 10724,
+     "steep_share": 0.0324
+    },
+    {
+     "band_m": "2 to 5",
+     "edges": 520260,
+     "with_incline": 517992,
+     "steep": 16275,
+     "steep_share": 0.0314
+    },
+    {
+     "band_m": "5 to 10",
+     "edges": 455300,
+     "with_incline": 453368,
+     "steep": 12334,
+     "steep_share": 0.0272
+    },
+    {
+     "band_m": "10 to 25",
+     "edges": 249328,
+     "with_incline": 246592,
+     "steep": 8031,
+     "steep_share": 0.0326
+    },
+    {
+     "band_m": "over 25",
+     "edges": 360968,
+     "with_incline": 357774,
+     "steep": 3239,
+     "steep_share": 0.0091
+    }
+   ]
+  },
+  "v0.3.3": {
+   "overall_share": 0.0175,
+   "bands": [
+    {
+     "band_m": "0 to 2",
+     "edges": 331754,
+     "with_incline": 331456,
+     "steep": 4645,
+     "steep_share": 0.014
+    },
+    {
+     "band_m": "2 to 5",
+     "edges": 520258,
+     "with_incline": 519750,
+     "steep": 6959,
+     "steep_share": 0.0134
+    },
+    {
+     "band_m": "5 to 10",
+     "edges": 455034,
+     "with_incline": 454704,
+     "steep": 10950,
+     "steep_share": 0.0241
+    },
+    {
+     "band_m": "10 to 25",
+     "edges": 248752,
+     "with_incline": 248380,
+     "steep": 7641,
+     "steep_share": 0.0308
+    },
+    {
+     "band_m": "over 25",
+     "edges": 359494,
+     "with_incline": 359274,
+     "steep": 3296,
+     "steep_share": 0.0092
+    }
+   ]
+  }
+ }
+}

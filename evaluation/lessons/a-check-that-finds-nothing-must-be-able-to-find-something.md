@@ -1,0 +1,3 @@
+A check that reports zero is only evidence if the same code has been seen to report a non-zero count.
+
+Asked whether ORS's wheelchair routes use steps, I counted `highway=steps` among the way ids ORS returned and got zero in 5,892 routes. The runner had read the ids from `extras.osmid`; ORS names the field `osmId`, so every route had an empty id list and zero was the only possible answer. The same empty lists then made a new matcher drop every edge, which is how it showed. Before trusting a zero, print one raw record and count the inputs (here: routes with at least one way id). Evidence: compare/run_ors.py reads `extras.osmId`; the rerun files are `routes/*.with_way_ids.jsonl.gz`.

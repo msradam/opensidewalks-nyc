@@ -1,0 +1,28 @@
+# ORS v10.0.1, Arm C: this graph's pedestrian edges only (no street centrelines), strict kerbs.
+ors:
+  engine:
+    init_threads: 2
+    profile_default:
+      build:
+        source_file: /home/ors/files/nyc-osw-pedestrian.osm.pbf
+        elevation: false
+      service:
+        maximum_distance: 200000
+        maximum_snapping_radius: 400
+        maximum_visited_nodes: 5000000
+    profiles:
+      foot-walking:
+        enabled: true
+        encoder_name: foot-walking
+      wheelchair:
+        enabled: true
+        encoder_name: wheelchair
+        build:
+          ext_storages:
+            WayCategory:
+            WaySurfaceType:
+            Wheelchair:
+              kerbs_on_crossings: true
+            OsmId:
+        service:
+          maximum_snapping_radius: 400

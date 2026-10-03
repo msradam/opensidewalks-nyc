@@ -1,0 +1,7 @@
+# Built engine data, regenerable (see README.md)
+*.osm.pbf
+ors/*/files/
+ors/*/graphs/
+ors/*/logs/
+ors/*/elevation_cache/
+valhalla/tiles/

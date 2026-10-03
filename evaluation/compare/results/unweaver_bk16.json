@@ -1,0 +1,8358 @@
+{
+ "summary": {
+  "pairs_asked": 840,
+  "found_agrees": 840,
+  "both_found": 826,
+  "length_within_1m": 826,
+  "same_path_99pct_both_ways": 825,
+  "largest_length_difference_m": 0.0999999999999659,
+  "found_disagreements": [],
+  "length_disagreements": []
+ },
+ "rows": [
+  {
+   "id": "brownsville-0000",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 784.0,
+   "unweaver_m": 784.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0001",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1158.4,
+   "unweaver_m": 1158.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0002",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 228.2,
+   "unweaver_m": 228.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0003",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1450.1,
+   "unweaver_m": 1450.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0004",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 688.3,
+   "unweaver_m": 688.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0005",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1520.2,
+   "unweaver_m": 1520.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0006",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 227.3,
+   "unweaver_m": 227.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0007",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1255.0,
+   "unweaver_m": 1255.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0008",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 426.3,
+   "unweaver_m": 426.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0009",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 813.6,
+   "unweaver_m": 813.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0010",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 400.9,
+   "unweaver_m": 400.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0011",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 616.7,
+   "unweaver_m": 616.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0012",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 150.3,
+   "unweaver_m": 150.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0013",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1945.4,
+   "unweaver_m": 1945.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0014",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 434.5,
+   "unweaver_m": 434.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0015",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2050.2,
+   "unweaver_m": 2050.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0016",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 393.2,
+   "unweaver_m": 393.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0017",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 428.3,
+   "unweaver_m": 428.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0018",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 225.5,
+   "unweaver_m": 225.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0019",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2571.4,
+   "unweaver_m": 2571.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0020",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 225.5,
+   "unweaver_m": 225.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0021",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2212.5,
+   "unweaver_m": 2212.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0022",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 282.6,
+   "unweaver_m": 282.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0023",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 830.3,
+   "unweaver_m": 830.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0024",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1529.9,
+   "unweaver_m": 1529.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0025",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 3798.6,
+   "unweaver_m": 3798.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0026",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 144.9,
+   "unweaver_m": 144.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0027",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 808.8,
+   "unweaver_m": 808.8,
+   "ours_within_1m": 0.957,
+   "unweaver_within_1m": 0.957
+  },
+  {
+   "id": "brownsville-0028",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 237.1,
+   "unweaver_m": 237.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0029",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 555.4,
+   "unweaver_m": 555.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0030",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 614.2,
+   "unweaver_m": 614.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0031",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2104.0,
+   "unweaver_m": 2104.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0032",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 298.5,
+   "unweaver_m": 298.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0033",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 526.3,
+   "unweaver_m": 526.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0034",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 154.0,
+   "unweaver_m": 154.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0035",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 980.0,
+   "unweaver_m": 980.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0036",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 21.2,
+   "unweaver_m": 21.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0037",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 732.3,
+   "unweaver_m": 732.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0038",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 312.2,
+   "unweaver_m": 312.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0039",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1510.7,
+   "unweaver_m": 1510.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0040",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 659.4,
+   "unweaver_m": 659.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0041",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 923.4,
+   "unweaver_m": 923.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0042",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 956.5,
+   "unweaver_m": 956.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0043",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1627.6,
+   "unweaver_m": 1627.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0044",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1651.3,
+   "unweaver_m": 1651.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0045",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2447.7,
+   "unweaver_m": 2447.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0046",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 275.6,
+   "unweaver_m": 275.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0047",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 895.4,
+   "unweaver_m": 895.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0048",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 933.7,
+   "unweaver_m": 933.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0049",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2659.6,
+   "unweaver_m": 2659.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0050",
+   "profile": "wheelchair",
+   "ours_found": false,
+   "unweaver_status": "NoPath"
+  },
+  {
+   "id": "brownsville-0051",
+   "profile": "wheelchair",
+   "ours_found": false,
+   "unweaver_status": "NoPath"
+  },
+  {
+   "id": "brownsville-0052",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 655.7,
+   "unweaver_m": 655.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0053",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1723.3,
+   "unweaver_m": 1723.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0054",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 635.8,
+   "unweaver_m": 635.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0055",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2955.1,
+   "unweaver_m": 2955.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0056",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 425.1,
+   "unweaver_m": 425.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0057",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1492.8,
+   "unweaver_m": 1492.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0058",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 404.2,
+   "unweaver_m": 404.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0059",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1849.0,
+   "unweaver_m": 1849.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0060",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 412.9,
+   "unweaver_m": 412.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0061",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1458.3,
+   "unweaver_m": 1458.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0062",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 386.4,
+   "unweaver_m": 386.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0063",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1065.9,
+   "unweaver_m": 1065.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0064",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 659.7,
+   "unweaver_m": 659.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0065",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1647.8,
+   "unweaver_m": 1647.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0066",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 509.6,
+   "unweaver_m": 509.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0067",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1208.7,
+   "unweaver_m": 1208.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0068",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 547.7,
+   "unweaver_m": 547.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0069",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1174.5,
+   "unweaver_m": 1174.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0070",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 674.3,
+   "unweaver_m": 674.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0071",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2032.1,
+   "unweaver_m": 2032.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0072",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 641.5,
+   "unweaver_m": 641.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0073",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2029.7,
+   "unweaver_m": 2029.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0074",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 655.0,
+   "unweaver_m": 655.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0075",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2079.1,
+   "unweaver_m": 2079.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0076",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 369.0,
+   "unweaver_m": 369.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0077",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1795.7,
+   "unweaver_m": 1795.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0078",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 428.2,
+   "unweaver_m": 428.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0079",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 601.5,
+   "unweaver_m": 601.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0080",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 395.6,
+   "unweaver_m": 395.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0081",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1250.8,
+   "unweaver_m": 1250.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0082",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 327.6,
+   "unweaver_m": 327.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0083",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2416.3,
+   "unweaver_m": 2416.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0084",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 455.5,
+   "unweaver_m": 455.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0085",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1301.1,
+   "unweaver_m": 1301.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0086",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 702.9,
+   "unweaver_m": 702.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0087",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2195.0,
+   "unweaver_m": 2195.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0088",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 401.9,
+   "unweaver_m": 401.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0089",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2131.5,
+   "unweaver_m": 2131.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0090",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 431.9,
+   "unweaver_m": 431.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0091",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 823.5,
+   "unweaver_m": 823.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0092",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 613.0,
+   "unweaver_m": 613.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0093",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 467.6,
+   "unweaver_m": 467.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0094",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 709.4,
+   "unweaver_m": 709.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0095",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1207.9,
+   "unweaver_m": 1207.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0096",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 236.6,
+   "unweaver_m": 236.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0097",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1118.3,
+   "unweaver_m": 1118.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0098",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 443.1,
+   "unweaver_m": 443.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0099",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2166.1,
+   "unweaver_m": 2166.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0100",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 528.3,
+   "unweaver_m": 528.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0101",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 959.6,
+   "unweaver_m": 959.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0102",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 100.5,
+   "unweaver_m": 100.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0103",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1744.4,
+   "unweaver_m": 1744.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0104",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 100.5,
+   "unweaver_m": 100.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0105",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2271.0,
+   "unweaver_m": 2271.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0106",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 414.9,
+   "unweaver_m": 414.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0107",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1052.4,
+   "unweaver_m": 1052.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0108",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 639.1,
+   "unweaver_m": 639.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0109",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1385.7,
+   "unweaver_m": 1385.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0110",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 218.5,
+   "unweaver_m": 218.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0111",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 881.8,
+   "unweaver_m": 881.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0112",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 221.6,
+   "unweaver_m": 221.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0113",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1749.5,
+   "unweaver_m": 1749.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0114",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 82.8,
+   "unweaver_m": 82.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0115",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 617.0,
+   "unweaver_m": 617.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0116",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 624.4,
+   "unweaver_m": 624.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0117",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 873.9,
+   "unweaver_m": 873.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0118",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 172.0,
+   "unweaver_m": 172.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0119",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1849.8,
+   "unweaver_m": 1849.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0120",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 253.4,
+   "unweaver_m": 253.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0121",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1046.1,
+   "unweaver_m": 1046.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0122",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 824.1,
+   "unweaver_m": 824.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0123",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1128.4,
+   "unweaver_m": 1128.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0124",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 494.4,
+   "unweaver_m": 494.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0125",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 685.5,
+   "unweaver_m": 685.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0126",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 340.7,
+   "unweaver_m": 340.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0127",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2114.0,
+   "unweaver_m": 2114.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0128",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 589.8,
+   "unweaver_m": 589.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0129",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2298.7,
+   "unweaver_m": 2298.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0130",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 589.5,
+   "unweaver_m": 589.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0131",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2253.9,
+   "unweaver_m": 2253.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0132",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 958.2,
+   "unweaver_m": 958.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0133",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2137.2,
+   "unweaver_m": 2137.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0134",
+   "profile": "wheelchair",
+   "ours_found": false,
+   "unweaver_status": "NoPath"
+  },
+  {
+   "id": "brownsville-0135",
+   "profile": "wheelchair",
+   "ours_found": false,
+   "unweaver_status": "NoPath"
+  },
+  {
+   "id": "brownsville-0136",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2.6,
+   "unweaver_m": 2.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0137",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2371.0,
+   "unweaver_m": 2371.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0138",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 17.3,
+   "unweaver_m": 17.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0139",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 471.6,
+   "unweaver_m": 471.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0140",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 234.6,
+   "unweaver_m": 234.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0141",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 525.0,
+   "unweaver_m": 525.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0142",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 251.2,
+   "unweaver_m": 251.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0143",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 546.0,
+   "unweaver_m": 546.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0144",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 257.6,
+   "unweaver_m": 257.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0145",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1538.2,
+   "unweaver_m": 1538.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0146",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 269.4,
+   "unweaver_m": 269.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0147",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 497.4,
+   "unweaver_m": 497.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0148",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1291.0,
+   "unweaver_m": 1291.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0149",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1112.9,
+   "unweaver_m": 1112.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0150",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 740.9,
+   "unweaver_m": 740.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0151",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2416.2,
+   "unweaver_m": 2416.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0152",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 779.0,
+   "unweaver_m": 779.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0153",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2454.3,
+   "unweaver_m": 2454.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0154",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 858.5,
+   "unweaver_m": 858.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0155",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1992.2,
+   "unweaver_m": 1992.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0156",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 858.8,
+   "unweaver_m": 858.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0157",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 982.4,
+   "unweaver_m": 982.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0158",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 846.1,
+   "unweaver_m": 846.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0159",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1271.8,
+   "unweaver_m": 1271.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0160",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 329.5,
+   "unweaver_m": 329.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0161",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1486.8,
+   "unweaver_m": 1486.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0162",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 268.8,
+   "unweaver_m": 268.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0163",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2185.1,
+   "unweaver_m": 2185.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0164",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 99.7,
+   "unweaver_m": 99.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0165",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1839.8,
+   "unweaver_m": 1839.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0166",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 31.7,
+   "unweaver_m": 31.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0167",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1090.7,
+   "unweaver_m": 1090.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0168",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 652.6,
+   "unweaver_m": 652.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0169",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1501.4,
+   "unweaver_m": 1501.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0170",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 241.8,
+   "unweaver_m": 241.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0171",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2621.3,
+   "unweaver_m": 2621.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0172",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 750.3,
+   "unweaver_m": 750.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0173",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1460.0,
+   "unweaver_m": 1460.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0174",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 239.0,
+   "unweaver_m": 239.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0175",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2042.5,
+   "unweaver_m": 2042.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0176",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 183.1,
+   "unweaver_m": 183.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0177",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1886.1,
+   "unweaver_m": 1886.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0178",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 694.4,
+   "unweaver_m": 694.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0179",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2413.1,
+   "unweaver_m": 2413.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0180",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 528.5,
+   "unweaver_m": 528.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0181",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 751.8,
+   "unweaver_m": 751.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0182",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 333.4,
+   "unweaver_m": 333.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0183",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1198.9,
+   "unweaver_m": 1198.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0184",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 369.1,
+   "unweaver_m": 369.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0185",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 756.7,
+   "unweaver_m": 756.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0186",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 285.6,
+   "unweaver_m": 285.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0187",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2938.8,
+   "unweaver_m": 2938.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0188",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 285.6,
+   "unweaver_m": 285.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0189",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1183.6,
+   "unweaver_m": 1183.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0190",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 181.5,
+   "unweaver_m": 181.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0191",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1047.0,
+   "unweaver_m": 1047.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0192",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 174.5,
+   "unweaver_m": 174.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0193",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2864.9,
+   "unweaver_m": 2864.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0194",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 405.6,
+   "unweaver_m": 405.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0195",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 652.4,
+   "unweaver_m": 652.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0196",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 300.9,
+   "unweaver_m": 300.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0197",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1194.6,
+   "unweaver_m": 1194.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0198",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 613.4,
+   "unweaver_m": 613.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0199",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1345.3,
+   "unweaver_m": 1345.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0200",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 238.3,
+   "unweaver_m": 238.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0201",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 768.5,
+   "unweaver_m": 768.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0202",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 214.1,
+   "unweaver_m": 214.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0203",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2867.3,
+   "unweaver_m": 2867.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0204",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 240.8,
+   "unweaver_m": 240.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0205",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 673.2,
+   "unweaver_m": 673.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0206",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 711.6,
+   "unweaver_m": 711.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0207",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 669.7,
+   "unweaver_m": 669.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0208",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 664.4,
+   "unweaver_m": 664.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0209",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1373.2,
+   "unweaver_m": 1373.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0210",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 395.7,
+   "unweaver_m": 395.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0211",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1598.5,
+   "unweaver_m": 1598.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0212",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 135.9,
+   "unweaver_m": 135.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0213",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2781.7,
+   "unweaver_m": 2781.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0214",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 736.2,
+   "unweaver_m": 736.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0215",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 931.6,
+   "unweaver_m": 931.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0216",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1034.6,
+   "unweaver_m": 1034.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0217",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 3281.9,
+   "unweaver_m": 3281.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0218",
+   "profile": "wheelchair",
+   "ours_found": false,
+   "unweaver_status": "NoPath"
+  },
+  {
+   "id": "brownsville-0219",
+   "profile": "wheelchair",
+   "ours_found": false,
+   "unweaver_status": "NoPath"
+  },
+  {
+   "id": "brownsville-0220",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 729.0,
+   "unweaver_m": 729.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0221",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2041.3,
+   "unweaver_m": 2041.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0222",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 748.9,
+   "unweaver_m": 748.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0223",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2021.4,
+   "unweaver_m": 2021.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0224",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 961.0,
+   "unweaver_m": 961.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0225",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1810.8,
+   "unweaver_m": 1810.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0226",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1022.0,
+   "unweaver_m": 1022.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0227",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 982.0,
+   "unweaver_m": 982.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0228",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 960.8,
+   "unweaver_m": 960.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0229",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1799.9,
+   "unweaver_m": 1799.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0230",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1007.0,
+   "unweaver_m": 1007.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0231",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 987.2,
+   "unweaver_m": 987.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0232",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1331.0,
+   "unweaver_m": 1331.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0233",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1516.9,
+   "unweaver_m": 1516.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0234",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1738.7,
+   "unweaver_m": 1738.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0235",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2722.2,
+   "unweaver_m": 2722.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0236",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1776.8,
+   "unweaver_m": 1776.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0237",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2760.3,
+   "unweaver_m": 2760.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0238",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1074.6,
+   "unweaver_m": 1074.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0239",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1690.5,
+   "unweaver_m": 1690.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0240",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1045.8,
+   "unweaver_m": 1045.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0241",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2804.4,
+   "unweaver_m": 2804.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0242",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1059.3,
+   "unweaver_m": 1059.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0243",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2818.0,
+   "unweaver_m": 2818.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0244",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 484.6,
+   "unweaver_m": 484.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0245",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1130.9,
+   "unweaver_m": 1130.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0246",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 500.4,
+   "unweaver_m": 500.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0247",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1159.3,
+   "unweaver_m": 1159.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0248",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 336.3,
+   "unweaver_m": 336.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0249",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1245.1,
+   "unweaver_m": 1245.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0250",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 387.7,
+   "unweaver_m": 387.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0251",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1285.7,
+   "unweaver_m": 1285.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0252",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 508.6,
+   "unweaver_m": 508.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0253",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 552.1,
+   "unweaver_m": 552.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0254",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 536.7,
+   "unweaver_m": 536.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0255",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 477.9,
+   "unweaver_m": 477.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0256",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 746.3,
+   "unweaver_m": 746.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0257",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 983.4,
+   "unweaver_m": 983.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0258",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 36.7,
+   "unweaver_m": 36.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0259",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1404.7,
+   "unweaver_m": 1404.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0260",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 214.9,
+   "unweaver_m": 214.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0261",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 716.8,
+   "unweaver_m": 716.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0262",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 158.5,
+   "unweaver_m": 158.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0263",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 286.7,
+   "unweaver_m": 286.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0264",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 236.2,
+   "unweaver_m": 236.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0265",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1339.1,
+   "unweaver_m": 1339.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0266",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 624.8,
+   "unweaver_m": 624.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0267",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1974.9,
+   "unweaver_m": 1974.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0268",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 223.9,
+   "unweaver_m": 223.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0269",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1474.2,
+   "unweaver_m": 1474.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0270",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 867.4,
+   "unweaver_m": 867.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0271",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1417.7,
+   "unweaver_m": 1417.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0272",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 672.9,
+   "unweaver_m": 672.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0273",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1001.1,
+   "unweaver_m": 1001.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0274",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 349.1,
+   "unweaver_m": 349.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0275",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2857.5,
+   "unweaver_m": 2857.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0276",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 386.3,
+   "unweaver_m": 386.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0277",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 3614.8,
+   "unweaver_m": 3614.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0278",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 265.9,
+   "unweaver_m": 265.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0279",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1177.2,
+   "unweaver_m": 1177.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0280",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 530.6,
+   "unweaver_m": 530.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0281",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1570.5,
+   "unweaver_m": 1570.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0282",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 264.4,
+   "unweaver_m": 264.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0283",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 812.3,
+   "unweaver_m": 812.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0284",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 445.9,
+   "unweaver_m": 445.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0285",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1491.7,
+   "unweaver_m": 1491.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0286",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 795.9,
+   "unweaver_m": 795.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0287",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1482.0,
+   "unweaver_m": 1482.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0288",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 191.3,
+   "unweaver_m": 191.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0289",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 680.5,
+   "unweaver_m": 680.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0290",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 242.3,
+   "unweaver_m": 242.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0291",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 196.6,
+   "unweaver_m": 196.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0292",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 659.5,
+   "unweaver_m": 659.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0293",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 718.3,
+   "unweaver_m": 718.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0294",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 347.7,
+   "unweaver_m": 347.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0295",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1150.1,
+   "unweaver_m": 1150.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0296",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 507.7,
+   "unweaver_m": 507.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0297",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2540.0,
+   "unweaver_m": 2540.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0298",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 262.0,
+   "unweaver_m": 262.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0299",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1391.5,
+   "unweaver_m": 1391.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0300",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1284.9,
+   "unweaver_m": 1284.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0301",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2659.6,
+   "unweaver_m": 2659.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0302",
+   "profile": "wheelchair",
+   "ours_found": false,
+   "unweaver_status": "NoPath"
+  },
+  {
+   "id": "brownsville-0303",
+   "profile": "wheelchair",
+   "ours_found": false,
+   "unweaver_status": "NoPath"
+  },
+  {
+   "id": "brownsville-0304",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 226.1,
+   "unweaver_m": 226.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0305",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2498.9,
+   "unweaver_m": 2498.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0306",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 206.2,
+   "unweaver_m": 206.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0307",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1537.7,
+   "unweaver_m": 1537.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0308",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 245.7,
+   "unweaver_m": 245.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0309",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 232.9,
+   "unweaver_m": 232.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0310",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 224.8,
+   "unweaver_m": 224.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0311",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1521.4,
+   "unweaver_m": 1521.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0312",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 233.4,
+   "unweaver_m": 233.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0313",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 480.5,
+   "unweaver_m": 480.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0314",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 207.0,
+   "unweaver_m": 207.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0315",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 458.3,
+   "unweaver_m": 458.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0316",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 599.7,
+   "unweaver_m": 599.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0317",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2980.8,
+   "unweaver_m": 2980.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0318",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 123.5,
+   "unweaver_m": 123.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0319",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1838.2,
+   "unweaver_m": 1838.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0320",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 161.6,
+   "unweaver_m": 161.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0321",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1403.8,
+   "unweaver_m": 1403.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0322",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 269.7,
+   "unweaver_m": 269.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0323",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 820.0,
+   "unweaver_m": 820.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0324",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 270.8,
+   "unweaver_m": 270.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0325",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1705.9,
+   "unweaver_m": 1705.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0326",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 257.3,
+   "unweaver_m": 257.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0327",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1737.5,
+   "unweaver_m": 1737.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0328",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 511.2,
+   "unweaver_m": 511.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0329",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2638.0,
+   "unweaver_m": 2638.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0330",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 450.5,
+   "unweaver_m": 450.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0331",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 545.9,
+   "unweaver_m": 545.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0332",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 510.3,
+   "unweaver_m": 510.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0333",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1938.7,
+   "unweaver_m": 1938.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0334",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 572.7,
+   "unweaver_m": 572.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0335",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 3024.2,
+   "unweaver_m": 3024.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0336",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1546.1,
+   "unweaver_m": 1546.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0337",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1511.7,
+   "unweaver_m": 1511.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0338",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1979.8,
+   "unweaver_m": 1979.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0339",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2567.7,
+   "unweaver_m": 2567.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0340",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 940.2,
+   "unweaver_m": 940.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0341",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1558.7,
+   "unweaver_m": 1558.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0342",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1929.5,
+   "unweaver_m": 1929.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0343",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2041.4,
+   "unweaver_m": 2041.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0344",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1582.3,
+   "unweaver_m": 1582.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0345",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1832.5,
+   "unweaver_m": 1832.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0346",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1780.2,
+   "unweaver_m": 1780.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0347",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2359.5,
+   "unweaver_m": 2359.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0348",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2019.0,
+   "unweaver_m": 2019.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0349",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2327.7,
+   "unweaver_m": 2327.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0350",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2185.4,
+   "unweaver_m": 2185.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0351",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2837.4,
+   "unweaver_m": 2837.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0352",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2120.7,
+   "unweaver_m": 2120.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0353",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2567.0,
+   "unweaver_m": 2567.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0354",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2487.2,
+   "unweaver_m": 2487.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0355",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2953.8,
+   "unweaver_m": 2953.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0356",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2487.2,
+   "unweaver_m": 2487.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0357",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2953.8,
+   "unweaver_m": 2953.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0358",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2331.1,
+   "unweaver_m": 2331.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0359",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2889.2,
+   "unweaver_m": 2889.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0360",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1756.8,
+   "unweaver_m": 1756.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0361",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2549.5,
+   "unweaver_m": 2549.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0362",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1896.2,
+   "unweaver_m": 1896.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0363",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2213.9,
+   "unweaver_m": 2213.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0364",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2498.8,
+   "unweaver_m": 2498.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0365",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2921.5,
+   "unweaver_m": 2921.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0366",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2239.1,
+   "unweaver_m": 2239.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0367",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2903.1,
+   "unweaver_m": 2903.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0368",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2044.2,
+   "unweaver_m": 2044.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0369",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2610.7,
+   "unweaver_m": 2610.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0370",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2415.7,
+   "unweaver_m": 2415.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0371",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2882.3,
+   "unweaver_m": 2882.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0372",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1731.4,
+   "unweaver_m": 1731.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0373",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2080.2,
+   "unweaver_m": 2080.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0374",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1690.1,
+   "unweaver_m": 1690.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0375",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2269.3,
+   "unweaver_m": 2269.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0376",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1032.8,
+   "unweaver_m": 1032.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0377",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1530.7,
+   "unweaver_m": 1530.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0378",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1854.5,
+   "unweaver_m": 1854.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0379",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2556.6,
+   "unweaver_m": 2556.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0380",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1878.2,
+   "unweaver_m": 1878.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0381",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2670.9,
+   "unweaver_m": 2670.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0382",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2297.8,
+   "unweaver_m": 2297.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0383",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2641.5,
+   "unweaver_m": 2641.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0384",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2943.3,
+   "unweaver_m": 2943.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0385",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 3308.0,
+   "unweaver_m": 3308.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0386",
+   "profile": "wheelchair",
+   "ours_found": false,
+   "unweaver_status": "NoPath"
+  },
+  {
+   "id": "brownsville-0387",
+   "profile": "wheelchair",
+   "ours_found": false,
+   "unweaver_status": "NoPath"
+  },
+  {
+   "id": "brownsville-0388",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1158.0,
+   "unweaver_m": 1158.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0389",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1875.1,
+   "unweaver_m": 1875.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0390",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1138.1,
+   "unweaver_m": 1138.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0391",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1855.2,
+   "unweaver_m": 1855.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0392",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1389.4,
+   "unweaver_m": 1389.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0393",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1978.2,
+   "unweaver_m": 1978.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0394",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1372.1,
+   "unweaver_m": 1372.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0395",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1957.2,
+   "unweaver_m": 1957.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0396",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1412.5,
+   "unweaver_m": 1412.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0397",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1991.5,
+   "unweaver_m": 1991.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0398",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1389.7,
+   "unweaver_m": 1389.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0399",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1965.1,
+   "unweaver_m": 1965.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0400",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2061.0,
+   "unweaver_m": 2061.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0401",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2498.4,
+   "unweaver_m": 2498.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0402",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 644.7,
+   "unweaver_m": 644.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0403",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1571.0,
+   "unweaver_m": 1571.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0404",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 682.8,
+   "unweaver_m": 682.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0405",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1609.1,
+   "unweaver_m": 1609.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0406",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1463.8,
+   "unweaver_m": 1463.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0407",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2390.1,
+   "unweaver_m": 2390.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0408",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1473.0,
+   "unweaver_m": 1473.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0409",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2399.4,
+   "unweaver_m": 2399.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0410",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1483.1,
+   "unweaver_m": 1483.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0411",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2409.5,
+   "unweaver_m": 2409.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0412",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2037.8,
+   "unweaver_m": 2037.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0413",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2658.2,
+   "unweaver_m": 2658.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0414",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2055.2,
+   "unweaver_m": 2055.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0415",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2717.0,
+   "unweaver_m": 2717.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0416",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2529.2,
+   "unweaver_m": 2529.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0417",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 3057.7,
+   "unweaver_m": 3057.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0418",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2589.3,
+   "unweaver_m": 2589.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0419",
+   "profile": "wheelchair",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 3055.9,
+   "unweaver_m": 3055.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0000",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 791.6,
+   "unweaver_m": 791.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0001",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1233.6,
+   "unweaver_m": 1233.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0002",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 426.1,
+   "unweaver_m": 426.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0003",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1447.5,
+   "unweaver_m": 1447.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0004",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 690.1,
+   "unweaver_m": 690.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0005",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1491.1,
+   "unweaver_m": 1491.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0006",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 227.3,
+   "unweaver_m": 227.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0007",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1254.8,
+   "unweaver_m": 1254.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0008",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 425.8,
+   "unweaver_m": 425.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0009",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1007.0,
+   "unweaver_m": 1007.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0010",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 597.3,
+   "unweaver_m": 597.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0011",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 615.9,
+   "unweaver_m": 615.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0012",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 276.7,
+   "unweaver_m": 276.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0013",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1969.2,
+   "unweaver_m": 1969.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0014",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 481.4,
+   "unweaver_m": 481.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0015",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2050.4,
+   "unweaver_m": 2050.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0016",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 391.8,
+   "unweaver_m": 391.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0017",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 428.3,
+   "unweaver_m": 428.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0018",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 245.8,
+   "unweaver_m": 245.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0019",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2662.9,
+   "unweaver_m": 2662.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0020",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 310.2,
+   "unweaver_m": 310.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0021",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2303.5,
+   "unweaver_m": 2303.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0022",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 380.9,
+   "unweaver_m": 380.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0023",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 927.3,
+   "unweaver_m": 927.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0024",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1443.1,
+   "unweaver_m": 1443.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0025",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 3766.9,
+   "unweaver_m": 3766.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0026",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 149.4,
+   "unweaver_m": 149.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0027",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1009.1,
+   "unweaver_m": 1009.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0028",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 207.7,
+   "unweaver_m": 207.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0029",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 527.1,
+   "unweaver_m": 527.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0030",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 622.5,
+   "unweaver_m": 622.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0031",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1997.3,
+   "unweaver_m": 1997.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0032",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 298.5,
+   "unweaver_m": 298.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0033",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 526.3,
+   "unweaver_m": 526.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0034",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 245.8,
+   "unweaver_m": 245.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0035",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 929.6,
+   "unweaver_m": 929.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0036",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 147.9,
+   "unweaver_m": 147.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0037",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 857.1,
+   "unweaver_m": 857.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0038",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 507.3,
+   "unweaver_m": 507.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0039",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1423.5,
+   "unweaver_m": 1423.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0040",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 754.3,
+   "unweaver_m": 754.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0041",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 915.7,
+   "unweaver_m": 915.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0042",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 923.5,
+   "unweaver_m": 923.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0043",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1540.8,
+   "unweaver_m": 1540.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0044",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1564.5,
+   "unweaver_m": 1564.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0045",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2416.5,
+   "unweaver_m": 2416.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0046",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 275.6,
+   "unweaver_m": 275.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0047",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1090.6,
+   "unweaver_m": 1090.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0048",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 500.3,
+   "unweaver_m": 500.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0049",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2492.7,
+   "unweaver_m": 2492.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0050",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 482.6,
+   "unweaver_m": 482.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0051",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 954.8,
+   "unweaver_m": 954.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0052",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 653.6,
+   "unweaver_m": 653.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0053",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1721.7,
+   "unweaver_m": 1721.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0054",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 633.7,
+   "unweaver_m": 633.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0055",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2953.1,
+   "unweaver_m": 2953.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0056",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 422.7,
+   "unweaver_m": 422.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0057",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1491.9,
+   "unweaver_m": 1491.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0058",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 401.7,
+   "unweaver_m": 401.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0059",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1848.0,
+   "unweaver_m": 1848.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0060",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 423.2,
+   "unweaver_m": 423.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0061",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1636.9,
+   "unweaver_m": 1636.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0062",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 387.5,
+   "unweaver_m": 387.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0063",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1063.0,
+   "unweaver_m": 1063.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0064",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 635.9,
+   "unweaver_m": 635.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0065",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1135.2,
+   "unweaver_m": 1135.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0066",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 502.1,
+   "unweaver_m": 502.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0067",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1277.3,
+   "unweaver_m": 1277.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0068",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 540.2,
+   "unweaver_m": 540.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0069",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1243.2,
+   "unweaver_m": 1243.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0070",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 672.3,
+   "unweaver_m": 672.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0071",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2056.5,
+   "unweaver_m": 2056.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0072",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 641.0,
+   "unweaver_m": 641.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0073",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2044.7,
+   "unweaver_m": 2044.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0074",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 653.8,
+   "unweaver_m": 653.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0075",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2078.0,
+   "unweaver_m": 2078.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0076",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 368.8,
+   "unweaver_m": 368.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0077",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1803.8,
+   "unweaver_m": 1803.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0078",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 427.7,
+   "unweaver_m": 427.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0079",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 600.9,
+   "unweaver_m": 600.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0080",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 388.4,
+   "unweaver_m": 388.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0081",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1243.7,
+   "unweaver_m": 1243.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0082",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 326.9,
+   "unweaver_m": 326.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0083",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2384.3,
+   "unweaver_m": 2384.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0084",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 437.7,
+   "unweaver_m": 437.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0085",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1301.1,
+   "unweaver_m": 1301.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0086",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 697.5,
+   "unweaver_m": 697.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0087",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2190.5,
+   "unweaver_m": 2190.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0088",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 311.7,
+   "unweaver_m": 311.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0089",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2099.3,
+   "unweaver_m": 2099.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0090",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 431.9,
+   "unweaver_m": 431.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0091",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 807.1,
+   "unweaver_m": 807.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0092",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 592.3,
+   "unweaver_m": 592.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0093",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 467.6,
+   "unweaver_m": 467.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0094",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 641.5,
+   "unweaver_m": 641.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0095",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1130.0,
+   "unweaver_m": 1130.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0096",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 151.4,
+   "unweaver_m": 151.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0097",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1046.9,
+   "unweaver_m": 1046.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0098",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 367.7,
+   "unweaver_m": 367.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0099",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2242.1,
+   "unweaver_m": 2242.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0100",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 525.2,
+   "unweaver_m": 525.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0101",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 959.0,
+   "unweaver_m": 959.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0102",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 121.5,
+   "unweaver_m": 121.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0103",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1762.6,
+   "unweaver_m": 1762.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0104",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 163.6,
+   "unweaver_m": 163.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0105",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2326.2,
+   "unweaver_m": 2326.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0106",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 374.2,
+   "unweaver_m": 374.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0107",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1147.9,
+   "unweaver_m": 1147.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0108",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 638.4,
+   "unweaver_m": 638.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0109",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1382.7,
+   "unweaver_m": 1382.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0110",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 214.1,
+   "unweaver_m": 214.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0111",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 886.5,
+   "unweaver_m": 886.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0112",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 208.5,
+   "unweaver_m": 208.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0113",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1718.4,
+   "unweaver_m": 1718.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0114",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 74.2,
+   "unweaver_m": 74.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0115",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 607.1,
+   "unweaver_m": 607.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0116",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 622.7,
+   "unweaver_m": 622.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0117",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 870.8,
+   "unweaver_m": 870.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0118",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 121.5,
+   "unweaver_m": 121.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0119",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1924.5,
+   "unweaver_m": 1924.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0120",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 380.0,
+   "unweaver_m": 380.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0121",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1169.4,
+   "unweaver_m": 1169.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0122",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 738.8,
+   "unweaver_m": 738.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0123",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1022.2,
+   "unweaver_m": 1022.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0124",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 544.0,
+   "unweaver_m": 544.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0125",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 685.1,
+   "unweaver_m": 685.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0126",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 340.7,
+   "unweaver_m": 340.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0127",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2022.1,
+   "unweaver_m": 2022.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0128",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 589.8,
+   "unweaver_m": 589.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0129",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2142.9,
+   "unweaver_m": 2142.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0130",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 587.5,
+   "unweaver_m": 587.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0131",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2247.3,
+   "unweaver_m": 2247.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0132",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 175.1,
+   "unweaver_m": 175.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0133",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2005.4,
+   "unweaver_m": 2005.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0134",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 157.3,
+   "unweaver_m": 157.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0135",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1116.5,
+   "unweaver_m": 1116.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0136",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 38.9,
+   "unweaver_m": 38.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0137",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2369.4,
+   "unweaver_m": 2369.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0138",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 39.6,
+   "unweaver_m": 39.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0139",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 471.5,
+   "unweaver_m": 471.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0140",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 266.0,
+   "unweaver_m": 266.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0141",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 525.0,
+   "unweaver_m": 525.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0142",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 273.4,
+   "unweaver_m": 273.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0143",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 546.0,
+   "unweaver_m": 546.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0144",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 284.5,
+   "unweaver_m": 284.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0145",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1445.5,
+   "unweaver_m": 1445.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0146",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 287.6,
+   "unweaver_m": 287.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0147",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 482.0,
+   "unweaver_m": 482.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0148",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 912.9,
+   "unweaver_m": 912.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0149",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1085.8,
+   "unweaver_m": 1085.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0150",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 662.7,
+   "unweaver_m": 662.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0151",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2399.5,
+   "unweaver_m": 2399.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0152",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 700.8,
+   "unweaver_m": 700.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0153",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2437.6,
+   "unweaver_m": 2437.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0154",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 858.3,
+   "unweaver_m": 858.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0155",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1989.4,
+   "unweaver_m": 1989.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0156",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 855.3,
+   "unweaver_m": 855.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0157",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 934.3,
+   "unweaver_m": 934.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0158",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 845.9,
+   "unweaver_m": 845.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0159",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1253.0,
+   "unweaver_m": 1253.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0160",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 325.1,
+   "unweaver_m": 325.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0161",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1437.9,
+   "unweaver_m": 1437.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0162",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 268.8,
+   "unweaver_m": 268.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0163",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2182.6,
+   "unweaver_m": 2182.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0164",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 96.0,
+   "unweaver_m": 96.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0165",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1816.2,
+   "unweaver_m": 1816.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0166",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 31.7,
+   "unweaver_m": 31.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0167",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1090.7,
+   "unweaver_m": 1090.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0168",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 657.6,
+   "unweaver_m": 657.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0169",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1494.4,
+   "unweaver_m": 1494.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0170",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 241.8,
+   "unweaver_m": 241.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0171",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2606.5,
+   "unweaver_m": 2606.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0172",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 756.9,
+   "unweaver_m": 756.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0173",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1430.9,
+   "unweaver_m": 1430.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0174",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 223.7,
+   "unweaver_m": 223.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0175",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2000.9,
+   "unweaver_m": 2000.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0176",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 196.8,
+   "unweaver_m": 196.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0177",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1870.5,
+   "unweaver_m": 1870.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0178",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 478.9,
+   "unweaver_m": 478.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0179",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2335.0,
+   "unweaver_m": 2335.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0180",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 462.6,
+   "unweaver_m": 462.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0181",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 720.1,
+   "unweaver_m": 720.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0182",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 380.3,
+   "unweaver_m": 380.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0183",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1225.2,
+   "unweaver_m": 1225.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0184",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 369.1,
+   "unweaver_m": 369.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0185",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 737.0,
+   "unweaver_m": 737.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0186",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 306.6,
+   "unweaver_m": 306.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0187",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2917.6,
+   "unweaver_m": 2917.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0188",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 374.5,
+   "unweaver_m": 374.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0189",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1246.3,
+   "unweaver_m": 1246.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0190",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 279.8,
+   "unweaver_m": 279.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0191",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1124.7,
+   "unweaver_m": 1124.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0192",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 174.5,
+   "unweaver_m": 174.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0193",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2833.5,
+   "unweaver_m": 2833.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0194",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 399.6,
+   "unweaver_m": 399.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0195",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 657.1,
+   "unweaver_m": 657.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0196",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 287.8,
+   "unweaver_m": 287.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0197",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1143.9,
+   "unweaver_m": 1143.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0198",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 620.3,
+   "unweaver_m": 620.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0199",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1361.8,
+   "unweaver_m": 1361.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0200",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 238.3,
+   "unweaver_m": 238.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0201",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 746.5,
+   "unweaver_m": 746.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0202",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 306.6,
+   "unweaver_m": 306.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0203",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2917.6,
+   "unweaver_m": 2917.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0204",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 176.9,
+   "unweaver_m": 176.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0205",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 797.5,
+   "unweaver_m": 797.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0206",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 519.9,
+   "unweaver_m": 519.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0207",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 652.7,
+   "unweaver_m": 652.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0208",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 677.0,
+   "unweaver_m": 677.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0209",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1296.1,
+   "unweaver_m": 1296.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0210",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 384.7,
+   "unweaver_m": 384.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0211",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1610.5,
+   "unweaver_m": 1610.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0212",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 135.4,
+   "unweaver_m": 135.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0213",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2751.2,
+   "unweaver_m": 2751.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0214",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 736.2,
+   "unweaver_m": 736.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0215",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 913.6,
+   "unweaver_m": 913.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0216",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 561.1,
+   "unweaver_m": 561.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0217",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 3060.8,
+   "unweaver_m": 3060.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0218",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 543.4,
+   "unweaver_m": 543.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0219",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 3053.4,
+   "unweaver_m": 3053.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0220",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 729.0,
+   "unweaver_m": 729.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0221",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2039.6,
+   "unweaver_m": 2039.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0222",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 748.9,
+   "unweaver_m": 748.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0223",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2019.7,
+   "unweaver_m": 2019.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0224",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 954.6,
+   "unweaver_m": 954.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0225",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1809.8,
+   "unweaver_m": 1809.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0226",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1029.5,
+   "unweaver_m": 1029.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0227",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 975.6,
+   "unweaver_m": 975.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0228",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 940.5,
+   "unweaver_m": 940.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0229",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1810.3,
+   "unweaver_m": 1810.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0230",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1015.3,
+   "unweaver_m": 1015.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0231",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 976.2,
+   "unweaver_m": 976.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0232",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1117.8,
+   "unweaver_m": 1117.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0233",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1297.8,
+   "unweaver_m": 1297.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0234",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1672.0,
+   "unweaver_m": 1672.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0235",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2679.5,
+   "unweaver_m": 2679.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0236",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1710.1,
+   "unweaver_m": 1710.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0237",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2717.6,
+   "unweaver_m": 2717.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0238",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1072.5,
+   "unweaver_m": 1072.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0239",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1695.7,
+   "unweaver_m": 1695.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0240",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1044.4,
+   "unweaver_m": 1044.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0241",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2774.3,
+   "unweaver_m": 2774.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0242",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1055.6,
+   "unweaver_m": 1055.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0243",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2787.8,
+   "unweaver_m": 2787.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0244",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 484.6,
+   "unweaver_m": 484.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0245",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1138.7,
+   "unweaver_m": 1138.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0246",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 499.8,
+   "unweaver_m": 499.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0247",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1167.1,
+   "unweaver_m": 1167.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0248",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 329.1,
+   "unweaver_m": 329.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0249",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1216.1,
+   "unweaver_m": 1216.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0250",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 387.7,
+   "unweaver_m": 387.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0251",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1263.8,
+   "unweaver_m": 1263.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0252",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 478.5,
+   "unweaver_m": 478.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0253",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 559.2,
+   "unweaver_m": 559.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0254",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 191.7,
+   "unweaver_m": 191.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0255",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 477.2,
+   "unweaver_m": 477.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0256",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 534.9,
+   "unweaver_m": 534.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0257",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 892.8,
+   "unweaver_m": 892.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0258",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 36.7,
+   "unweaver_m": 36.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0259",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1403.5,
+   "unweaver_m": 1403.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0260",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 214.9,
+   "unweaver_m": 214.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0261",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 712.6,
+   "unweaver_m": 712.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0262",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 151.5,
+   "unweaver_m": 151.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0263",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 469.7,
+   "unweaver_m": 469.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0264",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 326.8,
+   "unweaver_m": 326.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0265",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1296.9,
+   "unweaver_m": 1296.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0266",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 549.4,
+   "unweaver_m": 549.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0267",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2040.6,
+   "unweaver_m": 2040.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0268",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 227.3,
+   "unweaver_m": 227.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0269",
+   "profile": "distance",
+   "ours_found": false,
+   "unweaver_status": "NoPath"
+  },
+  {
+   "id": "brownsville-0270",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 733.5,
+   "unweaver_m": 733.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0271",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1435.4,
+   "unweaver_m": 1435.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0272",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 766.0,
+   "unweaver_m": 766.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0273",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1266.4,
+   "unweaver_m": 1266.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0274",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 448.8,
+   "unweaver_m": 448.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0275",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2887.7,
+   "unweaver_m": 2887.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0276",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 426.4,
+   "unweaver_m": 426.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0277",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 3645.2,
+   "unweaver_m": 3645.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0278",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 263.8,
+   "unweaver_m": 263.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0279",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1180.7,
+   "unweaver_m": 1180.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0280",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 507.7,
+   "unweaver_m": 507.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0281",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1553.5,
+   "unweaver_m": 1553.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0282",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 255.8,
+   "unweaver_m": 255.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0283",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 820.2,
+   "unweaver_m": 820.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0284",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 225.2,
+   "unweaver_m": 225.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0285",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1412.8,
+   "unweaver_m": 1412.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0286",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 733.5,
+   "unweaver_m": 733.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0287",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1570.1,
+   "unweaver_m": 1570.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0288",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 139.0,
+   "unweaver_m": 139.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0289",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 642.3,
+   "unweaver_m": 642.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0290",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 224.3,
+   "unweaver_m": 224.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0291",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 379.6,
+   "unweaver_m": 379.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0292",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 400.1,
+   "unweaver_m": 400.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0293",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 833.5,
+   "unweaver_m": 833.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0294",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 347.7,
+   "unweaver_m": 347.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0295",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1248.4,
+   "unweaver_m": 1248.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0296",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 547.8,
+   "unweaver_m": 547.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0297",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2502.4,
+   "unweaver_m": 2502.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0298",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 267.8,
+   "unweaver_m": 267.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0299",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1388.4,
+   "unweaver_m": 1388.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0300",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 768.2,
+   "unweaver_m": 768.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0301",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2492.7,
+   "unweaver_m": 2492.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0302",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 750.5,
+   "unweaver_m": 750.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0303",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 783.8,
+   "unweaver_m": 783.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0304",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 226.1,
+   "unweaver_m": 226.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0305",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2487.6,
+   "unweaver_m": 2487.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0306",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 206.2,
+   "unweaver_m": 206.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0307",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1534.0,
+   "unweaver_m": 1534.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0308",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 258.4,
+   "unweaver_m": 258.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0309",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 232.5,
+   "unweaver_m": 232.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0310",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 237.4,
+   "unweaver_m": 237.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0311",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1520.3,
+   "unweaver_m": 1520.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0312",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 258.9,
+   "unweaver_m": 258.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0313",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 469.5,
+   "unweaver_m": 469.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0314",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 223.2,
+   "unweaver_m": 223.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0315",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 445.6,
+   "unweaver_m": 445.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0316",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 574.4,
+   "unweaver_m": 574.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0317",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2896.0,
+   "unweaver_m": 2896.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0318",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 123.5,
+   "unweaver_m": 123.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0319",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1823.0,
+   "unweaver_m": 1823.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0320",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 161.6,
+   "unweaver_m": 161.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0321",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1383.3,
+   "unweaver_m": 1383.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0322",
+   "profile": "distance",
+   "ours_found": false,
+   "unweaver_status": "NoPath"
+  },
+  {
+   "id": "brownsville-0323",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 811.4,
+   "unweaver_m": 811.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0324",
+   "profile": "distance",
+   "ours_found": false,
+   "unweaver_status": "NoPath"
+  },
+  {
+   "id": "brownsville-0325",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1707.3,
+   "unweaver_m": 1707.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0326",
+   "profile": "distance",
+   "ours_found": false,
+   "unweaver_status": "NoPath"
+  },
+  {
+   "id": "brownsville-0327",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1672.4,
+   "unweaver_m": 1672.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0328",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 506.8,
+   "unweaver_m": 506.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0329",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2603.8,
+   "unweaver_m": 2603.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0330",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 450.5,
+   "unweaver_m": 450.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0331",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 544.9,
+   "unweaver_m": 544.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0332",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 510.1,
+   "unweaver_m": 510.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0333",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1856.9,
+   "unweaver_m": 1856.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0334",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 572.5,
+   "unweaver_m": 572.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0335",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2995.1,
+   "unweaver_m": 2995.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0336",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1550.3,
+   "unweaver_m": 1550.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0337",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1450.7,
+   "unweaver_m": 1450.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0338",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1967.5,
+   "unweaver_m": 1967.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0339",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2569.4,
+   "unweaver_m": 2569.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0340",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 881.4,
+   "unweaver_m": 881.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0341",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1556.7,
+   "unweaver_m": 1556.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0342",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1840.3,
+   "unweaver_m": 1840.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0343",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2048.1,
+   "unweaver_m": 2048.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0344",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1523.5,
+   "unweaver_m": 1523.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0345",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1833.4,
+   "unweaver_m": 1833.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0346",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1701.2,
+   "unweaver_m": 1701.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0347",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2297.8,
+   "unweaver_m": 2297.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0348",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1821.8,
+   "unweaver_m": 1821.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0349",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2288.0,
+   "unweaver_m": 2288.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0350",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2209.5,
+   "unweaver_m": 2209.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0351",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2898.6,
+   "unweaver_m": 2898.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0352",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2094.2,
+   "unweaver_m": 2094.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0353",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2573.7,
+   "unweaver_m": 2573.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0354",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2494.2,
+   "unweaver_m": 2494.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0355",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2981.6,
+   "unweaver_m": 2981.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0356",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2559.6,
+   "unweaver_m": 2559.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0357",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 3001.3,
+   "unweaver_m": 3001.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0358",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2257.0,
+   "unweaver_m": 2257.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0359",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2946.0,
+   "unweaver_m": 2946.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0360",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1747.4,
+   "unweaver_m": 1747.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0361",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2488.7,
+   "unweaver_m": 2488.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0362",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1758.8,
+   "unweaver_m": 1758.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0363",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2225.0,
+   "unweaver_m": 2225.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0364",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2457.2,
+   "unweaver_m": 2457.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0365",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2937.4,
+   "unweaver_m": 2937.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0366",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2154.4,
+   "unweaver_m": 2154.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0367",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2913.5,
+   "unweaver_m": 2913.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0368",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2013.0,
+   "unweaver_m": 2013.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0369",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2613.2,
+   "unweaver_m": 2613.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0370",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2494.2,
+   "unweaver_m": 2494.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0371",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2981.6,
+   "unweaver_m": 2981.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0372",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1599.4,
+   "unweaver_m": 1599.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0373",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2128.0,
+   "unweaver_m": 2128.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0374",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1616.4,
+   "unweaver_m": 1616.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0375",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2213.1,
+   "unweaver_m": 2213.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0376",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1113.7,
+   "unweaver_m": 1113.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0377",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1616.9,
+   "unweaver_m": 1616.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0378",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1845.1,
+   "unweaver_m": 1845.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0379",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2493.9,
+   "unweaver_m": 2493.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0380",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1868.8,
+   "unweaver_m": 1868.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0381",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2610.1,
+   "unweaver_m": 2610.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0382",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2270.9,
+   "unweaver_m": 2270.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0383",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2648.1,
+   "unweaver_m": 2648.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0384",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2739.3,
+   "unweaver_m": 2739.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0385",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 3186.2,
+   "unweaver_m": 3186.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0386",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2721.6,
+   "unweaver_m": 2721.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0387",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 3178.3,
+   "unweaver_m": 3178.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0388",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1145.3,
+   "unweaver_m": 1145.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0389",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1787.8,
+   "unweaver_m": 1787.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0390",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1127.7,
+   "unweaver_m": 1127.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0391",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1767.9,
+   "unweaver_m": 1767.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0392",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1372.5,
+   "unweaver_m": 1372.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0393",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1916.0,
+   "unweaver_m": 1916.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0394",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1360.7,
+   "unweaver_m": 1360.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0395",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1895.1,
+   "unweaver_m": 1895.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0396",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1391.0,
+   "unweaver_m": 1391.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0397",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1928.0,
+   "unweaver_m": 1928.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0398",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1365.1,
+   "unweaver_m": 1365.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0399",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1892.2,
+   "unweaver_m": 1892.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0400",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2025.5,
+   "unweaver_m": 2025.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0401",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2404.6,
+   "unweaver_m": 2404.6,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0402",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 644.7,
+   "unweaver_m": 644.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0403",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1575.9,
+   "unweaver_m": 1575.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0404",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 682.8,
+   "unweaver_m": 682.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0405",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1614.0,
+   "unweaver_m": 1614.0,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0406",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1431.1,
+   "unweaver_m": 1431.1,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0407",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2362.2,
+   "unweaver_m": 2362.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0408",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1437.7,
+   "unweaver_m": 1437.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0409",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2359.2,
+   "unweaver_m": 2359.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0410",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 1445.9,
+   "unweaver_m": 1445.9,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0411",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2372.7,
+   "unweaver_m": 2372.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0412",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2002.5,
+   "unweaver_m": 2002.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0413",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2662.2,
+   "unweaver_m": 2662.2,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0414",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2022.5,
+   "unweaver_m": 2022.5,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0415",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2718.8,
+   "unweaver_m": 2718.8,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0416",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2493.4,
+   "unweaver_m": 2493.4,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0417",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 3057.3,
+   "unweaver_m": 3057.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0418",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 2558.3,
+   "unweaver_m": 2558.3,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  },
+  {
+   "id": "brownsville-0419",
+   "profile": "distance",
+   "ours_found": true,
+   "unweaver_status": "Ok",
+   "ours_m": 3062.7,
+   "unweaver_m": 3062.7,
+   "ours_within_1m": 1.0,
+   "unweaver_within_1m": 1.0
+  }
+ ]
+}

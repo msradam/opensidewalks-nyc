@@ -1,0 +1,173 @@
+{
+ "sheets": 48,
+ "rated_by_A": 48,
+ "rated_by_B": 24,
+ "rated_by_both": 24,
+ "agreement": {
+  "place": {
+   "n": 24,
+   "observed_agreement": 0.958,
+   "kappa": 0.941,
+   "confusion": {
+    "crossing / crossing": 11,
+    "path / path": 4,
+    "roadway / roadway": 1,
+    "sidewalk / sidewalk": 5,
+    "structure / structure": 1,
+    "unclear / path": 1,
+    "unclear / unclear": 1
+   }
+  },
+  "ramps": {
+   "n": 24,
+   "observed_agreement": 0.917,
+   "kappa": 0.858,
+   "confusion": {
+    "cannot tell / cannot tell": 7,
+    "cannot tell / one": 1,
+    "neither / cannot tell": 1,
+    "not applicable / not applicable": 13,
+    "one / one": 2
+   }
+  },
+  "sidewalk": {
+   "n": 24,
+   "observed_agreement": 0.958,
+   "kappa": 0.913,
+   "confusion": {
+    "cannot tell / cannot tell": 1,
+    "no / cannot tell": 1,
+    "no / no": 6,
+    "yes / yes": 16
+   }
+  }
+ },
+ "by_cause": {
+  "connectivity": {
+   "sheets": 12,
+   "place": {
+    "crossing": 7,
+    "roadway": 3,
+    "path": 1,
+    "structure": 1
+   },
+   "sidewalk": {
+    "no": 10,
+    "yes": 1,
+    "cannot tell": 1
+   },
+   "reference_route_in_the_roadway": 10,
+   "reference_route_on_a_sidewalk_or_path": 1,
+   "notes": {
+    "3": "Mark is mid crosswalk, but the line leaves the stripes there and cuts diagonally across the open intersection; no pads resolvable at the kerb ends.",
+    "4": "Mark is on a painted crosswalk, and the line turns off it to run diagonally through the intersection; kerb ends show no pad I can resolve.",
+    "8": "Mark is on a painted crosswalk, but the line turns north through the middle of the intersection; west kerb end is in shadow and a car sits at the east end.",
+    "14": "Mark is in the middle of the carriageway at an unpainted T junction and the line then runs along the roadway.",
+    "23": "Mark is in the carriageway at the mouth of a side street with no crosswalk, and the line runs down the middle of that street.",
+    "24": "Mark is mid carriageway away from any corner; the line crosses the road at an angle and enters woods with no visible path.",
+    "25": "Paved way through parkland lined with boulders, no vehicles; it is wide enough that it could be a park drive.",
+    "33": "Mark is on a painted crosswalk with a reddish pad at the south corner only; east of the mark the line runs down the middle of the street between parked cars.",
+    "34": "Mark is on a long painted crosswalk; tree shadow covers the north end, and northwest of the mark the line cuts across open carriageway off the stripes.",
+    "38": "Mark is on a timber framed linear structure beside an elevated walkway that looks under construction, so whether it is walkable is not visible.",
+    "46": "Mark is on a painted crosswalk whose west end is in building shadow; north of the mark the line crosses the middle of the junction off any crosswalk.",
+    "47": "Mark is on a painted crosswalk with no coloured pad seen at either corner; west of the mark the line crosses the main street diagonally with no crossing under it."
+   }
+  },
+  "incline data": {
+   "sheets": 12,
+   "place": {
+    "unclear": 3,
+    "sidewalk": 4,
+    "path": 2,
+    "crossing": 3
+   },
+   "sidewalk": {
+    "cannot tell": 2,
+    "yes": 9,
+    "no": 1
+   },
+   "on_a_structure": 0,
+   "notes": {
+    "2": "Mark sits on the curved edge between a paved driveway apron and a planted bed, partly in shadow, and no walkway is clearly visible under the line.",
+    "5": "Mark is on leaf covered ground under bare trees beside a brick terrace, with no path visible under the zigzag line.",
+    "17": "Mark is in deep building shadow between a row of parked cars and the building wall, which reads as sidewalk but is dark.",
+    "19": "Mark is on a paved entrance court off the street, and the line continues over a paved garden walk.",
+    "20": "Mark is at the corner end of a painted crosswalk; the near kerb is covered by the survey squares and the far end is in shadow.",
+    "22": "Mark is on the street sidewalk just west of where the street bridges a railway cut, so it could count as the bridge approach.",
+    "29": "Paved forecourt beside a building, set back from the street; the line follows paved walks between planters.",
+    "32": "Mark is at the back of the street sidewalk where a diagonal walk (possibly a ramp or steps) rises into a paved plaza.",
+    "37": "A thin pale strip runs along the east edge of a narrow lane beside a lawn; it is narrow enough that it may be only a kerb.",
+    "42": "Whole scene is in deep shadow; mark is on the sidewalk at the head of a wide painted crosswalk.",
+    "43": "Mark is at the south end of a painted crosswalk in deep building shadow; the line southeast hugs the building edge where the sidewalk is hidden by shadow.",
+    "45": "Mark is on grass under trees in a park between two paved paths; no path is visible under the line, though tree shadows could hide a worn track."
+   }
+  },
+  "kerb data": {
+   "sheets": 12,
+   "place": {
+    "crossing": 11,
+    "sidewalk": 1
+   },
+   "sidewalk": {
+    "yes": 9,
+    "no": 2,
+    "cannot tell": 1
+   },
+   "at_a_crossing": 11,
+   "ramps_at_those_crossings": {
+    "cannot tell": 8,
+    "neither": 2,
+    "one": 1
+   },
+   "supported": 3,
+   "contradicted_ramps_visible_at_both_ends": 0,
+   "undecided": 9,
+   "contradicted_sheets": [],
+   "notes": {
+    "9": "Mark is at the corner end of a painted crosswalk and the line follows the sidewalk and the stripes; shadow hides the kerbs.",
+    "11": "Mark is at a corner where the line crosses the avenue with no painted crosswalk; parked cars line the far kerb and no ramp is visible there.",
+    "12": "Mark is at a corner at the end of a faintly visible crosswalk; the whole street is in deep shadow.",
+    "15": "Mark is on a median island nose within a long painted crosswalk; the survey squares cover the kerb edge there.",
+    "26": "Mark is at the west end of a painted crosswalk against the parapet of what looks like a raised roadway; west of the mark the line crosses that roadway with no crossing visible, and a parked car and shadow hide the kerb.",
+    "28": "Mark is at the plaza end of a painted crosswalk; no coloured pad shows at either end, though a kerb break alone would not resolve at this scale.",
+    "30": "Mark is at the north kerb end of a painted crosswalk; no coloured pad seen at either end, and plain kerb breaks would not resolve.",
+    "31": "A narrow sidewalk starts at the mark and runs northeast; southwest of the mark the line runs along the road edge where no sidewalk is visible.",
+    "35": "Mark is at the south end of a painted crosswalk across a wide avenue; the south kerb is in deep building shadow.",
+    "36": "Mark is on the corner where two painted crosswalks land; the crossing to the south is in building shadow.",
+    "40": "Mark is at the west end of a painted crosswalk; red pad clear at the east corner, the west corner is faint and crossed by a pole shadow.",
+    "41": "Mark is on a painted crosswalk in a work zone; yellow barriers and cones clutter both kerb ends."
+   }
+  },
+  "structure": {
+   "sheets": 12,
+   "place": {
+    "crossing": 3,
+    "unclear": 1,
+    "structure": 2,
+    "sidewalk": 4,
+    "path": 1,
+    "roadway": 1
+   },
+   "sidewalk": {
+    "yes": 9,
+    "cannot tell": 2,
+    "no": 1
+   },
+   "on_a_structure": 2,
+   "notes": {
+    "1": "Mark is at the north end of a painted crosswalk; building shadow hides both kerb ends.",
+    "6": "Woodland floor under bare trees and long shadows; no trail can be made out under the line.",
+    "7": "Narrow railed strip with planting and a paved walk passing between and under buildings looks like an elevated walkway; half is in shadow.",
+    "10": "Mark is on the sidewalk where a parking lot driveway crosses it, mid block.",
+    "13": "Line leaves the street sidewalk and follows a park path visible further south; the mark itself is under an evergreen and its shadow.",
+    "16": "Mark is on the lanes of a divided highway and the line cuts diagonally across it; no footbridge or crossing is visible.",
+    "18": "Bridge deck carrying roadway and rail tracks over water; the line runs along the fence at the edge of the track bed and I cannot see a walkway surface.",
+    "21": "Narrow paved walk between a fence and the verge of a curving road, beside a cemetery.",
+    "27": "Reddish pad visible at the island end of the crosswalk; the west end shows pale concrete but no pad, partly under tree shadow.",
+    "39": "Mark is in deep shadow between a building line and parked cars; the sidewalk is visible in sunlight just north on the same alignment.",
+    "44": "Mark is at the corner end of a faint crosswalk where a road bridge over rail tracks begins; shadow and a parapet hide the kerb.",
+    "48": "Mark is on a narrow sidewalk between a fence line and parked cars, partly in shadow."
+   }
+  }
+ }
+}
