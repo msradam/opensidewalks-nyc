@@ -57,8 +57,8 @@ def _polyline_length_m(coords):
 
 # ----- the ramp rule ------------------------------------------------------
 
-def crossings_with_ramps(feats, curb_ids, node_xy, reach_m):
-    """IDs of the crossing edges that lie on a crossing with a ramp at each end.
+def crossing_ends(feats, curb_ids, node_xy, reach_m):
+    """Each crossing's edges, and whether each of its ends has a ramp in reach.
 
     A crossing is usually several edges: the kerb, lane and centreline
     vertices of the OSM way are all nodes. A surveyed ramp is snapped to the
@@ -66,9 +66,11 @@ def crossings_with_ramps(feats, curb_ids, node_xy, reach_m):
     beside the crossing as a node of the crossing itself. So "either endpoint
     of this edge is a curb node" fails most edges of a crossing that has a
     ramp at both corners. Judge the crossing as a whole: join crossing edges
-    that meet at a node no sidewalk or footway reaches, and pass the group
-    when every node where it meets the rest of the pedestrian network has a
-    surveyed ramp within reach_m.
+    that meet at a node no sidewalk or footway reaches. Its ends are the nodes
+    where it meets the rest of the pedestrian network, and an end has a ramp
+    when a surveyed ramp lies within reach_m of it.
+
+    Returns ({crossing: [edge ids]}, {crossing: {end node: has a ramp}}).
     """
     crossing_edges, walk_nodes = [], set()
     for f in feats:
@@ -103,14 +105,21 @@ def crossings_with_ramps(feats, curb_ids, node_xy, reach_m):
         return (lonlat[0] * east, lonlat[1] * 111320)
 
     ramps = cKDTree([metres(node_xy[n]) for n in curb_ids]) if curb_ids else None
-    meets = {}
+    groups, ends = {}, {}
     for eid, u, v in crossing_edges:
-        meets.setdefault(find(eid), set()).update(n for n in (u, v) if n in walk_nodes)
-    ramped = {g: bool(ends) and ramps is not None and all(
-                  ramps.query(metres(node_xy[n]))[0] <= reach_m for n in ends)
-              for g, ends in meets.items()}
-    ok = {eid for eid, _, _ in crossing_edges if ramped[find(eid)]}
-    print(f"[crossings] {len(crossing_edges):,} edges in {len(meets):,} crossings; "
+        g = find(eid)
+        groups.setdefault(g, []).append(eid)
+        for n in (u, v):
+            if n in walk_nodes:
+                ends.setdefault(g, {})[n] = ramps is not None and ramps.query(metres(node_xy[n]))[0] <= reach_m
+    return groups, ends
+
+
+def crossings_with_ramps(feats, curb_ids, node_xy, reach_m):
+    """IDs of the crossing edges that lie on a crossing with a ramp at each end."""
+    groups, ends = crossing_ends(feats, curb_ids, node_xy, reach_m)
+    ok = {eid for g, eids in groups.items() if ends.get(g) and all(ends[g].values()) for eid in eids}
+    print(f"[crossings] {sum(len(e) for e in groups.values()):,} edges in {len(groups):,} crossings; "
           f"{len(ok):,} edges on a crossing with a ramp at each end")
     return ok
 
