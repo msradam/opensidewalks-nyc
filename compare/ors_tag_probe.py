@@ -37,6 +37,7 @@ FORMS = {
     "width=1.2": ({}, {"width": "1.2"}),
 }
 LIMITS = {
+    "none given": {},
     "kerb 0.03": {"maximum_sloped_kerb": 0.03}, "kerb 0.06": {"maximum_sloped_kerb": 0.06},
     "kerb 0.1": {"maximum_sloped_kerb": 0.1},
     "incline 6": {"maximum_incline": 6}, "incline 10": {"maximum_incline": 10},
@@ -77,7 +78,9 @@ def ask(base, out):
         o, d = [x0 + 5 * M, y], [x1 - 5 * M, y]      # inside the graph's bounding box, or ORS finds no point
         res[form] = {}
         for name, r in LIMITS.items():
-            body = {"coordinates": [o, d], "instructions": False, "options": {"profile_params": {"restrictions": r}}}
+            body = {"coordinates": [o, d], "instructions": False}
+            if r:
+                body["options"] = {"profile_params": {"restrictions": r}}
             j = requests.post(f"{base}/ors/v2/directions/wheelchair/geojson", json=body, timeout=30).json()
             # 2009 is "no route": the corridor is blocked. Anything else is a failed probe.
             code = j.get("error", {}).get("code")

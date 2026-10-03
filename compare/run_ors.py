@@ -2,14 +2,23 @@
 
 Never a public API: the base URL must be on this machine.
 
-Configurations (all with preference "shortest", to match this graph's
-shortest-passable-path search, except "default"):
-  foot                      foot-walking, the engine's plain foot route
-  default                   wheelchair as ORS ships it (recommended, 6%, 0.06 m)
-  i{6,10}_k{3,6}[_w90]      wheelchair with maximum_incline, maximum_sloped_kerb
-                            (cm) and, with _w90, minimum_width 0.9 m
+Configurations:
+  foot                      foot-walking, shortest
+  foot_rec                  foot-walking as ORS ships it (recommended weighting)
+  default                   wheelchair with no restrictions given. ORS then
+                            applies no kerb, incline or width limit at all
+                            (ors_tag_probe.json); only its weighting differs
+                            from foot.
+  rec_i{6,10}_k6            wheelchair, recommended weighting, with
+                            maximum_incline and maximum_sloped_kerb 0.06 m.
+                            6% and 0.06 m are the defaults ORS documents;
+                            these are the routes a user of ORS would see.
+  i{6,10}_k{3,6}[_w90]      the same limits with preference "shortest", which
+                            matches this graph's shortest-passable-path
+                            search, and with _w90 minimum_width 0.9 m. Whether
+                            a route is found does not depend on the weighting.
 
-usage: python compare/run_ors.py BASE_URL PAIRS_JSON OUT_JSONL_GZ [--full-matrix-per-area N]
+usage: python compare/run_ors.py BASE_URL PAIRS_JSON OUT_JSONL_GZ [--only CONFIG,CONFIG]
 """
 import gzip
 import json
@@ -23,12 +32,13 @@ import requests
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from compare.graph import EAST, NORTH, read_json
 
-PRIMARY = ("foot", "default", "i10_k6", "i6_k3")
-
 
 def configs():
     out = {"foot": ("foot-walking", {"preference": "shortest"}),
+           "foot_rec": ("foot-walking", {}),
            "default": ("wheelchair", {})}
+    for inc in (6, 10):
+        out[f"rec_i{inc}_k6"] = ("wheelchair", {"options": {"profile_params": {"restrictions": {"maximum_incline": inc, "maximum_sloped_kerb": 0.06}}}})
     for inc in (6, 10):
         for kerb in (3, 6):
             for width in (None, 0.9):
@@ -60,16 +70,11 @@ def ask(session, base, profile, body, o, d):
             "osmid": f["properties"].get("extras", {}).get("osmid", {}).get("values")}
 
 
-def main(base, pairs_json, out, full_per_area=None, threads=6):
+def main(base, pairs_json, out, only=None, threads=6):
     assert base.startswith(("http://localhost", "http://127.0.0.1")), "local engines only"
     pairs = read_json(pairs_json)["pairs"]
     cfg = configs()
-    seen = {}
-    jobs = []
-    for p in pairs:
-        n = seen[p["area"]] = seen.get(p["area"], 0) + 1
-        full = p["set"] != "random" or full_per_area is None or n <= full_per_area
-        jobs += [(p, name) for name in cfg if full or name in PRIMARY]
+    jobs = [(p, name) for p in pairs for name in cfg if only is None or name in only]
     session = requests.Session()
 
     def run(job):
@@ -86,5 +91,4 @@ def main(base, pairs_json, out, full_per_area=None, threads=6):
 
 if __name__ == "__main__":
     a = sys.argv[1:]
-    full = int(a[a.index("--full-matrix-per-area") + 1]) if "--full-matrix-per-area" in a else None
-    main(a[0], a[1], a[2], full)
+    main(a[0], a[1], a[2], a[a.index("--only") + 1].split(",") if "--only" in a else None)
