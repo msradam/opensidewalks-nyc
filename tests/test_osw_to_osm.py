@@ -111,6 +111,26 @@ def test_unknown_mode_leaves_unramped_ends_untagged():
     assert at(r, feats[0]["geometry"]["coordinates"])["kerb"] == "lowered"
 
 
+def test_pedestrian_only_leaves_out_street_centrelines():
+    feats = fixture()
+    a, d = feats[0]["geometry"]["coordinates"], feats[3]["geometry"]["coordinates"]
+    street = [edge("st", "d", "a", [d, a], highway="residential", name="Test Street"), edge("str", "a", "d", [a, d], highway="residential", name="Test Street")]
+    _, ways = read(feats + street)
+    assert ways == ["s1", "x1", "x2", "p1", "st"], "a street on the same line as a sidewalk is a way of its own"
+    _, ways = read(feats + street, pedestrian_only=True)
+    assert ways == ["s1", "x1", "x2", "p1"], ways
+
+
+def test_steps_and_a_path_on_one_line_are_both_kept():
+    feats = fixture()
+    b, c = feats[1]["geometry"]["coordinates"], feats[2]["geometry"]["coordinates"]
+    via = [-73.9101, 40.66 + 20 * M]
+    steps = [edge("t1", "b", "c", [b, via, c], highway="steps"), edge("t1r", "c", "b", [c, via, b], highway="steps")]
+    r, ways = read(feats + steps)
+    assert ways == ["s1", "x1", "x2", "p1", "t1"], ways
+    assert [tags["highway"] for _, tags in r.ways.values()][-2:] == ["footway", "steps"]
+
+
 if __name__ == "__main__":
     for name, fn in list(globals().items()):
         if name.startswith("test_"):

@@ -17,7 +17,10 @@ What this writes:
           width in metres, incline as a signed percentage ("8.3%").
   sidecar OUTPUT.ways.json, the OSW edge _id for each OSM way id.
 
-usage: python scripts/osw_to_osm.py --input OSW.geojson --output OUT.osm.pbf [--no-ramp raised|unknown]
+With --pedestrian-only the street centrelines are left out, so a router on the
+result can use only what this graph's own profiles use.
+
+usage: python scripts/osw_to_osm.py --input OSW.geojson --output OUT.osm.pbf [--no-ramp raised|unknown] [--pedestrian-only]
 """
 
 from __future__ import annotations
@@ -67,7 +70,7 @@ def way_tags(p):
     return tags
 
 
-def convert(feats, output, no_ramp="raised"):
+def convert(feats, output, no_ramp="raised", pedestrian_only=False):
     """Write the PBF and the sidecar. Returns (nodes, ways) written."""
     output = Path(output)
     output.unlink(missing_ok=True)
@@ -87,8 +90,10 @@ def convert(feats, output, no_ramp="raised"):
             continue
         p = f["properties"]
         coords = [tuple(c[:2]) for c in f["geometry"]["coordinates"]]
-        key = min(tuple(coords), tuple(reversed(coords)))
-        if key in done or p["_u_id"] == p["_v_id"]:
+        # Opposite edges share a line and a class. Two ways of different classes can share a line too
+        # (steps and the path beside them, drawn on the same nodes), and both must survive.
+        key = (min(tuple(coords), tuple(reversed(coords))), p.get("highway"), p.get("footway"))
+        if key in done or p["_u_id"] == p["_v_id"] or (pedestrian_only and p.get("highway") not in ("footway", "steps")):
             continue
         done.add(key)
         refs = [node_id[p["_u_id"]]]
@@ -112,9 +117,10 @@ def main():
     ap.add_argument("--input", required=True, type=Path)
     ap.add_argument("--output", required=True, type=Path)
     ap.add_argument("--no-ramp", choices=("raised", "unknown"), default="raised")
+    ap.add_argument("--pedestrian-only", action="store_true")
     args = ap.parse_args()
     feats = json.loads(args.input.read_text())["features"]
-    nodes, ways = convert(feats, args.output, args.no_ramp)
+    nodes, ways = convert(feats, args.output, args.no_ramp, args.pedestrian_only)
     print(f"[write] {args.output}: {nodes:,} nodes, {ways:,} ways")
 
 
