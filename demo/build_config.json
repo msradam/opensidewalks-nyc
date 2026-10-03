@@ -22,7 +22,7 @@
      "Where a surveyed ramp serves a crossing. On 200 crossings rated over the city's 2018 aerial imagery, 164 of the 166 crossings that the 5 m rule passes have a surveyed ramp placed to serve both ends (98.8%). Two raters agreed with kappa 0.81. The imagery shows where the survey put a ramp, not whether anyone can use it.",
      "The route search. This page's routes match Unweaver, the open routing engine the profile was written for. On 840 route requests in Brownsville the two agree every time on whether a route exists, and all 826 routes found by both have the same length to within 1 m. On 514 more requests across the city they also agree every time on whether a route exists.",
      "Against OpenRouteService. On 362 Brownsville trips, this graph and OpenRouteService's wheelchair profile (plain OpenStreetMap data, 10% incline limit, 6 cm kerb limit) both find a route every time. They take the same route on 130 trips and different routes on 232. 151 of OpenRouteService's 362 routes (41.7%) use a crossing with no surveyed ramp within 5 m of one end. OpenStreetMap carries no kerb information there that OpenRouteService treats as a barrier.",
-     "What the disagreements look like from above. 48 places across the city where the two routers part were drawn over the city's March 2024 aerial imagery and rated by an agent that was not told why each was chosen. Where OpenRouteService's route had been flagged as running in the roadway, the photograph agreed at 10 of 12 places. At the 11 crossings flagged for a missing ramp, the photograph showed a ramp at both ends at none, at one end or neither at 3, and could not tell at 8. At 15 cm per pixel a kerb ramp is rarely visible, so this check cannot confirm the ramp data. A second agent rated 24 of the sheets and agreed on the kind of place at 23 (kappa 0.94)."
+     "What the disagreements look like from above. 48 places across the city where the two routers part were drawn over the city's March 2024 aerial imagery and rated by agents that were not told why each was chosen. Where OpenRouteService's route had been flagged as running in the roadway, the photograph agreed at 10 of 12 places. At the 11 crossings flagged for a missing ramp, the photograph showed a ramp at both ends at none, at one end or neither at 3, and could not tell at 8. At 15 cm per pixel a kerb ramp is rarely visible, so this check cannot confirm the ramp data. A further agent rated 24 of the sheets again, without seeing the first ratings, and agreed on the kind of place at 23 (kappa 0.94)."
     ]
    },
    {
@@ -42,7 +42,7 @@
      "The survey's slopes were taken from street imagery and vehicle LiDAR between 2018 and 2019. No public record shows them checked against a hand measurement.",
      "978 of the 2,363 surveyed ramps here are at corners DOT lists as rebuilt since the survey. Their slopes and status describe ramps that may be gone, and nothing here says how the new ramps measure.",
      "Clear width past poles, trees and stoops, surface condition, the lip at the gutter, ponding, construction and snow are not in the data.",
-     "The imagery ratings and the route comparison were carried out by language-model agents following written protocols, with a second independent agent rating a sample. No person has reviewed them on the ground."
+     "The imagery ratings and the route comparison were carried out by language-model agents following written protocols, with an independent agent rating a sample again. No person has reviewed them on the ground."
     ]
    }
   ],
