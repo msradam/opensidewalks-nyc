@@ -12,7 +12,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from compare.graph import EAST, NORTH, Graph, build
-from compare.measures import Matcher, audit, line, overlap, parting
+from compare.measures import Matcher, audit, line, near, overlap, parting
 
 
 def ll(x, y):
@@ -109,9 +109,10 @@ def test_audit_names_the_first_barrier_and_respects_direction():
 def test_overlap_and_parting():
     a = line([ll(0, 0), ll(100, 0), ll(100, 100)])
     b = line([ll(0, 0), ll(100, 0), ll(200, 0)])
-    assert 0.54 < overlap(a, b) < 0.56      # 100 m shared, then 10 m inside the tolerance, of 200 m
-    assert 105 <= parting(a, b) <= 115
-    assert parting(a, a) is None
+    assert 0.54 < overlap(a, near(b)) < 0.56      # 100 m shared, then 10 m inside the tolerance, of 200 m
+    assert 109 <= parting(a, near(b)) <= 111
+    assert parting(a, near(a)) is None
+    assert parting(line([ll(0, 50), ll(0, 0), ll(100, 0)]), near(b)) == 0.0, "a route that starts away from the other parts at once"
 
 
 if __name__ == "__main__":

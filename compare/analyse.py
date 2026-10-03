@@ -25,7 +25,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from shapely.geometry import LineString
 
 from compare.graph import Graph, metres, read_json, write_json
-from compare.measures import Matcher, audit, line, overlap, parting
+from compare.measures import Matcher, audit, line, near, overlap, parting
 from compare.osm_tags import barriers
 
 # name: (source, config, role). "wheelchair" routers are compared with ours; "foot" is each engine's plain foot route.
@@ -110,10 +110,12 @@ def one(p):
             far = max(far, float(np.hypot(*(c - ends).T).max()))
     rec["snap_apart_m"] = round(far, 1)
     ours = lines.get("ours_wheelchair")
-    for key, geom in lines.items():
-        if ours is not None and key != "ours_wheelchair" and geom.length and ours.length:
-            rec["vs_ours"][key] = {"ours_in_theirs": round(overlap(ours, geom), 3), "theirs_in_ours": round(overlap(geom, ours), 3),
-                                   "parting_m": parting(geom, ours)}
+    if ours is not None and ours.length:
+        ours_near = near(ours)
+        for key, geom in lines.items():
+            if key != "ours_wheelchair" and geom.length:
+                rec["vs_ours"][key] = {"ours_in_theirs": round(overlap(ours, near(geom)), 3), "theirs_in_ours": round(overlap(geom, ours_near), 3),
+                                       "parting_m": parting(geom, ours_near)}
     rec["verdict"] = verdict(rec)
     return rec
 
@@ -243,8 +245,12 @@ def main(npz, tags_json, pairs_json, routes_dir, out_dir, procs=8):
             matrix[src] = found
     pairs = read_json(pairs_json)["pairs"]
     G.snap_edge(pairs[0]["o"], "wheelchair")        # build the snap index before the fork
+    recs = []
     with get_context("fork").Pool(procs) as pool:
-        recs = pool.map(one, pairs, chunksize=50)
+        for n, rec in enumerate(pool.imap(one, pairs, chunksize=20)):
+            recs.append(rec)
+            if n % 1000 == 0:
+                print(n, len(pairs), flush=True)
     with gzip.open(out_dir / "pairs_detail.jsonl.gz", "wt") as f:
         for r in recs:
             f.write(json.dumps(r) + "\n")

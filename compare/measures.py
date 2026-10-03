@@ -22,18 +22,23 @@ def line(coords):
     return LineString(metres(coords)) if len(coords) >= 2 else None
 
 
-def overlap(a, b, tol=OVERLAP_M):
-    """Share of a's length within tol metres of b."""
-    return float(a.intersection(b.buffer(tol)).length / a.length) if a.length else 1.0
+def near(a, tol=OVERLAP_M):
+    """The area within tol metres of a route. Make it once per route: it is the costly part."""
+    return a.buffer(tol, quad_segs=4)
 
 
-def parting(a, b, tol=OVERLAP_M, step=5.0):
-    """Metres along a where it first leaves b by more than tol, or None if it never does."""
-    near = b.buffer(tol)
-    for d in np.arange(0, a.length + step, step):
-        if not near.contains(a.interpolate(min(d, a.length))):
-            return float(min(d, a.length))
-    return None
+def overlap(a, b_near):
+    """Share of a's length inside b_near, the area near route b."""
+    return float(a.intersection(b_near).length / a.length) if a.length else 1.0
+
+
+def parting(a, b_near):
+    """Metres along a where it first leaves b_near, or None if it never does."""
+    away = a.difference(b_near)
+    if away.is_empty:
+        return None
+    parts = getattr(away, "geoms", [away])
+    return float(min(a.project(Point(part.coords[0])) for part in parts if part.geom_type == "LineString"))
 
 
 class Matcher:

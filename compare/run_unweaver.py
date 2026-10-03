@@ -5,7 +5,7 @@ snapped to the nearest node the profile can use, Unweaver is asked for the
 route between those node coordinates, and the two routes are compared by
 length and by the share of each lying within 1 m of the other.
 
-usage: python compare/run_unweaver.py BASE_URL GRAPH_NPZ PAIRS_JSON SET OUT_JSON
+usage: python compare/run_unweaver.py BASE_URL GRAPH_NPZ PAIRS_JSON SET OUT_JSON [PAIRS_PER_AREA]
 """
 import json
 import sys
@@ -21,10 +21,14 @@ PROFILES = {"wheelchair": ("wheelchair", {"avoidCurbs": "true", "uphill": "0.083
             "distance": ("distance", {})}
 
 
-def main(base, npz, pairs_json, which, out):
+def main(base, npz, pairs_json, which, out, per_area=None):
     assert base.startswith(("http://localhost", "http://127.0.0.1")), "local engines only"
     g = Graph(npz)
-    pairs = [p for p in read_json(pairs_json)["pairs"] if p["set"] == which]
+    pairs, seen = [], {}
+    for p in read_json(pairs_json)["pairs"]:
+        seen[p["area"]] = seen.get(p["area"], 0) + (p["set"] == which)
+        if p["set"] == which and (per_area is None or seen[p["area"]] <= int(per_area)):
+            pairs.append(p)
     rows = []
     for name, (profile, args) in PROFILES.items():
         for p in pairs:
@@ -33,8 +37,11 @@ def main(base, npz, pairs_json, which, out):
                 continue
             (x1, y1), (x2, y2) = g.xy[s], g.xy[t]
             edges = g.routes(s, [t], name)[0]
-            j = requests.get(f"{base}/shortest_path/{profile}.json", timeout=120,
-                             params={"lon1": x1, "lat1": y1, "lon2": x2, "lat2": y2, **args}).json()
+            try:
+                j = requests.get(f"{base}/shortest_path/{profile}.json", timeout=600,
+                                 params={"lon1": x1, "lat1": y1, "lon2": x2, "lat2": y2, **args}).json()
+            except requests.RequestException as e:
+                j = {"code": f"client: {str(e)[:80]}"}
             row = {"id": p["id"], "profile": name, "ours_found": edges is not None, "unweaver_status": j.get("status") or j.get("code")}
             if edges is not None and j.get("status") == "Ok":
                 ours = LineString(metres(g.line(edges)))
@@ -59,4 +66,4 @@ def main(base, npz, pairs_json, which, out):
 
 
 if __name__ == "__main__":
-    main(*sys.argv[1:6])
+    main(*sys.argv[1:7])
