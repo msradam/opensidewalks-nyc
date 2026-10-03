@@ -1,9 +1,10 @@
 """Route every pair on this graph under each profile.
 
-Each end is snapped to the nearest node a passable edge of that profile
-touches, which is what the reference engines do with a coordinate. For the
-random pairs the wheelchair profile is also run from the drawn nodes with no
-snap ("wheelchair_as_drawn"), which is how reach.json counted.
+Each end is snapped to the nearest point on an edge that profile can use,
+which is what the reference engines do with a coordinate. For the random
+pairs the wheelchair profile, and the same profile with no incline limit,
+are also run from the drawn nodes with no snap ("wheelchair_as_drawn",
+"wheelchair_no_incline_as_drawn"), which is how reach.json counted.
 
 usage: python compare/run_ours.py GRAPH_NPZ PAIRS_JSON OUT_PKL [PROCESSES]
 """
@@ -16,42 +17,40 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from compare.graph import Graph, read_json
 
-PROFILES = ("wheelchair", "wheelchair_no_incline", "walk")
+PROFILES = ("wheelchair", "walk")
+AS_DRAWN = ("wheelchair_as_drawn", "wheelchair_no_incline_as_drawn")
 G = None
 
 
 def _work(task):
-    profile, s, targets = task
-    return profile, s, targets, G.routes(s, targets, profile)
+    i, prof, o, d = task
+    if prof.endswith("_as_drawn"):
+        edges = G.routes(o, [d], prof[:-9])[0]
+        if edges is None:
+            return i, prof, {"edges": None, "snap_m": [0.0, 0.0]}
+        return i, prof, {"edges": edges, "skip_first_m": 0.0, "skip_last_m": 0.0, "length_m": round(float(G.length[edges].sum()), 1), "snap_m": [0.0, 0.0]}
+    return i, prof, G.route(o, d, prof)
 
 
 def main(npz, pairs_json, out, procs=8):
     global G
     G = Graph(npz)
     pairs = read_json(pairs_json)["pairs"]
+    tasks = [(i, prof, p["o"], p["d"]) for i, p in enumerate(pairs) for prof in PROFILES]
+    tasks += [(i, prof, p["o_node"], p["d_node"]) for i, p in enumerate(pairs) if "o_node" in p for prof in AS_DRAWN]
+    for prof in PROFILES:       # build the matrices and the snap indexes before the fork so the workers share them
+        G.csr(prof)
+        G.snap_edge(pairs[0]["o"], prof)
+    G.csr("wheelchair_no_incline")
     res = {p["id"]: {} for p in pairs}
-    want = defaultdict(lambda: defaultdict(list))   # (profile, source) -> target -> [(pair, key)]
-    for p in pairs:
-        for prof in PROFILES:
-            (s, ds), (t, dt) = G.snap(p["o"], prof), G.snap(p["d"], prof)
-            res[p["id"]][prof] = {"snap_m": [round(float(ds), 1), round(float(dt), 1)], "edges": None}
-            want[(prof, int(s))][int(t)].append((p["id"], prof))
-        if "o_node" in p:
-            res[p["id"]]["wheelchair_as_drawn"] = {"snap_m": [0.0, 0.0], "edges": None}
-            want[("wheelchair", p["o_node"])][p["d_node"]].append((p["id"], "wheelchair_as_drawn"))
-    for prof in PROFILES:
-        G.csr(prof)     # build before the fork so the workers share it
-    tasks = [(prof, s, list(ts)) for (prof, s), ts in want.items()]
-    with get_context("fork").Pool(procs) as pool:   # fork: the workers share the loaded graph
-        for n, (prof, s, targets, routes) in enumerate(pool.imap_unordered(_work, tasks, chunksize=8)):
-            for t, edges in zip(targets, routes):
-                for pid, key in want[(prof, s)][t]:
-                    res[pid][key]["edges"] = edges
-            if n % 2000 == 0:
+    with get_context("fork").Pool(procs) as pool:
+        for n, (i, prof, r) in enumerate(pool.imap_unordered(_work, tasks, chunksize=16)):
+            res[pairs[i]["id"]][prof] = r
+            if n % 4000 == 0:
                 print(n, len(tasks), flush=True)
     with open(out, "wb") as f:
         pickle.dump(res, f)
-    for key in PROFILES + ("wheelchair_as_drawn",):
+    for key in (*PROFILES, *AS_DRAWN):
         by = defaultdict(lambda: [0, 0])
         for p in pairs:
             if key in res[p["id"]]:

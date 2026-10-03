@@ -19,6 +19,9 @@ import pandas as pd
 from scipy.sparse import coo_matrix
 from scipy.sparse.csgraph import dijkstra
 from scipy.spatial import cKDTree
+from shapely import STRtree, linestrings
+from shapely.geometry import LineString, Point
+from shapely.ops import substring
 
 ROOT = Path(__file__).resolve().parents[1]
 # One scale for the whole city, as in scripts/osw_to_unweaver.py.
@@ -122,10 +125,24 @@ class Graph:
         d, i = tree.query(metres(lonlat))
         return nodes[i], d
 
+    def _search(self, profile, sources, targets):
+        """Dijkstra from each source node, exact for every target.
+
+        Searching the whole city for each pair is slow, so the first pass
+        stops at a distance a real route rarely exceeds; only where that
+        finds nothing is the search repeated without a limit.
+        """
+        g = self.csr(profile)
+        crow = float(np.hypot(*(metres(self.xy[sources])[:, None] - metres(self.xy[targets])[None]).T).max())
+        dist, pred = dijkstra(g, directed=True, indices=sources, return_predecessors=True, limit=3 * crow + 2000)
+        if not np.isfinite(dist[:, targets]).all():
+            dist, pred = dijkstra(g, directed=True, indices=sources, return_predecessors=True)
+        return dist, pred
+
     def routes(self, s, targets, profile):
         """Edge lists from node s to each target (None where there is no path)."""
-        g = self.csr(profile)
-        dist, pred = dijkstra(g, directed=True, indices=int(s), return_predecessors=True)
+        dist, pred = self._search(profile, [int(s)], [int(t) for t in targets])
+        dist, pred = dist[0], pred[0]
         best, out = self._best[profile], []
         for t in targets:
             if not np.isfinite(dist[t]):
@@ -138,12 +155,74 @@ class Graph:
             out.append([best[pair] for pair in pairwise(seq)])
         return out
 
-    def line(self, edges):
-        """Route coordinates (lon, lat) for an edge list."""
+    def snap_edge(self, lonlat, profile):
+        """Nearest point on a passable edge: (edge, metres to it, metres along it).
+
+        This is how the reference engines treat a coordinate. Snapping to a
+        node instead puts the start up to half a block from theirs.
+        """
+        if ("edge", profile) not in self._tree:
+            idx = np.flatnonzero(self.masks[profile])
+            counts = (self.offsets[1:] - self.offsets[:-1])[idx]
+            take = np.concatenate([np.arange(self.offsets[e], self.offsets[e + 1]) for e in idx])
+            geoms = linestrings(metres(self.coords[take]), indices=np.repeat(np.arange(len(idx)), counts))
+            self._tree[("edge", profile)] = (STRtree(geoms), geoms, idx)
+        tree, geoms, idx = self._tree[("edge", profile)]
+        p = Point(metres(lonlat))
+        i = tree.nearest(p)
+        return int(idx[i]), float(geoms[i].distance(p)), float(geoms[i].project(p))
+
+    def route(self, o, d, profile):
+        """Shortest passable route between two coordinates, each snapped to its nearest passable edge.
+
+        Returns the two snap distances and, where there is a path, the edges
+        in order ("edges" is None otherwise), the metres of the first and
+        last edge that lie outside the route, and its length.
+        """
+        self.csr(profile)
+        best, length = self._best[profile], self.length
+        (eo, do, fo), (ed, dd, fd) = self.snap_edge(o, profile), self.snap_edge(d, profile)
+        uo, vo, ud, vd = int(self.u[eo]), int(self.v[eo]), int(self.u[ed]), int(self.v[ed])
+        # (node, metres from the snapped point to it, first edge, metres of that edge skipped)
+        starts = [(vo, length[eo] - fo, eo, fo)]
+        if (vo, uo) in best:        # the opposite direction is passable too
+            starts.append((uo, fo, best[(vo, uo)], length[eo] - fo))
+        ends = [(ud, fd, ed, length[ed] - fd)]
+        if (vd, ud) in best:
+            ends.append((vd, length[ed] - fd, best[(vd, ud)], fd))
+        # Both ends on one edge: travel along it, or along its opposite, without leaving.
+        found, twin = None, (uo, vo) == (vd, ud)
+        along = fd if eo == ed else length[eo] - fd if twin else None     # the destination, measured along eo
+        if along is not None and along >= fo:
+            found = (along - fo, [eo], fo, length[eo] - along)
+        elif along is not None and (vo, uo) in best:
+            found = (fo - along, [best[(vo, uo)]], length[eo] - fo, along)
+        dist, pred = self._search(profile, [s[0] for s in starts], [t[0] for t in ends])
+        for i, (s, cs, first, skip_first) in enumerate(starts):
+            for t, ct, last, skip_last in ends:
+                total = cs + dist[i][t] + ct
+                if np.isfinite(total) and (found is None or total < found[0]):
+                    seq = [t]
+                    while seq[-1] != s:
+                        seq.append(int(pred[i][seq[-1]]))
+                    seq.reverse()
+                    found = (total, [first] + [best[pair] for pair in pairwise(seq)] + [last], skip_first, skip_last)
+        if found is None:
+            return {"edges": None, "snap_m": [round(do, 1), round(dd, 1)]}
+        return {"edges": [int(e) for e in found[1]], "skip_first_m": round(float(found[2]), 2), "skip_last_m": round(float(found[3]), 2),
+                "length_m": round(float(found[0]), 1), "snap_m": [round(do, 1), round(dd, 1)]}
+
+    def line(self, edges, skip_first_m=0.0, skip_last_m=0.0):
+        """Route coordinates (lon, lat) for an edge list, less the given metres at each end."""
         if not edges:
             return np.zeros((0, 2))
         parts = [self.edge_coords(edges[0])] + [self.edge_coords(e)[1:] for e in edges[1:]]
-        return np.vstack(parts)
+        coords = np.vstack(parts)
+        if skip_first_m > 0 or skip_last_m > 0:
+            whole = LineString(metres(coords))
+            cut = substring(whole, min(skip_first_m, whole.length), max(whole.length - skip_last_m, skip_first_m))
+            coords = np.array(cut.coords).reshape(-1, 2) / np.array([EAST, NORTH])
+        return coords
 
 
 if __name__ == "__main__":

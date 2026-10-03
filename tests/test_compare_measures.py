@@ -61,6 +61,23 @@ def test_route_and_snap():
     assert g.routes(s, [t], "wheelchair")[0] is None
 
 
+def test_route_snaps_to_the_nearest_point_on_an_edge():
+    g = graph()
+    r = g.route(ll(50, 1), ll(113, 30), "walk")
+    assert fid(g, r["edges"]) == ["s", "x", "t"], fid(g, r["edges"])
+    assert abs(r["length_m"] - (50 + 12 + 30)) < 0.5, r
+    assert abs(r["skip_first_m"] - 50) < 0.5 and abs(r["skip_last_m"] - 20) < 0.5
+    assert 0.9 < r["snap_m"][0] < 1.1
+    shape = line(g.line(r["edges"], r["skip_first_m"], r["skip_last_m"]))
+    assert abs(shape.length - r["length_m"]) < 0.5, "the drawn route starts and ends at the snapped points"
+    back = g.route(ll(80, 0), ll(20, 0), "walk")
+    assert fid(g, back["edges"]) == ["sr"] and abs(back["length_m"] - 60) < 0.5, back
+    down = g.route(ll(150, 0), ll(120, 0), "wheelchair")
+    assert fid(g, down["edges"]) == ["pr"] and abs(down["length_m"] - 30) < 0.5, down
+    assert g.route(ll(120, 0), ll(150, 0), "wheelchair")["edges"] is None, "9% uphill is over the limit"
+    assert g.route(ll(150, 0), ll(10, 0), "wheelchair")["edges"] is None, "the crossing has no ramp"
+
+
 def test_match_restores_direction_and_order():
     g = graph()
     m = Matcher(g)
