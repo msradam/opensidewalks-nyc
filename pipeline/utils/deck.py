@@ -162,16 +162,19 @@ def label_surfaces(n: int, edges: list[tuple[int, int, float, bool]],
     # unsure one may be a tree. A node beside a labelled one whose surfaces
     # were all out of reach is not started: what it saw is not the deck (a
     # bridge tower, say), and interpolation between its neighbours is right.
+    # Lowest above the terrain model first: a bridge is entered from its
+    # landing, where the deck is near the ground, and the tower top beside
+    # the main span has labelled neighbours by the time its turn comes.
     counts = [{round(h, 3): c for h, c, _, _ in levels[i]} for i in range(n)]
-    share = {}
+    starts = {}
     for i in range(n):
-        solid = [counts[i][round(h, 3)] for h, s in options[i] if s]
-        if kind[i] < 0 and seed[i] and solid and not any(kind[b] >= 0 for b, _, _ in adj[i]):
-            share[i] = max(solid) / sum(counts[i].values())
-    for start in sorted(share, key=share.get, reverse=True):
-        if kind[start] < 0:
-            z[start] = max((h for h, s in options[start] if s),
-                           key=lambda h: counts[start][round(h, 3)])
+        solid = [h for h, s in options[i] if s]
+        if kind[i] < 0 and seed[i] and solid:
+            best = max(solid, key=lambda h: counts[i][round(h, 3)])
+            starts[i] = (best - dtm[i] if not np.isnan(dtm[i]) else np.inf, best)
+    for start in sorted(starts, key=lambda i: starts[i][0]):
+        if kind[start] < 0 and not any(kind[b] >= 0 for b, _, _ in adj[start]):
+            z[start] = starts[start][1]
             kind[start] = 1
             spread([start])
 

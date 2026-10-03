@@ -140,6 +140,19 @@ def test_a_tower_top_beside_a_labelled_deck_is_not_taken():
     assert kind[2] == 2 and abs(z[2] - 71.2) < 1e-6
 
 
+def test_a_bridge_is_entered_from_its_landing_not_its_tower():
+    # No node is on the ground: an all-tagged span with a tower node in the
+    # middle, where the only surface is the tower top. The chain must start
+    # at a landing, not at the tower, so the tower node is interpolated.
+    edges = [(0, 1, 30.0, False), (1, 2, 30.0, False), (2, 3, 30.0, False), (3, 4, 30.0, False)]
+    seed = np.array([True] * 5)
+    dtm = np.array([20.0, 0.0, 0.0, 0.0, 20.0])
+    levels = [[(24.0, 30, True, True)], [(27.0, 30, True, True)], [(175.0, 80, False, True)],
+              [(27.0, 30, True, True)], [(24.0, 30, True, True)]]
+    z, kind = label_surfaces(5, edges, seed, dtm, levels)
+    assert kind.tolist() == [1, 1, 2, 1, 1] and abs(z[2] - 27.0) < 1e-6
+
+
 def test_structure_with_no_survey_gets_no_height():
     edges = [(0, 1, 20.0, False), (1, 2, 20.0, False)]
     seed = np.array([True, True, True])
