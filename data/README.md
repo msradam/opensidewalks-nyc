@@ -1,6 +1,6 @@
 # data/
 
-This directory is a placeholder. **Built artifacts do not live in the repo tree** — they are distributed as **[GitHub Release assets](https://github.com/msradam/opensidewalks-nyc/releases)**.
+This directory is a placeholder. **Built artifacts do not live in the repo tree.** They are distributed as **[GitHub Release assets](https://github.com/msradam/opensidewalks-nyc/releases)**.
 
 The pipeline writes intermediate staged data here (gitignored):
 

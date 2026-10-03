@@ -5,6 +5,8 @@ This product is licensed as follows:
   - Pipeline code, scripts, and notebooks: Apache License 2.0 (see LICENSE).
   - Distributed graph data (GitHub Release assets): Open Database License v1.0
     (ODbL-1.0), inherited from OpenStreetMap. See LICENSE-DATA.md.
+  - The demo's data files (demo/data/): derived from OpenStreetMap and NYC
+    Open Data, and licensed ODbL-1.0 like the graph.
 
 ----------------------------------------------------------------------
 Source data attributions
@@ -19,29 +21,39 @@ All consumers must preserve these attributions per ODbL-1.0 §4.3.
 
   - NYC DOT Pedestrian Ramp Locations (dataset id: ufzp-rrqu)
     https://data.cityofnewyork.us/Transportation/Pedestrian-Ramp-Locations/ufzp-rrqu
-    Public domain. Used for curb-ramp geometry, slopes, and condition.
+    NYC Open Data terms of use, no licence attached. Used for curb-ramp
+    locations, measured slopes and warning-surface status.
 
   - NYC Planimetric Database: Sidewalks (dataset id: 52n9-sdep)
     https://data.cityofnewyork.us/City-Government/NYC-Planimetric-Database-Sidewalk/52n9-sdep
-    Public domain. Used for sidewalk widths and as a gap-fill source for
-    sidewalk centerlines.
+    NYC Open Data terms of use, no licence attached. Used for sidewalk
+    widths and as the source of the gap-fill centrelines shipped beside
+    the graph.
 
   - Borough boundaries: OpenStreetMap, fetched through Nominatim. The
     pipeline first tries NYC Borough Boundaries (dataset id: 7t3b-ywvw),
     which NYC Open Data has withdrawn, so the fallback is what ships.
-    Used as region polygons and to bound the per-borough OSM queries.
+    Used as region polygons and to cut the per-borough graphs from the
+    city graph.
 
   - NYC 2017 Topobathymetric LiDAR bare-earth DTM
     Served by the NY State GIS Program Office ArcGIS ImageServer
     (https://elevation.its.ny.gov/, NYC_TopoBathymetric_2017_1_meter).
-    Public domain. Sampled at 5 to 10 m per pixel to derive node elevations
-    and edge inclines.
+    Public data, no licence attached. Fetched as 2 m tiles to derive node
+    elevations and edge inclines.
+
+  - LiDAR point clouds: the 2017 NYC topobathymetric survey (NYC OTI) and
+    the 2014 USGS survey of New York City, served as Entwine Point Tiles on
+    NOAA's Digital Coast archive
+    (https://noaa-nos-coastal-lidar-pds.s3.amazonaws.com/entwine/geoid18/9306
+    and .../4920). Published with no licence attached; treated as public
+    domain. Used for deck heights on bridges and elevated ways.
 
   - OpenSidewalks Schema v0.3
     https://sidewalks.washington.edu/opensidewalks/0.3/schema.json
     Developed by the Taskar Center for Accessible Technology, University of
-    Washington. The schema specifies the OSW feature types and properties to
-    which this dataset conforms.
+    Washington. The schema specifies the OSW feature types and properties;
+    this dataset is checked against it with python-osw-validation 0.5.0.
 
 ----------------------------------------------------------------------
 AI-assisted authoring disclosure
@@ -53,3 +65,11 @@ repository were drafted with the assistance of large language models
 accepted by a human author who takes responsibility for the resulting code,
 the methodology, and the dataset. AI tools were not used to generate or
 modify the source data itself.
+
+Language-model agents were also used as raters. In the check of the ramp to
+crossing rule and in the router comparison's disagreement sheets, each sheet
+of aerial imagery was rated by language-model agents following a written
+protocol, and a sample was rated again by another agent for agreement. Every
+agreement statistic (kappa) quoted in this repository is agreement between
+such agents. No person rated those sheets, and nothing was checked on the
+ground. The protocols and ratings are in evaluation/.

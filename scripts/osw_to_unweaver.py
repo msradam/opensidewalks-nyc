@@ -32,11 +32,13 @@ from scipy.spatial import cKDTree
 
 # How far a surveyed ramp may be from the end of a crossing and still count
 # for it. The pipeline snaps a ramp to the graph within the same distance.
-# Checked on a stratified sample of 200 crossings rated over 2018 imagery
-# (research_notes/next/crossing/score.json): of the crossings this rule calls
-# ramped, 98.8% have a surveyed ramp positioned to serve them at both ends,
-# and it misses none that do. The strict test (ramp on the crossing's own
-# nodes) finds 56% of them.
+# Checked remotely on a stratified sample of 200 crossings rated over 2018
+# aerial imagery by language-model agents following a written protocol
+# (evaluation/crossing_rule/score.json); nothing was checked on the ground.
+# Of the crossings this rule calls ramped, 98.8% have a surveyed ramp
+# positioned to serve them at both ends, and it misses none that do. The
+# strict test (ramp on the crossing's own nodes) finds 56% of them. See
+# METHODOLOGY.md for the limits of that check.
 RAMP_REACH_M = 5.0
 
 

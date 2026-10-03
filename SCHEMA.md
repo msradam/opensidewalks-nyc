@@ -62,7 +62,7 @@ All nodes carry `_id`. Curb-ramp nodes (from the NYC DOT survey) additionally ca
 | `ext:ramp_id`, `ext:corner_id` | DOT survey identifiers |
 | `ext:street_1`, `ext:street_2` | Cross streets at the ramp corner |
 
-The slopes are signed, so compare magnitudes. They were measured in 2017 to 2020 and are not updated when a ramp is rebuilt.
+The slopes are signed, so compare magnitudes. They were measured between April 2018 and October 2019 and are not updated when a ramp is rebuilt. Six counter slopes of 114% to 473% (and one of -300%) are raw survey values that remain in the data; treat them as unmeasured.
 
 A ramp is attached to the graph when its node is an edge endpoint. A node holds one ramp's fields, so where several surveyed ramps land on one node the others are kept as separate nodes at their surveyed position, on no edge. Every surveyed ramp is in the file from v0.3.2.
 
@@ -75,7 +75,7 @@ The OSW v0.3 schema allows arbitrary `ext:`-prefixed properties on every feature
 | Extension | On | Why |
 |---|---|---|
 | `ext:source` / `ext:pipeline_version` | every feature | Provenance, required by repo policy |
-| `ext:source_timestamp` | every edge; nodes from the DOT survey and injected nodes | Retrieval time of the source. OSM-derived nodes do not carry it. |
+| `ext:source_timestamp` | every edge; the 36,180 curb ramps on no edge | Retrieval time of the source. OSM-derived nodes do not carry it. A ramp that sits on an edge shares its node with an OSM vertex, so it carries `ext:source=osm_walk` and no timestamp, although its ramp values come from the DOT survey. |
 | `ext:osm_id` | OSM-derived edges | Provenance back to the OSM way (a stringified ID, or list of IDs for merged ways) |
 | `ext:osm_highway` | edges from an OSM `cycleway` or `track` open to walkers | What OSM called the way; the edge itself is `highway=footway` |
 | `ext:borough` | nearly every feature | `MN` / `BK` / `QN` / `BX` / `SI`, for filtering and per-borough splits. An OSM edge or node carries the borough whose cut of the graph it came from, so a segment on a bridge belongs to one of its two boroughs. Nodes injected at the end of a gap-fill edge have none. In v0.3.1-nyc.1 the gap-fill edges and their nodes lack it. |

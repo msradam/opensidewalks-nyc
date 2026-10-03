@@ -7,7 +7,7 @@ Configurations:
   foot_rec                  foot-walking as ORS ships it (recommended weighting)
   default                   wheelchair with no restrictions given. ORS then
                             applies no kerb, incline or width limit at all
-                            (ors_tag_probe.json); only its weighting differs
+                            (evaluation/compare/probes/ors_tag_probe.json); only its weighting differs
                             from foot.
   rec_i{6,10}_k6            wheelchair, recommended weighting, with
                             maximum_incline and maximum_sloped_kerb 0.06 m.

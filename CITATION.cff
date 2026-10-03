@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-title: "opensidewalks-nyc: An OpenSidewalks v0.3-conformant pedestrian graph of New York City"
+title: "opensidewalks-nyc: an OpenSidewalks v0.3 pedestrian graph of New York City"
 message: "If you use this dataset, please cite as below."
 type: dataset
 authors:
@@ -10,14 +10,14 @@ repository-code: "https://github.com/msradam/opensidewalks-nyc"
 url: "https://github.com/msradam/opensidewalks-nyc"
 license: ODbL-1.0
 license-url: "https://opendatacommons.org/licenses/odbl/1-0/"
-version: "0.3.2-nyc.1"
-date-released: "2026-10-02"
+version: "0.3.3-nyc.1"
+date-released: "2026-10-03"
 keywords:
   - opensidewalks
   - new york city
   - pedestrian network
   - accessibility
-  - wheelchair routing
+  - accessibility research
   - sidewalks
   - graph
   - geojson

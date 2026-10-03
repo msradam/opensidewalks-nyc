@@ -1,7 +1,8 @@
 """The origin and destination pairs every engine is asked for.
 
 Three sets, written to one JSON:
-  random       the seeded pairs behind reach.json (same pools, same draws)
+  random       the seeded pairs behind evaluation/reachability/reach.json
+               (same pools, same draws)
   landmark     the 17 pairs of scripts/route_test.py
   brownsville  origins at NYCHA developments, senior centres and subway
                entrances in Community District 316; destinations at cooling
@@ -20,13 +21,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from compare.graph import EAST, NORTH, Graph, read_json, write_json
 from scripts.route_test import LANDMARKS, ROUTES
 
-SEED_RANDOM = 20261002      # research_notes/next/routing/reach.py
+SEED_RANDOM = 20261002      # the seed of the reachability check (evaluation/reachability/)
 SEED_BROWNSVILLE = 20261003
 ELEVATOR_REACH_M = 1000     # elevators this close to the district count as destinations
 
 
 def random_pairs(g, per_borough):
-    """Same pools and the same generator calls as reach.py, so pair i here is pair i there."""
+    """Same pools and the same generator calls as the reachability check, so pair i here is pair i there."""
     walkable = (g.kind != "street") & (g.kind != "steps")
     rng = np.random.default_rng(SEED_RANDOM)
     pools = {}

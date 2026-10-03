@@ -32,7 +32,7 @@ sources:
     description: >
       NYC DOT Pedestrian Ramp Locations. 217k+ point features recording the
       location, geometry, and condition of pedestrian curb ramps citywide.
-      Survey data collected 2017–2020. These become Curb Point Nodes in the
+      Survey data collected April 2018 to October 2019. These become Curb Point Nodes in the
       OSW graph with barrier=kerb, kerb=lowered.
     type: socrata
     license: Public Domain (NYC Open Data)
@@ -184,7 +184,9 @@ sources:
     license_url: https://api.mta.info/
     retrieval:
       method: http_csv
-      # MTA publishes GTFS static feeds; stops.txt has wheelchair_boarding column.
+      # drh3-e2fd is NOT the MTA station dataset (it is a planimetric
+      # hydrography layer), and the GTFS stops.txt has no wheelchair_boarding
+      # column, so this stage is skipped and nothing ships. See METHODOLOGY.md.
       # Primary: NYC Open Data subway stations with ADA column.
       # Fallback: MTA GTFS static stops.txt
       primary_url: https://data.cityofnewyork.us/resource/drh3-e2fd.json

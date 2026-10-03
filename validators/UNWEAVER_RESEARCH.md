@@ -1,5 +1,7 @@
 # Unweaver / OpenSidewalks Ecosystem Research
 
+> May 2026 notes, superseded in places. The current validator is `python-osw-validation` 0.5.0, Unweaver was later run in a container for the router comparison (build it with `--changes-sign incline`), and `validators/schema-cache/` is not tracked.
+
 Researched 2026-05-10 against live GitHub APIs and PyPI. URLs and SHAs verified at time of writing.
 
 ## TL;DR
@@ -16,10 +18,10 @@ Researched 2026-05-10 against live GitHub APIs and PyPI. URLs and SHAs verified 
 
 - URL: https://github.com/nbolten/unweaver
 - Mirror/fork: https://github.com/TaskarCenterAtUW/unweaver (no divergent commits)
-- Language: Python (Poetry, declares `python = "^3.8"` in `pyproject.toml` — `^3.8` will exclude Python 3.12+ unless you relax it)
+- Language: Python (Poetry, declares `python = "^3.8"` in `pyproject.toml`: `^3.8` will exclude Python 3.12+ unless you relax it)
 - License: Apache-2.0 (LICENSE file says Apache-2.0; GitHub API reports "NOASSERTION" because the file lacks a SPDX header)
 - Last commit: `66352c1` 2022-11-02 ("Added stricter mypy settings")
-- Status: not archived, but stale — 4 years no commits, 13 open issues, no PyPI release. Treat as a research artifact, not a supported product.
+- Status: not archived. It has had no commits since 2022, has 13 open issues and no PyPI release, so expect to patch it.
 - Stars/forks: 8 / 4
 
 ### Native dependencies (macOS / Apple Silicon)
@@ -45,7 +47,7 @@ uv pip install "git+https://github.com/nbolten/unweaver.git@66352c1#egg=unweaver
 Pitfalls:
 - `Fiona = "^1.8.20"` and `shapely = "^1.6"` in `pyproject.toml` are old; on Apple Silicon you may need `uv pip install fiona shapely --no-binary :all:` linked against Homebrew GDAL/GEOS. Or relax pins via a fork.
 - `osm-humanized-opening-hours = "^0.6.2"` may not have wheels for 3.12; stay on 3.11.
-- The `pyproject.toml` constraint `python = "^3.8"` means **`<4,>=3.8` per Poetry semantics, but actually `>=3.8,<4`** — works for 3.11. If you need 3.12, fork and bump.
+- The `pyproject.toml` constraint `python = "^3.8"` means **`<4,>=3.8` per Poetry semantics, but actually `>=3.8,<4`**: works for 3.11. If you need 3.12, fork and bump.
 
 ### Input format
 
@@ -56,7 +58,7 @@ Unweaver does **not** consume OSW directly as a graph. Pipeline:
 3. `unweaver weight <project>` precomputes static edge weights for each profile that has one.
 4. `unweaver serve <project>` launches a Flask server with endpoints `/shortest_path/<profile>.json`, `/shortest_path_tree/<profile>.json`, `/reachable_tree/<profile>.json`.
 
-Implication for OSW v0.3: **you must split or flatten the FeatureCollection before feeding Unweaver.** Unweaver wants a *transportation network* layer of LineStrings (sidewalks, crossings, footways). The OSW v0.3 mixed FeatureCollection (Nodes + Edges + Zones + Points + Lines + Polygons) will not work as-is. AccessMap's deployment expects a `transportation.geojson` (edges-only) plus a `regions.geojson` — confirmed in `TaskarCenterAtUW/AccessMap` README.
+Implication for OSW v0.3: **you must split or flatten the FeatureCollection before feeding Unweaver.** Unweaver wants a *transportation network* layer of LineStrings (sidewalks, crossings, footways). The OSW v0.3 mixed FeatureCollection (Nodes + Edges + Zones + Points + Lines + Polygons) will not work as-is. AccessMap's deployment expects a `transportation.geojson` (edges-only) plus a `regions.geojson`: confirmed in `TaskarCenterAtUW/AccessMap` README.
 
 ### Cost function and wheelchair profile
 
@@ -88,7 +90,7 @@ def cost_fun_generator(G, avoidCurbs=True, uphill=0.083, downhill=-0.1):
     return cost_fun
 ```
 
-So Unweaver consumes whatever attributes you put on your input GeoJSON. To run the stock wheelchair profile against OSW v0.3 data you need each edge to carry `footway`, `curbramps` (boolean), `incline` (numeric), `length` (numeric). In OSW v0.3 some of these are differently named (e.g., curb ramp presence is modeled as a connected `CurbRamp` node, not an edge boolean) — see Compatibility Verdict.
+So Unweaver consumes whatever attributes you put on your input GeoJSON. To run the stock wheelchair profile against OSW v0.3 data you need each edge to carry `footway`, `curbramps` (boolean), `incline` (numeric), `length` (numeric). In OSW v0.3 some of these are differently named (e.g., curb ramp presence is modeled as a connected `CurbRamp` node, not an edge boolean): see Compatibility Verdict.
 
 ### Query API
 
@@ -100,10 +102,10 @@ Response is GeoJSON. There is also a Python library API; entry points in `unweav
 
 ## AccessMap: relationship, repos, reference datasets
 
-- `https://github.com/TaskarCenterAtUW/AccessMap` — orchestration repo (docker-compose, env config). Confirms Unweaver as the routing engine and points to `opensidewalks-data` for input data generation.
-- `https://github.com/AccessMap/accessmap-incremental` — full bottom-up pipeline (OSM → DEM → OSW → routable) using a `osm_osw` Python package and Snakemake. This is the closest thing to a "build OSW for a new region" tutorial. Note: README says "this project is a tech demo and reproducing its functionality is difficult at this time."
-- `https://github.com/OpenSidewalks/opensidewalks-data` — the canonical multi-city builder. Last push 2023-12-29; per-city Snakefiles under `cities/<region>/`. Probable templates: Seattle and others. Outputs `transportation.geojson` + `regions.geojson`.
-- `https://github.com/AccessMap/accessmap` — the deployment repo (web app + routing wiring). Independent of `TaskarCenterAtUW/AccessMap` despite the name overlap.
+- `https://github.com/TaskarCenterAtUW/AccessMap`: orchestration repo (docker-compose, env config). Confirms Unweaver as the routing engine and points to `opensidewalks-data` for input data generation.
+- `https://github.com/AccessMap/accessmap-incremental`: full bottom-up pipeline (OSM → DEM → OSW → routable) using a `osm_osw` Python package and Snakemake. This is the closest thing to a "build OSW for a new region" tutorial. Note: README says "this project is a tech demo and reproducing its functionality is difficult at this time."
+- `https://github.com/OpenSidewalks/opensidewalks-data`: the canonical multi-city builder. Last push 2023-12-29; per-city Snakefiles under `cities/<region>/`. Probable templates: Seattle and others. Outputs `transportation.geojson` + `regions.geojson`.
+- `https://github.com/AccessMap/accessmap`: the deployment repo (web app + routing wiring). Independent of `TaskarCenterAtUW/AccessMap` despite the name overlap.
 
 No public CDN of pre-built OSW v0.3 reference datasets was found via the GitHub search; releases are empty on `opensidewalks-data`. AccessMap's production data is generated at deploy time. The closest thing to a reference is whatever ships from `accessmap-incremental` if you run its docker-compose pipeline against Seattle.
 
@@ -115,7 +117,7 @@ No public CDN of pre-built OSW v0.3 reference datasets was found via the GitHub 
 - Tag `0.3`: commit `975b1e9e156ac2ebdf2a9422f7f4dce5bef158ae`, released 2026-01-27
 - Authoritative file path in repo: `opensidewalks.schema.json` (root, not `schemas/`)
 - Stable raw URL: `https://raw.githubusercontent.com/OpenSidewalks/OpenSidewalks-Schema/main/opensidewalks.schema.json`
-- Internal `$id`: `https://sidewalks.washington.edu/opensidewalks/0.3/schema.json` — **THIS HOST RETURNS HTTP 404**, do not depend on it for `$ref` resolution.
+- Internal `$id`: `https://sidewalks.washington.edu/opensidewalks/0.3/schema.json`: this URL returned 404 when checked, so resolve the schema locally.
 - Meta-schema: `http://json-schema.org/draft-07/schema#`
 - Size: 278,540 bytes
 - SHA-256 (main, today): `0bd9b2f70ff42c5cd49d35d7a3efff238b0fa5a7a72fe4f8bce5c1376cd442e2`
@@ -129,13 +131,13 @@ required: ["$schema", "features", "type"]
 properties: $schema, dataSource, dataTimestamp, features, pipelineVersion, region, type
 ```
 
-Notable: **`region` is NOT in `required`.** It is declared as `GeoJSON.MultiPolygon` if present, but the schema does not force it. AccessMap's deployment wants a separate `regions.geojson` file regardless, so functionally you need it — but a strictly-valid OSW v0.3 file can omit it.
+Notable: **`region` is NOT in `required`.** It is declared as `GeoJSON.MultiPolygon` if present, but the schema does not force it. AccessMap's deployment wants a separate `regions.geojson` file regardless, so functionally you need it: but a strictly-valid OSW v0.3 file can omit it.
 
 ### Canonical enums (verified by inspecting `definitions/`)
 
 - `surface` (e.g., on `AlleyFields`, similarly on Sidewalk/Footway): `["asphalt", "concrete", "dirt", "grass", "grass_paver", "gravel", "paved", "paving_stones", "unpaved"]`
 - `crossing:markings` (on `CrossingFields`): `["dashes", "dots", "ladder", "ladder:paired", "ladder:skewed", "lines", "lines:paired", "lines:rainbow", "no", "pictograms", "rainbow", "skewed", "surface", "yes", "zebra", "zebra:bicolour", "zebra:double", "zebra:paired", "zebra:rainbow"]`
-- `kerb`: split per node type — `CurbRampFields.kerb = ["lowered"]`, `FlushCurbFields.kerb = ["flush"]`, `RaisedCurbFields.kerb = ["raised"]`, `RolledCurbFields.kerb = ["rolled"]`. There is no single `kerb` enum across all node types; the value is bound to the specific subtype.
+- `kerb`: split per node type: `CurbRampFields.kerb = ["lowered"]`, `FlushCurbFields.kerb = ["flush"]`, `RaisedCurbFields.kerb = ["raised"]`, `RolledCurbFields.kerb = ["rolled"]`. There is no single `kerb` enum across all node types; the value is bound to the specific subtype.
 - `tactile_paving` (on `CurbRampFields`): `["contrasted", "no", "primitive", "yes"]`
 
 The `definitions` block has 90 entries. The schema is composed of `<Entity>` + `<Entity>Fields` pairs (e.g., `Crossing` + `CrossingFields`), with `Custom*` entities new in v0.3.
@@ -167,7 +169,7 @@ The `definitions` block has 90 entries. The schema is composed of `<Entity>` + `
 1. **`$id` URL is dead.** Don't use `https://sidewalks.washington.edu/...` in tooling. Resolve `$ref`s locally or rewrite them. The TCAT WordPress site returns 404 for that path. Cache the schema in the repo (already in `validators/schema-cache/`).
 2. **Unweaver Python pin (`^3.8`) and Fiona `^1.8.20` will fight modern toolchains.** Pin your venv to Python 3.11 with `--enable-loadable-sqlite-extensions`. Apple Silicon stock `python.org` builds and `pyenv install` defaults will silently ship without sqlite extension support; SpatiaLite will fail to load at `unweaver build` time with an opaque "not authorized" error. The README's macOS troubleshooting section is correct but easy to skip.
 3. **Unweaver expects a digraph.** If your OSW v0.3 graph has parallel edges between the same node pair (rare but possible at multi-track crossings), Unweaver will silently drop one. Multidigraph support is open issue #10, never implemented.
-4. **Unweaver's `weight` step bakes in static costs per profile.** For a wheelchair profile parameterized by user (`uphill`, `downhill`, `avoidCurbs`), costs are recomputed per-request — fine, but the static `weight` pass uses defaults; verify your route times.
+4. **Unweaver's `weight` step bakes in static costs per profile.** For a wheelchair profile parameterized by user (`uphill`, `downhill`, `avoidCurbs`), costs are recomputed per-request: fine, but the static `weight` pass uses defaults; verify your route times.
 5. **Validator wants a ZIP of split files, not a FeatureCollection.** This is the most common build mistake. Write a splitter early. The naming convention is suffix-based (`*.edges.geojson` etc.).
 6. **`python-osw-validation` truncates errors to first 20 by default.** Pass `max_errors=10000` while iterating, or you'll fix one bug and not see the next 19,000.
 7. **AccessMap deployment wants `transportation.geojson` + `regions.geojson` separately.** The OSW `region` MultiPolygon is optional in the schema but required by the AccessMap docker-compose. Emit both.

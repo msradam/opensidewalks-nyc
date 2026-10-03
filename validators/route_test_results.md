@@ -1,3 +1,5 @@
+> Superseded. These are v0.3.0 results under an older wheelchair profile that allowed steps, street centrelines and crossings with a ramp at one end; they show that Unweaver returned a route, not that the route is usable. Current reachability and landmark routes are in [`evaluation/reachability/`](../evaluation/reachability/) and `validators/QUALITY_REPORT.md`.
+
 # Unweaver routing test results
 
 Base URL: `http://127.0.0.1:5000`
@@ -37,13 +39,13 @@ Routes tested: 10 pairs × 2 profiles = 20
 | Brooklyn Bridge MN -> DUMBO | distance | Ok | 0.29s | 58 | 4060.7 |
 | Brooklyn Bridge MN -> DUMBO | wheelchair | Ok | 0.29s | 58 | 4060.7 |
 | Atlantic Av-Barclays -> Prospect Park | distance | Ok | 0.4s | 82 | 5773.2 |
-| Atlantic Av-Barclays -> Prospect Park | wheelchair | NoPath | 6.23s | — | — |
+| Atlantic Av-Barclays -> Prospect Park | wheelchair | NoPath | 6.23s | n/a | n/a |
 | Williamsburg Bridge MN -> Williamsburg Bridge BK | distance | Ok | 0.68s | 112 | 8509.9 |
 | Williamsburg Bridge MN -> Williamsburg Bridge BK | wheelchair | Ok | 0.68s | 112 | 8509.9 |
 | Court Sq Queens -> LIC Hunters Point | distance | Ok | 0.03s | 25 | 859.4 |
 | Court Sq Queens -> LIC Hunters Point | wheelchair | Ok | 0.03s | 29 | 910.8 |
-| Yankee Stadium -> 161 St | distance | NoPath | 6.34s | — | — |
-| Yankee Stadium -> 161 St | wheelchair | NoPath | 6.28s | — | — |
+| Yankee Stadium -> 161 St | distance | NoPath | 6.34s | n/a | n/a |
+| Yankee Stadium -> 161 St | wheelchair | NoPath | 6.28s | n/a | n/a |
 | Empire State Building -> DUMBO (cross-borough) | distance | Ok | 0.69s | 105 | 7870.3 |
 | Empire State Building -> DUMBO (cross-borough) | wheelchair | Ok | 0.7s | 105 | 7870.3 |
 | Grand Central -> Washington Sq Park (long Manhattan) | distance | Ok | 0.22s | 37 | 3459.8 |

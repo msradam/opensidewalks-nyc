@@ -629,12 +629,12 @@ def main():
     # Per-borough connectivity. We have ext:borough on edges only; for nodes
     # we infer borough from any edge that touches them. A node is in borough
     # B if any incident edge had ext:borough==B (multi-borough nodes count
-    # in both — that's <0.1% in practice).
+    # in both; that's <0.1% in practice).
     node_to_boroughs = defaultdict(set)
     edges_with_borough = 0  # we re-stream edges briefly to assign nodes
     # Rather than re-streaming the file, record from edges_by_borough_hwy
     # Already lost per-edge mapping. Instead use a small second pass over
-    # the artifact for the borough graph — fast because we only read props.
+    # the artifact for the borough graph, fast because we only read props.
     print("[scan] borough sub-pass", file=sys.stderr)
     borough_graphs = {b: nx.Graph() for b in BOROUGH_AREAS_KM2}
     intersection_nodes_by_borough = defaultdict(set)  # placeholder (filled later via degree)

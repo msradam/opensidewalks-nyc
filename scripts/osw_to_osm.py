@@ -2,7 +2,7 @@
 
 Written for OpenRouteService's wheelchair profile, after TDEI's
 osm-osw-reformatter 0.4.2 was found not to carry what that profile reads
-(research_notes/compare/armB/roundtrip_reformatter.json): it writes incline
+(evaluation/compare/probes/roundtrip_reformatter.json): it writes incline
 as a ratio with both directions joined ("-0.0039;0.0039"), which ORS reads as
 0%, and it leaves kerb tags on the surveyed ramp nodes only, so a crossing
 whose ramp sits on a neighbouring sidewalk vertex shows no kerb at all.

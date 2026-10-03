@@ -4,7 +4,8 @@ Each end is snapped to the nearest point on an edge that profile can use,
 which is what the reference engines do with a coordinate. For the random
 pairs the wheelchair profile, and the same profile with no incline limit,
 are also run from the drawn nodes with no snap ("wheelchair_as_drawn",
-"wheelchair_no_incline_as_drawn"), which is how reach.json counted.
+"wheelchair_no_incline_as_drawn"), which is how the reachability check
+(evaluation/reachability/reach.json) counted.
 
 usage: python compare/run_ours.py GRAPH_NPZ PAIRS_JSON OUT_PKL [PROCESSES]
 """

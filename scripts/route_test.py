@@ -229,8 +229,8 @@ def main():
                             "snap_dist_origin_m": a["snap_dist_m"],
                             "snap_dist_dest_m":  b["snap_dist_m"]})
             md.append(f"| {label} | {profile} | {s.get('status')} | "
-                      f"{elapsed}s | {s.get('edges','—')} | "
-                      f"{s.get('total_length_m','—')} |")
+                      f"{elapsed}s | {s.get('edges','n/a')} | "
+                      f"{s.get('total_length_m','n/a')} |")
             print(f"  [{profile:>10}] {label}  ->  {s}")
 
     md += ["",

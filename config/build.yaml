@@ -66,14 +66,14 @@ outputs:
 socrata_app_token_env: "SOCRATA_APP_TOKEN"
 
 # ---------------------------------------------------------------------------
-# Optional study area — scope the pipeline to a bounding box for rapid
+# Optional study area: scope the pipeline to a bounding box for rapid
 # iteration and validation before a full city build.
 # Remove or comment out this block to run city-wide.
 # Changing the bbox requires `python -m pipeline clean` first.
 # ---------------------------------------------------------------------------
 # study_area:
-#   name: "nyc_tandon"
-#   description: "NYU Tandon / MetroTech, Downtown Brooklyn"
+#   name: "downtown_brooklyn"
+#   description: "MetroTech, Downtown Brooklyn"
 #   bbox:
 #     south: 40.688
 #     west:  -73.993

@@ -219,7 +219,7 @@ def dedup_edges(lines: list, report: dict) -> list:
 
 
 # ---------------------------------------------------------------------------
-# Aggressive node merge — cluster endpoints within R metres
+# Aggressive node merge: cluster endpoints within R metres
 # ---------------------------------------------------------------------------
 
 def merge_nearby_nodes(points: list, lines: list, tol_m: float, report: dict):
@@ -286,7 +286,7 @@ def merge_nearby_nodes(points: list, lines: list, tol_m: float, report: dict):
         ids = sorted(inv[i] for i in members)
         cid = ids[0]
         canonical_id[root] = cid
-        # Average position (still in 4326 lat/lon — safe for small clusters)
+        # Average position (still in 4326 lat/lon, safe for small clusters)
         lons = [coords_4326[i][0] for i in members]
         lats = [coords_4326[i][1] for i in members]
         canonical_centroid[root] = (sum(lons)/len(lons), sum(lats)/len(lats))
