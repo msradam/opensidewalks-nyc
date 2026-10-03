@@ -135,6 +135,20 @@ Set `SOCRATA_APP_TOKEN` in the environment to lift NYC Open Data rate limits. Fo
 
 OpenStreetMap comes from one dated Geofabrik extract, named by URL and SHA-256 in `config/sources.yaml`. A build downloads it once, checks it, and makes no Overpass query. To build on newer OSM data, change both lines. [`scripts/README.md`](scripts/README.md) has the commands that turn a build into the release assets.
 
+## Compared with other routers
+
+[`compare/`](compare/) measures this graph's wheelchair routes against routers people already use, each run on this machine from the same OpenStreetMap extract: OpenRouteService 10.0.1 (wheelchair and walking profiles), Valhalla 3.9.0 (pedestrian costing) and Unweaver, the engine this graph's profile was written for. No public routing service is called. 12,437 origin and destination pairs are routed: 2,000 seeded random pairs in each borough and city-wide, 17 landmark pairs, and 420 Brownsville trips between public facilities.
+
+What it found, in short:
+
+- **This graph finds fewer routes.** Its wheelchair profile finds a route for 87% of random pairs in Brooklyn, 65% in Queens, 56% in Manhattan, 46% in the Bronx and 45% on Staten Island. OpenRouteService on plain OSM finds 97% to 99% everywhere.
+- **Most of OpenRouteService's routes cross where this graph has no surveyed ramp.** By this graph's data, 88% to 95% of its wheelchair routes in each borough use at least one crossing with no surveyed ramp within 5 m of an end, and 13% (Brooklyn) to 73% (Staten Island) spend more than 10 m in the roadway. OSM carries no kerb tag there that OpenRouteService reads as a barrier, and where no sidewalk is mapped it routes along the street.
+- **The same engine on this graph's data behaves like this graph.** Given this graph converted back to OSM with the ramp rule on the crossing ends ([`scripts/osw_to_osm.py`](scripts/osw_to_osm.py)), OpenRouteService finds 67% to 95% of the pairs in a borough, and its routes use an unramped crossing 0.02 to 0.10 times per kilometre, against 0.7 to 1.1 on plain OSM.
+- **This graph is worse in ways the comparison names.** It refuses crossings an OSM mapper tagged with a lowered or flush kerb (24.9% of the 15,599 crossing ends where the 2018 survey has no ramp within 5 m), it ignores OSM's surface, smoothness and `wheelchair=no` tags, and it has no route where OSM has no sidewalk.
+- **The search is the engine's.** On 840 Brownsville requests and 34 landmark requests, this repo's search and Unweaver agree every time on whether a route exists and on its length.
+
+None of this says which route a wheelchair user could travel. That takes the field audit the demo describes. The result files and the method are in `research_notes/compare/` (not in the repository); `compare/analyse.py` regenerates them.
+
 ## The Brownsville demo
 
 [`demo/`](demo/) is a static page for Brooklyn Community District 16: the sidewalk network with width and incline, the crossings, every surveyed curb ramp drawn by NYC DOT's own assessment (with rebuilt corners marked), and eleven trips routed three ways (this graph's wheelchair profile, OpenRouteService's wheelchair profile on plain OpenStreetMap, and OpenRouteService's walking profile). Every route is also written out step by step, so the page works with a screen reader and without the map. A panel says what was checked, where this graph does worse, and what nobody has checked yet. Nothing on it has been verified on the ground.

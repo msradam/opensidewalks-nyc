@@ -114,9 +114,19 @@ edge endpoints and nodes, and replace Stage 5 with a call to
 - `pipeline/utils/ept.py`, `pipeline/utils/deck.py`: the LiDAR point cloud
   reader and the deck height rules; `assemble._structure_elevations` wires them
   in, `assemble._smoothed_for_incline` smooths short edges.
+- `scripts/osw_to_osm.py`: converts the OSW file back to OSM tags a router reads
+  (incline as a percentage, the 5 m ramp rule as kerb tags on crossing ends).
+- `compare/`: the comparison with OpenRouteService, Valhalla and Unweaver, all
+  run locally. `graph.py` (this graph as arrays, edge-snapped routes),
+  `pairs.py`, `run_*.py` (one per engine), `measures.py` (match a route to this
+  graph's edges, audit it), `analyse.py` (tables and a cause per disagreement),
+  `ors_tag_probe.py`. Results go to `research_notes/compare/` (git-ignored).
+- `demo/`: the static Brownsville page; `scripts/build_demo_data.py
+  demo/build_config.json` rebuilds its data from the comparison's results.
 - `validators/post_build_checks.py`: the checks the validator does not do.
 - `tests/`: `test_validity_fixes.py`, `test_structure_incline.py`,
-  `test_crossing_rule.py`; run each with `python tests/<file>`.
+  `test_crossing_rule.py`, `test_osw_to_osm.py`, `test_compare_measures.py`;
+  run each with `python tests/<file>`.
 - `validators/QUALITY_REPORT.md`: conformance + quality writeup for the current
   artifact. Its numbers come from `post_build_checks.py`.
 - `release-notes/`: one file per release, what changed and why.
@@ -193,6 +203,13 @@ by Stage 4 around structures into `data/raw/lidar_points/`); NYC Address Points
 - **A scipy sparse matrix adds duplicate entries.** Building a graph from this
   file's edges (one per direction, some parallel) without reducing to one
   weight per node pair doubles every distance.
+- **Unweaver adds a reverse copy of every feature.** This layer already has both
+  directions, so build with `unweaver build PROJECT --changes-sign incline` or
+  a 9% climb passes as a 9% descent.
+- **OpenRouteService reads few kerb forms.** `kerb=raised` is ignored, a bare
+  `kerb:height` of 0.15 or more is read as centimetres, a request with no
+  restrictions applies no limit, and its way ids are in `extras.osmId`.
+  `compare/ors_tag_probe.py` shows each on a fixture.
 - **`SOCRATA_APP_TOKEN`** is optional (anonymous access was fast enough for the
   city-wide build: 217,679 ramps in under 2 minutes).
 
