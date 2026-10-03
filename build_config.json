@@ -1,0 +1,124 @@
+{
+ "_about": "Inputs for scripts/build_demo_data.py. The research_notes/ paths are result files of the router comparison (git-ignored; compare/ rebuilds them). Every number in 'status' names its result file.",
+ "osw_clip": "research_notes/compare/brownsville/bk16.geojson",
+ "community_districts": "research_notes/ramp_backlog/raw/community_districts_5crt-au7u.geojson",
+ "compliance_pages": "research_notes/ramp_backlog/raw/compliance/page_*.json",
+ "progress_csv": "research_notes/evidence/raw/e7gc-ub6z_rows.csv",
+ "progress_retrieved": "2 October 2026",
+ "graph_npz": "research_notes/compare/graph/nyc.npz",
+ "pairs": "research_notes/compare/pairs/pairs.json",
+ "pairs_detail": "research_notes/compare/results/pairs_detail.jsonl.gz",
+ "ours_pkl": "research_notes/compare/routes/ours.pkl",
+ "ors_arm_a": [
+  "research_notes/compare/routes/ors_armA.rec.jsonl.gz",
+  "research_notes/compare/routes/ors_armA.with_way_ids.jsonl.gz"
+ ],
+ "numbers": {
+  "status": [
+   {
+    "title": "Checked, and how",
+    "items": [
+     "Form. The city-wide graph passes the official OpenSidewalks validator (python-osw-validation 0.5.0) with zero errors, and so does the Brownsville extract drawn here. The validator checks structure, not truth.",
+     "Where a surveyed ramp serves a crossing. On 200 crossings rated over the city's 2018 aerial imagery, 164 of the 166 crossings that the 5 m rule passes have a surveyed ramp placed to serve both ends (98.8%). Two raters agreed with kappa 0.81. The imagery shows where the survey put a ramp, not whether anyone can use it.",
+     "The route search. This page's routes match Unweaver, the open routing engine the profile was written for. On 840 route requests in Brownsville the two agree every time on whether a route exists, and all 826 routes found by both have the same length to within 1 m.",
+     "Against OpenRouteService. On 362 Brownsville trips, this graph and OpenRouteService's wheelchair profile (plain OpenStreetMap data, 10% incline limit, 6 cm kerb limit) take the same route on 127 and different routes on 225. On 10 trips only OpenRouteService finds a route. 151 of OpenRouteService's 362 routes (41.7%) use a crossing with no surveyed ramp within 5 m of one end. OpenStreetMap carries no kerb information there that OpenRouteService treats as a barrier.",
+     "What the disagreements look like from above. 48 places across the city where the two routers part were drawn over the city's March 2024 aerial imagery and rated by an agent that was not told why each was chosen. Where OpenRouteService's route had been flagged as running in the roadway, the photograph agreed at 10 of 12 places. At the 11 crossings flagged for a missing ramp, the photograph showed a ramp at both ends at none, at one end or neither at 3, and could not tell at 8. At 15 cm per pixel a kerb ramp is rarely visible, so this check cannot confirm the ramp data. A second agent rated 24 of the sheets and agreed on the kind of place at 23 (kappa 0.94)."
+    ]
+   },
+   {
+    "title": "Where this graph does worse",
+    "items": [
+     "It finds no wheelchair route on 10 of the 362 trips, where OpenRouteService finds one.",
+     "It may refuse crossings that have ramps. Across Brooklyn, OpenStreetMap mappers tagged a lowered or flush kerb at 1,893 of the 3,394 crossing ends (55.8%) where the survey has no ramp within 5 m. Some of those are likely ramps built after the survey.",
+     "It does not read OpenStreetMap's surface, smoothness or wheelchair=no tags. OpenRouteService does.",
+     "Where OpenStreetMap has no mapped sidewalk, this graph has no route. OpenRouteService falls back to the roadway, which is a choice a rider may or may not want.",
+     "Its incline limits (8.3% up, 10% down) apply to every short stretch. A noisy LiDAR reading on one short stretch can close a route."
+    ]
+   },
+   {
+    "title": "Not checked",
+    "items": [
+     "Nobody has measured a ramp with a level or travelled one of these routes for this project.",
+     "The survey's slopes were taken from street imagery and vehicle LiDAR between 2018 and 2019. No public record shows them checked against a hand measurement.",
+     "978 of the 2,363 surveyed ramps here are at corners DOT lists as rebuilt since the survey. Their slopes and status describe ramps that may be gone, and nothing here says how the new ramps measure.",
+     "Clear width past poles, trees and stoops, surface condition, the lip at the gutter, ponding, construction and snow are not in the data.",
+     "The imagery ratings and the route comparison were carried out by language-model agents following written protocols, with a second independent agent rating a sample. No person has reviewed them on the ground."
+    ]
+   }
+  ],
+  "sources": [
+   [
+    "Sidewalks, crossings, paths and street names",
+    "OpenStreetMap contributors, Geofabrik New York extract of 1 October 2026",
+    "https://www.openstreetmap.org/copyright",
+    "Open Database License 1.0"
+   ],
+   [
+    "Curb ramp positions and survey values",
+    "NYC DOT, Pedestrian Ramp Locations (ufzp-rrqu), surveyed 2017 to 2020",
+    "https://data.cityofnewyork.us/d/ufzp-rrqu",
+    "NYC Open Data terms of use; credit by source and date"
+   ],
+   [
+    "DOT's assessment of each surveyed ramp",
+    "NYC DOT survey assessment map layer, last edited December 2020, read 2 October 2026",
+    "https://www.nycpedramps.info/survey",
+    "Public map service of NYC DOT"
+   ],
+   [
+    "Which corners were rebuilt",
+    "NYC DOT, Pedestrian Ramp - Program Progress (e7gc-ub6z), read 2 October 2026",
+    "https://data.cityofnewyork.us/d/e7gc-ub6z",
+    "NYC Open Data terms of use"
+   ],
+   [
+    "Sidewalk width",
+    "NYC OTI, NYC Planimetric Database: Sidewalk (52n9-sdep), 2022 capture",
+    "https://data.cityofnewyork.us/d/52n9-sdep",
+    "NYC Open Data terms of use"
+   ],
+   [
+    "Incline",
+    "NYC 2017 topobathymetric LiDAR, terrain model served by NY State GIS, and point clouds from NOAA Digital Coast",
+    "https://data.cityofnewyork.us/d/7sc8-jtbz",
+    "Public data, no licence attached"
+   ],
+   [
+    "District boundary",
+    "NYC DCP, Community Districts (5crt-au7u)",
+    "https://data.cityofnewyork.us/d/5crt-au7u",
+    "NYC Open Data terms of use"
+   ],
+   [
+    "Trip starts and ends",
+    "NYC DCP Facilities Database (ji82-xba5); NYCHA Public Housing Developments (phvi-damg); NYC Parks Cool It! NYC 2020 cooling sites (h2bn-gu9k); MTA Subway Entrances and Exits 2024 (i9wp-a4ja), read 3 October 2026",
+    "https://data.cityofnewyork.us/d/ji82-xba5",
+    "NYC Open Data and New York State open data terms of use"
+   ],
+   [
+    "Reference routes",
+    "OpenRouteService 10.0.1 by HeiGIT, run on this project's own machine on the same OpenStreetMap extract. No public routing service was used.",
+    "https://openrouteservice.org",
+    "GNU GPL 3.0"
+   ],
+   [
+    "Imagery used for the checks (not shown on this page)",
+    "NYC OTI, NYC Orthos 2024, flown 14 to 24 March 2024",
+    "https://github.com/CityOfNewYork/nyc-geo-metadata/blob/master/Metadata/Metadata_AerialImagery.md",
+    "CC BY 4.0"
+   ],
+   [
+    "The pedestrian graph",
+    "opensidewalks-nyc v0.3.3, built 3 October 2026 (not yet released)",
+    "https://github.com/msradam/opensidewalks-nyc",
+    "Data: Open Database License 1.0. Code: Apache License 2.0"
+   ],
+   [
+    "Map library",
+    "Leaflet 1.9.4, stored with this page",
+    "https://leafletjs.com",
+    "BSD 2-Clause"
+   ]
+  ]
+ }
+}
