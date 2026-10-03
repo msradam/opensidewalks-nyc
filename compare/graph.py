@@ -17,7 +17,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from scipy.sparse import coo_matrix
-from scipy.sparse.csgraph import dijkstra
+from scipy.sparse.csgraph import connected_components, dijkstra
 from scipy.spatial import cKDTree
 from shapely import STRtree, linestrings
 from shapely.geometry import LineString, Point
@@ -28,6 +28,8 @@ ROOT = Path(__file__).resolve().parents[1]
 EAST = 111320 * math.cos(math.radians(40.7))
 NORTH = 111320.0
 UPHILL, DOWNHILL = 0.083, -0.1
+MIN_NETWORK_EDGES = 200     # GraphHopper, under ORS, drops networks smaller than this
+SNAP_SLACK_M = 25.0
 
 
 def read_json(path):
@@ -160,16 +162,32 @@ class Graph:
 
         This is how the reference engines treat a coordinate. Snapping to a
         node instead puts the start up to half a block from theirs.
+
+        The nearest passable edge is sometimes a fragment cut off from
+        everything else (a stub of path between two flights of steps). ORS
+        drops such fragments when it builds its graph. Here the nearest edge
+        of a real network (MIN_NETWORK_EDGES or more) is taken instead when it
+        is no more than SNAP_SLACK_M further away; a point whose only nearby
+        edges are an island stays on the island and gets no route.
         """
         if ("edge", profile) not in self._tree:
-            idx = np.flatnonzero(self.masks[profile])
+            k = self.masks[profile]
+            idx = np.flatnonzero(k)
+            _, label = connected_components(coo_matrix((np.ones(len(idx)), (self.u[idx], self.v[idx])), shape=(self.n, self.n)), directed=False)
+            size = np.bincount(label[self.u[idx]])      # edges per component
+            big = size[label[self.u[idx]]] >= MIN_NETWORK_EDGES
             counts = (self.offsets[1:] - self.offsets[:-1])[idx]
             take = np.concatenate([np.arange(self.offsets[e], self.offsets[e + 1]) for e in idx])
             geoms = linestrings(metres(self.coords[take]), indices=np.repeat(np.arange(len(idx)), counts))
-            self._tree[("edge", profile)] = (STRtree(geoms), geoms, idx)
-        tree, geoms, idx = self._tree[("edge", profile)]
+            where = np.flatnonzero(big)
+            self._tree[("edge", profile)] = (STRtree(geoms), geoms, idx, big, STRtree(geoms[where]), where)
+        tree, geoms, idx, big, big_tree, where = self._tree[("edge", profile)]
         p = Point(metres(lonlat))
         i = tree.nearest(p)
+        if not big[i] and len(where):
+            j = where[big_tree.nearest(p)]
+            if geoms[j].distance(p) <= geoms[i].distance(p) + SNAP_SLACK_M:
+                i = j
         return int(idx[i]), float(geoms[i].distance(p)), float(geoms[i].project(p))
 
     def route(self, o, d, profile):

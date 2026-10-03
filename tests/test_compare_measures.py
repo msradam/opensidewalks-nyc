@@ -27,7 +27,13 @@ def feat(i, u, v, a, b, subclass="footway", footway="sidewalk", incline=0.0, cur
                            "surface": None, "width": None, "description": f"{subclass} {i}", "ext_borough": "BK", "ext_osm_id": "1"}}
 
 
-def graph():
+def graph(min_network=1):
+    import compare.graph as cg
+    cg.MIN_NETWORK_EDGES = min_network      # the fixture is smaller than a real network
+    return _graph()
+
+
+def _graph():
     A, B, C, D, E = ll(0, 0), ll(100, 0), ll(112, 0), ll(112, 50), ll(160, 0)
     both = lambda i, u, v, a, b, inc=0.0, **kw: [feat(i, u, v, a, b, incline=inc, **kw), feat(i + "r", v, u, b, a, incline=-inc, **kw)]
     feats = (both("s", "A", "B", A, B) + both("x", "B", "C", B, C, footway="crossing")
@@ -76,6 +82,21 @@ def test_route_snaps_to_the_nearest_point_on_an_edge():
     assert fid(g, down["edges"]) == ["pr"] and abs(down["length_m"] - 30) < 0.5, down
     assert g.route(ll(120, 0), ll(150, 0), "wheelchair")["edges"] is None, "9% uphill is over the limit"
     assert g.route(ll(150, 0), ll(10, 0), "wheelchair")["edges"] is None, "the crossing has no ramp"
+
+
+def test_snap_prefers_a_real_network_to_a_nearby_fragment():
+    import compare.graph as cg
+    g = graph()
+    try:
+        cg.MIN_NETWORK_EDGES = 4        # the street (2 edges) is a fragment; the walk network (8) is not
+        e, d, _ = g.snap_edge(ll(50, 12), "distance")
+        assert str(g.fid[e]) in ("s", "sr") and 11.9 < d < 12.1, "8 m from the fragment, 12 m from the network: take the network"
+        cg.SNAP_SLACK_M = 2.0
+        g._tree.clear()
+        e, d, _ = g.snap_edge(ll(50, 12), "distance")
+        assert str(g.fid[e]) in ("r", "rr") and 7.9 < d < 8.1, "the network is too much further: the point is on the fragment"
+    finally:
+        cg.MIN_NETWORK_EDGES, cg.SNAP_SLACK_M = 200, 25.0
 
 
 def test_match_restores_direction_and_order():
