@@ -153,7 +153,7 @@ None of this says which route a wheelchair user could travel. That takes the fie
 
 [`demo/`](demo/) is a static page for Brooklyn Community District 16: the sidewalk network with width and incline, the crossings, every surveyed curb ramp drawn by NYC DOT's own assessment (with rebuilt corners marked), and ten trips routed three ways (this graph's wheelchair profile, OpenRouteService's wheelchair profile on plain OpenStreetMap, and OpenRouteService's walking profile). Every route is also written out step by step, so the page works with a screen reader and without the map. A panel says what was checked, where this graph does worse, and what nobody has checked yet. Nothing on it has been verified on the ground.
 
-Open `demo/index.html` in a browser. There is no server and nothing to install: the data are plain script files under `demo/data/`, and the only library, Leaflet 1.9.4, is stored in `demo/vendor/`. The page has no basemap tiles; streets come from the same OpenStreetMap extract as the graph. To publish it, serve the `demo/` folder as it is (GitHub Pages can serve a folder of a branch).
+Open `demo/index.html` in a browser. There is no server and nothing to install: the data are plain script files under `demo/data/`, and the only library, Leaflet 1.9.4, is stored in `demo/vendor/`. The page has no basemap tiles; streets come from the same OpenStreetMap extract as the graph. To publish it, serve the `demo/` folder as it is. GitHub Pages serves only the root or `/docs` of a branch, so push the folder to a branch of its own (`git subtree push --prefix demo origin gh-pages`) and point Pages at that branch.
 
 ```bash
 open demo/index.html                       # macOS; or double-click the file
