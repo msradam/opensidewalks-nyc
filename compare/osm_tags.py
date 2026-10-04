@@ -18,7 +18,10 @@ import osmium
 KEEP = ("highway", "footway", "surface", "smoothness", "tracktype", "incline", "width", "wheelchair",
         "bridge", "tunnel", "layer", "access", "foot", "crossing", "name")
 KERB_KEYS = ("kerb", "curb", "sloped_curb", "sloped_kerb", "kerb:height")
-# Surfaces ORS's wheelchair default (cobblestone:flattened or better) refuses.
+# Rough surfaces a wheelchair router could refuse. ORS documents a default surface
+# restriction, but in the ORS 10.0.1 source it applies only when the request sends one
+# (read in the source, not probed for surfaces); its encoder
+# itself excludes unpaved values such as earth, grass, dirt, mud and sand.
 ROUGH = {"cobblestone", "sett", "unhewn_cobblestone", "pebblestone", "gravel", "fine_gravel", "compacted", "unpaved",
          "ground", "dirt", "earth", "grass", "grass_paver", "sand", "mud", "woodchips", "rock", "wood"}
 BAD_SMOOTHNESS = {"intermediate", "bad", "very_bad", "horrible", "very_horrible", "impassable"}

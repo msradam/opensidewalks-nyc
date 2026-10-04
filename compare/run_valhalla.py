@@ -8,8 +8,12 @@ Run in its own environment, since the project does not depend on Valhalla:
 Configurations:
   foot         pedestrian costing as shipped: the engine's plain foot route
   wheelchair   pedestrian costing, type wheelchair, use_hills 0, with the
-               10 km wheelchair distance cap raised. No kerb option exists and
-               the grade limit is not enforced, so this is a stair-avoiding
+               10 km wheelchair distance cap raised. The tiles are built with
+               no elevation tiles, so every edge has zero grade and use_hills
+               acts on nothing. sidewalk_factor is left at its default of 1.0,
+               so a sidewalk is not preferred over a centreline. No kerb option
+               exists, the grade limit is not enforced, and steps are
+               penalised (600 s), not forbidden, so this is a stair-avoiding
                foot baseline, not a wheelchair router.
 """
 import gzip

@@ -1,9 +1,18 @@
 """Score the ramp-to-crossing rules against the rated sample.
 
-Truth per end: the primary rater's `ramp_serves`. A crossing is ramped on the
-ground when both ends are yes; a crossing with an unclear end is left out.
+Truth per end: the primary rater's `ramp_serves`. A crossing is rated ramped
+when both ends are rated yes; a crossing with an unclear end is left out. The
+raters were language-model instances rating 2018 aerial imagery, so the truth
+is a rating, not a check on the ground (docstring reworded 2026-10-03).
 Agreement: Cohen's kappa between the primary and the blind rater on the ends
 both rated.
+
+Inputs as published: FEATURES_JSON is ../sample/features.json and RATINGS_DIR
+is ../sample/ratings/. Run from the repository root with
+  uv run python evaluation/crossing_rule/code/score.py \
+    evaluation/crossing_rule/sample/features.json \
+    evaluation/crossing_rule/sample/ratings OUT_JSON
+and OUT_JSON matches ../score.json.
 
 usage: score.py FEATURES_JSON RATINGS_DIR OUT_JSON
 """

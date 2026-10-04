@@ -5,14 +5,19 @@ Never a public API: the base URL must be on this machine.
 Configurations:
   foot                      foot-walking, shortest
   foot_rec                  foot-walking as ORS ships it (recommended weighting)
-  default                   wheelchair with no restrictions given. ORS then
-                            applies no kerb, incline or width limit at all
-                            (evaluation/compare/probes/ors_tag_probe.json); only its weighting differs
-                            from foot.
+  default                   wheelchair with no restrictions given. ORS 10.0.1
+                            then applies no kerb, incline or width limit
+                            (observed on the fixture in
+                            evaluation/compare/probes/ors_tag_probe.json). It is
+                            still not a foot route: the wheelchair encoder always
+                            excludes steps, unpaved surfaces such as earth and
+                            grass, bad smoothness, and trunk, primary and
+                            secondary roads tagged sidewalk=no.
   rec_i{6,10}_k6            wheelchair, recommended weighting, with
                             maximum_incline and maximum_sloped_kerb 0.06 m.
-                            6% and 0.06 m are the defaults ORS documents;
-                            these are the routes a user of ORS would see.
+                            6% and 0.06 m are the defaults ORS documents, but
+                            ORS 10.0.1 applies them only when the request sends
+                            them; these are the routes a user of ORS would see.
   i{6,10}_k{3,6}[_w90]      the same limits with preference "shortest", which
                             matches this graph's shortest-passable-path
                             search, and with _w90 minimum_width 0.9 m. Whether

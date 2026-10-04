@@ -2,6 +2,8 @@
 
 This protocol is written so that a second rater can repeat the rating without talking to the first.
 
+Note 2026-10-03. This file is the instruction the raters received. The raters were Anthropic Claude models, run as separate instances through Claude Code, each given only this protocol and its sheets. The exact model versions were not recorded. No person rated any sheet, and nothing was checked on the ground. After external review, four things were changed in the last two sections, which tell the reader how the ratings are used: "ramped on the ground" became "rated ramped", "DOT's field survey" became a description of how the survey was collected, "the survey is from 2018" became "mostly from 2018", and a line on rater agreement was added. Nothing a rater was asked to do changed. The rest of the text is as the raters received it, so where it says 2018 is the year of the ramp survey, read it as the year most of the survey's records come from.
+
 ## What is being rated
 
 The sample is 200 pedestrian crossings from the v0.3.2 graph, 40 drawn at random from each borough (`sample/sample.csv`, drawn by `sample.py`, seed 20261002). Each crossing has two ends, A and B. A is the western end.
@@ -51,10 +53,11 @@ n,end,ramp_serves,seen_in_imagery,end_type,marked,note
 
 ## What the rating is used for
 
-A crossing counts as ramped on the ground when both ends are `yes`. Each matching rule (ramp on the crossing's own node, ramp within 5 m of each end, and others) is scored against that: precision is the share of crossings a rule calls ramped that are ramped on the ground, and recall is the share of ramped crossings the rule finds. Ends rated `unclear` are left out of the scoring and counted.
+A crossing counts as rated ramped when both ends are `yes`. This is what the 2018 imagery and the survey positions show to the rater, not a check on the ground. Each matching rule (ramp on the crossing's own node, ramp within 5 m of each end, and others) is scored against that: precision is the share of crossings a rule calls ramped that are rated ramped, and recall is the share of rated ramped crossings the rule finds. Ends rated `unclear` are left out of the scoring and counted.
 
 ## Limits to state with any result
 
-- The survey is from 2018 and the imagery is from 2018. The rating says whether a surveyed ramp was positioned to serve the crossing then. It does not say the ramp is there or usable today.
-- The imagery rarely shows a ramp directly. The existence of each ramp rests on DOT's field survey. The rating tests which crossing a ramp belongs to.
+- The survey is mostly from 2018 and the imagery is from 2018. The rating says whether a surveyed ramp was positioned to serve the crossing then. It does not say the ramp is there or usable today.
+- The imagery rarely shows a ramp directly. The existence of each ramp rests on the DOT ramp survey, which a contractor (Cyclomedia) collected from vehicle-mounted street-level imagery and LiDAR, with records from March 2017 to January 2020, mostly 2018. The rating tests which crossing a ramp belongs to.
+- Agreement between raters is agreement between instances of one language model. It measures consistency, not accuracy.
 - A ramp that serves a crossing may still be too steep or lack a warning surface. That is a separate question (the survey's slope fields).

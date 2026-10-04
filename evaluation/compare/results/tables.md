@@ -2,6 +2,48 @@
 
 From `comparison.json`. Random areas have 2,000 pairs each. Measured pairs are those whose snapped ends lie within 25 m of each other across routers.
 
+## Key
+
+Added 2026-10-03 after external review. Everything below the key is as `code/tables.py` wrote it from `comparison.json`. The protocol is `../PROTOCOL.md`.
+
+Columns. BK, QN, MN, BX, SI and citywide are 2,000 seeded random pairs each, drawn from graph nodes. Brownsville is 420 trips in Brooklyn Community District 16. "landmark hand-checked" is the 8 landmark pairs whose routes were checked over imagery in `../../reachability/hand_check.md`; the column name is the label the scripts use, and the check was done by a language-model rater, not by hand. "landmark structure" is the 9 landmark pairs meant to cross a bridge or other structure.
+
+Rows, by router:
+
+| Row label | What was asked | Data | Matched to edges by |
+|---|---|---|---|
+| this graph, wheelchair | This repository's search with the wheelchair profile: no steps, no street centreline, no crossing without a surveyed ramp within 5 m of each end, incline at most 8.3% up and 10% down | This graph: OSM ways, the DOT ramp survey, LiDAR incline | Its own edges |
+| this graph, walk | This repository's search with the walking profile | This graph | Its own edges |
+| ORS raw OSM, incline 10 kerb 0.06 | ORS 10.0.1 wheelchair, recommended weighting, `maximum_incline` 10, `maximum_sloped_kerb` 0.06. This is the reference | Plain OSM (arm A), elevation off | OSM way ids ORS returns |
+| ORS raw OSM, incline 6 kerb 0.06 | The same with `maximum_incline` 6 | Arm A | OSM way ids |
+| ORS raw OSM, no limits given | ORS wheelchair, recommended weighting, no restrictions in the request. ORS then applies no kerb, incline or width limit, but its encoder still excludes steps, unpaved surfaces, bad smoothness and major roads tagged `sidewalk=no` | Arm A | OSM way ids |
+| ORS on this graph, strict kerbs, 10/0.06 and 6/0.06 | ORS wheelchair, recommended weighting, incline 10 or 6, kerb 0.06 | Arm B strict: this graph converted to OSM, with a crossing end that has no surveyed ramp tagged `kerb=raised`, `kerb:height=0.14`, and LiDAR incline as `incline` | This graph's edge ids |
+| ORS on this graph, known kerbs only, 10/0.06 | The same at incline 10 | Arm B known: as strict, but ends without a surveyed ramp are left untagged | This graph's edge ids |
+| ORS raw OSM, foot | ORS foot-walking, recommended weighting | Arm A | Geometry only |
+| Valhalla wheelchair type | Valhalla 3.9.0 pedestrian costing, `type: wheelchair`, `use_hills` 0, built without elevation tiles, `sidewalk_factor` at its default 1.0. It has no kerb option, does not enforce `max_grade`, and penalises steps without forbidding them. It is a stair-avoiding foot baseline, not a wheelchair router | Arm A | Geometry only |
+| Valhalla foot | Valhalla pedestrian costing as shipped | Arm A | Geometry only |
+
+Rows matched by geometry only (ORS foot, both Valhalla rows) are not verified by the way-id method. Geometry matching overcounted steps for ORS before the way-id fix, so treat their steps, roadway and incline figures as less certain.
+
+Tables, in order:
+
+| Table | What it counts |
+|---|---|
+| Pairs | Pairs per area, pairs whose snapped ends lie more than 25 m apart between routers, and the rest (measured pairs) |
+| Route found, all pairs / measured pairs | Share of pairs for which the router returned a route |
+| Found by both / this graph only / the other only / neither | Counts over measured pairs, against this graph's wheelchair profile |
+| Detour over the same engine's foot route | Route length over the same engine's foot route length: median, 90th percentile, share over 1.5 |
+| Overlap with this graph's wheelchair route | For pairs both found: the median of the smaller of two shares (this route within 10 m of this graph's route, and the reverse), and the share of pairs where that is 0.9 or more (the same route) |
+| Audit against this graph's data (five tables) | Share of the router's routes on measured pairs that this graph's data flags. "No surveyed ramp within reach" is a crossing without a surveyed ramp within 5 m of each end. "Over this profile's incline limits" is any non-street, non-step edge steeper than 8.3% up or 10% down in the direction of travel on this graph's LiDAR incline, short edges included. "Steps" is a steps edge. "Over 10 m in the roadway" is more than 10 m on edges this graph classes as streets, that is, street centrelines, including centrelines where OSM tags a sidewalk on the street (`sidewalk=*`), so it does not mean travel in the carriageway. "Any of the four" is any of these |
+| Unramped crossings per km | Crossings with no surveyed ramp within 5 m, per km of route |
+| Raw OSM audit (seven tables) | Share of the router's routes on measured pairs that use a way whose raw OSM tags a wheelchair router could refuse (`compare/osm_tags.py`, `barriers`). "incline": an `incline` tag over 8.3%, or up, down or steep. "kerb=raised": a `footway=crossing` way with any node tagged `kerb=raised`, which is a coarse way-level flag. "smoothness": intermediate or worse. "surface": a rough surface value. "steps": `highway=steps`. "wheelchair=no". "any": any of these |
+| ORS settings matrix | Share of all pairs with a route for each ORS configuration in `compare/run_ors.py`. `foot` is foot-walking with `shortest`, `foot_rec` foot-walking as shipped, `default` wheelchair with no restrictions, `i6`/`i10` the incline limit, `k3`/`k6` the kerb limit in cm, `_w90` a minimum width of 0.9 m, `rec_` the recommended weighting (the others use `shortest`) |
+| This graph against the reference | Same or different route, found by one only, or neither, and the cause of each disagreement: the first thing on the ORS route that this profile refuses |
+
+The audit tables judge every router by this dataset's ramp survey and LiDAR incline, which only this graph and ORS arms B and C had. This graph's wheelchair profile scores 0% on them by construction. This graph's own walking profile scores 90.8% on "any of the four" in Brooklyn, against 91.3% for the ORS reference. On the raw OSM audit, which uses OSM's own tags, this graph's wheelchair routes score 43.7% in Brooklyn.
+
+`kerb=raised` and ORS. ORS 10.0.1 does not read `kerb=raised` as a kerb height: on the tag probe fixture a crossing with `kerb=raised` passes every kerb limit (`../probes/ors_tag_probe.json`). By the way-level raw OSM audit below, 51.3% of the reference's Brooklyn routes (66.7% city-wide) use a crossing way with a node tagged `kerb=raised`. The flag is coarse: the raised node can sit anywhere on the crossing way, for example at a median, and a node-level count for routes was not made. Part of the gap between ORS and this graph is therefore in how ORS reads OSM's own kerb tags, and part is the ramp survey. Separately, a bare `kerb:height` of 0.15 m or more passes every kerb limit on the probe; that parsing is ORS issue #2293 (https://github.com/GIScience/openrouteservice/issues/2293).
+
 ### Pairs
 
 | | BK | QN | MN | BX | SI | citywide | Brownsville | landmark hand-checked | landmark structure |

@@ -4,12 +4,14 @@ The v0.3.2 bridge test (`research_notes/release/city/bridges.py`) listed five cr
 as not joined end to end on pedestrian edges. This note gives the cause of each one.
 All numbers come from `diagnose.py` and are in `findings.json`.
 
+Note 2026-10-03. This diagnosis was written by an Anthropic Claude model instance run through Claude Code, working from the pinned extract and the v0.3.2 build. Where it says "I", that instance is writing. The exact model version was not recorded. No person checked any of it on the ground or in imagery. The author reviewed it. It describes v0.3.2. After external review the verdicts below were corrected where the first version blamed OpenStreetMap for this project's own modelling choices. This graph does not read `sidewalk=*` tags on street centrelines, and its wheelchair profile does not route along centrelines. Stage 3 drops cycleways that have no `foot` tag, which is stricter than the OSM default for the United States (`foot=yes`). A mapper note that proposed OSM edits from this diagnosis was removed from the repository. No OSM edit was made or proposed upstream.
+
 | Bridge | Verdict | Cause in one line |
 |---|---|---|
-| 145th Street Bridge | OSM | The Bronx end has no sidewalk ways leaving the intersection at East 149th Street. |
-| Broadway Bridge | OSM | A crossing of 9th Avenue and a sidewalk corner at West 225th Street are missing. The bridge sidewalks are joined. |
+| 145th Street Bridge | Modelling | OSM maps the Bronx-side sidewalks of East 149th Street as `sidewalk=right` on the street, which this graph does not read. No separate sidewalk way leaves the intersection. |
+| Broadway Bridge | OSM geometry, unconfirmed | No crossing way across 9th Avenue at Broadway, and a sidewalk corner at West 225th Street that is 12 m from the next sidewalk and not joined to it. Whether a crosswalk exists at 9th Avenue was not checked. The bridge sidewalks are joined. |
 | Randall's Island Connector | None of the three. No defect. | The Connector is joined. The test's landfalls for this row are under the RFK Bronx span. |
-| RFK Triborough Bridge, Bronx span | Pipeline, with an OSM tagging part | Stage 3 drops way 1414563386, an island path with no `foot` tag. It is the only link from both ramps to the island. |
+| RFK Triborough Bridge, Bronx span | Pipeline | Stage 3 drops way 1414563386, an island cycleway with no `foot` tag, although the United States default for `highway=cycleway` is `foot=yes`. It is the only link from both ramps to the island. |
 | Henry Hudson Bridge | None of the three. No defect. | The walkway is joined at both ends. The test's landfalls are 230 m off the walkway landings. |
 
 No bridge is "not walkable in reality". No bridge is cut by the Stage 4 endpoint merge.
@@ -27,7 +29,8 @@ Three checks hold for the whole box. Every OSM way that the rules classify as pe
 (14,850 ways) is present as pedestrian edges in the built graph, matched by `ext:osm_id`.
 For all five bridges the pedestrian shortest path in the built graph has the same length
 as the path on the raw OSM ways the rules keep. So Stage 4 cuts nothing here, and each
-cause is either in OSM or in the Stage 1 and Stage 3 rules. The release test numbers are
+cause is either in OSM or in the Stage 1 and Stage 3 rules, or in how this graph models
+sidewalks that OSM records as street tags. The release test numbers are
 reproduced inside the extract to within 2 m.
 
 | Bridge (test anchors) | Straight line | Built pedestrian path | Built path with street edges | Pedestrian path with the proposed fix |
@@ -38,7 +41,7 @@ reproduced inside the extract to within 2 m.
 | RFK Bronx span | 597 m | 2,486 m | 2,478 m | 1,201 m |
 | Henry Hudson Bridge | 535 m | 1,526 m | 1,519 m | no fix needed |
 
-## 1. 145th Street Bridge: OSM
+## 1. 145th Street Bridge: sidewalks mapped as street tags
 
 ### What OSM has
 
@@ -76,11 +79,14 @@ at 40.8191991, -73.9292627 on way 1453525595, and node 13329984704 at
 83 to 86 m north (node 13337724672 at 40.8201829, -73.9296940 on sidewalk 1454347058,
 east side of River Avenue, and node 13337724673 at 40.8202171, -73.9298525 on sidewalk
 1454347072, west side). East 149th Street carries `sidewalk=right` on ways 5699290 and 1082179001,
-so OSM records that the sidewalks exist. They are not drawn as ways.
+so OSM records that the sidewalks exist. OSM has two documented ways to map a sidewalk:
+as a separate way, or as a `sidewalk=*` tag on the street. Here it uses the second, and
+this graph reads only the first.
 
 The NYC DOT ramp survey has 16 kerb ramps within 70 m of the intersection, among them
 ramp 201524 at 40.819473, -73.92995 (4 m from node 9903127443) and ramps 201530 and
-201526 at the south-east corner. The sidewalks are on the ground.
+201526 at the south-east corner. The survey's ramps there are consistent with the
+sidewalks that the street tags record. Nobody checked them on the ground.
 
 ### What the built graph has
 
@@ -100,11 +106,15 @@ them. Neither is a pedestrian way and neither would close the gap.
 
 ### Fix
 
-No pipeline rule drops anything a pedestrian needs here. A mapper adds three sidewalk
-ways (see `osm_mapper_notes.md`, item 1). With those three links the test path is 804 m,
-ratio 1.48.
+The path exists along the street (786 m with street edges, against 2,476 m on
+pedestrian edges alone). This project's own rules cut it: the graph does not read
+`sidewalk=*` on the street, and the wheelchair profile refuses street centrelines. The fix
+belongs in the pipeline, for example by deriving sidewalk edges from `sidewalk=*` tags.
+With three sidewalk links added at the Bronx end the test path is 804 m, ratio 1.48. (The
+first version of this section said no pipeline rule was involved and proposed that a
+mapper draw the sidewalks. That was corrected on 2026-10-03.)
 
-## 2. Broadway Bridge: OSM
+## 2. Broadway Bridge: OSM geometry, unconfirmed
 
 ### What OSM has
 
@@ -155,9 +165,11 @@ west sidewalk, over the bridge, then 260 m west along West 225th Street and back
 
 ### Fix
 
-No pipeline rule is involved. A mapper adds the 9th Avenue crossing and joins the corner
-at West 225th Street (`osm_mapper_notes.md`, items 2 and 3). With both, the test path is
-394 m, ratio 1.70.
+No pipeline rule is involved as far as this diagnosis found. With a crossing of 9th
+Avenue and the corner at West 225th Street joined, the test path is 394 m, ratio 1.70.
+A ramp 1 m from the corner does not show that a crosswalk exists, so the missing crossing
+is unconfirmed. Nobody looked at imagery or the ground here, and no change to OSM is
+proposed from this note.
 
 ## 3. Randall's Island Connector: no defect in the Connector
 
@@ -178,12 +190,13 @@ a second time. With the RFK fix the same anchors give 958 m.
 
 East 132nd Street (ways 440887346, 465321984) and Cypress Avenue are
 `highway=unclassified`, which Stage 1 does not request, so the Bronx end has fewer
-street edges than it should. That does not affect pedestrian edges.
+street edges than it should. That does not affect pedestrian edges. (Note 2026-10-03:
+v0.3.3 requests `unclassified`; this paragraph describes v0.3.2.)
 
 The fix is in the test: move the landfalls to about (40.7975, -73.9167) and
 (40.7999, -73.9131).
 
-## 4. RFK Triborough Bridge, Bronx span: pipeline, with an OSM tagging part
+## 4. RFK Triborough Bridge, Bronx span: pipeline rule
 
 ### What OSM has
 
@@ -217,13 +230,13 @@ Gate Greenway Path) to node 12998503219 (40.7988880, -73.9211141). Its tags are
 1287206021 at node 4159724358 and cycleway 359260543 (`foot=yes`) at node 3640160377.
 The next two segments of the same path, 1414563387 and 299906173, carry
 `foot=designated`. In raw OSM the chain is connected by shared nodes from the deck to
-the island paths. The only thing missing is one tag.
+the island paths.
 
 ### What the built graph has
 
 Every walkway way above is a pedestrian edge. Way 1414563386 is absent: it passes the
 Stage 1 filter and Stage 3 drops it. Way 375160033 is absent: Stage 1 does not request
-`unclassified`. So on the island both ramps are dead ends at the four nodes in the
+`unclassified` (in v0.3.2; v0.3.3 requests it). So on the island both ramps are dead ends at the four nodes in the
 table, and the deck is reachable from the Bronx only. From the island path junction
 (node 3640160377) to the Bronx sidewalk (node 12842351865) the pedestrian path is
 1,286 m for a 533 m straight line, by way of the Randall's Island Connector. With way
@@ -240,8 +253,10 @@ designated, permissive). Any other cycleway returns `None` and is dropped.
 The OSM wiki's default access table for the United States gives `foot=yes` for
 `highway=cycleway`. Its worldwide table gives `foot=no` and notes that every router on
 osm.org walks untagged cycleways. So by the United States default the path is walkable
-in OSM and the pipeline drops it. By the mapping in the same place, the way is missing
-a tag its neighbours carry. That is why the verdict has two parts.
+in OSM and the pipeline drops it. The pipeline's rule is stricter than the United States
+default, so the cause is the pipeline. (The first version gave the verdict two parts and
+counted the missing `foot` tag as an OSM fault. That was corrected on 2026-10-03: adding a
+tag so that this pipeline keeps the way would be tagging for the router.)
 
 The MTA states that the path is open to pedestrians (press release of May 12, 2025):
 "The MTA replaced pedestrian-only paths on the RFK Manhattan and Bronx spans, both
@@ -259,7 +274,6 @@ Westchester.
 | A. Keep every cycleway with no `foot` tag | 627 | 37.0 km | 218 are `oneway=yes`, which is how on-street bike lanes are drawn (Tillary Street 11, Broadway 9, Pike Street 9). 28 are named Hudson River Greenway and 20 Ocean Parkway Bike Path. |
 | B. Keep an untagged cycleway only if it is two-way, is not a crossing, has both ends on kept pedestrian ways, and has no node on a street | 53 | 6.7 km | Includes 1414563386. 25 of the 53 are named Ocean Parkway Bike Path (18) or Hudson River Greenway (7). |
 | C. Allow list with the one way ID 1414563386 | 1 | 0.4 km | Nothing else. |
-| OSM: add `foot=designated` to way 1414563386 | 1 | 0.4 km | Nothing else. Takes effect when the extract pin moves. |
 
 Ocean Parkway and the Hudson River Greenway are, as far as I know, bike paths that run
 beside a separate walkway. I did not check that here. If it is right, rule B is wrong
@@ -267,12 +281,15 @@ on about half of what it adds, and rule A on much more.
 
 ### Fix
 
-Preferred: add `foot=designated` to OSM way 1414563386 (`osm_mapper_notes.md`, item 4)
-and leave the rule alone. If v0.3.3 must be fixed against the pinned extract, the
-smallest pipeline change is an allow list of way IDs that `_classify_osm_edge` treats
-as pedestrian, with the single entry 1414563386. I do not recommend rule A or rule B.
+The fix belongs in the pipeline. Rule A is the change that follows the United States default,
+and the table above gives what comes with it, including on-street bike lanes. Rule B is
+narrower. Whether way 1414563386
+should carry `foot=designated` is for a local mapper to judge from signage, and this
+project does not rely on it. (The first version preferred an OSM edit and an allow list
+of one way ID. That was corrected on 2026-10-03.)
 
-Adding `unclassified` to the Stage 1 filter is a separate change. It adds 2,052 ways
+Adding `unclassified` to the Stage 1 filter is a separate change, and v0.3.3 made it.
+In this diagnosis it adds 2,052 ways
 (259 km) as street edges and no pedestrian edges. It would put Bronx Shore Road, East
 132nd Street and Cypress Avenue in the street network. Stage 3 already lists
 `unclassified` in `STREET_TYPES`, so the filter is the only thing keeping them out.
@@ -360,6 +377,8 @@ walkway. I did not find out what it is.
 
 ## Files
 
+These scripts and their outputs are in the project's working archive and are not published. `findings.json` and `bridges.json` in this folder are the published results.
+
 | File | What it is |
 |---|---|
 | `osm_cache.py` | One pass over the extract. Writes `osm_cache.json` (ways, tags, nodes in the box) and `citywide_tag_counts.json`. |
@@ -368,7 +387,6 @@ walkway. I did not find out what it is.
 | `lib.py` | Loading, the pipeline's classification rule, graphs, shortest path. `python lib.py` runs its self-check. |
 | `explore.py` | `describe`, `reach`, `gaps`, `route`: the helpers used to follow each chain node by node. |
 | `diagnose.py` | Computes every number in this note and writes `findings.json`. |
-| `osm_mapper_notes.md` | The OSM-side items, for a mapper. Not posted anywhere. |
 
 To repeat, with `PYTHONPATH` set to the repository root and the project's
 `.venv/bin/python`: `osm_cache.py`, `cycleway_rule_cost.py cycleway_candidates.json`,

@@ -1,5 +1,7 @@
 # Rating protocol: what is at the marked point
 
+Note 2026-10-03. This file is the instruction the raters received, unchanged below this note. The raters were Anthropic Claude models, run as separate instances through Claude Code, each given only this protocol and its sheets. The exact model versions were not recorded. No person rated any sheet, and nothing was checked on the ground. Agreement between instances measures consistency, not accuracy. The "2018 city survey" below is the DOT ramp survey, which a contractor (Cyclomedia) collected for NYC DOT from vehicle-mounted street-level imagery and LiDAR, with records from March 2017 to January 2020, mostly 2018. Every result is reported in `../../README.md`, section 6.
+
 You are rating aerial photographs of street corners and paths in New York City. You are not told why each place was chosen. Rate only what the photograph shows.
 
 ## What a sheet shows

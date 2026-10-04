@@ -1,4 +1,5 @@
-"""Draw a stratified sample of disagreements over the city's 2024 orthoimagery for a hand check.
+"""Draw a stratified sample of disagreements over the city's 2024 orthoimagery for an imagery
+check. The raters were language-model instances, not people (docstring reworded 2026-10-03).
 
 Each sheet is one place: where the reference router (ORS on raw OSM) first uses something this
 graph's wheelchair profile refuses. Overlays are neutral, so a rater who is not told the cause
