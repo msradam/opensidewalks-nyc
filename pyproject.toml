@@ -1,6 +1,6 @@
 [project]
 name = "opensidewalks-nyc"
-version = "0.3.4+nyc.1"
+version = "0.3.5+nyc.1"
 description = "OpenSidewalks v0.3 pedestrian network of New York City"
 readme = "README.md"
 requires-python = ">=3.11"
