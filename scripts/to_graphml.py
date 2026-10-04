@@ -7,6 +7,8 @@ The graph is built from the LineString edges:
   - edge attributes: all OSW properties (flattened to strings/numbers)
   - node attributes: x, y (lon, lat), plus any OSW point properties
   - graph attributes: licence, attribution and the OSM snapshot
+  - each Pedestrian Zone (a Polygon) contributes the edges a person can walk
+    across it: its ring and the chords between its entrances, with `ext:zone`
 
 The graph is a directed multigraph, as the OSW file is: a walkable segment
 is one edge per travel direction and `incline` is signed for that direction.
@@ -29,6 +31,9 @@ from pathlib import Path
 
 import ijson
 import networkx as nx
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from pipeline.utils.zones import zone_edges
 
 
 PRIMITIVE = (str, int, float, bool)
@@ -60,6 +65,7 @@ def main(in_path: Path, out_path: Path, undirected: bool = False) -> None:
     n_edges = 0
     n_nodes = 0
     n_skipped = 0
+    zones, referenced, node_xy, node_z = [], set(), {}, {}
 
     with in_path.open("rb") as f:
         for feat in ijson.items(f, "features.item"):
@@ -78,6 +84,9 @@ def main(in_path: Path, out_path: Path, undirected: bool = False) -> None:
                 attrs["y"] = float(coords[1]) if coords[1] is not None else 0.0
                 G.add_node(fid, **attrs)
                 n_nodes += 1
+                node_xy[fid] = (attrs["x"], attrs["y"])
+                if props.get("ext:elevation_m") is not None:
+                    node_z[fid] = float(props["ext:elevation_m"])
 
             elif gtype == "LineString":
                 u = props.get("_u_id")
@@ -85,13 +94,30 @@ def main(in_path: Path, out_path: Path, undirected: bool = False) -> None:
                 if not u or not v:
                     n_skipped += 1
                     continue
+                referenced.update((u, v))
                 if undirected and G.has_edge(u, v):
                     continue
                 attrs = _flatten(props)
                 G.add_edge(u, v, **attrs)
                 n_edges += 1
 
-    print(f"  nodes: {n_nodes:,} | edges: {n_edges:,} | skipped: {n_skipped:,}")
+            elif gtype == "Polygon" and props.get("_w_id"):
+                zones.append({"properties": props})
+
+    # A Pedestrian Zone (a plaza) is a Polygon in the file. In the graph it
+    # is the edges a person can walk across it: its ring and the chords
+    # between its entrances, each named by ext:zone.
+    n_zone_edges = 0
+    for z in zones:
+        for e in zone_edges(z, node_xy, referenced, node_z):
+            u, v = e["_u_id"], e["_v_id"]
+            if undirected and G.has_edge(u, v):
+                continue
+            G.add_edge(u, v, **_flatten({k: val for k, val in e.items() if k != "coordinates"}))
+            n_zone_edges += 1
+
+    print(f"  nodes: {n_nodes:,} | edges: {n_edges:,} | zone edges: {n_zone_edges:,} "
+          f"from {len(zones):,} zones | skipped: {n_skipped:,}")
     # Edges referencing a node with no Point feature in the file leave a bare
     # auto-created node behind. Backfill x/y so GraphML attributes stay uniform.
     for nid, attrs in G.nodes(data=True):

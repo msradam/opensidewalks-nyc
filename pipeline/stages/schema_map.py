@@ -31,6 +31,7 @@ import shapely
 from shapely.geometry import LineString, MultiLineString, MultiPolygon, Point, mapping
 from shapely.ops import unary_union
 
+from pipeline.utils.zones import ring_from_edges, zone_feature
 from pipeline.utils.ids import edge_id, feature_id, node_id
 from pipeline.utils.provenance import load_manifest, provenance_fields
 
@@ -279,12 +280,35 @@ def _classify_osm_edge(row: pd.Series) -> str | None:
     return None
 
 
+def _area_ways(edges_gdf: gpd.GeoDataFrame) -> dict:
+    """{osmid: [edge geometries]} for the pedestrian areas among the OSM edges.
+
+    An OSM way tagged area=yes with highway=pedestrian, footway or path is a
+    plaza or another surface walked in every direction, and the schema's
+    entity for it is the Pedestrian Zone. A pedestrian way tagged as a
+    sidewalk or a crossing is not an area. Only ways whose edges join into
+    one closed ring are returned; the rest stay Edges.
+    """
+    if "area" not in edges_gdf.columns:
+        return {}
+    is_area = edges_gdf["area"].astype(str).str.lower() == "yes"
+    hw = edges_gdf["highway"].astype(str).str.split("|").str[0]
+    fw = edges_gdf["footway"].astype(str) if "footway" in edges_gdf.columns else pd.Series("", index=edges_gdf.index)
+    cand = edges_gdf[is_area & hw.isin(["pedestrian", "footway", "path"]) & ~fw.isin(["sidewalk", "crossing"])]
+    rings = {}
+    for osmid, group in cand.groupby("osmid"):
+        if ring_from_edges([g for g in group.geometry if g is not None and not g.is_empty]) is not None:
+            rings[osmid] = list(group.geometry)
+    return rings
+
+
 def _osm_edges_to_osw(edges_gdf: gpd.GeoDataFrame, pipeline_version: str,
                        manifest: dict) -> tuple[gpd.GeoDataFrame, gpd.GeoDataFrame,
-                                                gpd.GeoDataFrame, gpd.GeoDataFrame]:
-    """Convert OSM edges GeoDataFrame to four OSW edge GeoDataFrames.
+                                                gpd.GeoDataFrame, gpd.GeoDataFrame,
+                                                gpd.GeoDataFrame]:
+    """Convert OSM edges GeoDataFrame to four OSW edge GeoDataFrames and the zones.
 
-    Returns (sidewalks, crossings, footways, streets).
+    Returns (sidewalks, crossings, footways, streets, zones).
     """
     prov = provenance_fields("osm_walk", manifest, pipeline_version)
 
@@ -292,6 +316,9 @@ def _osm_edges_to_osw(edges_gdf: gpd.GeoDataFrame, pipeline_version: str,
     crossing_rows  = []
     footway_rows   = []
     street_rows    = []
+    zone_rows      = []
+    area_ways      = _area_ways(edges_gdf)
+    area_props: dict = {}
 
     for _, row in edges_gdf.iterrows():
         edge_type = _classify_osm_edge(row)
@@ -374,10 +401,21 @@ def _osm_edges_to_osw(edges_gdf: gpd.GeoDataFrame, pipeline_version: str,
             except ValueError:
                 pass
 
-        # A shared path is written as highway=footway; keep what OSM called it.
+        # A shared path or an OSM path is written as highway=footway; keep
+        # what OSM called it, so a park trail can be told from a footway.
         highway_osm = str(row.get("highway", "")).split("|")[0]
-        if highway_osm in SHARED_TYPES and edge_type != "street":
+        if (highway_osm in SHARED_TYPES or highway_osm == "path") and edge_type != "street":
             props["ext:osm_highway"] = highway_osm
+
+        # The edges of a pedestrian area become one Pedestrian Zone below,
+        # with the tags of the way; the first row of the way supplies them.
+        if osmid in area_ways:
+            if osmid not in area_props:
+                area_props[osmid] = {k: v for k, v in props.items()
+                                     if k not in ("_id", "_u_id", "_v_id", "highway", "footway", "width")}
+                if highway_osm != "pedestrian":
+                    area_props[osmid]["ext:osm_highway"] = highway_osm
+            continue
 
         if edge_type == "sidewalk":
             props["footway"] = "sidewalk"
@@ -425,13 +463,19 @@ def _osm_edges_to_osw(edges_gdf: gpd.GeoDataFrame, pipeline_version: str,
         if one_way:
             click.echo(f"    Added the reverse of {len(one_way)} one-way {kind} edges")
 
+    for osmid, geoms in area_ways.items():
+        if osmid in area_props:
+            zone_rows.append(zone_feature(ring_from_edges(geoms), area_props[osmid]))
+    if zone_rows:
+        click.echo(f"    {len(zone_rows)} pedestrian areas (area=yes) written as Pedestrian Zones")
+
     def _to_gdf(rows, geom_type_label):
         if not rows:
-            click.echo(f"    Warning: no {geom_type_label} edges found")
+            click.echo(f"    Warning: no {geom_type_label} found")
             return gpd.GeoDataFrame(columns=["_id", "_u_id", "_v_id", "geometry"],
                                     geometry="geometry", crs="EPSG:4326")
         gdf = gpd.GeoDataFrame(rows, geometry="geometry", crs="EPSG:4326")
-        click.echo(f"    OSM → {geom_type_label}: {len(gdf)} edges")
+        click.echo(f"    OSM → {geom_type_label}: {len(gdf)}")
         return gdf
 
     return (
@@ -439,6 +483,7 @@ def _osm_edges_to_osw(edges_gdf: gpd.GeoDataFrame, pipeline_version: str,
         _to_gdf(crossing_rows, "crossings"),
         _to_gdf(footway_rows, "footways"),
         _to_gdf(street_rows, "streets"),
+        _to_gdf(zone_rows, "zones"),
     )
 
 
@@ -811,7 +856,7 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
 
     # --- Transform 1: OSM edges → OSW edge types ---
     click.echo("\n  Mapping OSM edges to OSW schema...")
-    sidewalks, crossings, footways, streets = _osm_edges_to_osw(
+    sidewalks, crossings, footways, streets, zones = _osm_edges_to_osw(
         osm_edges, pipeline_version, manifest
     )
 
@@ -855,8 +900,12 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
         "footways":    footways,
         "streets":     streets,
         "curb_nodes":  curb_nodes,
+        "zones":       zones,
         "gapfill_sidewalks": plan_sidewalks,
     }
+    # GeoJSON drivers do not round-trip a list field; Stage 4 parses it back.
+    if len(zones) > 0:
+        zones["_w_id"] = zones["_w_id"].map(json.dumps)
 
     # Sources tag boroughs three ways (OSMnx region slugs, DOT display names,
     # boro_name from the boundaries file); normalize all of them to the
@@ -868,7 +917,7 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
     click.echo()
     for name, gdf in outputs.items():
         out_path = staged_dir / f"{name}.geojson"
-        if len(gdf) == 0 and name == "gapfill_sidewalks":
+        if len(gdf) == 0 and name in ("gapfill_sidewalks", "zones"):
             out_path.unlink(missing_ok=True)   # or Stage 6 ships a stale one
             continue
         gdf.to_file(out_path, driver="GeoJSON")

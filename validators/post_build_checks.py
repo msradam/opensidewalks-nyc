@@ -1,6 +1,7 @@
 """Checks the official validator does not do, on a finished build, city-wide
 and by borough: zero elevations, cut boroughs, tactile_paving against the
-survey, detached and missing ramps, widths, one-way edges, long coordinates.
+survey, detached and missing ramps, widths, one-way edges, long coordinates,
+and the Pedestrian Zones (ring vertices on their nodes, nodes only a zone holds).
 
 usage: python validators/post_build_checks.py OSW_GEOJSON OUT_JSON [DATA_DIR]
 
@@ -32,11 +33,17 @@ res = {"input": str(osw)}
 
 fc = json.loads(osw.read_text())
 res["root"] = {k: v for k, v in fc.items() if k not in ("features", "region")}
-nrows, erows, bad_precision = [], [], 0
+nrows, erows, zrows, bad_precision = [], [], [], 0
 def dec_ok(x):
     return round(x, 7) == x
 for f in fc["features"]:
     p, g = f["properties"], f["geometry"]
+    if g["type"] == "Polygon":
+        ring = g["coordinates"][0]
+        bad_precision += not all(dec_ok(x) for pt in ring for x in pt)
+        zrows.append((p["_id"], tuple(p.get("_w_id") or []), p.get("highway"), p.get("ext:borough"), p.get("ext:osm_highway"),
+                      p.get("ext:source"), len(ring) - 1, ring))
+        continue
     if g["type"] == "Point":
         c = g["coordinates"]
         bad_precision += not (dec_ok(c[0]) and dec_ok(c[1]))
@@ -63,10 +70,15 @@ N = pd.DataFrame(nrows, columns=["id", "lon", "lat", "elev", "barrier", "kerb", 
 E = pd.DataFrame(erows, columns=["id", "u", "v", "kind", "highway", "borough", "source", "incline", "width", "length",
                                  "name", "x0", "y0", "x1", "y1", "npts", "surface", "markings", "has_osm_id", "has_ts",
                                  "structure", "foot"])
-del nrows, erows
+Z = pd.DataFrame(zrows, columns=["id", "w", "highway", "borough", "osm_highway", "source", "nvert", "ring"])
+del nrows, erows, zrows
 
 # --- counts and form -------------------------------------------------------
-res["counts"] = {"features": len(N) + len(E), "nodes": len(N), "edges": len(E),
+res["counts"] = {"features": len(N) + len(E) + len(Z), "nodes": len(N), "edges": len(E), "zones": len(Z),
+                 "zones_by_osm_highway": Z.osm_highway.fillna("pedestrian").value_counts().to_dict(),
+                 "zones_by_borough": Z.borough.fillna("none").value_counts().to_dict(),
+                 "zone_ring_vertices": {"sum": int(Z.nvert.sum()), "median": float(Z.nvert.median()) if len(Z) else None,
+                                        "max": int(Z.nvert.max()) if len(Z) else None},
                  "edges_by_kind": E.kind.value_counts().to_dict(),
                  "edges_by_source": E.source.value_counts().to_dict(),
                  "edges_by_borough": E.borough.fillna("none").value_counts().to_dict(),
@@ -76,8 +88,18 @@ res["counts"] = {"features": len(N) + len(E), "nodes": len(N), "edges": len(E),
                  "foot_by_kind": {k: d.foot.fillna("none").value_counts().to_dict() for k, d in E.groupby("kind")},
                  "duplicate_node_ids": int(N.id.duplicated().sum()), "duplicate_edge_ids": int(E.id.duplicated().sum())}
 nid = pd.Index(N.id)
+ncoord0 = N.set_index("id")[["lon", "lat"]]
+zone_bad_ref, zone_bad_vertex = 0, 0
+for z in Z.itertuples():
+    if any(n not in ncoord0.index for n in z.w):
+        zone_bad_ref += 1
+        continue
+    if len(z.w) != z.nvert or any(list(ncoord0.loc[n]) != list(pt[:2]) for n, pt in zip(z.w, z.ring[:-1])):
+        zone_bad_vertex += 1
 res["form"] = {"coordinates_over_7_decimals": int(bad_precision),
                "edges_with_unresolved_node": int((~E.u.isin(nid) | ~E.v.isin(nid)).sum()),
+               "zones_with_unresolved_node": zone_bad_ref,
+               "zones_whose_ring_vertex_is_off_its_node": zone_bad_vertex,
                "self_loop_edges": int((E.u == E.v).sum()),
                "zero_length_edges": int((E.length == 0).sum()),
                "edges_over_500m": int((E.length > 500).sum())}
@@ -152,12 +174,15 @@ res["structure"] = {
     "deck_elevation_m": {"min": float(deck.elev.min()) if len(deck) else None, "max": float(deck.elev.max()) if len(deck) else None}}
 
 # --- pedestrian graph components -------------------------------------------
+# A zone joins every node of its ring; its ring is enough for connectivity.
+ZR = pd.DataFrame([(z.w[i], z.w[(i + 1) % len(z.w)]) for z in Z.itertuples() for i in range(len(z.w))], columns=["u", "v"])
 P = E[E.kind != "street"]
-codes, uniq = pd.factorize(np.r_[P.u.values, P.v.values]); m = len(P)
+PZ = pd.concat([P[["u", "v"]], ZR], ignore_index=True)
+codes, uniq = pd.factorize(np.r_[PZ.u.values, PZ.v.values]); m = len(PZ)
 k, lab = connected_components(coo_matrix((np.ones(m), (codes[:m], codes[m:])), shape=(len(uniq), len(uniq))), directed=False)
 sizes = np.bincount(lab); order = np.argsort(-sizes); giant = order[0]
 pn = pd.DataFrame({"id": uniq, "comp": lab}).merge(N[["id", "poly_boro"]], on="id", how="left")
-comp = {"pedestrian_nodes": len(uniq), "pedestrian_edges": m, "components": int(k),
+comp = {"pedestrian_nodes": len(uniq), "pedestrian_edges": len(P), "zone_ring_edges": len(ZR), "components": int(k),
         "largest": int(sizes[giant]), "largest_share": round(float(sizes[giant] / len(uniq)), 4),
         "next_five": [int(sizes[i]) for i in order[1:6]],
         "components_of_10_or_more_nodes": int((sizes >= 10).sum()), "by_borough": {}}
@@ -184,7 +209,8 @@ res["borough_crossing_pedestrian_edges"] = {"edges": len(X), "by_pair": X.assign
 
 # --- curb ramps ------------------------------------------------------------
 curb = N[N.barrier == "kerb"].copy()
-ref = set(E.u) | set(E.v); pref = set(P.u) | set(P.v)
+zref = set(ZR.u)
+ref = set(E.u) | set(E.v) | zref; pref = set(P.u) | set(P.v) | zref
 cr = E[E.kind == "crossing"]; xref = set(cr.u) | set(cr.v)
 raw = pd.DataFrame([f["properties"] for f in json.loads((data / "raw/nyc_dot_ramps/nyc_dot_ramps.geojson").read_text())["features"]])
 raw = raw.rename(columns={"rampid": "RampID", "dws_conditions": "DWS_CONDITIONS"}).astype({"RampID": str}).set_index("RampID")
@@ -217,6 +243,9 @@ res["curb"] = {
                    for b, d in curb.groupby(curb.poly_boro.fillna("outside"))}}
 res["nodes_not_on_any_edge"] = int((~N.id.isin(ref)).sum())
 res["nodes_not_on_any_edge_by_source"] = N[~N.id.isin(ref)].source.fillna("none").value_counts().to_dict()
+res["nodes_only_on_a_zone_ring"] = int((N.id.isin(zref) & ~N.id.isin(set(E.u) | set(E.v))).sum())
+res["curb"]["attached_only_through_a_zone_ring"] = int((curb.id.isin(zref) & ~curb.id.isin(set(E.u) | set(E.v))).sum())
+res["curb"]["source_on_attached_ramps"] = curb[curb.id.isin(ref)].source.fillna("none").value_counts().to_dict()
 
 # --- widths ----------------------------------------------------------------
 sw = E[(E.kind == "sidewalk")]

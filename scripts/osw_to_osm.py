@@ -1,5 +1,9 @@
 """Convert an OSW v0.3 FeatureCollection back to OSM, for a router that reads OSM tags.
 
+NEVER UPLOAD THE OUTPUT TO OPENSTREETMAP. It is for a local routing engine
+only. It carries NYC DOT survey data and kerb tags this project invented for
+the comparison, and its ids are not OpenStreetMap's.
+
 Written for OpenRouteService's wheelchair profile, after TDEI's
 osm-osw-reformatter 0.4.2 was found not to carry what that profile reads
 (evaluation/compare/probes/roundtrip_reformatter.json): it writes incline
@@ -14,7 +18,8 @@ What this writes:
           with --no-ramp unknown it gets no tag.
   ways    one per pair of opposite OSW edges, in the direction of the first.
           highway, footway, surface, name and crossing:markings as they are,
-          width in metres, incline as a signed percentage ("8.3%").
+          width in metres, incline as a signed percentage ("8.3%"). A
+          Pedestrian Zone becomes a closed way with area=yes.
   sidecar OUTPUT.ways.json, the OSW edge _id for each OSM way id.
 
 With --pedestrian-only the street centrelines are left out, so a router on the
@@ -104,6 +109,15 @@ def convert(feats, output, no_ramp="raised", pedestrian_only=False):
         refs.append(node_id[p["_v_id"]])
         ways.append(p["_id"])
         pending.append((refs, way_tags(p)))
+    for f in feats:
+        if f["geometry"]["type"] != "Polygon" or not f["properties"].get("_w_id"):
+            continue
+        p = f["properties"]
+        refs = [node_id[n] for n in p["_w_id"] if n in node_id]
+        if len(refs) < 3:
+            continue
+        ways.append(p["_id"])
+        pending.append((refs + [refs[0]], {**way_tags(p), "highway": "pedestrian", "area": "yes"}))
     for i, (refs, tags) in enumerate(pending, start=1):
         writer.add_way(osmium.osm.mutable.Way(id=i, nodes=refs, tags=tags, version=1))
         written += 1

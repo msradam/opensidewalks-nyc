@@ -2,10 +2,11 @@
 
 Two-pass streaming, bounded memory:
 
-    Pass 1: scan all LineStrings, bucket their _id by `ext:borough`,
-            and collect the set of node _ids referenced via _u_id/_v_id.
-    Pass 2: stream all features again, write each LineString into its
-            borough file and each Point into every borough file whose
+    Pass 1: scan all LineStrings and Polygons (zones), bucket their _id by
+            `ext:borough`, and collect the set of node _ids referenced via
+            _u_id/_v_id and _w_id.
+    Pass 2: stream all features again, write each LineString and Polygon
+            into its borough file and each Point into every borough file whose
             edge-endpoint set contains its _id. A Point that no edge
             references (a curb ramp kept at its surveyed position, say)
             goes into the borough named by its own `ext:borough`.
@@ -80,6 +81,10 @@ def main(in_path: Path, out_dir: Path) -> None:
                     node_ids_by_boro[boro].add(u)
                 if v:
                     node_ids_by_boro[boro].add(v)
+            elif geom.get("type") == "Polygon":
+                boro = props.get("ext:borough")
+                if boro in BOROUGHS:
+                    node_ids_by_boro[boro].update(props.get("_w_id") or [])
             elif geom.get("type") == "Point":
                 node_count += 1
 
@@ -107,7 +112,7 @@ def main(in_path: Path, out_dir: Path) -> None:
             geom = feat.get("geometry") or {}
             props = feat.get("properties") or {}
             gtype = geom.get("type")
-            if gtype == "LineString":
+            if gtype in ("LineString", "Polygon"):
                 boro = props.get("ext:borough")
                 if boro in BOROUGHS:
                     h = handles[boro]

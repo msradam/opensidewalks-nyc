@@ -159,7 +159,7 @@ def test_one_way_edges_get_their_reverse():
     osm = gpd.GeoDataFrame({"highway": ["pedestrian", "residential"], "key": [0, 0]},
                            geometry=[LineString([(-73.97, 40.77), (-73.971, 40.771)]),
                                      LineString([(-73.98, 40.77), (-73.981, 40.771)])], crs="EPSG:4326")
-    _, _, footways, streets = _osm_edges_to_osw(osm, "test", {})
+    _, _, footways, streets, _ = _osm_edges_to_osw(osm, "test", {})
     for edges in (footways, streets):
         assert len(edges) == 2
         assert edges["_u_id"].tolist() == edges["_v_id"].tolist()[::-1]

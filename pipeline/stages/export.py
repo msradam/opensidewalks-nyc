@@ -18,6 +18,32 @@ import networkx as nx
 import geopandas as gpd
 from shapely.geometry import shape
 
+from pipeline.utils.zones import zone_edges
+
+
+def expanded_zones(fc: dict) -> list[dict]:
+    """The edges that every Pedestrian Zone in the collection stands for.
+
+    A zone is a Polygon; a graph consumer walks it as its ring plus the
+    chords between its entrances (pipeline.utils.zones.zone_edges).
+    """
+    node_xy, node_z, referenced, zones = {}, {}, set(), []
+    for feat in fc["features"]:
+        geom = feat.get("geometry") or {}
+        props = feat.get("properties") or {}
+        if geom.get("type") == "Point" and props.get("_id"):
+            node_xy[props["_id"]] = tuple(geom["coordinates"][:2])
+            if props.get("ext:elevation_m") is not None:
+                node_z[props["_id"]] = float(props["ext:elevation_m"])
+        elif geom.get("type") == "LineString":
+            referenced.update((props.get("_u_id"), props.get("_v_id")))
+        elif geom.get("type") == "Polygon" and props.get("_w_id"):
+            zones.append(feat)
+    out = []
+    for z in zones:
+        out.extend(zone_edges(z, node_xy, referenced, node_z))
+    return out
+
 
 # ---------------------------------------------------------------------------
 # Export: canonical OSW GeoJSON
@@ -92,6 +118,14 @@ def export_graphml(fc: dict, output_dir: Path) -> Path:
                 # No reverse copy: it would overwrite the real reverse edge
                 # with this one's signed incline, and open one-way streets.
                 G.add_edge(u_id, v_id, edge_id=fid, **edge_attrs)
+
+    # A Pedestrian Zone is a Polygon in the file; in the graph it is the
+    # edges a person can walk across it.
+    for e in expanded_zones(fc):
+        attrs = {k: str(v) for k, v in e.items()
+                 if k not in ("_id", "_u_id", "_v_id", "coordinates") and v is not None}
+        attrs["length_approx_m"] = str(e["length_m"])
+        G.add_edge(e["_u_id"], e["_v_id"], edge_id=e["_id"], **attrs)
 
     # Fill coordinates for nodes first created by add_edge, where the Point
     # feature appeared later in the file than the edge referencing it.
@@ -184,6 +218,16 @@ def export_routing_json(fc: dict, output_dir: Path) -> Path:
             }
             edges_out.append(edge_record)
 
+    for e in expanded_zones(fc):
+        edges_out.append({
+            "_id": e["_id"], "_u_id": e["_u_id"], "_v_id": e["_v_id"],
+            "highway": "pedestrian", "footway": None, "surface": e.get("surface"),
+            "length_m": round(e["length_m"], 2),
+            "props": {k: v for k, v in e.items()
+                      if k not in ("_id", "_u_id", "_v_id", "highway", "surface", "length_m", "coordinates")
+                      and v is not None},
+        })
+
     routing_doc = {
         "meta": {
             "generated_at":      datetime.now(timezone.utc).isoformat(),
@@ -195,7 +239,10 @@ def export_routing_json(fc: dict, output_dir: Path) -> Path:
             "n_edges":           len(edges_out),
             "description": (
                 "Routing-friendly export of the NYC OpenSidewalks pedestrian graph. "
-                "Use nodes dict + edges list to build a routing graph. "
+                "Use nodes dict + edges list to build a routing graph. Each "
+                "Pedestrian Zone (a plaza) appears as the edges a person can walk "
+                "across it: its ring and the chords between its entrances, with "
+                "ext:zone naming the zone. "
                 "length_m is approximate (equirectangular distance on edge coordinates). "
                 "Cost functions (surface roughness, incline penalty, etc.) are left "
                 "to the consumer."

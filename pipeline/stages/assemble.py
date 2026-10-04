@@ -23,7 +23,7 @@ import geopandas as gpd
 import networkx as nx
 import numpy as np
 import pandas as pd
-from shapely.geometry import Point, mapping
+from shapely.geometry import LineString, Point, mapping
 
 from pipeline.stages.schema_map import borough_code
 from pipeline.utils.ids import node_id
@@ -344,6 +344,65 @@ def _inject_missing_nodes(all_edges: gpd.GeoDataFrame,
 # ---------------------------------------------------------------------------
 # Connected components analysis
 # ---------------------------------------------------------------------------
+
+def _merge_node_group(group: pd.DataFrame, curb_fields: set) -> pd.Series:
+    """One node from the rows that share an id: an OSM vertex and the ramp on it.
+
+    The first row keeps its position (the edge endpoint). The ramp fields
+    come from the row that has them. A node that carries a ramp says so in
+    its provenance: `ext:source` and `ext:source_timestamp` are the survey's,
+    because every value on it apart from its position comes from the survey.
+    """
+    merged = group.iloc[0].copy()
+    for field in curb_fields:
+        if field in group.columns:
+            filled = group[field].dropna()
+            if not filled.empty:
+                merged[field] = filled.iloc[0]
+    if "barrier" in group.columns:
+        ramp = group[group["barrier"] == "kerb"]
+        if not ramp.empty:
+            for field in ("ext:source", "ext:source_timestamp"):
+                if field in ramp.columns and pd.notna(ramp.iloc[0][field]):
+                    merged[field] = ramp.iloc[0][field]
+    return merged
+
+
+def _load_zones(path: Path) -> gpd.GeoDataFrame:
+    """The staged Pedestrian Zones, with `_w_id` parsed back into a list."""
+    if not path.exists():
+        return gpd.GeoDataFrame(columns=["_id", "_w_id", "geometry"], geometry="geometry", crs="EPSG:4326")
+    zones = gpd.read_file(path)
+    zones["_w_id"] = zones["_w_id"].map(lambda w: json.loads(w) if isinstance(w, str) else list(w))
+    before = len(zones)
+    zones = zones.drop_duplicates(subset="_id", keep="first").copy()
+    if len(zones) < before:
+        click.echo(f"    Deduplicated {before - len(zones)} duplicate zones")
+    return zones
+
+
+def _ring_rows(zones: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+    """One edge row per pair of consecutive ring nodes of every zone.
+
+    They carry `_ring_of`, the zone id, so the caller can drop them again.
+    """
+    rows = []
+    for _, z in zones.iterrows():
+        w = z["_w_id"]
+        ring = list(z.geometry.exterior.coords)
+        for i in range(len(w)):
+            a, b = w[i], w[(i + 1) % len(w)]
+            row = {"_id": f"ring:{z['_id']}:{i}", "_u_id": a, "_v_id": b, "highway": "pedestrian",
+                   "_ring_of": z["_id"], "geometry": LineString([ring[i], ring[(i + 1) % len(w)]])}
+            for k in ("ext:structure", "ext:source", "ext:borough", "ext:pipeline_version"):
+                if k in z and pd.notna(z[k]):
+                    row[k] = z[k]
+            rows.append(row)
+    if not rows:
+        return gpd.GeoDataFrame(columns=["_id", "_u_id", "_v_id", "highway", "_ring_of", "geometry"],
+                                geometry="geometry", crs="EPSG:4326")
+    return gpd.GeoDataFrame(rows, geometry="geometry", crs="EPSG:4326")
+
 
 def _topology_report(all_edges: gpd.GeoDataFrame, all_nodes: gpd.GeoDataFrame,
                      staged_dir: Path, min_component_size: int) -> None:
@@ -715,6 +774,60 @@ def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
 # Stage entry point
 # ---------------------------------------------------------------------------
 
+ATTRIBUTION = (
+    "Pedestrian network from OpenSidewalks NYC, an independent dataset in the "
+    "OpenSidewalks Schema, ODbL-1.0. Map data \u00a9 OpenStreetMap contributors "
+    "(openstreetmap.org/copyright). Also from NYC DOT and NYC OTI data on NYC "
+    "Open Data, and LiDAR from NYS GIS and NOAA."
+)
+REPO_URL = "https://github.com/msradam/opensidewalks-nyc"
+
+
+def root_metadata(build_cfg: dict, osm_extract: dict, pipeline_version: str, git_sha: str) -> dict:
+    """The root members of the FeatureCollection, as the schema defines them.
+
+    `dataTimestamp` is how current the data is: the OSM extract's own data
+    timestamp, since the network is OSM's. The curb ramp survey is older
+    (mostly 2018) and each ramp's `ext:source_timestamp` says when it was
+    read. The build time is `pipelineVersion.builtAt`. `dataSource` names
+    the sources; `pipelineVersion` names the software and the commit.
+    """
+    now_iso = datetime.now(timezone.utc).isoformat()
+    return {
+        # Must match the CompatibleSchemaURI enum in the OSW schema exactly.
+        # The GitHub raw URL is used to *fetch* the schema; this field must use
+        # the canonical sidewalks.washington.edu URI the enum validates against.
+        "$schema": (
+            f"https://sidewalks.washington.edu/opensidewalks/"
+            f"{build_cfg.get('osw_schema_version', '0.3')}/schema.json"
+        ),
+        "type": "FeatureCollection",
+        "dataSource": {
+            "name": ("OpenStreetMap, NYC DOT Pedestrian Ramp Locations, NYC Planimetric "
+                     "Sidewalks, NYC 2017 LiDAR (terrain model and point clouds)"),
+            "url": REPO_URL,
+            "license": "ODbL-1.0",
+            "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
+            "attribution": ATTRIBUTION,
+            # Which OSM snapshot this build read: extract URL, SHA-256 and
+            # the extract's own data timestamp.
+            "osmExtract": {
+                "url": osm_extract.get("url"),
+                "sha256": osm_extract.get("content_hash"),
+                "dataTimestamp": osm_extract.get("osm_data_timestamp"),
+            },
+        },
+        "dataTimestamp": osm_extract.get("osm_data_timestamp") or now_iso,
+        "pipelineVersion": {
+            "name": "opensidewalks-nyc",
+            "version": pipeline_version,
+            "url": f"{REPO_URL}/tree/{git_sha}" if git_sha and git_sha != "unknown" else REPO_URL,
+            "gitSHA": git_sha,
+            "builtAt": now_iso,
+        },
+    }
+
+
 def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
     """Stage 4: snap nodes, assign IDs, build canonical FeatureCollection."""
     staged_dir    = repo_root / build_cfg["dirs"]["staged"]
@@ -733,6 +846,12 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
     footways   = gpd.read_file(staged_dir / "footways.geojson")
     streets    = gpd.read_file(staged_dir / "streets.geojson")
     curb_nodes = gpd.read_file(staged_dir / "curb_nodes.geojson")
+    zones      = _load_zones(staged_dir / "zones.geojson")
+    # A zone takes part in the graph through its ring: one row per pair of
+    # consecutive ring nodes, so that the ramp snap, the endpoint merge, the
+    # orphan check, the heights and the topology report see a plaza as the
+    # edges it replaced. The rows are dropped before the file is written.
+    rings      = _ring_rows(zones)
 
     osm_nodes_path = repo_root / build_cfg["dirs"]["clean"] / "osm_nodes.geojson"
     osm_nodes = gpd.read_file(osm_nodes_path) if osm_nodes_path.exists() else gpd.GeoDataFrame()
@@ -744,10 +863,11 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
     click.echo(f"    Footways:   {len(footways):,}")
     click.echo(f"    Streets:    {len(streets):,}")
     click.echo(f"    Curb nodes: {len(curb_nodes):,}")
+    click.echo(f"    Zones:      {len(zones):,}")
 
     # Combine all edges for the full graph.
     all_edges = gpd.GeoDataFrame(
-        pd.concat([sidewalks, crossings, footways, streets], ignore_index=True),
+        pd.concat([sidewalks, crossings, footways, streets, rings], ignore_index=True),
         geometry="geometry", crs="EPSG:4326"
     )
 
@@ -773,7 +893,7 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
     # centerlines.
     click.echo("\n  Snapping curb nodes to edge endpoints...")
     pedestrian_edges = gpd.GeoDataFrame(
-        pd.concat([sidewalks, crossings, footways], ignore_index=True),
+        pd.concat([sidewalks, crossings, footways, rings], ignore_index=True),
         geometry="geometry", crs="EPSG:4326"
     )
     click.echo(f"    {len(pedestrian_edges):,} pedestrian edge endpoints to index")
@@ -792,6 +912,8 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
     # an ID no edge references.
     if endpoint_remap and len(curb_nodes) > 0:
         curb_nodes["_id"] = curb_nodes["_id"].map(lambda i: endpoint_remap.get(i, i))
+    if endpoint_remap and len(zones) > 0:
+        zones["_w_id"] = zones["_w_id"].map(lambda w: [endpoint_remap.get(i, i) for i in w])
 
     # Several ramps at one corner can land on the same node, and a node holds
     # one ramp's fields. The first ramp keeps the node; the others go back to
@@ -872,21 +994,10 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
                        "ext:running_slope_pct", "ext:cross_slope_pct",
                        "ext:counter_slope_pct", "ext:dws_condition"}
 
-        def _merge_node_group(group: pd.DataFrame) -> pd.Series:
-            # Start from the first row, then fill in curb fields from any row
-            # that has them (curb_nodes rows carry barrier/kerb/tactile_paving).
-            merged = group.iloc[0].copy()
-            for field in curb_fields:
-                if field in group.columns:
-                    filled = group[field].dropna()
-                    if not filled.empty:
-                        merged[field] = filled.iloc[0]
-            return merged
-
         all_nodes = (
             all_nodes
             .groupby("_id", sort=False)
-            .apply(_merge_node_group)
+            .apply(_merge_node_group, curb_fields)
             # pandas 3 excludes the grouping column from apply() groups, so _id
             # only survives as the group index; a plain reset_index restores it.
             .reset_index()
@@ -920,10 +1031,14 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
     # which are not part of the pedestrian routing graph).
     click.echo("\n  Computing connected components (pedestrian edges only)...")
     pedestrian_for_topo = gpd.GeoDataFrame(
-        pd.concat([sidewalks, crossings, footways], ignore_index=True),
+        pd.concat([sidewalks, crossings, footways, rings], ignore_index=True),
         geometry="geometry", crs="EPSG:4326"
     )
     _topology_report(pedestrian_for_topo, all_nodes, staged_dir, min_comp_size)
+
+    # The ring rows have done their work; the zones ship as Polygons.
+    if "_ring_of" in all_edges.columns:
+        all_edges = all_edges[all_edges["_ring_of"].isna()].drop(columns=["_ring_of"]).copy()
 
     # Build the canonical OSW FeatureCollection.
     # Features: all nodes first, then all edges (OSW convention).
@@ -976,47 +1091,12 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
 
     node_features = _gdf_to_features(all_nodes)
     edge_features = _gdf_to_features(all_edges)
-    all_features  = node_features + edge_features
+    zone_features = _gdf_to_features(zones) if len(zones) > 0 else []
+    all_features  = node_features + edge_features + zone_features
 
     # Root OSW metadata.
-    now_iso = datetime.now(timezone.utc).isoformat()
-    fc = {
-        # Must match the CompatibleSchemaURI enum in the OSW schema exactly.
-        # The GitHub raw URL is used to *fetch* the schema; this field must use
-        # the canonical sidewalks.washington.edu URI the enum validates against.
-        "$schema": (
-            f"https://sidewalks.washington.edu/opensidewalks/"
-            f"{build_cfg.get('osw_schema_version', '0.3')}/schema.json"
-        ),
-        "type": "FeatureCollection",
-        "dataSource": {
-            "name": "OpenSidewalks NYC pipeline",
-            "url": "https://github.com/msradam/opensidewalks-nyc",
-            "license": "ODbL-1.0",
-            "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
-            "attribution": (
-                "Pedestrian network from OpenSidewalks NYC, ODbL-1.0. Map data "
-                "\u00a9 OpenStreetMap contributors (openstreetmap.org/copyright). "
-                "Also from NYC DOT and NYC OTI data on NYC Open Data, and LiDAR "
-                "from NYS GIS and NOAA."
-            ),
-            # Which OSM snapshot this build read: extract URL, SHA-256 and
-            # the extract's own data timestamp.
-            "osmExtract": {
-                "url": osm_extract.get("url"),
-                "sha256": osm_extract.get("content_hash"),
-                "dataTimestamp": osm_extract.get("osm_data_timestamp"),
-            },
-        },
-        "dataTimestamp": now_iso,
-        "pipelineVersion": {
-            "version": pipeline_version,
-            "gitSHA": git_sha,
-            "builtAt": now_iso,
-        },
-        "region": region_raw,
-        "features": all_features,
-    }
+    fc = {**root_metadata(build_cfg, osm_extract, pipeline_version, git_sha),
+          "region": region_raw, "features": all_features}
 
     out_path = staged_dir / "nyc-osw-unvalidated.geojson"
 

@@ -26,9 +26,13 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import sys
 from pathlib import Path
 
 from scipy.spatial import cKDTree
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from pipeline.utils.zones import zone_edges
 
 # How far a surveyed ramp may be from the end of a crossing and still count
 # for it. The pipeline snaps a ramp to the graph within the same distance.
@@ -159,19 +163,38 @@ def main():
 
     # First pass: node coordinates, and which node ids carry a curb-ramp annotation.
     curb_ids = set()
-    node_xy = {}
+    node_xy, node_z, referenced, zones = {}, {}, set(), []
     for f in feats:
         gt = (f.get("geometry") or {}).get("type")
+        p = f.get("properties") or {}
+        if gt == "LineString":
+            referenced.update((p.get("_u_id"), p.get("_v_id")))
+            continue
+        if gt == "Polygon" and p.get("_w_id"):
+            zones.append(f)
+            continue
         if gt != "Point":
             continue
-        p = f.get("properties") or {}
-        node_xy[p.get("_id")] = f["geometry"]["coordinates"][:2]
+        node_xy[p.get("_id")] = tuple(f["geometry"]["coordinates"][:2])
+        if p.get("ext:elevation_m") is not None:
+            node_z[p.get("_id")] = float(p["ext:elevation_m"])
         if (p.get("barrier") == "kerb"
                 or p.get("kerb") in {"lowered", "raised", "flush"}):
             nid = p.get("_id")
             if nid:
                 curb_ids.add(nid)
     print(f"[curb] curb-annotated nodes: {len(curb_ids):,}")
+
+    # A Pedestrian Zone (a plaza) is a Polygon. A person walks it in any
+    # direction, so the layer gets its ring and a straight chord between
+    # every two of its entrances that stays inside it, walked like footways.
+    zone_feats = []
+    for z in zones:
+        for e in zone_edges(z, node_xy, referenced, node_z):
+            zone_feats.append({"type": "Feature", "properties": {**e, "footway": None},
+                               "geometry": {"type": "LineString", "coordinates": e.pop("coordinates")}})
+    print(f"[zones] {len(zones):,} zones expanded into {len(zone_feats):,} directed edges")
+    feats = feats + zone_feats
 
     crossing_ok = crossings_with_ramps(feats, curb_ids, node_xy, RAMP_REACH_M)
 
@@ -235,6 +258,7 @@ def main():
                 "description": description,
                 "ext_borough": p.get("ext:borough"),
                 "ext_osm_id":  p.get("ext:osm_id"),
+                "ext_zone":    p.get("ext:zone"),
             },
             "geometry": {"type": "LineString", "coordinates": coords},
         }
