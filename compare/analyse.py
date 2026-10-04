@@ -157,7 +157,7 @@ def verdict(rec):
             cause = "structure" if first["structure"] else "incline data"
             detail = "reference takes an edge over the incline limits" + (" on a bridge, tunnel or raised way" if first["structure"] else "")
         elif first["why"] == "street":
-            cause, detail = "connectivity", "reference follows a street centreline; no sidewalk is mapped there"
+            cause, detail = "connectivity", "reference follows a street centreline; OSM has no separately drawn sidewalk there"
         else:
             cause, detail = "rule", "reference takes steps"
         out.update(cause=cause, detail=detail, at=first and first["xy"])

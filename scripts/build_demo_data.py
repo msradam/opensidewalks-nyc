@@ -318,7 +318,7 @@ def verdict_text(rec, ours, ref):
         "connectivity": "OpenRouteService uses a way that this graph's wheelchair profile cannot: the street itself where OpenStreetMap has no "
                         "separately drawn sidewalk, or a way this graph does not include",
         "rule": "OpenRouteService's route also meets this graph's rules. The difference comes from OpenRouteService's own rules "
-                "(its surface and smoothness limits and its route weighting), not from the ramp or incline data",
+                "(its limits on rough surfaces and the way it weighs one path against another), not from the ramp or incline data",
     }[v["cause"]]
     # Each tail names this graph as the subject: after the incline data and connectivity
     # clauses "its route" would read as OpenRouteService compared with itself.

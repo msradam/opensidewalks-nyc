@@ -7811,7 +7811,7 @@ a { text-decoration: underline !important; }
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h1 id="How-OpenSidewalks-NYC-is-pieced-together">How OpenSidewalks NYC is pieced together<a class="anchor-link" href="#How-OpenSidewalks-NYC-is-pieced-together">¶</a></h1><p><a href="https://msradam.github.io/opensidewalks-nyc/">Brownsville demo</a> · <a href="https://github.com/msradam/opensidewalks-nyc">Repository</a> · <a href="https://github.com/msradam/opensidewalks-nyc/releases/latest">Download</a></p>
 <p>This notebook follows a few blocks of Washington Heights in Manhattan from the public sources to the published graph. Each step shows a raw source, the pipeline function that turns it into OpenSidewalks Nodes and Edges, and what that step left in the published release.</p>
-<p>It reads the published release over the network, a few blocks at a time, so it does not need the full build (about 48 minutes; peak memory 35 GB, which ran with swap on a 32 GB machine). It describes v0.3.5-nyc.1 and reads the latest release. To read a local copy instead, set the environment variable <code>OSW_NYC_FGB</code> to the path of <code>nyc-osw.fgb</code>. It calls the same functions as <code>python -m pipeline build</code>, imported from this repository.</p>
+<p>It reads the published release over the network, a few blocks at a time, so it does not need the full build (about 54 minutes; peak memory 35 GB, which ran with swap on a 32 GB machine). It describes v0.3.5-nyc.1 and reads the latest release. To read a local copy instead, set the environment variable <code>OSW_NYC_FGB</code> to the path of <code>nyc-osw.fgb</code>. It calls the same functions as <code>python -m pipeline build</code>, imported from this repository.</p>
 <p>This project has not checked any of the data on the ground. Read the <a href="#Disclaimer">Disclaimer</a> at the end before using it. The evidence behind its numbers, and what that evidence does not show, is in <a href="https://github.com/msradam/opensidewalks-nyc/tree/main/evaluation"><code>evaluation/</code></a>. Questions and corrections go to the project's <a href="https://github.com/msradam/opensidewalks-nyc/issues">GitHub issues</a>.</p>
 <p>Map data in every figure: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a> (ODbL), NYC DOT, NYC OTI, NY State GIS and NOAA.</p>
 <p>To run it yourself:</p>
@@ -8588,7 +8588,13 @@ jupyter<span class="w"> </span>lab<span class="w"> </span>notebooks/how-it-works
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>98 of 101 ramps snapped, median move 1.1 m
+<pre>98 of 101 ramps snapped, median move 1.1 m</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
 </pre>
 </div>
 </div>

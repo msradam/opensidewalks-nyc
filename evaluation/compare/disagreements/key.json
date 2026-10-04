@@ -51,7 +51,7 @@
   "area": "SI",
   "status": "reference only",
   "cause": "connectivity",
-  "detail": "reference follows a street centreline; no sidewalk is mapped there",
+  "detail": "reference follows a street centreline; OSM has no separately drawn sidewalk there",
   "at": [
    -74.095904,
    40.575666
@@ -74,7 +74,7 @@
   "area": "BK",
   "status": "different route",
   "cause": "connectivity",
-  "detail": "reference follows a street centreline; no sidewalk is mapped there",
+  "detail": "reference follows a street centreline; OSM has no separately drawn sidewalk there",
   "at": [
    -73.941476,
    40.608704
@@ -166,7 +166,7 @@
   "area": "BK16",
   "status": "different route",
   "cause": "connectivity",
-  "detail": "reference follows a street centreline; no sidewalk is mapped there",
+  "detail": "reference follows a street centreline; OSM has no separately drawn sidewalk there",
   "at": [
    -73.90174,
    40.67228
@@ -304,7 +304,7 @@
   "area": "BX",
   "status": "different route",
   "cause": "connectivity",
-  "detail": "reference follows a street centreline; no sidewalk is mapped there",
+  "detail": "reference follows a street centreline; OSM has no separately drawn sidewalk there",
   "at": [
    -73.854695,
    40.806083
@@ -511,7 +511,7 @@
   "area": "BX",
   "status": "reference only",
   "cause": "connectivity",
-  "detail": "reference follows a street centreline; no sidewalk is mapped there",
+  "detail": "reference follows a street centreline; OSM has no separately drawn sidewalk there",
   "at": [
    -73.85282,
    40.841018
@@ -534,7 +534,7 @@
   "area": "citywide",
   "status": "reference only",
   "cause": "connectivity",
-  "detail": "reference follows a street centreline; no sidewalk is mapped there",
+  "detail": "reference follows a street centreline; OSM has no separately drawn sidewalk there",
   "at": [
    -74.191872,
    40.526561
@@ -557,7 +557,7 @@
   "area": "MN",
   "status": "reference only",
   "cause": "connectivity",
-  "detail": "reference follows a street centreline; no sidewalk is mapped there",
+  "detail": "reference follows a street centreline; OSM has no separately drawn sidewalk there",
   "at": [
    -73.925828,
    40.782449
@@ -741,7 +741,7 @@
   "area": "QN",
   "status": "reference only",
   "cause": "connectivity",
-  "detail": "reference follows a street centreline; no sidewalk is mapped there",
+  "detail": "reference follows a street centreline; OSM has no separately drawn sidewalk there",
   "at": [
    -73.807213,
    40.708084
@@ -764,7 +764,7 @@
   "area": "BK",
   "status": "different route",
   "cause": "connectivity",
-  "detail": "reference follows a street centreline; no sidewalk is mapped there",
+  "detail": "reference follows a street centreline; OSM has no separately drawn sidewalk there",
   "at": [
    -73.95229,
    40.615033
@@ -856,7 +856,7 @@
   "area": "MN",
   "status": "reference only",
   "cause": "connectivity",
-  "detail": "reference follows a street centreline; no sidewalk is mapped there",
+  "detail": "reference follows a street centreline; OSM has no separately drawn sidewalk there",
   "at": [
    -74.006735,
    40.744793
@@ -1040,7 +1040,7 @@
   "area": "BK16",
   "status": "reference only",
   "cause": "connectivity",
-  "detail": "reference follows a street centreline; no sidewalk is mapped there",
+  "detail": "reference follows a street centreline; OSM has no separately drawn sidewalk there",
   "at": [
    -73.90174,
    40.67228
@@ -1063,7 +1063,7 @@
   "area": "QN",
   "status": "different route",
   "cause": "connectivity",
-  "detail": "reference follows a street centreline; no sidewalk is mapped there",
+  "detail": "reference follows a street centreline; OSM has no separately drawn sidewalk there",
   "at": [
    -73.817727,
    40.757074
