@@ -122,7 +122,7 @@ The DOT data dictionary does not define `999`, `888`, `777` or `555`. This proje
 - OSM node tags (`kerb`, elevators) are not carried.
 - Both directions of every segment are stored; do not add reverse edges.
 - 36,180 Curb Ramp nodes are on no edge and no zone ring.
-- A Pedestrian Zone has one outer ring and no interior detail, and an OSM pedestrian area that does not close into one valid ring stays Edges along its outline.
+- A Pedestrian Zone has one outer ring and no interior detail. An OSM pedestrian area that does not close into one valid ring would stay Edges along its outline; in v0.3.5 all 2,201 such areas closed.
 
 ## Validation
 

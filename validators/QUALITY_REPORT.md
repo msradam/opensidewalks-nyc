@@ -33,7 +33,7 @@
 |---|---|
 | Sidewalk edges | 933,110 |
 | Crossing edges | 437,510 |
-| Footway edges | 449,626 (45,616 from OSM paths and 26,756 from cycleways and tracks open to walkers, each marked in `ext:osm_highway`) |
+| Footway edges | 449,626 (45,600 from OSM paths and 26,756 from cycleways and tracks open to walkers, each marked in `ext:osm_highway`) |
 | Pedestrian Road edges | 11,402 (linear pedestrian streets) |
 | Steps edges | 15,470 |
 | Motor vehicle road edges | 950,420 (residential 418,888; service 289,378; secondary 89,644; tertiary 71,658; primary 58,632; unclassified 21,042; living_street 1,178) |
@@ -130,7 +130,7 @@ Not in the graph. The 2,348 directed edges (1,174 segments) derived from planime
 | `surface` | 1,200,310 edges (42.9%) | asphalt 749,394; concrete 344,360; paving_stones 46,982 |
 | `crossing:markings` | 400,006 of 437,510 Crossing edges (91.4%) | `zebra` 227,508; `yes` 64,992; `no` 57,616; `ladder` 44,206. Read from OSM's `crossing:markings` tag first, then from `crossing=*` as the schema advises (see SCHEMA.md). |
 | `foot` | 75,314 edges | OSM's tag where it is one of the schema's values; 12,662 on roads |
-| `ext:osm_highway` | 72,372 edges and 265 zones | `path` 45,616, `cycleway` 26,168, `track` 588 on edges |
+| `ext:osm_highway` | 72,372 edges and 265 zones | `path` 45,616 (45,600 Footways, 12 Crossings, 4 Sidewalks), `cycleway` 26,168, `track` 588 on edges |
 | `kerb` | 217,679 curb nodes | `lowered` on all. `ufzp-rrqu` has no ramp type column; DOT's cut-through ramps may be flush curbs in schema terms |
 | `ext:structure` | 21,084 edges and 44 zones | bridge, elevated, tunnel |
 | `ext:elevation_source` | 14,402 nodes | `lidar_2017`, `lidar_2014`, `interpolated` |

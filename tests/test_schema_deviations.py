@@ -1,5 +1,4 @@
-"""Checks for the schema deviations found in the outside reviews of
-v0.3.3-nyc.1 (crossing:markings, Pedestrian Road, foot, the warning surface
+"""Checks for the schema deviations of v0.3.3-nyc.1 that v0.3.4 fixed (crossing:markings, Pedestrian Road, foot, the warning surface
 condition, ramp and width outliers, the sidecar licence, the version).
 
 Run: python tests/test_schema_deviations.py

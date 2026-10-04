@@ -26,7 +26,8 @@ they were used.
 
 It uses the OpenSidewalks Schema, which the Taskar Center at the
 University of Washington develops. Contact: GitHub issues,
-https://github.com/msradam/opensidewalks-nyc/issues
+https://github.com/msradam/opensidewalks-nyc/issues (a free GitHub
+account is needed, and what you write there is public)
 
 ----------------------------------------------------------------------
 Licences
@@ -105,7 +106,7 @@ Used in the graph:
     and .../4920/ept.json). Published with no licence attached. Used for
     deck heights on bridges and elevated ways.
 
-Used in the Brownsville demo only:
+Used in the Brownsville demo and the imagery checks only:
 
   - NYC DOT survey assessment map layer (CMT_SURVEY_COMPLIANCY_TOLERANCE_PROD)
     on DOT's ArcGIS service, linked from https://www.nycpedramps.info/survey.
@@ -125,7 +126,8 @@ Used in the Brownsville demo only:
   - NYC DCP Facilities Database (ji82-xba5). NYC Open Data terms of use.
   - NYCHA Public Housing Developments (phvi-damg). NYC Open Data terms
     of use.
-  - NYC Parks Cool It! NYC 2020 cooling sites (h2bn-gu9k). NYC Open Data
+  - NYC Parks Cool It! NYC 2020 list of playground misting stations
+    and spray features (h2bn-gu9k). NYC Open Data
     terms of use.
   - MTA Subway Entrances and Exits 2024 (i9wp-a4ja, data.ny.gov).
     New York State open data terms of use.

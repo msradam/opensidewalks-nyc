@@ -51,6 +51,6 @@ The NYC Open Data sources (`ufzp-rrqu`, `52n9-sdep`) and the NYC 2017 LiDAR elev
 | NYC DCP Community Districts (`5crt-au7u`) | NYC Open Data terms of use |
 | NYC DCP Facilities Database (`ji82-xba5`) | NYC Open Data terms of use |
 | NYCHA Public Housing Developments (`phvi-damg`) | NYC Open Data terms of use |
-| NYC Parks Cool It! NYC 2020 cooling sites (`h2bn-gu9k`) | NYC Open Data terms of use |
+| NYC Parks Cool It! NYC 2020 list of playground misting stations and spray features (`h2bn-gu9k`) | NYC Open Data terms of use |
 | MTA Subway Entrances and Exits 2024 (`i9wp-a4ja`, data.ny.gov) | New York State open data terms of use |
 | NYC OTI orthoimagery: NYC Orthos 2018 and NYC Orthos 2024. Shown in the rating sheets under `evaluation/` and in `evaluation-sheets.zip`, with overlays of OpenStreetMap data (ODbL) and NYC DOT ramp positions. Not shown in the demo. | CC BY 4.0 |

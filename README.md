@@ -99,6 +99,7 @@ The schema puts curb ramps at Edge endpoints and expects a Footway between a Sid
 - Many Crossings join Sidewalks directly, with no Footway between them, and 36,180 Curb Ramp Nodes are on no Edge or Zone ([Network Topology](#network-topology)).
 - OSM node tags (`kerb`, elevators) are not carried. Every Curb Ramp comes from the DOT survey.
 - Both directions are stored, so applications must not add reverse Edges.
+- A Pedestrian Zone has one outer ring and no interior detail, so a hole in a plaza (a fountain, a planter) is not written.
 
 # Data Sources
 
@@ -110,7 +111,7 @@ The schema puts curb ramps at Edge endpoints and expects a Footway between a Sid
 | NYC DOT Pedestrian Ramp Locations (`ufzp-rrqu`), collected for DOT by Cyclomedia from vehicle-mounted imagery and LiDAR, March 2017 to January 2020, mostly 2018 | Curb ramps with slopes and warning surface | NYC Open Data terms of use |
 | NYC Planimetric Sidewalks (`52n9-sdep`), 2022 capture | Sidewalk widths | NYC Open Data terms of use |
 | NYC OTI 2017 LiDAR terrain model (`7sc8-jtbz`), read through the NY State GIS ImageServer | Node elevation and Edge incline | NYC Open Data terms of use |
-| 2017 NYC and 2014 USGS LiDAR point clouds (NOAA) | Deck heights on bridges and elevated ways | Public, no licence attached |
+| 2017 NYC and 2014 USGS LiDAR point clouds (NOAA) | Deck heights on bridges and elevated ways | Public, no license attached |
 
 [METHODOLOGY.md](METHODOLOGY.md) describes how each source is read and joined. [NOTICE](NOTICE) lists every source the data and the demo use.
 
@@ -155,13 +156,13 @@ The same random trips, 2,000 per borough, were routed locally on one OpenStreetM
 | ORS wheelchair finds a route | 99% | 98% | 98% | 97% | 98% |
 | ORS routes that this dataset's ramp and incline data would refuse | 91% | 97% | 97% | 98% | 98% |
 | This dataset's walking profile, judged the same way | 91% | 94% | 98% | 98% | 97% |
-| ORS run on this dataset's graph agrees with this dataset on whether a route exists | 93% | 93% | 91% | 89% | 90% |
+| ORS run on this dataset's sidewalks, crossings, ramps and incline, with street centerlines left out, agrees with this dataset on whether a route exists | 93% | 93% | 91% | 89% | 90% |
 
-The third and fourth rows apply this project's rules (a surveyed ramp within 5 m of each crossing end, no slope over 8.3% up or 10% down, no steps, no more than 10 m of roadway) using data ORS did not have: the ramp survey and the LiDAR incline. They count routes on measured pairs; the other rows count all pairs. Any route planned without that data scores about the same, as the fourth row shows for this dataset's own walking profile, and this dataset's wheelchair profile scores 0% by construction. The rows measure missing data, not a worse engine, and the last row shows that given the same data ORS mostly agrees. "Roadway" includes street centerlines that OSM tags as having a sidewalk. Agreement in the last row includes pairs neither router finds. In Brooklyn the two disagree on 141 of 2,000 pairs: 52 found only by this dataset and 89 only by ORS.
+The third and fourth rows apply this project's rules (a surveyed ramp within 5 m of each crossing end, no slope over 8.3% up or 10% down, no steps, no more than 10 m of roadway) using data ORS did not have: the ramp survey and the LiDAR incline. They count routes on measured pairs (pairs where both routers start and end at the same places); the other rows count all pairs. Any route planned without that data scores about the same, as the fourth row shows for this dataset's own walking profile, and this dataset's wheelchair profile scores 0% by construction. The rows measure missing data, not a worse engine, and the last row shows that given the same data ORS mostly agrees. "Roadway" includes street centerlines that OSM tags as having a sidewalk. Agreement in the last row includes pairs neither router finds. In Brooklyn the two disagree on 141 of 2,000 pairs: 52 found only by this dataset and 89 only by ORS.
 
-This graph has no ferry edges. 349 of the 2,000 Manhattan pairs have one end on Governors Island, Liberty Island or Ellis Island, which no walking route reaches, so this graph cannot route them. ORS used a ferry on 19% of its Manhattan routes and Valhalla on 35%. With those pairs set apart, this dataset's wheelchair profile finds a route for 78% of Manhattan pairs and ORS for 97% ([tables](evaluation/compare/results/tables.md), "Ferries and pairs across water").
+This graph has no ferry edges. 349 of the 2,000 Manhattan pairs have an end on Governors Island, Liberty Island or Ellis Island, which no walking route reaches, so this graph cannot route them. ORS used a ferry on 19% of its Manhattan routes and Valhalla on 35%. With those pairs set apart, this dataset's wheelchair profile finds a route for 78% of Manhattan pairs and ORS for 97% ([tables](evaluation/compare/results/tables.md), "Ferries and pairs across water").
 
-A small part of the gap is in how ORS reads OpenStreetMap. On a test fixture, ORS v10.0.1 let a crossing tagged `kerb=raised` pass every kerb limit. This has not been reported to the ORS project. OpenStreetMap tags 4% of the crossing ends that have no surveyed ramp that way. 51% of ORS's Brooklyn routes pass over a node tagged `kerb=raised`, and so do 27% of this dataset's own wheelchair routes, which follow the ramp survey and do not read OpenStreetMap kerb tags either. ORS also reads a bare `kerb:height` of 0.15 or more as centimeters ([ORS #2293](https://github.com/GIScience/openrouteservice/issues/2293)).
+A small part of the gap is in how ORS reads OpenStreetMap. On a test fixture, ORS 10.0.1 let a crossing tagged `kerb=raised` pass every kerb limit. This has not been reported to the ORS project. OpenStreetMap tags 4% of the crossing ends that have no surveyed ramp that way. 51% of ORS's Brooklyn routes pass over a node tagged `kerb=raised`, and so do 27% of this dataset's own Brooklyn wheelchair routes and 48% of its walking routes, which follow the ramp survey and do not read OpenStreetMap kerb tags either. ORS also reads a bare `kerb:height` of 0.15 or more as centimeters ([ORS #2293](https://github.com/GIScience/openrouteservice/issues/2293)).
 
 Valhalla 3.9.0 was run as a baseline that avoids stairs, and Unweaver as a check on this dataset's own search. Their rows are in the tables.
 

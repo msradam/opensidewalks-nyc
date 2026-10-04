@@ -1,4 +1,4 @@
-"""Checks for defects found in the v0.3.1-nyc.1 review. Each passed the
+"""Checks for defects of v0.3.1-nyc.1. Each passed the
 official validator, so each needs its own check.
 
 Run: python tests/test_validity_fixes.py
