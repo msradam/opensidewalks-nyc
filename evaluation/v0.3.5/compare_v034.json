@@ -1,0 +1,263 @@
+{
+ "before_file": "release-assets-v0.3.4/nyc-osw.geojson.gz",
+ "after_file": "output/nyc-osw.geojson",
+ "expected_to_change": [
+  "ext:source",
+  "ext:osm_highway",
+  "ext:source_timestamp",
+  "ext:pipeline_version"
+ ],
+ "before": {
+  "root": {
+   "$schema": "https://sidewalks.washington.edu/opensidewalks/0.3/schema.json",
+   "type": "FeatureCollection",
+   "dataSource": {
+    "name": "opensidewalks-nyc pipeline",
+    "url": "https://github.com/msradam/opensidewalks-nyc",
+    "license": "ODbL-1.0",
+    "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "attribution": "Pedestrian network from opensidewalks-nyc, ODbL-1.0. Map data \u00a9 OpenStreetMap contributors (openstreetmap.org/copyright). Also from NYC DOT and NYC OTI data on NYC Open Data, and LiDAR from NYS GIS and NOAA.",
+    "osmExtract": {
+     "url": "https://download.geofabrik.de/north-america/us/new-york-261001.osm.pbf",
+     "sha256": "1214968b2c988e13ee6a6bde6b9c9891337a588475b7fd2ac1939e175073d8b7",
+     "dataTimestamp": "2026-10-01T20:22:06Z"
+    }
+   },
+   "dataTimestamp": "2026-10-04T07:03:13.283280+00:00",
+   "pipelineVersion": {
+    "version": "0.3.4+nyc.1",
+    "gitSHA": "774b7e9",
+    "builtAt": "2026-10-04T07:03:13.283280+00:00"
+   }
+  },
+  "features": 4068058,
+  "by_kind": {
+   "bare_node": 969231,
+   "road": 950386,
+   "sidewalk": 933110,
+   "footway": 459570,
+   "crossing": 437510,
+   "curb_ramp": 217679,
+   "pedestrian_road": 85102,
+   "steps": 15470
+  },
+  "curb_source": {
+   "osm_walk": 181499,
+   "nyc_dot_ramps": 36180
+  },
+  "edge_osm_highway": {
+   "null": 2854392,
+   "cycleway": 26168,
+   "track": 588
+  },
+  "zone_osm_highway": {},
+  "zone_ring_vertices": 0,
+  "pipeline_version": {
+   "0.3.4+nyc.1": 4068058
+  }
+ },
+ "after": {
+  "root": {
+   "$schema": "https://sidewalks.washington.edu/opensidewalks/0.3/schema.json",
+   "type": "FeatureCollection",
+   "dataSource": {
+    "name": "OpenStreetMap, NYC DOT Pedestrian Ramp Locations, NYC Planimetric Sidewalks, NYC 2017 LiDAR (terrain model and point clouds)",
+    "url": "https://github.com/msradam/opensidewalks-nyc",
+    "license": "ODbL-1.0",
+    "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "attribution": "Pedestrian network from OpenSidewalks NYC, an independent dataset in the OpenSidewalks Schema, ODbL-1.0. Map data \u00a9 OpenStreetMap contributors (openstreetmap.org/copyright). Also from NYC DOT and NYC OTI data on NYC Open Data, and LiDAR from NYS GIS and NOAA.",
+    "osmExtract": {
+     "url": "https://download.geofabrik.de/north-america/us/new-york-261001.osm.pbf",
+     "sha256": "1214968b2c988e13ee6a6bde6b9c9891337a588475b7fd2ac1939e175073d8b7",
+     "dataTimestamp": "2026-10-01T20:22:06Z"
+    }
+   },
+   "dataTimestamp": "2026-10-01T20:22:06Z",
+   "pipelineVersion": {
+    "name": "opensidewalks-nyc",
+    "version": "0.3.5+nyc.1",
+    "url": "https://github.com/msradam/opensidewalks-nyc/tree/5d04a19",
+    "gitSHA": "5d04a19",
+    "builtAt": "2026-10-04T16:01:46.280036+00:00"
+   }
+  },
+  "features": 3986649,
+  "by_kind": {
+   "bare_node": 969231,
+   "road": 950420,
+   "sidewalk": 933110,
+   "footway": 449626,
+   "crossing": 437510,
+   "curb_ramp": 217679,
+   "steps": 15470,
+   "pedestrian_road": 11402,
+   "pedestrian_zone": 2201
+  },
+  "curb_source": {
+   "nyc_dot_ramps": 217679
+  },
+  "edge_osm_highway": {
+   "null": 2725166,
+   "path": 45616,
+   "cycleway": 26168,
+   "track": 588
+  },
+  "zone_osm_highway": {
+   "pedestrian": 1936,
+   "footway": 262,
+   "path": 3
+  },
+  "zone_ring_vertices": 41826,
+  "pipeline_version": {
+   "0.3.5+nyc.1": 3986649
+  }
+ },
+ "diff": {
+  "only_before": 83644,
+  "only_after": 2235,
+  "shared": 3984414,
+  "only_before_by_kind": {
+   "pedestrian_road": 73700,
+   "footway": 9944
+  },
+  "only_after_by_kind": {
+   "pedestrian_zone": 2201,
+   "road": 34
+  },
+  "only_before_edges_on_a_zone_ring_in_after": {
+   "pedestrian_road": 73700,
+   "footway": 9944
+  },
+  "only_before_edges_not_on_a_zone_ring": {},
+  "geometry_differs": 0,
+  "incline_differs": 16,
+  "elevation_differs": 6,
+  "kind_differs": 0,
+  "other_properties_differ": 1,
+  "transitions": {
+   "ext:source": {
+    "curb_ramp: osm_walk -> nyc_dot_ramps": 181499
+   },
+   "ext:osm_highway": {
+    "footway: None -> path": 45600,
+    "crossing: None -> path": 12,
+    "sidewalk: None -> path": 4
+   }
+  }
+ },
+ "examples": {
+  "geometry": [],
+  "incline": [
+   [
+    "29df2c789437110a",
+    -0.0057,
+    null
+   ],
+   [
+    "f111a43eb0630b2c",
+    null,
+    -0.0876
+   ],
+   [
+    "feef4e1431622fc4",
+    -0.0001,
+    0.6049
+   ],
+   [
+    "9f60064d70500e80",
+    -0.0279,
+    -0.0297
+   ],
+   [
+    "54f70a8b86f080d5",
+    0.0289,
+    0.0221
+   ],
+   [
+    "64239bcfd9bba971",
+    null,
+    0.0876
+   ],
+   [
+    "9028db9d6a4d9587",
+    0.0001,
+    -0.6049
+   ],
+   [
+    "49e29570dfb1d782",
+    -0.2288,
+    null
+   ],
+   [
+    "fcf6f7f44dae1877",
+    -0.0022,
+    -0.0036
+   ],
+   [
+    "26093255f832b168",
+    0.0279,
+    0.0297
+   ]
+  ],
+  "elevation": [
+   [
+    "086fe621094e97d8",
+    10.4,
+    7.0
+   ],
+   [
+    "6dbd4db4d0e2e104",
+    43.7,
+    44.8
+   ],
+   [
+    "7645ac859f089175",
+    12.4,
+    11.1
+   ],
+   [
+    "df5738a97c35fa2c",
+    11.0,
+    12.0
+   ],
+   [
+    "946e669b41f70027",
+    26.2,
+    29.6
+   ],
+   [
+    "3b704925a58d878e",
+    11.1,
+    12.0
+   ]
+  ],
+  "other": [
+   "086fe621094e97d8"
+  ],
+  "only_before": [
+   "0001d4e28b72dfe9",
+   "0001dd7e7b686c2b",
+   "0002fe906c680c64",
+   "00031bb62d4a17a7",
+   "00035405f9faf897",
+   "000420a668b78212",
+   "0004ae78f2ea2bf6",
+   "000539471ada64e1",
+   "000693ff6e087984",
+   "0006d63ff96e30f4"
+  ],
+  "only_after": [
+   "0063e63ae4713772",
+   "00697531adee0257",
+   "007543c7c56ce32a",
+   "0085be265e7677f9",
+   "00ae0f708bdd3123",
+   "00ba05e4dc99043a",
+   "00bbcbfb8a823205",
+   "00d4c5fd841144c5",
+   "0101155ce2025c98",
+   "01445130bceb476c"
+  ],
+  "only_before_not_on_ring": []
+ }
+}

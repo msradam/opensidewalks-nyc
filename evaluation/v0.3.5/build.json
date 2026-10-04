@@ -1,0 +1,16 @@
+{
+ "commit": "5d04a19",
+ "command": "python -m pipeline build, once, after python -m pipeline clean",
+ "started": "2026-10-04T15:13:03Z",
+ "finished": "2026-10-04T16:07:09Z",
+ "exit": 0,
+ "wall_seconds": 3246.33,
+ "peak_memory_footprint_bytes": 34972364856,
+ "maximum_resident_set_bytes": 14580645888,
+ "machine": "Apple Silicon, 32 GB",
+ "osm_extract": "new-york-261001.osm.pbf",
+ "osm_extract_sha256_before_clean": "1214968b2c988e13ee6a6bde6b9c9891337a588475b7fd2ac1939e175073d8b7",
+ "osm_extract_sha256_after_clean": "1214968b2c988e13ee6a6bde6b9c9891337a588475b7fd2ac1939e175073d8b7",
+ "working_tree_at_build": "pipeline/, config/ and pyproject.toml as committed; documents, demo and evaluation files had uncommitted edits",
+ "exports_made_after_the_build": "The canonical GeoJSON, the borough files, the FlatGeobuf and the validator ZIP are the build's output after the endpoint snap. The GraphML files, the routing JSON and the reachability results were made from that output with pipeline/utils/zones.py as committed after the build, which keeps the incline on a zone edge under 5 m when its ends differ by more than 0.5 m. The first version of that rule, at the build commit, gave such edges no incline."
+}

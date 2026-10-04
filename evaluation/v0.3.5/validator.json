@@ -1,0 +1,16 @@
+{
+ "validator": "python-osw-validation",
+ "validator_version": "0.5.0",
+ "geopandas": "0.14.4",
+ "run_at": "2026-10-04T16:12:55Z",
+ "is_valid": true,
+ "errors": [],
+ "input": "nyc-osw-osw-split.zip",
+ "input_sha256": "eced270f93849811ea9857801d71bc6a011bbd3ec1dd8b2fe24533fb3e37aa96",
+ "input_members": [
+  "nyc.nodes.geojson",
+  "nyc.edges.geojson",
+  "nyc.zones.geojson"
+ ],
+ "command": "uv run --no-project --isolated --with python-osw-validation==0.5.0 python -c ...OSWValidation(zip).validate()"
+}
