@@ -10,6 +10,7 @@ Usage:
 
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -21,6 +22,11 @@ def main(in_path: Path, out_path: Path) -> None:
     print(f"reading {in_path.name}...", flush=True)
     gdf = gpd.read_file(in_path)
     print(f"  features: {len(gdf):,}, columns: {len(gdf.columns)}")
+
+    # FlatGeobuf has no list type. A Pedestrian Zone's _w_id (its ring's Node
+    # ids, in order) is written as a JSON array in a string.
+    if "_w_id" in gdf.columns:
+        gdf["_w_id"] = gdf["_w_id"].map(lambda w: None if w is None else json.dumps([str(i) for i in w]))
 
     # FlatGeobuf has no free-form root object; the layer title and
     # description carry the licence and credit instead.

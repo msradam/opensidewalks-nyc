@@ -191,8 +191,9 @@ def main():
     zone_feats = []
     for z in zones:
         for e in zone_edges(z, node_xy, referenced, node_z):
+            coords = e.pop("coordinates")
             zone_feats.append({"type": "Feature", "properties": {**e, "footway": None},
-                               "geometry": {"type": "LineString", "coordinates": e.pop("coordinates")}})
+                               "geometry": {"type": "LineString", "coordinates": coords}})
     print(f"[zones] {len(zones):,} zones expanded into {len(zone_feats):,} directed edges")
     feats = feats + zone_feats
 
