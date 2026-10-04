@@ -20,7 +20,7 @@ Claim: v0.3.3 validates under `python-osw-validation` 0.5.0 and was built in one
 
 ### 2. Incline on bridges and elevated ways
 
-Claim: deck heights from the LiDAR point clouds put incline on structures. Test: the 2017 heights against the 2014 USGS survey, which the fix did not use for those nodes, and the lifted nodes against the city's planimetric transport structure polygons. Result: 14,402 nodes carry a deck height and 98.5% of bridge edges have an incline (`build/checks.json`); 83.4% of 2017 heights have a 2014 surface within 0.25 m and 91.6% within 1 m (`structure_incline/structure_validate_2014.json`); 73.6% of nodes lifted 2 m or more lie in a structure polygon (`structure_incline/structure_where_check.json`). Footway edges over the wheelchair limits fell from 3.24% to 1.40% under 2 m long (`build/steep_by_length.json`). Code: `pipeline/utils/ept.py`, `pipeline/utils/deck.py`, `pipeline/stages/assemble.py`, `tests/test_structure_incline.py`; method in `METHODOLOGY.md` section 5b.
+Claim: deck heights from the LiDAR point clouds put incline on structures. Test: the 2017 heights against the 2014 USGS survey, which the fix did not use for those nodes, and the lifted nodes against the city's planimetric transport structure polygons. Result: 14,402 nodes carry a deck height and 98.5% of bridge edges have an incline (`build/checks.json`); 83.4% of 2017 heights have a 2014 surface within 0.25 m and 91.6% within 1 m (`structure_incline/structure_validate_2014.json`); 73.6% of nodes lifted 2 m or more lie within 5 m of a structure polygon (`structure_incline/structure_where_check.json`). Footway edges over the wheelchair limits fell from 3.24% to 1.40% under 2 m long (`build/steep_by_length.json`). Code: `pipeline/utils/ept.py`, `pipeline/utils/deck.py`, `pipeline/stages/assemble.py`, `tests/test_structure_incline.py`; method in `METHODOLOGY.md` section 5b.
 
 ### 3. The 5 m ramp to crossing rule
 
@@ -48,7 +48,7 @@ Result: this graph's wheelchair profile finds a route for 91.2% of Brooklyn pair
 
 Part of the gap is how ORS reads OSM. On the tag probe fixture, ORS 10.0.1 lets a crossing tagged `kerb=raised` pass every kerb limit (`compare/probes/ors_tag_probe.json`). By a coarse way-level count, 51.3% of the reference's Brooklyn routes (66.7% city-wide) use a crossing way with a node tagged `kerb=raised` (`compare/results/tables.md`, "Raw OSM audit: routes with kerb=raised"). A bare `kerb:height` of 0.15 m or more also passes on the probe; that parsing is ORS issue #2293. Of the 15,599 crossing ends with no surveyed ramp within 5 m, 3,878 (24.9%) are tagged lowered or flush in OSM (`compare/results/kerb_crosscheck.json`), so the survey is not always right where it has no ramp. Unweaver and this repository's search agree on whether a route exists for all 1,354 requests, and routes both found differ by at most 6.4 m (`compare/results/unweaver_*.json`).
 
-Matching. ORS wheelchair routes were matched to edges by the OSM way ids ORS returns. Valhalla and ORS foot-walking routes were matched by geometry only, so their steps, roadway and incline rows are not verified by the way-id method.
+Matching. ORS wheelchair routes were matched to edges by the OSM way ids ORS returns, and since 2026-10-04 Valhalla routes by the way ids Valhalla's `trace_attributes` returns for each route (`compare/results/valhalla_way_ids.json`). Matched by way id, Valhalla's wheelchair routes take steps on 0.1% of routes city-wide, not the 3.8% geometry matching gave; a positive control finds steps on 6.0% of its foot routes in Brooklyn and 16.4% in Manhattan. ORS foot-walking routes are still matched by geometry only, so their rows are not verified by the way-id method.
 
 The imagery check of disagreements (`compare/disagreements/`) rated 48 sheets over March 2024 imagery, 12 for each of four causes. The fifth cause, rule (203 disagreements in the five boroughs), was not sampled: a rule disagreement has no point on the ORS route that this profile refuses, so a sheet has nothing to mark (`compare/disagreements/code/sheets.py` keeps only disagreements with a marked point). Every result in `compare/disagreements/score.json` is below. Counts are from the primary rating of all 48 sheets, and the intervals are exact 95% binomial intervals computed on 2026-10-03.
 
@@ -67,7 +67,7 @@ Code: `compare/` (`pairs.py`, `run_ours.py`, `run_ors.py`, `run_valhalla.py`, `r
 
 ### Lessons
 
-`lessons/` holds 41 short notes, one per thing learned. Some quote numbers from the v0.3.2 dry run or make a claim later corrected, and each of those carries a dated note.
+`lessons/` holds 40 short notes, one per thing learned. Some quote numbers from the v0.3.2 dry run or make a claim later corrected, and each of those carries a dated note.
 
 ## Two sets of reachability numbers
 
@@ -94,7 +94,7 @@ Both are correct for their method. `reach.json` starts each trip at the drawn gr
 - Structures newer than May 2017 carry the height the survey saw then (LaGuardia, the new Kosciuszko span).
 - The comparison's search is a re-implementation. It was run against Unweaver itself in a container and agreed on all 1,354 requests. City-wide, Unweaver was sampled at 40 pairs per area, since a query takes seconds to minutes.
 - ORS and Valhalla ran without elevation data, and Valhalla with its default sidewalk weighting. A Valhalla run with elevation tiles was not done.
-- Valhalla and ORS foot-walking routes were matched to edges by geometry, not way ids. Their steps, roadway and incline rows are less certain than the ORS wheelchair rows.
+- ORS foot-walking routes were matched to edges by geometry, not way ids, so their steps, roadway and incline rows are less certain than the ORS wheelchair and Valhalla rows.
 - "Roadway" counts street centrelines, including those where OSM tags a sidewalk on the street. How much of it is on such centrelines was not measured.
 - Arm B was converted before the coincident-ways fix and lacks 286 of 1,437,901 ways. Arm C was rebuilt after it. The effect on arm B's shares was not measured.
 - 387 pairs across all sets are routed by this graph and not by ORS on the same edges (arm C). Rough surfaces explain 37. The likely cause is where ORS snaps; this was not verified.
@@ -129,6 +129,6 @@ Imagery: NYC Orthos 2018, NYC Office of Technology and Innovation (captured by t
 The result files that hold OpenStreetMap ids, coordinates or route lines are derived from OpenStreetMap and are under the Open Database License 1.0, like the graph (`../LICENSE-DATA.md`). Code is under Apache-2.0 (`../LICENSE`).
 
 - OpenStreetMap: © OpenStreetMap contributors, ODbL 1.0. The graph's geometry and every engine in the comparison start from Geofabrik's `new-york-261001.osm.pbf`.
-- NYC Open Data, under the NYC Open Data terms of use: the DOT pedestrian ramp survey (`ufzp-rrqu`), the planimetric sidewalks (`52n9-sdep`), and, for the Brownsville trips, the Facilities Database (`ji82-xba5`), NYCHA developments (`phvi-damg`), Cool It! NYC (`h2bn-gu9k`) and MTA subway entrances (`i9wp-a4ja`).
+- NYC Open Data, under the NYC Open Data terms of use: the DOT pedestrian ramp survey (`ufzp-rrqu`), the planimetric sidewalks (`52n9-sdep`), and, for the Brownsville trips, the Facilities Database (`ji82-xba5`), NYCHA developments (`phvi-damg`) and Cool It! NYC (`h2bn-gu9k`). MTA subway entrances (`i9wp-a4ja`) come from data.ny.gov under the New York State open data terms.
 - LiDAR: the 2017 New York City survey (NYC OTI) and the 2014 survey of the U.S. Geological Survey, served as Entwine point cloud tiles by NOAA Digital Coast; the 2017 topobathymetric terrain model, served by the New York State GIS Program Office.
 - Orthoimagery: NYC Orthos 2018 and 2024, NYC Office of Technology and Innovation, CC BY 4.0, as credited under "Images".

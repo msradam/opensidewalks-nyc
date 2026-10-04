@@ -33,9 +33,9 @@
 | Crossing edges | 437,510 |
 | Footway edges | 544,672 (26,756 from OSM cycleways and tracks open to walkers) |
 | Steps edges | 15,470 |
-| Street edges | 950,386 (residential 418,875; service 289,376; secondary 89,629; tertiary 71,654; primary 58,632; unclassified 21,042; living_street 1,178) |
+| Motor vehicle road edges | 950,386 (residential 418,875; service 289,376; secondary 89,629; tertiary 71,654; primary 58,632; unclassified 21,042; living_street 1,178) |
 | Curb nodes | 217,679, one per surveyed ramp |
-| Other nodes | 969,231 |
+| Bare nodes | 969,231 |
 
 Every edge is directed and every segment has its reverse (965,381 pedestrian segments). Edges marked `ext:structure`: bridge 14,992, elevated 5,158, tunnel 2,762.
 
@@ -54,9 +54,9 @@ The pedestrian graph is the sidewalk, crossing, footway and steps edges.
 
 Share of each borough's pedestrian nodes in the largest component:
 
-| Brooklyn | Manhattan | Bronx | Queens | Staten Island |
+| Brooklyn | Queens | Manhattan | Bronx | Staten Island |
 |---|---|---|---|---|
-| 96.3% | 89.6% | 86.2% | 84.2% | 0% (a separate component) |
+| 96.3% | 84.2% | 89.6% | 86.2% | 0% (a separate component) |
 
 Much of the rest lies along streets whose sidewalks OSM maps as `sidewalk=*` tags on the street. That is a valid OSM scheme, and this pipeline does not read it, so the graph has no sidewalk edge there. The pipeline's tag filter also drops some ways that plain OSM routing uses, such as cycleways with no `foot` tag, which the US default treats as walkable: OpenRouteService's walking profile on this graph routes 82.1% of Manhattan pairs, against 100% on plain OSM ([`evaluation/compare/results/tables.md`](../evaluation/compare/results/tables.md), ORS settings matrix).
 
@@ -106,7 +106,7 @@ The survey records running and cross slopes in percent: 212,194 ramps carry a ru
 Read incline as an estimate from an airborne survey, not a measurement of the path.
 
 1. **The terrain model is bare earth.** On a bridge, a deck or a pier it holds the ground or water below. v0.3.3 reads the classified LiDAR point clouds instead (the 2017 city survey, and the 2014 USGS survey where the 2017 one has no returns, which is the main spans over open water), around every edge OSM tags as a bridge or as `layer` above 0 and outward along the path until the deck meets the ground. The method is in `METHODOLOGY.md`, section 5b.
-2. **Deck heights against a survey the fix did not use.** For the 13,930 nodes whose height came from the 2017 survey, the 2014 survey has a surface within 0.25 m at 83% and within 1 m at 92%; the median difference is 5 cm ([`evaluation/structure_incline/structure_validate_2014.json`](../evaluation/structure_incline/structure_validate_2014.json)). The large disagreements are mostly places rebuilt between the two flights: Hudson Yards, Empire Outlets, the Bayonne Bridge, LaGuardia. Of the nodes lifted 2 m or more above the terrain model, 74% lie within 5 m of a transport structure polygon of the city's planimetric database, which comes from photogrammetry and knows nothing of OSM tags or LiDAR (78% for OSM-tagged structures, 54% for untagged approaches; boardwalks, piers and plazas are not in that database).
+2. **Deck heights against a survey the fix did not use.** Of the 13,943 nodes whose height came from the 2017 survey, 13,930 have a surface in the 2014 survey to compare with (13 have none). Among those, the 2014 surface is within 0.25 m at 83% and within 1 m at 92%; the median difference is 5 cm ([`evaluation/structure_incline/structure_validate_2014.json`](../evaluation/structure_incline/structure_validate_2014.json)). The large disagreements are mostly places rebuilt between the two flights: Hudson Yards, Empire Outlets, the Bayonne Bridge, LaGuardia. Of the nodes lifted 2 m or more above the terrain model, 74% lie within 5 m of a transport structure polygon of the city's planimetric database, which comes from photogrammetry and knows nothing of OSM tags or LiDAR (78% for OSM-tagged structures, 54% for untagged approaches; boardwalks, piers and plazas are not in that database).
 3. **The remaining steep edges on structures.** 1,708 edges of 3 m or more touching a deck node read steeper than 15%. They cluster at station entrances, where the graph has a plain edge because this pipeline does not carry OSM node tags such as elevators; at airport terminals; and at the foot of ramps, where this pipeline's height estimate jumps by several metres across one short edge.
 4. **Short edges.** The graph keeps every OSM vertex as a node, so half its edges are shorter than 6 m. Before incline is taken, each node's height is averaged with its neighbours' along the path over edges shorter than 5 m (never across a step of 0.5 m or more, and not on steps or tunnel edges).
 5. **What no airborne survey can see.** A kerb ramp a metre long, a step, a cross slope. The limits in the wheelchair profile are applied to estimates with about 0.1 m of noise per node.
@@ -125,7 +125,7 @@ Not in the graph. The 2,318 directed edges (1,159 segments, 60 km) derived from 
 |---|---|---|
 | `surface` | 1,260,426 edges (43.8%) | asphalt 766,676; concrete 358,354; paving_stones 69,556 |
 | `crossing:markings` | 380,888 of 437,510 crossings (87.1%) | `yes` 272,110; `zebra` 108,778. Inferred from OSM `crossing=*`; OSM's `crossing:markings` tag is not read. `crossing=uncontrolled` is mapped to `zebra`, which asserts more than the source says, `traffic_signals` to `yes`, and `unmarked` is dropped, so no crossing carries `no`. |
-| `kerb` | 217,679 curb nodes | `lowered` on all (the survey does not distinguish flush from lowered) |
+| `kerb` | 217,679 curb nodes | `lowered` on all. `ufzp-rrqu` has no ramp type column; DOT's cut-through ramps may be flush curbs in schema terms |
 | `ext:structure` | 22,912 edges | bridge, elevated, tunnel |
 | `ext:elevation_source` | 14,402 nodes | `lidar_2017`, `lidar_2014`, `interpolated` |
 | `ext:source`, `ext:pipeline_version` | every feature | `0.3.3+nyc.1` |
@@ -141,13 +141,13 @@ The wheelchair profile, adapted from Unweaver's example wheelchair profile (Nick
 
 Share of 2,000 seeded random origin and destination pairs with a route, both ends in the same borough, each end at the graph node it was drawn at (node snapping; 95% intervals about 2 points either way). The router comparison uses the same pairs with each end snapped to the nearest edge, which gives higher figures (91.2%, 67.8%, 64.0%, 50.8% and 50.3% for Brooklyn, Queens, Manhattan, the Bronx and Staten Island); [`evaluation/README.md`](../evaluation/README.md#two-sets-of-reachability-numbers), under "Two sets of reachability numbers", explains the difference.
 
-| Profile | Brooklyn | Bronx | Manhattan | Queens | Staten Island | Ends anywhere |
+| Profile | Brooklyn | Queens | Manhattan | Bronx | Staten Island | Ends anywhere |
 |---|---|---|---|---|---|---|
-| Every edge, street centrelines included | 98.0% | 93.1% | 79.7% | 93.7% | 93.8% | 61.6% |
-| Pedestrian edges only | 94.0% | 74.2% | 79.3% | 73.3% | 66.3% | 52.4% |
-| Pedestrian edges without steps | 93.5% | 73.6% | 75.1% | 72.7% | 65.3% | 51.3% |
-| Wheelchair profile without its incline limits | 87.8% | 58.6% | 68.1% | 67.0% | 52.3% | 45.5% |
-| **Wheelchair profile** | **84.8%** | **43.7%** | **53.0%** | **63.0%** | **43.1%** | **40.5%** |
+| Every edge, street centrelines included | 98.0% | 93.7% | 79.7% | 93.1% | 93.8% | 61.6% |
+| Pedestrian edges only | 94.0% | 73.3% | 79.3% | 74.2% | 66.3% | 52.4% |
+| Pedestrian edges without steps | 93.5% | 72.7% | 75.1% | 73.6% | 65.3% | 51.3% |
+| Wheelchair profile without its incline limits | 87.8% | 67.0% | 68.1% | 58.6% | 52.3% | 45.5% |
+| **Wheelchair profile** | **84.8%** | **63.0%** | **53.0%** | **43.7%** | **43.1%** | **40.5%** |
 
 Taking the constraints away in this order (street centrelines, steps, ramps, incline), excluding street centrelines costs the most in the Bronx, Queens and Staten Island, where many sidewalks are mapped as `sidewalk=*` tags on the street, which this pipeline does not read. In Brooklyn crossings with no surveyed ramp within reach cost the most, and in Manhattan incline does. The incline limits cost 3 points in Brooklyn and 15 in the Bronx and Manhattan. A different order would split the loss differently.
 
