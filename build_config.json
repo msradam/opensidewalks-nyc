@@ -22,7 +22,7 @@
      "Where a surveyed ramp serves a crossing. 200 crossings were rated remotely over the city's 2018 aerial photographs. Of the 166 crossings that the 5 m rule passes, 164 have a surveyed ramp placed to serve both ends (98.8%). The raters were language-model programs (Anthropic Claude models, exact versions not recorded) following a written protocol, not people. Two separate runs agreed on 96% of the crossings. That shows the raters are consistent. It does not show that the ramps are there today or that anyone can use them. No crossing was visited.",
      "The route search. This page's routes match Unweaver, the open routing engine the profile was adapted from. On 840 route requests in Brownsville the two agree every time on whether a route exists, and all 826 routes found by both have the same length to within 1 m. On 514 more requests across the city they also agree every time on whether a route exists.",
      "Against OpenRouteService. On 362 Brownsville trips, this graph and OpenRouteService's wheelchair profile (plain OpenStreetMap data, 10% incline limit, 6 cm or 2.4 in curb height limit) both find a route every time. They take the same route on 130 trips and different routes on 232. 151 of OpenRouteService's 362 routes (41.7%) use a crossing with no surveyed ramp within 5 m of one end. OpenStreetMap carries no curb information there that OpenRouteService treats as a barrier.",
-     "What the disagreements look like from above. 48 places across the city where the two route finders part were drawn over the city's March 2024 aerial photographs. Language-model programs rated them, following a written protocol, and were not told why each place was chosen. Where OpenRouteService's route had been flagged as running in the roadway, the photograph agreed at 10 of 12 places. At the 11 crossings flagged for a missing ramp, the photograph never showed ramps at both ends. It showed one or none at 3 and could not tell at 8. At 15 cm (6 in) per pixel a curb ramp is rarely visible, so this check cannot confirm the ramp data. A second run rated 24 of the sheets again without seeing the first ratings, and agreed on the kind of place at 23. No person rated the sheets."
+     "What the disagreements look like from above. 48 places across the city where the two route finders part were drawn over the city's March 2024 aerial photographs. Language-model programs (Anthropic Claude models, exact versions not recorded) rated them, following a written protocol, and were not told why each place was chosen. Where OpenRouteService's route had been flagged as running in the roadway, the photograph agreed at 10 of 12 places. At the 11 crossings flagged for a missing ramp, the photograph never showed ramps at both ends. It showed one or none at 3 and could not tell at 8. At 15 cm (6 in) per pixel a curb ramp is rarely visible, so this check cannot confirm the ramp data. A second run rated 24 of the sheets again without seeing the first ratings, and agreed on the kind of place at 23. No person rated the sheets."
     ]
    },
    {
@@ -39,11 +39,12 @@
    {
     "title": "Not checked",
     "items": [
-     "Nothing on this page has been checked on the ground. Nobody has measured a ramp with a level or travelled one of these routes for this project. A field audit would be needed to do that.",
+     "Nothing on this page has been checked on the ground. Nobody has measured a ramp with a level or traveled one of these routes for this project. A field audit would be needed to do that.",
      "This project has not compared the survey's slopes with a hand measurement.",
      "978 of the 2,363 surveyed ramps here are at corners DOT lists as rebuilt since the survey. Their slopes and status may describe ramps that are gone, and nothing here says how the new ramps measure.",
      "Clear width past poles, trees and stoops, surface condition, the lip at the gutter, ponding, construction and snow are not in the data.",
-     "Whether a subway entrance has steps or an elevator is not in the graph. No trip starts at an entrance the MTA names as a stair, but a station house entrance may still have steps.",
+     "Whether a subway entrance has steps or an elevator is not in the data, so no trip starts at a subway entrance.",
+     "No community or disability organization has reviewed this page.",
      "The imagery ratings were done by language-model programs following written protocols. No person rated the sheets.",
      "The page passes automated accessibility checks (axe-core and pa11y, zero violations) and a keyboard pass. It has not been tested by a screen-reader user."
     ]
@@ -66,7 +67,7 @@
     "DOT's assessment of each surveyed ramp",
     "NYC DOT survey assessment map layer, last edited December 2020, read 2 October 2026",
     "https://www.nycpedramps.info/survey",
-    "No published terms. Used as a public NYC DOT map service"
+    "No published terms. It is not an NYC Open Data dataset, and this project does not relicense it"
    ],
    [
     "Which corners were rebuilt",
