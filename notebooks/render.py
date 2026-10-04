@@ -37,6 +37,7 @@ html = html.replace("</head>", """<style>
 .highlight .mi, .highlight .mf { color: #116611 !important; }
 .highlight .ow { color: #7a1fc2 !important; }
 .highlight .o { color: #4d4d4d !important; }
+a { text-decoration: underline !important; }
 </style></head>""", 1)
 # pandas tables have no header scope; screen readers need it to read cells.
 def scoped(table):
