@@ -37,8 +37,8 @@
   const REBUILT = { shape: "diamond", color: "#6b3fa0", label: "Corner rebuilt after the survey (survey values may be out of date)" };
   const ROUTE = {
     ours: { color: "#0050a0", weight: 6, label: "This graph, wheelchair profile" },
-    ors_wheelchair: { color: "#c2410c", weight: 5, dashArray: "11 7", label: "OpenRouteService wheelchair, plain OSM" },
-    ors_foot: { color: "#1b1f23", weight: 4, dashArray: "2 8", lineCap: "round", label: "OpenRouteService walking, plain OSM" },
+    ors_wheelchair: { color: "#c2410c", weight: 5, dashArray: "11 7", label: "OpenRouteService wheelchair, plain OpenStreetMap" },
+    ors_foot: { color: "#1b1f23", weight: 4, dashArray: "2 8", lineCap: "round", label: "OpenRouteService walking, plain OpenStreetMap" },
   };
 
   /* ---------- map ---------- */
@@ -224,16 +224,17 @@
         const bad = el("li", {}, `Crossings with no surveyed ramp near an end: ${o.no_ramp}`);
         if (o.no_ramp) bad.className = "flag";
         facts.append(bad);
-        facts.append(el("li", {}, `Steepest stretch: ${o.steepest === null ? "not known" : o.steepest.toFixed(1) + "%"}`));
+        facts.append(el("li", {}, `Steepest stretch, crossings and roadway included: ${o.steepest === null ? "not known" : o.steepest.toFixed(1) + "%"}`));
         if (o.steps) facts.append(el("li", { class: "flag" }, `Flights of steps: ${o.steps}`));
         if (o.street_m > 10) facts.append(el("li", { class: "flag" }, `In the roadway, where OpenStreetMap has no separately drawn sidewalk: ${fmt(o.street_m)}`));
-        const rated = el("li", {}, `Ramps on this route that DOT rated Non-Compliant: ${o.ramps.non_compliant}. Rated Compliant: ${o.ramps.compliant}.` +
-          (o.ramps.pending ? ` Pending Technical Review: ${o.ramps.pending}.` : "") +
+        const rated = el("li", {}, `Ramps on this route, each counted once, that DOT rated Non-Compliant: ${o.ramps.non_compliant}. Rated Compliant: ${o.ramps.compliant}.` +
+          (o.ramps.pending ? ` Pending Technical Review as of December 2020: ${o.ramps.pending}.` : "") +
           (o.ramps.no_assessment ? ` No DOT rating: ${o.ramps.no_assessment}.` : "") +
           (o.ramps.non_compliant_rebuilt ? ` Of the Non-Compliant ratings, ${o.ramps.non_compliant_rebuilt} ${o.ramps.non_compliant_rebuilt === 1 ? "is" : "are"} older than a rebuild of the corner.` : ""));
         if (o.ramps.non_compliant) rated.className = "flag";
         facts.append(rated);
         if (o.rebuilt) facts.append(el("li", {}, `Crossing ends at corners rebuilt after the survey: ${o.rebuilt}`));
+        if (o.steps_text[0] && o.steps_text[0].includes("does not include")) facts.append(el("li", {}, "These counts cover only the part of the route on ways this graph includes. The first step says how much is left out."));
         card.append(facts, el("h4", {}, "Step by step"));
         const ol = el("ol");
         for (const step of o.steps_text) ol.append(el("li", {}, step));
