@@ -26,11 +26,13 @@ The image is pinned by digest in `ors/run.sh`. Each arm has its own folder with 
 | `armC` | `nyc-osw-pedestrian.osm.pbf` | the same as strict with `--pedestrian-only` |
 | `probe` | `probe.osm.pbf` | `python compare/ors_tag_probe.py write ...` |
 
-`ors/run.sh ARM PORT` starts an arm in the foreground with `REBUILD_GRAPHS=False`, for restarts on a built graph. `ors/run_detached.sh ARM PORT` starts it in the background with the image's default and smaller heap. `ors/probe.sh` starts the tag probe on port 8083. Then `compare/run_ors.py` and `compare/ors_tag_probe.py ask` send the requests.
+Build each graph once with `ors/run_detached.sh ARM PORT`, which starts it in the background with a 4 GB heap (`XMX=4g`); arm A needed 7 GB, so set `XMX=7g` in the script for it. `ors/run.sh ARM PORT` starts an arm in the foreground with `REBUILD_GRAPHS=False`, for restarts on a built graph. `ors/probe.sh` starts the tag probe on port 8083. Then `compare/run_ors.py` and `compare/ors_tag_probe.py ask` send the requests.
+
+The runs used the wheelchair profile with the recommended weighting, an incline limit of 10 and a kerb limit of 0.06 m, with elevation off and `kerbs_on_crossings: true` (the ORS default). In v10.0.1 the wheelchair incline limit reads only the OSM `incline` tag, so elevation does not change which routes it allows. Observed in these runs, ORS v10.0.1 does not read `kerb=raised`, and it reads a bare `kerb:height` of 0.15 or more as centimetres ([ORS issue #2293](https://github.com/GIScience/openrouteservice/issues/2293)).
 
 ## Valhalla 3.9.0
 
-Valhalla runs in process from the `pyvalhalla` wheel, so there is no Dockerfile. `valhalla/valhalla.json` is the configuration `compare/run_valhalla.py build` writes: `pyvalhalla` defaults, with `service_limits.pedestrian.max_distance` raised to 250000 and `tile_dir` set to `engines/valhalla/tiles`. The `ipc:///tmp/...` entries are Valhalla's own default socket addresses, not paths on the machine that ran the comparison.
+Valhalla runs in process from the `pyvalhalla` wheel, so there is no Dockerfile. `valhalla/valhalla.json` is the configuration `compare/run_valhalla.py build` writes: `pyvalhalla` defaults, with `service_limits.pedestrian.max_distance` raised to 250000 and `tile_dir` set to `engines/valhalla/tiles`. The elevation tiles it points at were never built, so every edge has zero grade and `use_hills` acts on nothing. The runs used pedestrian costing with `type: wheelchair` and `sidewalk_factor` at its default of 1.0. Valhalla 3.9.0 has no kerb option, does not enforce `max_grade`, and penalises steps (600 s) without forbidding them, so it is a stair-avoiding foot baseline, not a wheelchair router. The `ipc:///tmp/...` entries are Valhalla's own default socket addresses, not paths on the machine that ran the comparison.
 
 ```sh
 uv run --no-project --isolated --python 3.12 --with pyvalhalla==3.9.0 \
@@ -39,7 +41,7 @@ uv run --no-project --isolated --python 3.12 --with pyvalhalla==3.9.0 \
 
 ## Unweaver
 
-`unweaver/Dockerfile` builds Unweaver at commit `66352c1` (2022-11-02) on Debian, which supplies `mod_spatialite` inside the container. A project folder is the output of `scripts/osw_to_unweaver.py` (the routing layer and `regions.geojson`) plus the four cost and profile files in `unweaver-project/`, unchanged. Build it with `unweaver build PROJECT --changes-sign incline`. Without `--changes-sign incline` Unweaver copies each edge reversed with its incline unchanged, so a climb passes as a descent (`evaluation/compare/results/unweaver_bk16_without_changes_sign.json`). Then `compare/run_unweaver.py` sends the requests.
+`unweaver/Dockerfile` builds Unweaver at commit `66352c1` (2022-11-02) on Debian, which supplies `mod_spatialite` inside the container. A project folder is the output of `scripts/osw_to_unweaver.py` (the routing layer and `regions.geojson`) plus the four cost and profile files in `unweaver-project/`, unchanged. `cost-wheelchair.py` is adapted from Unweaver's example wheelchair profile (Nick Bolten, Apache-2.0); this project added refusals for steps and street centrelines. Build it with `unweaver build PROJECT --changes-sign incline`. Without `--changes-sign incline` Unweaver copies each edge reversed with its incline unchanged, so a climb passes as a descent (`evaluation/compare/results/unweaver_bk16_without_changes_sign.json`). Then `compare/run_unweaver.py` sends the requests.
 
 ## Not included
 

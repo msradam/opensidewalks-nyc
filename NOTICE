@@ -1,30 +1,50 @@
 opensidewalks-nyc
 Copyright 2026 Adam Munawar Rahman
 
+opensidewalks-nyc is an independent project by Adam Munawar Rahman. It is
+not made or endorsed by the Taskar Center for Accessible Technology,
+OpenSidewalks or TDEI, nor by NYC DOT or the City of New York. It uses the
+OpenSidewalks Schema, which the Taskar Center at the University of
+Washington develops. Contact: GitHub issues,
+https://github.com/msradam/opensidewalks-nyc/issues
+
 This product is licensed as follows:
   - Pipeline code, scripts, and notebooks: Apache License 2.0 (see LICENSE).
-  - Distributed graph data (GitHub Release assets): Open Database License v1.0
-    (ODbL-1.0), inherited from OpenStreetMap. See LICENSE-DATA.md.
-  - The demo's data files (demo/data/): derived from OpenStreetMap and NYC
-    Open Data, and licensed ODbL-1.0 like the graph.
+  - Distributed graph data (every GitHub Release asset): Open Database
+    License v1.0 (ODbL-1.0), because it is derived from OpenStreetMap. See
+    LICENSE-DATA.md. This includes nyc-gapfill-sidewalks.geojson, whose
+    root says "Public Domain"; that label is an error, LICENSE-DATA.md
+    governs, and the label will be fixed in the next release.
+  - The demo's data files (demo/data/) and the result files under
+    evaluation/: derived from OpenStreetMap and the city sources below,
+    and licensed ODbL-1.0 like the graph, except the DOT assessment
+    statuses noted below, which this project does not relicense.
 
 ----------------------------------------------------------------------
 Source data attributions
 ----------------------------------------------------------------------
 
-This dataset incorporates and is derived from the following public sources.
-All consumers must preserve these attributions per ODbL-1.0 §4.3.
+Anyone who conveys this database must keep these notices (ODbL-1.0
+section 4.2). Anyone who publishes a map or other Produced Work from it
+must credit it (section 4.3).
 
-  - OpenStreetMap (https://www.openstreetmap.org)
-    © OpenStreetMap contributors, licensed ODbL-1.0.
-    Used as the topological scaffold (footways, crossings, road centerlines).
+Used in the graph:
+
+  - OpenStreetMap (https://www.openstreetmap.org/copyright)
+    Map data © OpenStreetMap contributors, licensed ODbL-1.0.
+    Geofabrik extract new-york-261001.osm.pbf (data timestamp
+    2026-10-01T20:22:06Z). Used for footways, crossings, steps, streets
+    and topology.
 
   - NYC DOT Pedestrian Ramp Locations (dataset id: ufzp-rrqu)
     https://data.cityofnewyork.us/Transportation/Pedestrian-Ramp-Locations/ufzp-rrqu
-    NYC Open Data terms of use, no licence attached. Used for curb-ramp
-    locations, measured slopes and warning-surface status.
+    Collected for NYC DOT by a contractor (Cyclomedia) from vehicle-mounted
+    street-level imagery and LiDAR; records captured March 2017 to January
+    2020, mostly in 2018. DOT says the measurements do not establish ADA
+    compliance. NYC Open Data terms of use, no licence attached. Used for
+    curb-ramp locations, slopes and warning-surface status.
 
-  - NYC Planimetric Database: Sidewalks (dataset id: 52n9-sdep)
+  - NYC Planimetric Database: Sidewalks (dataset id: 52n9-sdep), NYC OTI
     https://data.cityofnewyork.us/City-Government/NYC-Planimetric-Database-Sidewalk/52n9-sdep
     NYC Open Data terms of use, no licence attached. Used for sidewalk
     widths and as the source of the gap-fill centrelines shipped beside
@@ -33,43 +53,70 @@ All consumers must preserve these attributions per ODbL-1.0 §4.3.
   - Borough boundaries: OpenStreetMap, fetched through Nominatim. The
     pipeline first tries NYC Borough Boundaries (dataset id: 7t3b-ywvw),
     which NYC Open Data has withdrawn, so the fallback is what ships.
-    Used as region polygons and to cut the per-borough graphs from the
-    city graph.
 
-  - NYC 2017 Topobathymetric LiDAR bare-earth DTM
+  - NYC 2017 Topobathymetric LiDAR bare-earth DTM (NYC OTI)
     Served by the NY State GIS Program Office ArcGIS ImageServer
     (https://elevation.its.ny.gov/, NYC_TopoBathymetric_2017_1_meter).
-    Public data, no licence attached. Fetched as 2 m tiles to derive node
-    elevations and edge inclines.
+    Public data, no licence attached. Fetched as 2 m tiles to estimate
+    node elevations and edge inclines.
 
   - LiDAR point clouds: the 2017 NYC topobathymetric survey (NYC OTI) and
     the 2014 USGS survey of New York City, served as Entwine Point Tiles on
     NOAA's Digital Coast archive
-    (https://noaa-nos-coastal-lidar-pds.s3.amazonaws.com/entwine/geoid18/9306
-    and .../4920). Published with no licence attached; treated as public
-    domain. Used for deck heights on bridges and elevated ways.
+    (https://noaa-nos-coastal-lidar-pds.s3.amazonaws.com/entwine/geoid18/9306/ept.json
+    and .../4920/ept.json). Published with no licence attached. Used for
+    deck heights on bridges and elevated ways.
+
+Used in the Brownsville demo only:
+
+  - NYC DOT survey assessment map layer (CMT_SURVEY_COMPLIANCY_TOLERANCE_PROD)
+    on DOT's ArcGIS service, linked from https://www.nycpedramps.info/survey,
+    last edited December 2020, read 2 October 2026. Used for each ramp's
+    DOT status. DOT publishes it with no stated terms. It is not an NYC
+    Open Data data set, and this project does not relicense it.
+  - NYC DOT Pedestrian Ramp Program Progress (e7gc-ub6z), read 2 October
+    2026. NYC Open Data terms of use.
+  - NYC DCP Community Districts (5crt-au7u). NYC Open Data terms of use.
+  - NYC DCP Facilities Database (ji82-xba5). NYC Open Data terms of use.
+  - NYCHA Public Housing Developments (phvi-damg). NYC Open Data terms
+    of use.
+  - NYC Parks Cool It! NYC 2020 cooling sites (h2bn-gu9k). NYC Open Data
+    terms of use.
+  - MTA Subway Entrances and Exits 2024 (i9wp-a4ja, data.ny.gov).
+    New York State open data terms of use.
+  - NYC OTI, NYC Orthos 2024, flown 14 to 24 March 2024, CC BY 4.0
+    (https://github.com/CityOfNewYork/nyc-geo-metadata/blob/master/Metadata/Metadata_AerialImagery.md).
+    Used for the imagery checks, not shown in the demo or the graph.
+  - OpenRouteService 10.0.1 (HeiGIT, GNU GPL 3.0), run locally for the
+    reference routes.
+  - Leaflet 1.9.4 (BSD 2-Clause), the map library.
+
+Schema, validator and routing:
 
   - OpenSidewalks Schema v0.3
-    https://sidewalks.washington.edu/opensidewalks/0.3/schema.json
+    https://github.com/OpenSidewalks/OpenSidewalks-Schema
     Developed by the Taskar Center for Accessible Technology, University of
-    Washington. The schema specifies the OSW feature types and properties;
-    this dataset is checked against it with python-osw-validation 0.5.0.
+    Washington. This dataset passes python-osw-validation 0.5.0 (also from
+    the Taskar Center), which checks form, not the schema's topology rules.
+
+  - Unweaver (https://github.com/nbolten/unweaver), Copyright 2017 Nick
+    Bolten, Apache License 2.0. The routing setup and the wheelchair cost
+    function in unweaver-project/ are adapted from Unweaver's example
+    wheelchair profile, whose limits (8.3% up, 10% down) follow AccessMap's
+    manual wheelchair profile. This project modified it to refuse steps
+    and street centrelines.
 
 ----------------------------------------------------------------------
-AI-assisted authoring disclosure
+How this was made
 ----------------------------------------------------------------------
 
-Portions of the pipeline code, conversion scripts, and documentation in this
-repository were drafted with the assistance of large language models
-(Anthropic Claude). All AI-suggested changes were reviewed, edited, and
-accepted by a human author who takes responsibility for the resulting code,
-the methodology, and the dataset. AI tools were not used to generate or
-modify the source data itself.
-
-Language-model agents were also used as raters. In the check of the ramp to
-crossing rule and in the router comparison's disagreement sheets, each sheet
-of aerial imagery was rated by language-model agents following a written
-protocol, and a sample was rated again by another agent for agreement. Every
-agreement statistic (kappa) quoted in this repository is agreement between
-such agents. No person rated those sheets, and nothing was checked on the
-ground. The protocols and ratings are in evaluation/.
+The author designed and directed the project and reviewed and accepted
+the code, documents and results. Language models (Anthropic Claude
+models, run through Claude Code; exact versions were not recorded)
+drafted most of the code and documentation, did the imagery ratings, and
+diagnosed the routes and bridges. Every agreement statistic (kappa)
+quoted in this repository is agreement between model instances. No
+person rated imagery, and nothing was checked on the ground. Tools
+(axe-core, pa11y, python-osw-validation, the test suite) checked the
+rest. Language models did not generate or modify the source data. The
+protocols and ratings are in evaluation/.

@@ -2,6 +2,15 @@ cff-version: 1.2.0
 title: "opensidewalks-nyc: an OpenSidewalks v0.3 pedestrian graph of New York City"
 message: "If you use this dataset, please cite as below."
 type: dataset
+abstract: >-
+  An experimental pedestrian network of New York City in the OpenSidewalks
+  Schema v0.3, built from OpenStreetMap, the NYC DOT curb ramp survey, NYC
+  planimetric sidewalks and LiDAR. Nothing in it has been checked on the
+  ground. Dataset version 0.3.3-nyc.1 is this project's own version; it uses
+  OpenSidewalks Schema v0.3. opensidewalks-nyc is an independent project by
+  Adam Munawar Rahman. It is not made or endorsed by the Taskar Center for
+  Accessible Technology, OpenSidewalks or TDEI, nor by NYC DOT or the City of
+  New York.
 authors:
   - family-names: Rahman
     given-names: Adam Munawar
@@ -27,7 +36,14 @@ references:
     title: "OpenSidewalks Schema"
     authors:
       - name: "Taskar Center for Accessible Technology, University of Washington"
-    url: "https://sidewalks.washington.edu/"
+    url: "https://github.com/OpenSidewalks/OpenSidewalks-Schema"
+  - type: software
+    title: "Unweaver"
+    authors:
+      - family-names: Bolten
+        given-names: Nick
+    url: "https://github.com/nbolten/unweaver"
+    license: Apache-2.0
   - type: data
     title: "OpenStreetMap"
     authors:

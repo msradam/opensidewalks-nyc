@@ -7,16 +7,17 @@ The pipeline writes intermediate staged data here (gitignored):
 ```
 data/
 ├── raw/        # untouched downloads from upstream sources
-├── staged/     # per-stage intermediates (post-clean, post-schema-map, ...)
-└── clean/      # final pre-export FeatureCollection (also gitignored)
+├── clean/      # cleaned sources and data/clean/cleaning_report.md
+└── staged/     # per-stage intermediates, including the pre-export
+                # data/staged/nyc-osw-unvalidated.geojson
 ```
 
 `output/` (sibling, also gitignored) holds the canonical `nyc-osw.geojson` plus derived formats. `scripts/` reads from `output/` to produce release assets.
 
 ## Why releases, not LFS
 
-- **No size cap.** GitHub LFS free-tier quotas are easy to blow through with multi-version geo data; releases have no such ceiling.
-- **Versioned downloads.** Each release tag pins a reproducible build, datable to a specific source-fetch timestamp.
-- **Direct URLs.** `releases/latest/download/nyc-osw.fgb` always resolves to the newest asset.
+GitHub LFS free-tier quotas fill quickly with several versions of large geodata, and release assets have no such cap. Each release tag pins a reproducible build that can be dated to its source-fetch timestamps. `releases/latest/download/nyc-osw.fgb` always resolves to the newest asset.
 
-See [`../README.md`](../README.md) for the curl one-liners.
+Every release asset is ODbL-1.0 (see [`../LICENSE-DATA.md`](../LICENSE-DATA.md)).
+
+See [`../README.md`](../README.md#download) for the download commands.

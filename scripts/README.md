@@ -9,8 +9,8 @@ Conversion scripts that turn the canonical OSW GeoJSON into the formats shipped 
 | `to_graphml.py` | `nyc-osw.graphml` | NetworkX GraphML. Directed multigraph, one edge per OSW edge. Properties coerced to GraphML primitives. |
 | `to_graphml.py --undirected` | `nyc-osw-undirected.graphml` | A simple undirected graph, one edge per pair of nodes (the first the file holds for that pair), with `_u_id` and `_v_id` kept as attributes so `incline` can still be read the right way round. The reverse direction and parallel edges are gone. |
 | `to_routing_json.py` | `nyc-routing.json` | Flat nodes dict and edges list, with edge lengths. |
-| `osw_to_unweaver.py` | Unweaver input layer | Applies the 5 m ramp to crossing rule (see `METHODOLOGY.md`). Build the Unweaver graph with `unweaver build PROJECT --changes-sign incline`: Unweaver adds a reversed copy of each edge, and without that flag a climb passes as a descent. |
-| `osw_to_osm.py` | OSM XML | Converts the graph back to OSM tags for OpenRouteService, with the ramp rule written on the crossing ends. Used by the router comparison. |
+| `osw_to_unweaver.py` | Input layer for [Unweaver](https://github.com/nbolten/unweaver) (Nick Bolten, Apache-2.0) | Applies the 5 m ramp to crossing rule (see `METHODOLOGY.md`). The cost function in `unweaver-project/` is adapted from Unweaver's example wheelchair profile. Build the Unweaver graph with `unweaver build PROJECT --changes-sign incline`: Unweaver adds a reversed copy of each edge, and without that flag a climb passes as a descent. The dataset already stores both directions, so those copies are parallel duplicates; they do not change route lengths. |
+| `osw_to_osm.py` | OSM XML | Converts the graph back to OSM tags for OpenRouteService, with the ramp rule written on the crossing ends. Used by the router comparison. For local routing only: never upload the output to OpenStreetMap. It contains NYC DOT data and synthetic `kerb` tags. |
 
 The release conversions read the canonical `nyc-osw.geojson` produced by `python -m pipeline build` and then snapped by `scripts/snap_endpoints.py`. Run them after the snap, so every asset agrees with the canonical file.
 

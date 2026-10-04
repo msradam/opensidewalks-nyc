@@ -28,6 +28,13 @@ sources:
       simplify: false
     expected_geometry: LineString
 
+  # Correction (2026-10-03): the description below is out of date. A contractor
+  # (Cyclomedia) collected this survey for NYC DOT from vehicle-mounted
+  # street-level imagery and LiDAR; the GeoCyclora capture dates run from March
+  # 2017 to January 2020, mostly 2018. The "Public Domain" licence labels in this
+  # file are also inaccurate: NYC Open Data carries terms of use (Admin Code
+  # 23-502(d)), and every release file is ODbL-1.0 as LICENSE-DATA.md states.
+  # The values are left unchanged in this pass so a rebuild matches the release.
   nyc_dot_ramps:
     description: >
       NYC DOT Pedestrian Ramp Locations. 217k+ point features recording the
