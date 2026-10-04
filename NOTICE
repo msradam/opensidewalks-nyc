@@ -12,9 +12,7 @@ This product is licensed as follows:
   - Pipeline code, scripts, and notebooks: Apache License 2.0 (see LICENSE).
   - Distributed graph data (every GitHub Release asset): Open Database
     License v1.0 (ODbL-1.0), because it is derived from OpenStreetMap. See
-    LICENSE-DATA.md. This includes nyc-gapfill-sidewalks.geojson, whose
-    root says "Public Domain"; that label is an error, LICENSE-DATA.md
-    governs, and the label will be fixed in the next release.
+    LICENSE-DATA.md. This includes nyc-gapfill-sidewalks.geojson.
   - The demo's data files (demo/data/) and the result files under
     evaluation/: derived from OpenStreetMap and the city sources below,
     and licensed ODbL-1.0 like the graph, except the DOT assessment
@@ -26,7 +24,10 @@ Source data attributions
 
 Anyone who conveys this database must keep these notices (ODbL-1.0
 section 4.2). Anyone who publishes a map or other Produced Work from it
-must credit it (section 4.3).
+must credit it (section 4.3). The attribution string, as written into
+the root of every release file:
+
+  Pedestrian network from opensidewalks-nyc, ODbL-1.0. Map data © OpenStreetMap contributors (openstreetmap.org/copyright). Also from NYC DOT and NYC OTI data on NYC Open Data, and LiDAR from NYS GIS and NOAA.
 
 Used in the graph:
 

@@ -2,8 +2,6 @@
 
 Every data file distributed in the GitHub Releases of this repository is licensed under the **[Open Database License v1.0 (ODbL)](https://opendatacommons.org/licenses/odbl/1-0/)**. That covers `nyc-osw.geojson`, `nyc-osw.fgb`, both GraphML files, the routing JSON, the per-borough splits, the validator ZIP, `nyc-gapfill-sidewalks.geojson` and any derived format. The same licence covers the demo's data files under `demo/data/` and the result files under `evaluation/`, except the DOT assessment statuses described under "Sources used only in the demo".
 
-The root of `nyc-gapfill-sidewalks.geojson` in v0.3.3-nyc.1 says "Public Domain (NYC Open Data, dataset 52n9-sdep)". That label is an error. The file is selected by comparison with OpenStreetMap, so it is ODbL like the graph. This document governs, and the label will be fixed in the next release.
-
 The licence is inherited from OpenStreetMap, which is the source of the network geometry (footways, crossings, steps, road centrelines). Under ODbL section 4.4, a database derived from an ODbL database must itself be offered under ODbL, so this dataset is released under ODbL.
 
 opensidewalks-nyc is an independent project by Adam Munawar Rahman. It is not made or endorsed by the Taskar Center for Accessible Technology, OpenSidewalks or TDEI, nor by NYC DOT or the City of New York.
@@ -22,11 +20,11 @@ If you use this dataset, you must:
 
 The borough boundaries in the region polygon are OpenStreetMap data (fetched through Nominatim), so they fall under the OpenStreetMap credit.
 
-A suggested attribution string:
+The attribution string, as written into the root of every release file:
 
-> Pedestrian network from opensidewalks-nyc, ODbL-1.0. Map data © OpenStreetMap contributors (openstreetmap.org/copyright). Also from NYC DOT and NYC OTI data on NYC Open Data (ufzp-rrqu, 52n9-sdep), and LiDAR from NYS GIS and NOAA.
+> Pedestrian network from opensidewalks-nyc, ODbL-1.0. Map data © OpenStreetMap contributors (openstreetmap.org/copyright). Also from NYC DOT and NYC OTI data on NYC Open Data, and LiDAR from NYS GIS and NOAA.
 
-The attribution string written into the v0.3.3-nyc.1 files is shorter and lacks the copyright link and NOAA. Use the string above.
+The files of v0.3.3-nyc.1 carry an older, shorter string without the copyright link and NOAA. Use the string above for them too.
 
 ## What ODbL requires of you (summary, not legal advice)
 

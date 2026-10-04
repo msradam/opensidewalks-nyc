@@ -1,5 +1,7 @@
 # Evaluation evidence for opensidewalks-nyc v0.3.3
 
+The evidence was produced on v0.3.3 and still describes v0.3.4's geometry, incline and routing inputs, which v0.3.4 did not change.
+
 This folder holds the evidence behind the claims made for v0.3.3 of the graph and for the comparison with other routers: protocols, raw ratings, result files and a few example images. Each section below says what was claimed, how it was tested, the result, where the files are and which tracked code produced it. The section after that lists what the evidence does not show.
 
 ## How the evidence was made

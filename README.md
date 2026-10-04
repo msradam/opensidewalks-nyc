@@ -34,7 +34,7 @@ opensidewalks-nyc is an independent project by Adam Munawar Rahman. It is not ma
 
 <a id="introduction"></a>
 
-opensidewalks-nyc is a pedestrian network of all five boroughs of New York City: sidewalks, street crossings, footways, steps and curb ramps, encoded as OpenSidewalks Nodes and Edges so that it loads as a routable graph.
+opensidewalks-nyc is a pedestrian network of all five boroughs of New York City: sidewalks, street crossings, footways, pedestrian roads, steps and curb ramps, encoded as OpenSidewalks Nodes and Edges so that it loads as a routable graph.
 
 Following the OpenSidewalks approach, this dataset labels no path as wheelchair accessible. It stores values that an application can read against a person's own needs, with rules like "no incline greater than 8.3 percent". Only the curb ramp slopes are measurements, taken from NYC DOT's vehicle-based survey. Incline and width are estimates.
 
@@ -54,7 +54,8 @@ The dataset holds 4,068,058 features: 2,881,148 Edges and 1,186,910 Nodes. Every
 |---|---|---|
 | Sidewalk | `highway=footway`, `footway=sidewalk` | 933,110 |
 | Crossing | `highway=footway`, `footway=crossing` | 437,510 |
-| Footway | `highway=footway` with no `footway` subtag | 544,672 |
+| Footway | `highway=footway` with no `footway` subtag | 459,570 |
+| Pedestrian Road | `highway=pedestrian` | 85,102 |
 | Steps | `highway=steps` | 15,470 |
 | Motor vehicle roads | `highway=residential`, `service`, `secondary`, `unclassified` and other road classes | 950,386 |
 
@@ -71,7 +72,7 @@ The dataset holds 4,068,058 features: 2,881,148 Edges and 1,186,910 Nodes. Every
 
 <a id="fields"></a>
 
-Edges carry `incline`, `width`, `surface`, `name`, `crossing:markings` and `ext:structure`. Curb Ramps carry `tactile_paving` and the survey's slopes. Nodes carry `ext:elevation_m`. [SCHEMA.md](SCHEMA.md) lists every field.
+Edges carry `incline`, `width`, `surface`, `name`, `crossing:markings`, `foot` and `ext:structure`. `crossing:markings` comes from OSM's own `crossing:markings` tag, or from `crossing=*` as the schema advises. `foot` is OSM's tag, on 75,974 Edges. Curb Ramps carry `tactile_paving`, DOT's raw warning surface value in `ext:dws_condition`, and the survey's slopes. Nodes carry `ext:elevation_m`. [SCHEMA.md](SCHEMA.md) lists every field.
 
 ## Network Topology
 
@@ -84,10 +85,6 @@ The schema puts curb ramps at Edge endpoints and expects a Footway between a Sid
 <a id="known-deviations-from-the-schema"></a>
 
 - Many Crossings join Sidewalks directly, with no Footway between them, and 36,180 Curb Ramp Nodes are on no Edge ([Network Topology](#network-topology)).
-- OSM `highway=pedestrian` ways are written as Footway. Pedestrian Road is not used.
-- `crossing:markings` comes from OSM `crossing=*`, not OSM's `crossing:markings` tag. `uncontrolled` is written as `zebra` (108,778 Crossings) and `unmarked` is dropped.
-- No Edge carries `foot`, so every road Edge has unknown pedestrian access.
-- `tactile_paving=yes` includes defective and misplaced warning surfaces, and DOT's raw condition is not kept.
 - OSM node tags (`kerb`, elevators) are not carried. Every Curb Ramp comes from the DOT survey.
 - Both directions are stored, so applications must not add reverse Edges.
 
@@ -131,7 +128,7 @@ The release passes [`python-osw-validation`](https://pypi.org/project/python-osw
 
 <a id="evaluation"></a>
 
-The protocols, ratings and result files behind every number here are in [`evaluation/`](evaluation/).
+The protocols, ratings and result files behind every number here are in [`evaluation/`](evaluation/). The evaluation and the router comparison were run on v0.3.3. v0.3.4 changes no input of the wheelchair profile except that pedestrian roads, which were Footways in v0.3.3, are their own class and stay walkable. Wheelchair reachability measured on v0.3.4 is unchanged.
 
 ## Comparison with Other Routers
 
@@ -190,7 +187,7 @@ The full list, with numbers, is in [evaluation/README.md](evaluation/README.md).
 ```bash
 uv venv --python 3.11 && source .venv/bin/activate
 uv pip install -e .
-python -m pipeline build          # about 48 minutes, 35 GB peak memory
+python -m pipeline build          # about an hour, 35 GB peak memory
 python scripts/snap_endpoints.py --input output/nyc-osw.geojson
 ```
 
@@ -206,7 +203,7 @@ The author designed and directed the project and reviewed and accepted the code,
 
 <a id="license-and-attribution"></a>
 
-Data is ODbL-1.0 because it is derived from OpenStreetMap ([LICENSE-DATA.md](LICENSE-DATA.md)). Every release file is ODbL, including `nyc-gapfill-sidewalks.geojson`, whose root wrongly says public domain; LICENSE-DATA.md governs, and the label will be fixed next release. Credit "© OpenStreetMap contributors" ([openstreetmap.org/copyright](https://www.openstreetmap.org/copyright)), and release any derived database under ODbL. Code is Apache-2.0. Cite with [CITATION.cff](CITATION.cff).
+Data is ODbL-1.0 because it is derived from OpenStreetMap ([LICENSE-DATA.md](LICENSE-DATA.md)). Every release file is ODbL, including `nyc-gapfill-sidewalks.geojson`. Credit "© OpenStreetMap contributors" ([openstreetmap.org/copyright](https://www.openstreetmap.org/copyright)), and release any derived database under ODbL. Code is Apache-2.0. Cite with [CITATION.cff](CITATION.cff).
 
 The OpenSidewalks Schema and `python-osw-validation` are developed by the [Taskar Center for Accessible Technology](https://sidewalks.washington.edu/) at the University of Washington. The routing setup and the wheelchair cost function are adapted from [Unweaver](https://github.com/nbolten/unweaver) (Nick Bolten, Apache-2.0), the engine behind AccessMap, and the limits of 8.3% up and 10% down are the defaults of its example. This project added refusals for steps and street centrelines.
 
@@ -216,4 +213,5 @@ The OpenSidewalks Schema and `python-osw-validation` are developed by the [Taska
 
 | Version | Release Date | Link | Notes |
 |---|---|---|---|
+| 0.3.4-nyc.1 | 2026-10-04 | [GitHub](https://github.com/msradam/opensidewalks-nyc/releases/tag/v0.3.4-nyc.1) | Fixes the schema departures reviewers found: `crossing:markings` from OSM's tag, Pedestrian Road, `foot` and `ext:dws_condition`. Geometry and incline unchanged. |
 | 0.3.3-nyc.1 | 2026-10-03 | [GitHub](https://github.com/msradam/opensidewalks-nyc/releases/tag/v0.3.3-nyc.1) | First public release. 0.3.3-nyc.1 is this dataset's own version, and it uses OpenSidewalks Schema v0.3. |

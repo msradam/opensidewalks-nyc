@@ -1,5 +1,7 @@
 # Quality Report: opensidewalks-nyc v0.3.3-nyc.1
 
+> Note for v0.3.4-nyc.1 (2026-10-04): this report was measured on v0.3.3. v0.3.4 changes only the fields listed in its [release notes](../release-notes/v0.3.4-nyc.1.md). Geometry, incline and wheelchair reachability are unchanged on all 4,068,058 features, and v0.3.4 passes `python-osw-validation` 0.5.0 with zero errors. Every post-build check and routing result in this report is the same on v0.3.4. Three checks are new: `ext:dws_condition` agrees with the survey on 217,679 of 217,679 ramps, no counter slope is over 100%, and no width is 0 or less. Where this report counts Footway edges (544,672) or `crossing:markings` values, v0.3.4 has 459,570 Footway and 85,102 Pedestrian Road edges, and the markings come from a different rule.
+
 > Audit date: 2026-10-03. Artifact audited: `nyc-osw.geojson` of the v0.3.3-nyc.1 build, made by one run of `python -m pipeline build` from an empty cache at commit `2442db2` plus the post-build endpoint snap (`scripts/snap_endpoints.py`). OpenStreetMap data as of 2026-10-01T20:22:06Z (Geofabrik extract `new-york-261001.osm.pbf`). Schema target: **OSW v0.3**. Validator: **`python-osw-validation` 0.5.0**.
 >
 > Every number here comes from a script: `validators/post_build_checks.py` for the artifact ([`evaluation/build/checks.json`](../evaluation/build/checks.json)), and the routing, bridge, deck-height and imagery checks described in their sections, whose result files are named there and are kept under [`evaluation/`](../evaluation/).

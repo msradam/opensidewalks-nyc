@@ -6,7 +6,7 @@ abstract: >-
   An experimental pedestrian network of New York City in the OpenSidewalks
   Schema v0.3, built from OpenStreetMap, the NYC DOT curb ramp survey, NYC
   planimetric sidewalks and LiDAR. Nothing in it has been checked on the
-  ground. Dataset version 0.3.3-nyc.1 is this project's own version; it uses
+  ground. Dataset version 0.3.4-nyc.1 is this project's own version; it uses
   OpenSidewalks Schema v0.3. opensidewalks-nyc is an independent project by
   Adam Munawar Rahman. It is not made or endorsed by the Taskar Center for
   Accessible Technology, OpenSidewalks or TDEI, nor by NYC DOT or the City of
@@ -19,8 +19,8 @@ repository-code: "https://github.com/msradam/opensidewalks-nyc"
 url: "https://github.com/msradam/opensidewalks-nyc"
 license: ODbL-1.0
 license-url: "https://opendatacommons.org/licenses/odbl/1-0/"
-version: "0.3.3-nyc.1"
-date-released: "2026-10-03"
+version: "0.3.4-nyc.1"
+date-released: "2026-10-04"
 keywords:
   - opensidewalks
   - new york city

@@ -14,7 +14,7 @@ The OpenStreetMap pedestrian walking network for NYC. Footways, paths, crossings
 
 #### Where it came from
 
-One dated regional extract from Geofabrik, named by URL and SHA-256 in `config/sources.yaml`. The v0.3.3 build reads `new-york-261001.osm.pbf` (data timestamp 2026-10-01T20:22:06Z). Geofabrik may remove daily files, so the release itself is the copy to rebuild from. Stage 1 downloads it once, refuses a file whose checksum differs from the pin, filters its ways with pyosmium, and hands the result to [OSMnx](https://github.com/gboeing/osmnx) to build the graph. No Overpass query is made.
+One dated regional extract from Geofabrik, named by URL and SHA-256 in `config/sources.yaml`. The v0.3.3 and v0.3.4 builds read `new-york-261001.osm.pbf` (data timestamp 2026-10-01T20:22:06Z). Geofabrik may remove daily files, so the release itself is the copy to rebuild from. Stage 1 downloads it once, refuses a file whose checksum differs from the pin, filters its ways with pyosmium, and hands the result to [OSMnx](https://github.com/gboeing/osmnx) to build the graph. No Overpass query is made.
 
 #### License
 
@@ -46,10 +46,11 @@ The syntax is Overpass's and so are the semantics: each regex is an unanchored s
 
 #### How it was transformed
 
-OSM edges are classified into five OSW feature types based on `highway` and `footway` tag values:
+OSM edges are classified into six OSW feature types based on `highway` and `footway` tag values:
 - `highway=footway` + `footway=sidewalk` → Sidewalk Edge
 - `highway=footway` + `footway=crossing` → Crossing Edge
-- `highway=footway|path|pedestrian` (other) → Footway Edge. `path` has no schema entity. `pedestrian` is the schema's Pedestrian Road, which this dataset does not use, and the OSM value is not kept.
+- `highway=footway|path` (other) → Footway Edge. `path` has no schema entity.
+- `highway=pedestrian` → Pedestrian Road Edge, unless it is tagged `footway=sidewalk` or `footway=crossing`, which makes it a Sidewalk or Crossing. Stage 4's endpoint merge counts it as pedestrian, and the routing layer walks it like a Footway.
 - `highway=steps` → Steps Edge, its own entity in the schema
 - `highway=cycleway|track` with `foot=yes`, `designated` or `permissive` → the same classes, with `ext:osm_highway` keeping the OSM value. Without one of those foot values the way is dropped.
 - `highway=residential|service|...` → the schema's motor vehicle road Edges (Residential Street, Service Road and so on). `service=*` subtags are not kept, so Driveway, Alley and Parking Aisle appear as Service Road.
@@ -60,13 +61,15 @@ An edge whose OSM way is a bridge or a tunnel is marked `ext:structure` (`bridge
 
 OSM `surface` tags are mapped to the OSW surface enum (9 canonical values). Non-canonical OSM values are mapped to a canonical one: `tarmac` becomes `asphalt`; `sett`, `cobblestone`, `stone` and `brick` become `paving_stones`; `wood` and `metal` become `paved`. The OSM value is not kept, so cobbles and smooth pavers look alike.
 
-OSM `crossing` tags are mapped to `crossing:markings`; OSM's own `crossing:markings` way tag is not read. `marked` and `traffic_signals` give `yes`, `uncontrolled` gives `zebra` (108,778 crossings, which asserts more than the source says), and `unmarked` is dropped, so no crossing carries `no`. The schema derives `crossing:markings` only from unambiguous `crossing=*` values, so this mapping departs from it.
+`crossing:markings` comes from OSM's own `crossing:markings` way tag where present. A value in the schema's enum is kept. A variant the schema does not list becomes its base type (`zebra:skewed` becomes `zebra`, `lines:surface` becomes `lines`), and a list of several marking types (`zebra;lines;pictograms`) becomes `yes`. Without a usable tag, the value comes from `crossing=*`, read as the schema advises: `marked` and `zebra` give `yes`, `unmarked` gives `no`, and every other value gives none. `uncontrolled` and `traffic_signals` say nothing about paint, so a crossing tagged only that way carries no `crossing:markings`.
+
+OSM `foot=*` is written as `foot` on any Edge where its value is one of the schema's seven (`yes`, `no`, `designated`, `permissive`, `private`, `use_sidepath`, `destination`). Other values, such as `customers`, are left off. OSM `width` tags of 0 or less are left off.
 
 #### Known issues
 
 OSM records sidewalks in two ways: as separate ways (`footway=sidewalk`) or as `sidewalk=both`, `left`, `right` or `separate` on the street. Both are valid OSM schemes. This pipeline reads only the first. Streets tagged the second way become road Edges with no Sidewalk Edge beside them, and the `sidewalk=*` value is not carried. Stage 3's planimetric gap-fill pass derives candidate centrelines for some of them; they ship as a sidecar file and are not part of the graph.
 
-OSM node tags are not carried. Stage 1 requests way tags only, and Stage 4 keeps only `_id`, `barrier`, `kerb` and `tactile_paving` on nodes, which come from the DOT survey. The 105,016 OSM `kerb` nodes in the extract, OSM `tactile_paving`, `highway=elevator` and `highway=crossing` nodes are therefore absent. No edge carries OSM's `foot` tag, although the filter reads it.
+OSM node tags are not carried. Stage 1 requests way tags only, and Stage 4 keeps only `_id`, `barrier`, `kerb` and `tactile_paving` on nodes, which come from the DOT survey. The 105,016 OSM `kerb` nodes in the extract, OSM `tactile_paving`, `highway=elevator` and `highway=crossing` nodes are therefore absent.
 
 The filter drops a cycleway with no `foot` tag. That is stricter than OSM's United States default, which treats `highway=cycleway` as `foot=yes`.
 
@@ -104,7 +107,7 @@ Each ramp becomes a Curb Ramp Node:
 }
 ```
 
-`tactile_paving` comes from the survey's `DWS_CONDITIONS` field: Good Condition, Defective (2,021) and the two Off Ramp values (83) map to `yes`, Missing maps to `no`, and Not Applicable leaves the tag off. The raw condition is not kept, so `yes` includes defective and misplaced surfaces.
+`tactile_paving` comes from the survey's `DWS_CONDITIONS` field: Good Condition, Defective (2,021) and the two Off Ramp values (83) map to `yes`, Missing maps to `no`, and Not Applicable leaves the tag off. `yes` includes defective and misplaced surfaces, so DOT's raw value is also kept unchanged as `ext:dws_condition`.
 
 #### Why `kerb=lowered` and not `kerb=flush`
 
@@ -124,7 +127,7 @@ The records were captured from March 2017 to January 2020, mostly in 2018. DOT s
 
 #### Sentinel value handling
 
-The DOT data dictionary does not define `999`, `888`, `777` or `555`. This project reads them as no measurement because they fall far outside the physical range and recur together on the same rows (`999` on a running slope probably marks a cut-through ramp, which has no ramp run). Stage 3 omits these from the artifact rather than carrying them (the validator rejects null-valued `ext:*` tags, and the codes would poison any downstream statistics).
+The DOT data dictionary does not define `999`, `888`, `777` or `555`. This project reads them as no measurement because they fall far outside the physical range and recur together on the same rows (`999` on a running slope probably marks a cut-through ramp, which has no ramp run). Stage 3 omits these from the artifact rather than carrying them (the validator rejects null-valued `ext:*` tags, and the codes would poison any downstream statistics). A counter slope with a magnitude over 100% (steeper than 45 degrees) is not a gutter slope; Stage 3 leaves it off as unmeasured. Six survey values were dropped this way, from -300% to 473%.
 
 #### Stage 4 snapping
 
@@ -150,7 +153,7 @@ NYC Open Data terms of use; no licence is attached (see `LICENSE-DATA.md`).
 
 Two uses: sidewalk widths and gap-fill centerlines.
 
-Widths: each OSM sidewalk edge whose centroid falls inside a planimetric polygon gets `width` = 2 × polygon area / perimeter (the mean width of an elongated strip). OSM-surveyed `width` tags take precedence; the planimetric estimate only fills gaps. The value is the mean width of the whole polygon, not the clear width at the edge.
+Widths: each OSM sidewalk edge whose centroid falls inside a planimetric polygon gets `width` = 2 × polygon area / perimeter (the mean width of an elongated strip). OSM-surveyed `width` tags take precedence, except a value of 0 or less, which is left off; the planimetric estimate only fills gaps. The value is the mean width of the whole polygon, not the clear width at the edge.
 
 Gap-fill coverage check: for each planimetric polygon, check whether any existing OSM sidewalk edge is within 10 m of the polygon boundary. If covered, skip. If not covered (typically where OSM has only a `sidewalk=both` tag on the street centerline), extract a centerline from the polygon and emit it as a Sidewalk Edge, unless at least half of that centerline lies within 1.5 m of an OSM crossing or footway. That last test removes the median refuges that a crossing already runs through and the paths OSM maps without `footway=sidewalk`.
 
@@ -332,7 +335,7 @@ Stage 6 runs before the endpoint snap, so its GraphML and routing JSON predate t
 
 ## Routing layer: the 5 m ramp to crossing rule
 
-**The rule.** `scripts/osw_to_unweaver.py` builds the layer the wheelchair profile reads. It counts a crossing as having curb ramps when a surveyed ramp lies within 5 m (`RAMP_REACH_M`) of each end of the crossing; the crossing edges of one street crossing are grouped through nodes no sidewalk reaches, and the rule is applied to the group's two ends. The profile in `unweaver-project/cost-wheelchair.py` is adapted from the example wheelchair profile of [Unweaver](https://github.com/nbolten/unweaver) (Nick Bolten, Apache-2.0), whose limits follow AccessMap's manual wheelchair profile; this project added the refusals for steps and street centrelines. It refuses a crossing without ramps at both ends, refuses steps and street centrelines, and refuses an edge steeper than 8.3% up or 10% down. The strict reading (a ramp on the crossing's own end node) was rejected because it left about 1% of Queens pairs routable.
+**The rule.** `scripts/osw_to_unweaver.py` builds the layer the wheelchair profile reads. It counts a crossing as having curb ramps when a surveyed ramp lies within 5 m (`RAMP_REACH_M`) of each end of the crossing; the crossing edges of one street crossing are grouped through nodes no sidewalk reaches, and the rule is applied to the group's two ends. The profile in `unweaver-project/cost-wheelchair.py` is adapted from the example wheelchair profile of [Unweaver](https://github.com/nbolten/unweaver) (Nick Bolten, Apache-2.0), whose limits follow AccessMap's manual wheelchair profile; this project added the refusals for steps and street centrelines. It walks a Pedestrian Road like a Footway (`osw_to_unweaver.py` gives it `subclass=footway`). It refuses a crossing without ramps at both ends, refuses steps and street centrelines, and refuses an edge steeper than 8.3% up or 10% down. The strict reading (a ramp on the crossing's own end node) was rejected because it left about 1% of Queens pairs routable.
 
 **How it was checked.** 200 crossings were drawn at random, 40 per borough (seed 20261002). Each was drawn on a sheet over the city's 2018 orthoimagery, the main year of the ramp survey, with the survey's ramp positions marked and no rule's verdict shown. For each end a rater answered whether a surveyed ramp sits where the crossing meets the kerb (yes, no or unclear). The raters were language-model agents following a written protocol: four took 50 sheets each, and a fifth rated every third sheet again without seeing the other ratings. No person rated the sheets and no crossing was visited. The two ratings agreed on 96% of the 132 ends both rated (Cohen's kappa 0.81 over three classes), and on all 125 ends both called yes or no. This kappa is between instances of one language model, so it measures consistency, not accuracy.
 
@@ -369,7 +372,7 @@ Where OSM has `sidewalk=both` or `sidewalk=left/right` tags on a street centerli
 1. **Incline is estimated, not measured.** It comes from the terrain model at 2 m, smoothed over short edges, and on structures from LiDAR deck heights; it is absent in tunnels. It has not been compared with surveyed street grades, and a kerb ramp a metre long is below what any airborne survey can resolve. Values outside the OSW ±1.0 range are dropped.
 2. **No APS (Accessible Pedestrian Signal) data.** It would need a separate NYC DOT dataset or a field survey.
 3. **No sidewalk condition ratings.** The DOT ramp dataset has condition flags but there is no equivalent for sidewalk pavement quality citywide.
-4. **Planimetric centerlines are unreliable.** The minimum-rotated-rectangle axis is not a centerline. About half of a sample lay on a sidewalk, and nearly all gap-fill segments are unconnected to the rest of the graph. They are not in the graph: they ship as `nyc-gapfill-sidewalks.geojson`, whose root says what they are.
+4. **Planimetric centerlines are unreliable.** The minimum-rotated-rectangle axis is not a centerline. About half of a sample lay on a sidewalk, and nearly all gap-fill segments are unconnected to the rest of the graph. They are not in the graph: they ship as `nyc-gapfill-sidewalks.geojson`, whose root says what they are. The polygons were selected by comparison with OpenStreetMap, so the file's root carries the graph's licence (ODbL-1.0) and attribution.
 5. **No live feeds.** The pipeline is a point-in-time snapshot. Rerun to refresh.
 6. **MTA ADA annotation not implemented.** No station index is produced (see the MTA section above).
 7. **OSM node tags and `sidewalk=*` are not read.** OSM kerbs, elevators and crossing nodes are absent, and streets whose sidewalks OSM maps as tags have no Sidewalk Edge.
