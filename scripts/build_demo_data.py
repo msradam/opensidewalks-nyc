@@ -22,6 +22,7 @@ import gzip
 import json
 import math
 import pickle
+import re
 import sys
 from collections import Counter, defaultdict
 from datetime import UTC, date, datetime
@@ -45,8 +46,9 @@ STATUS = {"Compliant": 1, "Pending": 2, "Non-Compliant": 3}
 STATUS_TEXT = {0: "no DOT assessment", 1: "Compliant", 2: "Pending Technical Review", 3: "Non-Compliant"}
 COMPASS = ["north", "north-east", "east", "south-east", "south", "south-west", "west", "north-west"]
 TRIPS = 10
-NOTICE = ("Data (c) OpenStreetMap contributors (openstreetmap.org/copyright), NYC DOT, NYC Open Data. ODbL-1.0. "
-          "See https://github.com/msradam/opensidewalks-nyc/blob/main/LICENSE-DATA.md")
+NOTICE = ("Map data (c) OpenStreetMap contributors (openstreetmap.org/copyright), ODbL-1.0. Also contains NYC DOT and "
+          "NYC OTI data from NYC Open Data. DOT's ramp assessment labels come from a DOT map service with no published "
+          "terms and are not relicensed. See https://github.com/msradam/opensidewalks-nyc/blob/main/LICENSE-DATA.md")
 FT = 3.28084
 NOISE_M = 3.0       # an edge shorter than this does not set a route's "steepest stretch"
 
@@ -293,12 +295,12 @@ def verdict_text(rec, ours, ref):
         return "This graph finds a wheelchair route and OpenRouteService does not.", v["detail"][0].upper() + v["detail"][1:] + "."
     head = "This graph finds no wheelchair route; OpenRouteService does." if v["status"] == "reference only" else "The two wheelchair routes differ."
     why = {
-        "kerb data": "OpenRouteService crosses where NYC DOT's survey has no ramp within 5 m of one end. OpenStreetMap carries no kerb tag that "
+        "kerb data": "OpenRouteService crosses where NYC DOT's survey has no ramp within 5 m of one end. OpenStreetMap carries no curb tag (kerb=*) that "
                      "OpenRouteService reads as a barrier there, so it passes. This graph's profile refuses such a crossing",
         "incline data": "OpenRouteService takes a stretch that the LiDAR incline puts over this profile's limits (8.3% up, 10% down). "
                         "OpenStreetMap has no incline tag there, so OpenRouteService passes it",
         "structure": "OpenRouteService takes a bridge, tunnel or raised way where this graph's deck heights give an incline over the profile's limits",
-        "connectivity": "OpenRouteService uses a way that this graph's wheelchair profile cannot: a street centreline where no sidewalk is mapped, "
+        "connectivity": "OpenRouteService uses a way that this graph's wheelchair profile cannot: a street centerline where no sidewalk is mapped, "
                         "or a way this graph does not include",
         "rule": "By this graph's data OpenRouteService's route is passable too. The difference comes from OpenRouteService's own rules "
                 "(its surface and smoothness limits and its route weighting), not from the ramp or incline data",
@@ -311,28 +313,34 @@ def verdict_text(rec, ours, ref):
     return head, why + tail
 
 
+def fix_name(s):
+    """The city datasets title-case names, which turns roman numerals into Ii and Iii."""
+    return re.sub(r"\bI[iI]+\b", lambda m: m.group(0).upper(), s)
+
+
 def dest_kind(p):
     # The Facilities Database files school-based health centres under HOSPITALS AND CLINICS, by the school's name.
     return "health clinic in a school" if p["d_kind"] == "clinic" and "school" in p["d_name"].lower() else p["d_kind"]
 
 
-def stair_start(p):
-    return p["o_kind"] == "subway entrance" and "stair" in p["o_name"].lower()
+def subway_start(p):
+    return p["o_kind"] == "subway entrance"
 
 
 def choose(recs, pairs, inside):
     """A fixed, mixed selection of Brownsville trips: agreement first, then each kind of disagreement.
 
-    No trip starts at a subway entrance whose name says Stair (the pairs file builds the name from the
-    MTA entrance type): a wheelchair user cannot begin there.
+    No trip starts at a subway entrance. The MTA data cannot say whether a station house entrance has
+    steps, so trips start only at NYCHA developments and senior centres. None of those trips is an
+    incline data disagreement, so that kind has no trip and connectivity takes its place.
     """
     want = [("same route", None, 3), ("different route", "kerb data", 4), ("different route", "incline data", 1),
-            ("different route", "rule", 1), ("different route", "connectivity", 1), ("reference only", None, 2), ("ours only", None, 1)]
+            ("different route", "rule", 1), ("different route", "connectivity", 2), ("reference only", None, 2), ("ours only", None, 1)]
     picked, used = [], set()
     for status, cause, n in want:
         pool = [r for r in recs if r["verdict"]["status"] == status and (cause is None or r["verdict"].get("cause") == cause)
                 and r["snap_apart_m"] <= 25 and inside(pairs[r["id"]]) and r["routes"].get("ors_a_foot", {}).get("found")
-                and not stair_start(pairs[r["id"]])]
+                and not subway_start(pairs[r["id"]])]
         pool.sort(key=lambda r: (pairs[r["id"]]["pick"] != "nearest", abs(r["routes"]["ors_a_foot"]["length_m"] - 900), r["id"]))
         for r in pool:
             o = pairs[r["id"]]["o_name"]
@@ -382,7 +390,7 @@ def main(cfg):
     inside = lambda p: area.contains(Point(p["o"])) and area.contains(Point(p["d"]))
     trips = []
     for rec in choose(recs, pairs, inside):
-        p = pairs[rec["id"]]
+        p = dict(pairs[rec["id"]], o_name=fix_name(pairs[rec["id"]]["o_name"]), d_name=fix_name(pairs[rec["id"]]["d_name"]))
         options = {}
         mine = ours_routes[p["id"]]["wheelchair"]
         if mine["edges"]:
@@ -402,7 +410,7 @@ def main(cfg):
                 text.insert(0, f"About {round(unmatched * 100)}% of this route runs on ways this graph does not include. Those parts are drawn on the map and are not described here.")
             options[key] = {"found": True, "length_m": r["length_m"], **facts, "coords": latlon(r["coords"]), "steps_text": text}
         head, reason = verdict_text(rec, rec["routes"]["ours_wheelchair"], rec["routes"]["ors_a_rec_i10_k6"])
-        trips.append({"id": p["id"], "from": {"name": p["o_name"], "kind": p["o_kind"], "lat": p["o"][1], "lon": p["o"][0]},
+        trips.append({"id": p["id"], "from": {"name": p["o_name"], "kind": p["o_kind"].replace("centre", "center"), "lat": p["o"][1], "lon": p["o"][0]},
                       "to": {"name": p["d_name"], "kind": dest_kind(p), "lat": p["d"][1], "lon": p["d"][0]},
                       "verdict": {"status": rec["verdict"]["status"], "cause": rec["verdict"].get("cause"), "headline": head, "reason": reason},
                       "options": options})
@@ -479,5 +487,6 @@ def main(cfg):
 
 
 if __name__ == "__main__":
+    assert fix_name("Learning Center Ii") == "Learning Center II" and fix_name("Van Dyke Ii") == "Van Dyke II" and fix_name("In") == "In"
     with open(sys.argv[1]) as fh:
         main(json.load(fh))

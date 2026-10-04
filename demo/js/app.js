@@ -25,13 +25,16 @@
     ramped: { color: "#0f6b5c", weight: 3.5, label: "Crossing with a surveyed ramp near both ends" },
     unramped: { color: "#8c1d78", weight: 3.5, dashArray: "4 5", label: "Crossing with no surveyed ramp near one or both ends" },
   };
+  // Ramp colours are not used by any line, all have at least 3:1 contrast with the map background, and each
+  // marker gets a white outline so it stands out where it sits on a line. Compliant is a neutral dark slate,
+  // not a "go" colour.
   const RAMP = [
-    { shape: "cross", color: "#555555", label: "Surveyed ramp with no DOT assessment" },
-    { shape: "circle", color: "#1a5fb4", label: "DOT label: Compliant" },
-    { shape: "square", color: "#8a5200", label: "DOT label: Pending Technical Review (not decided yet)" },
-    { shape: "triangle", color: "#a3172b", label: "DOT label: Non-Compliant" },
+    { shape: "cross", color: "#6e6e6e", label: "Surveyed ramp with no DOT assessment" },
+    { shape: "circle", color: "#26323c", label: "DOT label: Compliant" },
+    { shape: "square", color: "#b05a00", label: "DOT label: Pending Technical Review (not decided yet)" },
+    { shape: "triangle", color: "#c4001d", label: "DOT label: Non-Compliant" },
   ];
-  const REBUILT = { shape: "diamond", color: "#4b2e83", label: "Corner rebuilt after the survey (survey values may be out of date)" };
+  const REBUILT = { shape: "diamond", color: "#6b3fa0", label: "Corner rebuilt after the survey (survey values may be out of date)" };
   const ROUTE = {
     ours: { color: "#0050a0", weight: 6, label: "This graph, wheelchair profile" },
     ors_wheelchair: { color: "#c2410c", weight: 5, dashArray: "11 7", label: "OpenRouteService wheelchair, plain OSM" },
@@ -101,6 +104,10 @@
       const ctx = this._renderer._ctx, p = this._point, r = Math.max(this._radius, 1);
       if (!this._renderer._drawing || this._empty()) return;
       drawShape(ctx, this.options.shape, p.x, p.y, r);
+      ctx.lineWidth = this.options.weight + 3;
+      ctx.strokeStyle = "#ffffff";
+      ctx.globalAlpha = 1;
+      ctx.stroke();
       this._renderer._fillStroke(ctx, this);
     },
   });
