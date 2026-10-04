@@ -1,0 +1,2550 @@
+{
+ "_meta": {
+  "date": "2026-10-04",
+  "code": "evaluation/compare/results/code/ferries.py",
+  "command": "python evaluation/compare/results/code/ferries.py --routes-dir research_notes/compare/routes --pbf research_notes/compare/engines/osm/nyc-261001.osm.pbf --pairs research_notes/compare/pairs/pairs.json --detail research_notes/compare/results/pairs_detail.jsonl.gz --graph research_notes/compare/graph/nyc.npz --out evaluation/compare/results/ferries.json --tables ferries_tables.md",
+  "inputs": {
+   "routes": {
+    "ors_a_rec_i10_k6": "research_notes/compare/routes/ors_armA.with_way_ids.jsonl.gz config rec_i10_k6",
+    "ors_a_no_limits": "research_notes/compare/routes/ors_armA.with_way_ids.jsonl.gz config default",
+    "valhalla_wheelchair": "research_notes/compare/routes/valhalla.with_way_ids.jsonl.gz config wheelchair",
+    "valhalla_foot": "research_notes/compare/routes/valhalla.with_way_ids.jsonl.gz config foot"
+   },
+   "arm_b_strict": {
+    "default": "research_notes/compare/routes/ors_armB_strict.jsonl.gz",
+    "rec_i10_k6": "research_notes/compare/routes/ors_armB_strict.rec.jsonl.gz",
+    "foot_rec": "research_notes/compare/routes/ors_armB_strict.rec.jsonl.gz"
+   },
+   "pairs": "research_notes/compare/pairs/pairs.json",
+   "detail": "research_notes/compare/results/pairs_detail.jsonl.gz",
+   "graph": "research_notes/compare/graph/nyc.npz",
+   "osm": "research_notes/compare/engines/osm/nyc-261001.osm.pbf",
+   "note": "the routes, pairs and graph arrays are in the project's working archive, which is not published; the OSM clip is made as engines/README.md says"
+  },
+  "what": {
+   "pairs_across_water": "pairs whose two ends lie on different lands (boxes below). This graph has no ferry edge and no walkway joins these lands inside the city, so it can route none of them",
+   "ferry_use": "per router and area: routes found, routes using at least one OSM way tagged route=ferry (by the way ids the router returned), the share, and how many of those are on pairs that are not across water (the router chose a ferry where a walking route may exist)",
+   "found": "routes found over all pairs, and with the pairs across water removed from numerator and denominator; found or not is read from pairs_detail.jsonl.gz",
+   "agreement": "against this graph's wheelchair profile on measured pairs (snapped ends within 25 m across routers), all and with the pairs across water removed",
+   "arm_a_only": "per ORS setting: pairs found on arm A (plain OSM) and not on arm B strict (this graph as OSM); of those, arm A routes that used a ferry, routes that used no ferry but a way that is in the clip and not in this graph (an upper bound on what the pipeline's tag filter explains, since such a way may also lie in New Jersey or be a motorway), and routes using only ways this graph has",
+   "checks": "this script's numbers against tables.md, and the Staten Island box against the borough sets"
+  },
+  "areas": "random pairs by borough and citywide (2,000 each), brownsville (420 trips); the 17 landmark pairs are left out",
+  "land_boxes_lon_min_lon_max_lat_min_lat_max": {
+   "Governors Island": [
+    -74.03,
+    -74.008,
+    40.684,
+    40.6965
+   ],
+   "Liberty Island": [
+    -74.05,
+    -74.03,
+    40.685,
+    40.694
+   ],
+   "Ellis Island": [
+    -74.05,
+    -74.03,
+    40.694,
+    40.703
+   ],
+   "Staten Island": [
+    -74.3,
+    -74.048,
+    40.45,
+    40.652
+   ]
+  },
+  "ferry_ways_in_clip": 103
+ },
+ "pairs_across_water": {
+  "BK": {
+   "pairs": 2000,
+   "across_water": 0,
+   "one_end_on_governors_liberty_or_ellis": 0,
+   "one_end_on_staten_island": 0,
+   "pairs_with_an_end_off_the_rest_of_the_city_by_ends": {}
+  },
+  "QN": {
+   "pairs": 2000,
+   "across_water": 0,
+   "one_end_on_governors_liberty_or_ellis": 0,
+   "one_end_on_staten_island": 0,
+   "pairs_with_an_end_off_the_rest_of_the_city_by_ends": {}
+  },
+  "MN": {
+   "pairs": 2000,
+   "across_water": 349,
+   "one_end_on_governors_liberty_or_ellis": 349,
+   "one_end_on_staten_island": 0,
+   "pairs_with_an_end_off_the_rest_of_the_city_by_ends": {
+    "Governors Island / rest of the city": 336,
+    "Governors Island / Governors Island": 10,
+    "Liberty Island / rest of the city": 8,
+    "Ellis Island / rest of the city": 3,
+    "Ellis Island / Governors Island": 2
+   }
+  },
+  "BX": {
+   "pairs": 2000,
+   "across_water": 0,
+   "one_end_on_governors_liberty_or_ellis": 0,
+   "one_end_on_staten_island": 0,
+   "pairs_with_an_end_off_the_rest_of_the_city_by_ends": {}
+  },
+  "SI": {
+   "pairs": 2000,
+   "across_water": 0,
+   "one_end_on_governors_liberty_or_ellis": 0,
+   "one_end_on_staten_island": 0,
+   "pairs_with_an_end_off_the_rest_of_the_city_by_ends": {
+    "Staten Island / Staten Island": 2000
+   }
+  },
+  "citywide": {
+   "pairs": 2000,
+   "across_water": 698,
+   "one_end_on_governors_liberty_or_ellis": 61,
+   "one_end_on_staten_island": 647,
+   "pairs_with_an_end_off_the_rest_of_the_city_by_ends": {
+    "Staten Island / rest of the city": 637,
+    "Staten Island / Staten Island": 90,
+    "Governors Island / rest of the city": 46,
+    "Governors Island / Staten Island": 9,
+    "Liberty Island / rest of the city": 3,
+    "Ellis Island / rest of the city": 2,
+    "Liberty Island / Staten Island": 1
+   }
+  },
+  "brownsville": {
+   "pairs": 420,
+   "across_water": 0,
+   "one_end_on_governors_liberty_or_ellis": 0,
+   "one_end_on_staten_island": 0,
+   "pairs_with_an_end_off_the_rest_of_the_city_by_ends": {}
+  }
+ },
+ "ferry_use": {
+  "ors_a_rec_i10_k6": {
+   "BK": {
+    "found": 1976,
+    "using_a_ferry": 0,
+    "using_a_ferry_on_pairs_not_across_water": 0,
+    "share": 0.0
+   },
+   "QN": {
+    "found": 1962,
+    "using_a_ferry": 0,
+    "using_a_ferry_on_pairs_not_across_water": 0,
+    "share": 0.0
+   },
+   "MN": {
+    "found": 1954,
+    "using_a_ferry": 367,
+    "using_a_ferry_on_pairs_not_across_water": 19,
+    "share": 0.1878
+   },
+   "BX": {
+    "found": 1932,
+    "using_a_ferry": 13,
+    "using_a_ferry_on_pairs_not_across_water": 13,
+    "share": 0.0067
+   },
+   "SI": {
+    "found": 1965,
+    "using_a_ferry": 0,
+    "using_a_ferry_on_pairs_not_across_water": 0,
+    "share": 0.0
+   },
+   "citywide": {
+    "found": 1957,
+    "using_a_ferry": 755,
+    "using_a_ferry_on_pairs_not_across_water": 69,
+    "share": 0.3858
+   },
+   "brownsville": {
+    "found": 420,
+    "using_a_ferry": 0,
+    "using_a_ferry_on_pairs_not_across_water": 0,
+    "share": 0.0
+   }
+  },
+  "ors_a_no_limits": {
+   "BK": {
+    "found": 1979,
+    "using_a_ferry": 0,
+    "using_a_ferry_on_pairs_not_across_water": 0,
+    "share": 0.0
+   },
+   "QN": {
+    "found": 1962,
+    "using_a_ferry": 0,
+    "using_a_ferry_on_pairs_not_across_water": 0,
+    "share": 0.0
+   },
+   "MN": {
+    "found": 1954,
+    "using_a_ferry": 367,
+    "using_a_ferry_on_pairs_not_across_water": 19,
+    "share": 0.1878
+   },
+   "BX": {
+    "found": 1932,
+    "using_a_ferry": 13,
+    "using_a_ferry_on_pairs_not_across_water": 13,
+    "share": 0.0067
+   },
+   "SI": {
+    "found": 1965,
+    "using_a_ferry": 0,
+    "using_a_ferry_on_pairs_not_across_water": 0,
+    "share": 0.0
+   },
+   "citywide": {
+    "found": 1958,
+    "using_a_ferry": 749,
+    "using_a_ferry_on_pairs_not_across_water": 62,
+    "share": 0.3825
+   },
+   "brownsville": {
+    "found": 420,
+    "using_a_ferry": 0,
+    "using_a_ferry_on_pairs_not_across_water": 0,
+    "share": 0.0
+   }
+  },
+  "valhalla_wheelchair": {
+   "BK": {
+    "found": 1964,
+    "using_a_ferry": 166,
+    "using_a_ferry_on_pairs_not_across_water": 166,
+    "share": 0.0845
+   },
+   "QN": {
+    "found": 1936,
+    "using_a_ferry": 55,
+    "using_a_ferry_on_pairs_not_across_water": 55,
+    "share": 0.0284
+   },
+   "MN": {
+    "found": 1883,
+    "using_a_ferry": 666,
+    "using_a_ferry_on_pairs_not_across_water": 390,
+    "share": 0.3537
+   },
+   "BX": {
+    "found": 1941,
+    "using_a_ferry": 13,
+    "using_a_ferry_on_pairs_not_across_water": 13,
+    "share": 0.0067
+   },
+   "SI": {
+    "found": 1953,
+    "using_a_ferry": 0,
+    "using_a_ferry_on_pairs_not_across_water": 0,
+    "share": 0.0
+   },
+   "citywide": {
+    "found": 1933,
+    "using_a_ferry": 1253,
+    "using_a_ferry_on_pairs_not_across_water": 587,
+    "share": 0.6482
+   },
+   "brownsville": {
+    "found": 420,
+    "using_a_ferry": 0,
+    "using_a_ferry_on_pairs_not_across_water": 0,
+    "share": 0.0
+   }
+  },
+  "valhalla_foot": {
+   "BK": {
+    "found": 2000,
+    "using_a_ferry": 161,
+    "using_a_ferry_on_pairs_not_across_water": 161,
+    "share": 0.0805
+   },
+   "QN": {
+    "found": 1976,
+    "using_a_ferry": 48,
+    "using_a_ferry_on_pairs_not_across_water": 48,
+    "share": 0.0243
+   },
+   "MN": {
+    "found": 2000,
+    "using_a_ferry": 725,
+    "using_a_ferry_on_pairs_not_across_water": 376,
+    "share": 0.3625
+   },
+   "BX": {
+    "found": 1992,
+    "using_a_ferry": 11,
+    "using_a_ferry_on_pairs_not_across_water": 11,
+    "share": 0.0055
+   },
+   "SI": {
+    "found": 2000,
+    "using_a_ferry": 0,
+    "using_a_ferry_on_pairs_not_across_water": 0,
+    "share": 0.0
+   },
+   "citywide": {
+    "found": 1995,
+    "using_a_ferry": 1248,
+    "using_a_ferry_on_pairs_not_across_water": 550,
+    "share": 0.6256
+   },
+   "brownsville": {
+    "found": 420,
+    "using_a_ferry": 0,
+    "using_a_ferry_on_pairs_not_across_water": 0,
+    "share": 0.0
+   }
+  }
+ },
+ "found": {
+  "ours_wheelchair": {
+   "BK": {
+    "pairs": 2000,
+    "found": 1824,
+    "share_all_pairs": 0.912,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1824,
+    "share_without_pairs_across_water": 0.912,
+    "found_on_pairs_across_water": 0
+   },
+   "QN": {
+    "pairs": 2000,
+    "found": 1357,
+    "share_all_pairs": 0.6785,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1357,
+    "share_without_pairs_across_water": 0.6785,
+    "found_on_pairs_across_water": 0
+   },
+   "MN": {
+    "pairs": 2000,
+    "found": 1280,
+    "share_all_pairs": 0.64,
+    "pairs_without_pairs_across_water": 1651,
+    "found_without_pairs_across_water": 1280,
+    "share_without_pairs_across_water": 0.7753,
+    "found_on_pairs_across_water": 0
+   },
+   "BX": {
+    "pairs": 2000,
+    "found": 1016,
+    "share_all_pairs": 0.508,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1016,
+    "share_without_pairs_across_water": 0.508,
+    "found_on_pairs_across_water": 0
+   },
+   "SI": {
+    "pairs": 2000,
+    "found": 1006,
+    "share_all_pairs": 0.503,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1006,
+    "share_without_pairs_across_water": 0.503,
+    "found_on_pairs_across_water": 0
+   },
+   "citywide": {
+    "pairs": 2000,
+    "found": 903,
+    "share_all_pairs": 0.4515,
+    "pairs_without_pairs_across_water": 1302,
+    "found_without_pairs_across_water": 903,
+    "share_without_pairs_across_water": 0.6935,
+    "found_on_pairs_across_water": 0
+   },
+   "brownsville": {
+    "pairs": 420,
+    "found": 420,
+    "share_all_pairs": 1.0,
+    "pairs_without_pairs_across_water": 420,
+    "found_without_pairs_across_water": 420,
+    "share_without_pairs_across_water": 1.0,
+    "found_on_pairs_across_water": 0
+   }
+  },
+  "ors_a_rec_i10_k6": {
+   "BK": {
+    "pairs": 2000,
+    "found": 1976,
+    "share_all_pairs": 0.988,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1976,
+    "share_without_pairs_across_water": 0.988,
+    "found_on_pairs_across_water": 0
+   },
+   "QN": {
+    "pairs": 2000,
+    "found": 1962,
+    "share_all_pairs": 0.981,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1962,
+    "share_without_pairs_across_water": 0.981,
+    "found_on_pairs_across_water": 0
+   },
+   "MN": {
+    "pairs": 2000,
+    "found": 1954,
+    "share_all_pairs": 0.977,
+    "pairs_without_pairs_across_water": 1651,
+    "found_without_pairs_across_water": 1606,
+    "share_without_pairs_across_water": 0.9727,
+    "found_on_pairs_across_water": 348
+   },
+   "BX": {
+    "pairs": 2000,
+    "found": 1932,
+    "share_all_pairs": 0.966,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1932,
+    "share_without_pairs_across_water": 0.966,
+    "found_on_pairs_across_water": 0
+   },
+   "SI": {
+    "pairs": 2000,
+    "found": 1965,
+    "share_all_pairs": 0.9825,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1965,
+    "share_without_pairs_across_water": 0.9825,
+    "found_on_pairs_across_water": 0
+   },
+   "citywide": {
+    "pairs": 2000,
+    "found": 1957,
+    "share_all_pairs": 0.9785,
+    "pairs_without_pairs_across_water": 1302,
+    "found_without_pairs_across_water": 1271,
+    "share_without_pairs_across_water": 0.9762,
+    "found_on_pairs_across_water": 686
+   },
+   "brownsville": {
+    "pairs": 420,
+    "found": 420,
+    "share_all_pairs": 1.0,
+    "pairs_without_pairs_across_water": 420,
+    "found_without_pairs_across_water": 420,
+    "share_without_pairs_across_water": 1.0,
+    "found_on_pairs_across_water": 0
+   }
+  },
+  "ors_a_rec_i6_k6": {
+   "BK": {
+    "pairs": 2000,
+    "found": 1967,
+    "share_all_pairs": 0.9835,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1967,
+    "share_without_pairs_across_water": 0.9835,
+    "found_on_pairs_across_water": 0
+   },
+   "QN": {
+    "pairs": 2000,
+    "found": 1961,
+    "share_all_pairs": 0.9805,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1961,
+    "share_without_pairs_across_water": 0.9805,
+    "found_on_pairs_across_water": 0
+   },
+   "MN": {
+    "pairs": 2000,
+    "found": 1917,
+    "share_all_pairs": 0.9585,
+    "pairs_without_pairs_across_water": 1651,
+    "found_without_pairs_across_water": 1574,
+    "share_without_pairs_across_water": 0.9534,
+    "found_on_pairs_across_water": 343
+   },
+   "BX": {
+    "pairs": 2000,
+    "found": 1928,
+    "share_all_pairs": 0.964,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1928,
+    "share_without_pairs_across_water": 0.964,
+    "found_on_pairs_across_water": 0
+   },
+   "SI": {
+    "pairs": 2000,
+    "found": 1957,
+    "share_all_pairs": 0.9785,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1957,
+    "share_without_pairs_across_water": 0.9785,
+    "found_on_pairs_across_water": 0
+   },
+   "citywide": {
+    "pairs": 2000,
+    "found": 1948,
+    "share_all_pairs": 0.974,
+    "pairs_without_pairs_across_water": 1302,
+    "found_without_pairs_across_water": 1267,
+    "share_without_pairs_across_water": 0.9731,
+    "found_on_pairs_across_water": 681
+   },
+   "brownsville": {
+    "pairs": 420,
+    "found": 420,
+    "share_all_pairs": 1.0,
+    "pairs_without_pairs_across_water": 420,
+    "found_without_pairs_across_water": 420,
+    "share_without_pairs_across_water": 1.0,
+    "found_on_pairs_across_water": 0
+   }
+  },
+  "ors_a_no_limits": {
+   "BK": {
+    "pairs": 2000,
+    "found": 1979,
+    "share_all_pairs": 0.9895,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1979,
+    "share_without_pairs_across_water": 0.9895,
+    "found_on_pairs_across_water": 0
+   },
+   "QN": {
+    "pairs": 2000,
+    "found": 1962,
+    "share_all_pairs": 0.981,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1962,
+    "share_without_pairs_across_water": 0.981,
+    "found_on_pairs_across_water": 0
+   },
+   "MN": {
+    "pairs": 2000,
+    "found": 1954,
+    "share_all_pairs": 0.977,
+    "pairs_without_pairs_across_water": 1651,
+    "found_without_pairs_across_water": 1606,
+    "share_without_pairs_across_water": 0.9727,
+    "found_on_pairs_across_water": 348
+   },
+   "BX": {
+    "pairs": 2000,
+    "found": 1932,
+    "share_all_pairs": 0.966,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1932,
+    "share_without_pairs_across_water": 0.966,
+    "found_on_pairs_across_water": 0
+   },
+   "SI": {
+    "pairs": 2000,
+    "found": 1965,
+    "share_all_pairs": 0.9825,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1965,
+    "share_without_pairs_across_water": 0.9825,
+    "found_on_pairs_across_water": 0
+   },
+   "citywide": {
+    "pairs": 2000,
+    "found": 1958,
+    "share_all_pairs": 0.979,
+    "pairs_without_pairs_across_water": 1302,
+    "found_without_pairs_across_water": 1271,
+    "share_without_pairs_across_water": 0.9762,
+    "found_on_pairs_across_water": 687
+   },
+   "brownsville": {
+    "pairs": 420,
+    "found": 420,
+    "share_all_pairs": 1.0,
+    "pairs_without_pairs_across_water": 420,
+    "found_without_pairs_across_water": 420,
+    "share_without_pairs_across_water": 1.0,
+    "found_on_pairs_across_water": 0
+   }
+  },
+  "ors_b_strict_rec_i10_k6": {
+   "BK": {
+    "pairs": 2000,
+    "found": 1908,
+    "share_all_pairs": 0.954,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1908,
+    "share_without_pairs_across_water": 0.954,
+    "found_on_pairs_across_water": 0
+   },
+   "QN": {
+    "pairs": 2000,
+    "found": 1630,
+    "share_all_pairs": 0.815,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1630,
+    "share_without_pairs_across_water": 0.815,
+    "found_on_pairs_across_water": 0
+   },
+   "MN": {
+    "pairs": 2000,
+    "found": 1339,
+    "share_all_pairs": 0.6695,
+    "pairs_without_pairs_across_water": 1651,
+    "found_without_pairs_across_water": 1339,
+    "share_without_pairs_across_water": 0.811,
+    "found_on_pairs_across_water": 0
+   },
+   "BX": {
+    "pairs": 2000,
+    "found": 1684,
+    "share_all_pairs": 0.842,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1684,
+    "share_without_pairs_across_water": 0.842,
+    "found_on_pairs_across_water": 0
+   },
+   "SI": {
+    "pairs": 2000,
+    "found": 1619,
+    "share_all_pairs": 0.8095,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1619,
+    "share_without_pairs_across_water": 0.8095,
+    "found_on_pairs_across_water": 0
+   },
+   "citywide": {
+    "pairs": 2000,
+    "found": 1098,
+    "share_all_pairs": 0.549,
+    "pairs_without_pairs_across_water": 1302,
+    "found_without_pairs_across_water": 1098,
+    "share_without_pairs_across_water": 0.8433,
+    "found_on_pairs_across_water": 0
+   },
+   "brownsville": {
+    "pairs": 420,
+    "found": 420,
+    "share_all_pairs": 1.0,
+    "pairs_without_pairs_across_water": 420,
+    "found_without_pairs_across_water": 420,
+    "share_without_pairs_across_water": 1.0,
+    "found_on_pairs_across_water": 0
+   }
+  },
+  "ors_b_strict_rec_i6_k6": {
+   "BK": {
+    "pairs": 2000,
+    "found": 1824,
+    "share_all_pairs": 0.912,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1824,
+    "share_without_pairs_across_water": 0.912,
+    "found_on_pairs_across_water": 0
+   },
+   "QN": {
+    "pairs": 2000,
+    "found": 1543,
+    "share_all_pairs": 0.7715,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1543,
+    "share_without_pairs_across_water": 0.7715,
+    "found_on_pairs_across_water": 0
+   },
+   "MN": {
+    "pairs": 2000,
+    "found": 1113,
+    "share_all_pairs": 0.5565,
+    "pairs_without_pairs_across_water": 1651,
+    "found_without_pairs_across_water": 1113,
+    "share_without_pairs_across_water": 0.6741,
+    "found_on_pairs_across_water": 0
+   },
+   "BX": {
+    "pairs": 2000,
+    "found": 1458,
+    "share_all_pairs": 0.729,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1458,
+    "share_without_pairs_across_water": 0.729,
+    "found_on_pairs_across_water": 0
+   },
+   "SI": {
+    "pairs": 2000,
+    "found": 1324,
+    "share_all_pairs": 0.662,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1324,
+    "share_without_pairs_across_water": 0.662,
+    "found_on_pairs_across_water": 0
+   },
+   "citywide": {
+    "pairs": 2000,
+    "found": 584,
+    "share_all_pairs": 0.292,
+    "pairs_without_pairs_across_water": 1302,
+    "found_without_pairs_across_water": 584,
+    "share_without_pairs_across_water": 0.4485,
+    "found_on_pairs_across_water": 0
+   },
+   "brownsville": {
+    "pairs": 420,
+    "found": 410,
+    "share_all_pairs": 0.9762,
+    "pairs_without_pairs_across_water": 420,
+    "found_without_pairs_across_water": 410,
+    "share_without_pairs_across_water": 0.9762,
+    "found_on_pairs_across_water": 0
+   }
+  },
+  "ors_b_known_rec_i10_k6": {
+   "BK": {
+    "pairs": 2000,
+    "found": 1947,
+    "share_all_pairs": 0.9735,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1947,
+    "share_without_pairs_across_water": 0.9735,
+    "found_on_pairs_across_water": 0
+   },
+   "QN": {
+    "pairs": 2000,
+    "found": 1671,
+    "share_all_pairs": 0.8355,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1671,
+    "share_without_pairs_across_water": 0.8355,
+    "found_on_pairs_across_water": 0
+   },
+   "MN": {
+    "pairs": 2000,
+    "found": 1403,
+    "share_all_pairs": 0.7015,
+    "pairs_without_pairs_across_water": 1651,
+    "found_without_pairs_across_water": 1403,
+    "share_without_pairs_across_water": 0.8498,
+    "found_on_pairs_across_water": 0
+   },
+   "BX": {
+    "pairs": 2000,
+    "found": 1777,
+    "share_all_pairs": 0.8885,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1777,
+    "share_without_pairs_across_water": 0.8885,
+    "found_on_pairs_across_water": 0
+   },
+   "SI": {
+    "pairs": 2000,
+    "found": 1793,
+    "share_all_pairs": 0.8965,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1793,
+    "share_without_pairs_across_water": 0.8965,
+    "found_on_pairs_across_water": 0
+   },
+   "citywide": {
+    "pairs": 2000,
+    "found": 1132,
+    "share_all_pairs": 0.566,
+    "pairs_without_pairs_across_water": 1302,
+    "found_without_pairs_across_water": 1132,
+    "share_without_pairs_across_water": 0.8694,
+    "found_on_pairs_across_water": 0
+   },
+   "brownsville": {
+    "pairs": 420,
+    "found": 420,
+    "share_all_pairs": 1.0,
+    "pairs_without_pairs_across_water": 420,
+    "found_without_pairs_across_water": 420,
+    "share_without_pairs_across_water": 1.0,
+    "found_on_pairs_across_water": 0
+   }
+  },
+  "valhalla_wheelchair": {
+   "BK": {
+    "pairs": 2000,
+    "found": 1964,
+    "share_all_pairs": 0.982,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1964,
+    "share_without_pairs_across_water": 0.982,
+    "found_on_pairs_across_water": 0
+   },
+   "QN": {
+    "pairs": 2000,
+    "found": 1936,
+    "share_all_pairs": 0.968,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1936,
+    "share_without_pairs_across_water": 0.968,
+    "found_on_pairs_across_water": 0
+   },
+   "MN": {
+    "pairs": 2000,
+    "found": 1883,
+    "share_all_pairs": 0.9415,
+    "pairs_without_pairs_across_water": 1651,
+    "found_without_pairs_across_water": 1607,
+    "share_without_pairs_across_water": 0.9733,
+    "found_on_pairs_across_water": 276
+   },
+   "BX": {
+    "pairs": 2000,
+    "found": 1941,
+    "share_all_pairs": 0.9705,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1941,
+    "share_without_pairs_across_water": 0.9705,
+    "found_on_pairs_across_water": 0
+   },
+   "SI": {
+    "pairs": 2000,
+    "found": 1953,
+    "share_all_pairs": 0.9765,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1953,
+    "share_without_pairs_across_water": 0.9765,
+    "found_on_pairs_across_water": 0
+   },
+   "citywide": {
+    "pairs": 2000,
+    "found": 1933,
+    "share_all_pairs": 0.9665,
+    "pairs_without_pairs_across_water": 1302,
+    "found_without_pairs_across_water": 1267,
+    "share_without_pairs_across_water": 0.9731,
+    "found_on_pairs_across_water": 666
+   },
+   "brownsville": {
+    "pairs": 420,
+    "found": 420,
+    "share_all_pairs": 1.0,
+    "pairs_without_pairs_across_water": 420,
+    "found_without_pairs_across_water": 420,
+    "share_without_pairs_across_water": 1.0,
+    "found_on_pairs_across_water": 0
+   }
+  },
+  "ours_walk": {
+   "BK": {
+    "pairs": 2000,
+    "found": 1895,
+    "share_all_pairs": 0.9475,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1895,
+    "share_without_pairs_across_water": 0.9475,
+    "found_on_pairs_across_water": 0
+   },
+   "QN": {
+    "pairs": 2000,
+    "found": 1486,
+    "share_all_pairs": 0.743,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1486,
+    "share_without_pairs_across_water": 0.743,
+    "found_on_pairs_across_water": 0
+   },
+   "MN": {
+    "pairs": 2000,
+    "found": 1615,
+    "share_all_pairs": 0.8075,
+    "pairs_without_pairs_across_water": 1651,
+    "found_without_pairs_across_water": 1615,
+    "share_without_pairs_across_water": 0.9782,
+    "found_on_pairs_across_water": 0
+   },
+   "BX": {
+    "pairs": 2000,
+    "found": 1503,
+    "share_all_pairs": 0.7515,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1503,
+    "share_without_pairs_across_water": 0.7515,
+    "found_on_pairs_across_water": 0
+   },
+   "SI": {
+    "pairs": 2000,
+    "found": 1388,
+    "share_all_pairs": 0.694,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1388,
+    "share_without_pairs_across_water": 0.694,
+    "found_on_pairs_across_water": 0
+   },
+   "citywide": {
+    "pairs": 2000,
+    "found": 1059,
+    "share_all_pairs": 0.5295,
+    "pairs_without_pairs_across_water": 1302,
+    "found_without_pairs_across_water": 1059,
+    "share_without_pairs_across_water": 0.8134,
+    "found_on_pairs_across_water": 0
+   },
+   "brownsville": {
+    "pairs": 420,
+    "found": 420,
+    "share_all_pairs": 1.0,
+    "pairs_without_pairs_across_water": 420,
+    "found_without_pairs_across_water": 420,
+    "share_without_pairs_across_water": 1.0,
+    "found_on_pairs_across_water": 0
+   }
+  },
+  "ors_a_foot": {
+   "BK": {
+    "pairs": 2000,
+    "found": 2000,
+    "share_all_pairs": 1.0,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 2000,
+    "share_without_pairs_across_water": 1.0,
+    "found_on_pairs_across_water": 0
+   },
+   "QN": {
+    "pairs": 2000,
+    "found": 1977,
+    "share_all_pairs": 0.9885,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1977,
+    "share_without_pairs_across_water": 0.9885,
+    "found_on_pairs_across_water": 0
+   },
+   "MN": {
+    "pairs": 2000,
+    "found": 2000,
+    "share_all_pairs": 1.0,
+    "pairs_without_pairs_across_water": 1651,
+    "found_without_pairs_across_water": 1651,
+    "share_without_pairs_across_water": 1.0,
+    "found_on_pairs_across_water": 349
+   },
+   "BX": {
+    "pairs": 2000,
+    "found": 1991,
+    "share_all_pairs": 0.9955,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1991,
+    "share_without_pairs_across_water": 0.9955,
+    "found_on_pairs_across_water": 0
+   },
+   "SI": {
+    "pairs": 2000,
+    "found": 2000,
+    "share_all_pairs": 1.0,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 2000,
+    "share_without_pairs_across_water": 1.0,
+    "found_on_pairs_across_water": 0
+   },
+   "citywide": {
+    "pairs": 2000,
+    "found": 1995,
+    "share_all_pairs": 0.9975,
+    "pairs_without_pairs_across_water": 1302,
+    "found_without_pairs_across_water": 1297,
+    "share_without_pairs_across_water": 0.9962,
+    "found_on_pairs_across_water": 698
+   },
+   "brownsville": {
+    "pairs": 420,
+    "found": 420,
+    "share_all_pairs": 1.0,
+    "pairs_without_pairs_across_water": 420,
+    "found_without_pairs_across_water": 420,
+    "share_without_pairs_across_water": 1.0,
+    "found_on_pairs_across_water": 0
+   }
+  },
+  "valhalla_foot": {
+   "BK": {
+    "pairs": 2000,
+    "found": 2000,
+    "share_all_pairs": 1.0,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 2000,
+    "share_without_pairs_across_water": 1.0,
+    "found_on_pairs_across_water": 0
+   },
+   "QN": {
+    "pairs": 2000,
+    "found": 1976,
+    "share_all_pairs": 0.988,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1976,
+    "share_without_pairs_across_water": 0.988,
+    "found_on_pairs_across_water": 0
+   },
+   "MN": {
+    "pairs": 2000,
+    "found": 2000,
+    "share_all_pairs": 1.0,
+    "pairs_without_pairs_across_water": 1651,
+    "found_without_pairs_across_water": 1651,
+    "share_without_pairs_across_water": 1.0,
+    "found_on_pairs_across_water": 349
+   },
+   "BX": {
+    "pairs": 2000,
+    "found": 1992,
+    "share_all_pairs": 0.996,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 1992,
+    "share_without_pairs_across_water": 0.996,
+    "found_on_pairs_across_water": 0
+   },
+   "SI": {
+    "pairs": 2000,
+    "found": 2000,
+    "share_all_pairs": 1.0,
+    "pairs_without_pairs_across_water": 2000,
+    "found_without_pairs_across_water": 2000,
+    "share_without_pairs_across_water": 1.0,
+    "found_on_pairs_across_water": 0
+   },
+   "citywide": {
+    "pairs": 2000,
+    "found": 1995,
+    "share_all_pairs": 0.9975,
+    "pairs_without_pairs_across_water": 1302,
+    "found_without_pairs_across_water": 1297,
+    "share_without_pairs_across_water": 0.9962,
+    "found_on_pairs_across_water": 698
+   },
+   "brownsville": {
+    "pairs": 420,
+    "found": 420,
+    "share_all_pairs": 1.0,
+    "pairs_without_pairs_across_water": 420,
+    "found_without_pairs_across_water": 420,
+    "share_without_pairs_across_water": 1.0,
+    "found_on_pairs_across_water": 0
+   }
+  }
+ },
+ "agreement": {
+  "ours_wheelchair": {
+   "BK": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1806,
+     0,
+     0,
+     144
+    ],
+    "without_pairs_across_water": [
+     1806,
+     0,
+     0,
+     144
+    ]
+   },
+   "QN": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1336,
+     0,
+     0,
+     538
+    ],
+    "without_pairs_across_water": [
+     1336,
+     0,
+     0,
+     538
+    ]
+   },
+   "MN": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1271,
+     0,
+     0,
+     658
+    ],
+    "without_pairs_across_water": [
+     1271,
+     0,
+     0,
+     314
+    ]
+   },
+   "BX": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     986,
+     0,
+     0,
+     816
+    ],
+    "without_pairs_across_water": [
+     986,
+     0,
+     0,
+     816
+    ]
+   },
+   "SI": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     992,
+     0,
+     0,
+     869
+    ],
+    "without_pairs_across_water": [
+     992,
+     0,
+     0,
+     869
+    ]
+   },
+   "citywide": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     889,
+     0,
+     0,
+     999
+    ],
+    "without_pairs_across_water": [
+     889,
+     0,
+     0,
+     329
+    ]
+   },
+   "brownsville": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     362,
+     0,
+     0,
+     0
+    ],
+    "without_pairs_across_water": [
+     362,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  "ors_a_rec_i10_k6": {
+   "BK": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1796,
+     10,
+     134,
+     10
+    ],
+    "without_pairs_across_water": [
+     1796,
+     10,
+     134,
+     10
+    ]
+   },
+   "QN": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1335,
+     1,
+     503,
+     35
+    ],
+    "without_pairs_across_water": [
+     1335,
+     1,
+     503,
+     35
+    ]
+   },
+   "MN": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1256,
+     15,
+     633,
+     25
+    ],
+    "without_pairs_across_water": [
+     1256,
+     15,
+     290,
+     24
+    ]
+   },
+   "BX": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     956,
+     30,
+     785,
+     31
+    ],
+    "without_pairs_across_water": [
+     956,
+     30,
+     785,
+     31
+    ]
+   },
+   "SI": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     985,
+     7,
+     846,
+     23
+    ],
+    "without_pairs_across_water": [
+     985,
+     7,
+     846,
+     23
+    ]
+   },
+   "citywide": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     882,
+     7,
+     966,
+     33
+    ],
+    "without_pairs_across_water": [
+     882,
+     7,
+     308,
+     21
+    ]
+   },
+   "brownsville": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     362,
+     0,
+     0,
+     0
+    ],
+    "without_pairs_across_water": [
+     362,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  "ors_a_rec_i6_k6": {
+   "BK": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1790,
+     16,
+     132,
+     12
+    ],
+    "without_pairs_across_water": [
+     1790,
+     16,
+     132,
+     12
+    ]
+   },
+   "QN": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1335,
+     1,
+     503,
+     35
+    ],
+    "without_pairs_across_water": [
+     1335,
+     1,
+     503,
+     35
+    ]
+   },
+   "MN": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1234,
+     37,
+     617,
+     41
+    ],
+    "without_pairs_across_water": [
+     1234,
+     37,
+     279,
+     35
+    ]
+   },
+   "BX": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     954,
+     32,
+     782,
+     34
+    ],
+    "without_pairs_across_water": [
+     954,
+     32,
+     782,
+     34
+    ]
+   },
+   "SI": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     982,
+     10,
+     841,
+     28
+    ],
+    "without_pairs_across_water": [
+     982,
+     10,
+     841,
+     28
+    ]
+   },
+   "citywide": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     880,
+     9,
+     960,
+     39
+    ],
+    "without_pairs_across_water": [
+     880,
+     9,
+     307,
+     22
+    ]
+   },
+   "brownsville": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     362,
+     0,
+     0,
+     0
+    ],
+    "without_pairs_across_water": [
+     362,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  "ors_a_no_limits": {
+   "BK": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1798,
+     8,
+     135,
+     9
+    ],
+    "without_pairs_across_water": [
+     1798,
+     8,
+     135,
+     9
+    ]
+   },
+   "QN": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1335,
+     1,
+     503,
+     35
+    ],
+    "without_pairs_across_water": [
+     1335,
+     1,
+     503,
+     35
+    ]
+   },
+   "MN": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1256,
+     15,
+     633,
+     25
+    ],
+    "without_pairs_across_water": [
+     1256,
+     15,
+     290,
+     24
+    ]
+   },
+   "BX": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     956,
+     30,
+     785,
+     31
+    ],
+    "without_pairs_across_water": [
+     956,
+     30,
+     785,
+     31
+    ]
+   },
+   "SI": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     985,
+     7,
+     846,
+     23
+    ],
+    "without_pairs_across_water": [
+     985,
+     7,
+     846,
+     23
+    ]
+   },
+   "citywide": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     882,
+     7,
+     967,
+     32
+    ],
+    "without_pairs_across_water": [
+     882,
+     7,
+     308,
+     21
+    ]
+   },
+   "brownsville": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     362,
+     0,
+     0,
+     0
+    ],
+    "without_pairs_across_water": [
+     362,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  "ors_b_strict_rec_i10_k6": {
+   "BK": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1769,
+     37,
+     96,
+     48
+    ],
+    "without_pairs_across_water": [
+     1769,
+     37,
+     96,
+     48
+    ]
+   },
+   "QN": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1312,
+     24,
+     220,
+     318
+    ],
+    "without_pairs_across_water": [
+     1312,
+     24,
+     220,
+     318
+    ]
+   },
+   "MN": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1193,
+     78,
+     104,
+     554
+    ],
+    "without_pairs_across_water": [
+     1193,
+     78,
+     104,
+     210
+    ]
+   },
+   "BX": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     927,
+     59,
+     649,
+     167
+    ],
+    "without_pairs_across_water": [
+     927,
+     59,
+     649,
+     167
+    ]
+   },
+   "SI": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     949,
+     43,
+     608,
+     261
+    ],
+    "without_pairs_across_water": [
+     949,
+     43,
+     608,
+     261
+    ]
+   },
+   "citywide": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     853,
+     36,
+     189,
+     810
+    ],
+    "without_pairs_across_water": [
+     853,
+     36,
+     189,
+     140
+    ]
+   },
+   "brownsville": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     362,
+     0,
+     0,
+     0
+    ],
+    "without_pairs_across_water": [
+     362,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  "ors_b_strict_rec_i6_k6": {
+   "BK": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1729,
+     77,
+     56,
+     88
+    ],
+    "without_pairs_across_water": [
+     1729,
+     77,
+     56,
+     88
+    ]
+   },
+   "QN": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1271,
+     65,
+     191,
+     347
+    ],
+    "without_pairs_across_water": [
+     1271,
+     65,
+     191,
+     347
+    ]
+   },
+   "MN": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1046,
+     225,
+     31,
+     627
+    ],
+    "without_pairs_across_water": [
+     1046,
+     225,
+     31,
+     283
+    ]
+   },
+   "BX": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     852,
+     134,
+     520,
+     296
+    ],
+    "without_pairs_across_water": [
+     852,
+     134,
+     520,
+     296
+    ]
+   },
+   "SI": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     857,
+     135,
+     428,
+     441
+    ],
+    "without_pairs_across_water": [
+     857,
+     135,
+     428,
+     441
+    ]
+   },
+   "citywide": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     482,
+     407,
+     79,
+     920
+    ],
+    "without_pairs_across_water": [
+     482,
+     407,
+     79,
+     250
+    ]
+   },
+   "brownsville": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     352,
+     10,
+     0,
+     0
+    ],
+    "without_pairs_across_water": [
+     352,
+     10,
+     0,
+     0
+    ]
+   }
+  },
+  "ors_b_known_rec_i10_k6": {
+   "BK": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1789,
+     17,
+     112,
+     32
+    ],
+    "without_pairs_across_water": [
+     1789,
+     17,
+     112,
+     32
+    ]
+   },
+   "QN": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1328,
+     8,
+     245,
+     293
+    ],
+    "without_pairs_across_water": [
+     1328,
+     8,
+     245,
+     293
+    ]
+   },
+   "MN": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1218,
+     53,
+     140,
+     518
+    ],
+    "without_pairs_across_water": [
+     1218,
+     53,
+     140,
+     174
+    ]
+   },
+   "BX": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     956,
+     30,
+     710,
+     106
+    ],
+    "without_pairs_across_water": [
+     956,
+     30,
+     710,
+     106
+    ]
+   },
+   "SI": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     975,
+     17,
+     744,
+     125
+    ],
+    "without_pairs_across_water": [
+     975,
+     17,
+     744,
+     125
+    ]
+   },
+   "citywide": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     866,
+     23,
+     207,
+     792
+    ],
+    "without_pairs_across_water": [
+     866,
+     23,
+     207,
+     122
+    ]
+   },
+   "brownsville": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     362,
+     0,
+     0,
+     0
+    ],
+    "without_pairs_across_water": [
+     362,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  "valhalla_wheelchair": {
+   "BK": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1796,
+     10,
+     137,
+     7
+    ],
+    "without_pairs_across_water": [
+     1796,
+     10,
+     137,
+     7
+    ]
+   },
+   "QN": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1335,
+     1,
+     511,
+     27
+    ],
+    "without_pairs_across_water": [
+     1335,
+     1,
+     511,
+     27
+    ]
+   },
+   "MN": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1255,
+     16,
+     572,
+     86
+    ],
+    "without_pairs_across_water": [
+     1255,
+     16,
+     299,
+     15
+    ]
+   },
+   "BX": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     979,
+     7,
+     788,
+     28
+    ],
+    "without_pairs_across_water": [
+     979,
+     7,
+     788,
+     28
+    ]
+   },
+   "SI": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     985,
+     7,
+     847,
+     22
+    ],
+    "without_pairs_across_water": [
+     985,
+     7,
+     847,
+     22
+    ]
+   },
+   "citywide": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     887,
+     2,
+     960,
+     39
+    ],
+    "without_pairs_across_water": [
+     887,
+     2,
+     314,
+     15
+    ]
+   },
+   "brownsville": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     362,
+     0,
+     0,
+     0
+    ],
+    "without_pairs_across_water": [
+     362,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  "ours_walk": {
+   "BK": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1806,
+     0,
+     70,
+     74
+    ],
+    "without_pairs_across_water": [
+     1806,
+     0,
+     70,
+     74
+    ]
+   },
+   "QN": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1335,
+     1,
+     105,
+     433
+    ],
+    "without_pairs_across_water": [
+     1335,
+     1,
+     105,
+     433
+    ]
+   },
+   "MN": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1271,
+     0,
+     298,
+     360
+    ],
+    "without_pairs_across_water": [
+     1271,
+     0,
+     298,
+     16
+    ]
+   },
+   "BX": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     986,
+     0,
+     474,
+     342
+    ],
+    "without_pairs_across_water": [
+     986,
+     0,
+     474,
+     342
+    ]
+   },
+   "SI": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     991,
+     1,
+     328,
+     541
+    ],
+    "without_pairs_across_water": [
+     991,
+     1,
+     328,
+     541
+    ]
+   },
+   "citywide": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     889,
+     0,
+     140,
+     859
+    ],
+    "without_pairs_across_water": [
+     889,
+     0,
+     140,
+     189
+    ]
+   },
+   "brownsville": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     362,
+     0,
+     0,
+     0
+    ],
+    "without_pairs_across_water": [
+     362,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  "ors_a_foot": {
+   "BK": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1806,
+     0,
+     144,
+     0
+    ],
+    "without_pairs_across_water": [
+     1806,
+     0,
+     144,
+     0
+    ]
+   },
+   "QN": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1336,
+     0,
+     516,
+     22
+    ],
+    "without_pairs_across_water": [
+     1336,
+     0,
+     516,
+     22
+    ]
+   },
+   "MN": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1271,
+     0,
+     658,
+     0
+    ],
+    "without_pairs_across_water": [
+     1271,
+     0,
+     314,
+     0
+    ]
+   },
+   "BX": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     986,
+     0,
+     813,
+     3
+    ],
+    "without_pairs_across_water": [
+     986,
+     0,
+     813,
+     3
+    ]
+   },
+   "SI": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     992,
+     0,
+     869,
+     0
+    ],
+    "without_pairs_across_water": [
+     992,
+     0,
+     869,
+     0
+    ]
+   },
+   "citywide": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     889,
+     0,
+     994,
+     5
+    ],
+    "without_pairs_across_water": [
+     889,
+     0,
+     324,
+     5
+    ]
+   },
+   "brownsville": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     362,
+     0,
+     0,
+     0
+    ],
+    "without_pairs_across_water": [
+     362,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  "valhalla_foot": {
+   "BK": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1806,
+     0,
+     144,
+     0
+    ],
+    "without_pairs_across_water": [
+     1806,
+     0,
+     144,
+     0
+    ]
+   },
+   "QN": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1335,
+     1,
+     516,
+     22
+    ],
+    "without_pairs_across_water": [
+     1335,
+     1,
+     516,
+     22
+    ]
+   },
+   "MN": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     1271,
+     0,
+     658,
+     0
+    ],
+    "without_pairs_across_water": [
+     1271,
+     0,
+     314,
+     0
+    ]
+   },
+   "BX": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     986,
+     0,
+     816,
+     0
+    ],
+    "without_pairs_across_water": [
+     986,
+     0,
+     816,
+     0
+    ]
+   },
+   "SI": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     992,
+     0,
+     869,
+     0
+    ],
+    "without_pairs_across_water": [
+     992,
+     0,
+     869,
+     0
+    ]
+   },
+   "citywide": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     889,
+     0,
+     994,
+     5
+    ],
+    "without_pairs_across_water": [
+     889,
+     0,
+     324,
+     5
+    ]
+   },
+   "brownsville": {
+    "order": "both / this graph only / the other only / neither",
+    "measured_pairs": [
+     362,
+     0,
+     0,
+     0
+    ],
+    "without_pairs_across_water": [
+     362,
+     0,
+     0,
+     0
+    ]
+   }
+  }
+ },
+ "arm_a_only": {
+  "default": {
+   "BK": {
+    "found_arm_a": 1979,
+    "found_arm_b_strict": 2000,
+    "arm_a_only": 0,
+    "arm_a_only_on_pairs_across_water": 0,
+    "arm_a_route_used_a_ferry": 0,
+    "arm_a_route_used_no_ferry_but_a_way_this_graph_lacks": 0,
+    "arm_a_route_used_only_ways_this_graph_has": 0,
+    "highway_tags_of_those_ways_counted_per_route_and_way": {}
+   },
+   "QN": {
+    "found_arm_a": 1962,
+    "found_arm_b_strict": 1960,
+    "arm_a_only": 13,
+    "arm_a_only_on_pairs_across_water": 0,
+    "arm_a_route_used_a_ferry": 0,
+    "arm_a_route_used_no_ferry_but_a_way_this_graph_lacks": 8,
+    "arm_a_route_used_only_ways_this_graph_has": 5,
+    "highway_tags_of_those_ways_counted_per_route_and_way": {
+     "service": 6,
+     "tertiary_link": 3
+    }
+   },
+   "MN": {
+    "found_arm_a": 1954,
+    "found_arm_b_strict": 1642,
+    "arm_a_only": 357,
+    "arm_a_only_on_pairs_across_water": 348,
+    "arm_a_route_used_a_ferry": 348,
+    "arm_a_route_used_no_ferry_but_a_way_this_graph_lacks": 1,
+    "arm_a_route_used_only_ways_this_graph_has": 8,
+    "highway_tags_of_those_ways_counted_per_route_and_way": {
+     "motorway_link": 7,
+     "motorway": 6
+    }
+   },
+   "BX": {
+    "found_arm_a": 1932,
+    "found_arm_b_strict": 1932,
+    "arm_a_only": 62,
+    "arm_a_only_on_pairs_across_water": 0,
+    "arm_a_route_used_a_ferry": 11,
+    "arm_a_route_used_no_ferry_but_a_way_this_graph_lacks": 2,
+    "arm_a_route_used_only_ways_this_graph_has": 49,
+    "highway_tags_of_those_ways_counted_per_route_and_way": {
+     "cycleway": 1,
+     "secondary_link": 1,
+     "motorway_link": 1
+    }
+   },
+   "SI": {
+    "found_arm_a": 1965,
+    "found_arm_b_strict": 1977,
+    "arm_a_only": 18,
+    "arm_a_only_on_pairs_across_water": 0,
+    "arm_a_route_used_a_ferry": 0,
+    "arm_a_route_used_no_ferry_but_a_way_this_graph_lacks": 5,
+    "arm_a_route_used_only_ways_this_graph_has": 13,
+    "highway_tags_of_those_ways_counted_per_route_and_way": {
+     "tertiary_link": 4,
+     "corridor": 2
+    }
+   },
+   "citywide": {
+    "found_arm_a": 1958,
+    "found_arm_b_strict": 1285,
+    "arm_a_only": 698,
+    "arm_a_only_on_pairs_across_water": 687,
+    "arm_a_route_used_a_ferry": 688,
+    "arm_a_route_used_no_ferry_but_a_way_this_graph_lacks": 2,
+    "arm_a_route_used_only_ways_this_graph_has": 8,
+    "highway_tags_of_those_ways_counted_per_route_and_way": {
+     "service": 4
+    }
+   },
+   "brownsville": {
+    "found_arm_a": 420,
+    "found_arm_b_strict": 420,
+    "arm_a_only": 0,
+    "arm_a_only_on_pairs_across_water": 0,
+    "arm_a_route_used_a_ferry": 0,
+    "arm_a_route_used_no_ferry_but_a_way_this_graph_lacks": 0,
+    "arm_a_route_used_only_ways_this_graph_has": 0,
+    "highway_tags_of_those_ways_counted_per_route_and_way": {}
+   }
+  },
+  "rec_i10_k6": {
+   "BK": {
+    "found_arm_a": 1976,
+    "found_arm_b_strict": 1908,
+    "arm_a_only": 87,
+    "arm_a_only_on_pairs_across_water": 0,
+    "arm_a_route_used_a_ferry": 0,
+    "arm_a_route_used_no_ferry_but_a_way_this_graph_lacks": 1,
+    "arm_a_route_used_only_ways_this_graph_has": 86,
+    "highway_tags_of_those_ways_counted_per_route_and_way": {
+     "motorway_link": 1
+    }
+   },
+   "QN": {
+    "found_arm_a": 1962,
+    "found_arm_b_strict": 1630,
+    "arm_a_only": 339,
+    "arm_a_only_on_pairs_across_water": 0,
+    "arm_a_route_used_a_ferry": 0,
+    "arm_a_route_used_no_ferry_but_a_way_this_graph_lacks": 265,
+    "arm_a_route_used_only_ways_this_graph_has": 74,
+    "highway_tags_of_those_ways_counted_per_route_and_way": {
+     "footway": 14700,
+     "residential": 2500,
+     "service": 779,
+     "primary": 253,
+     "tertiary": 250,
+     "secondary": 250,
+     "track": 11,
+     "tertiary_link": 8,
+     "cycleway": 1
+    }
+   },
+   "MN": {
+    "found_arm_a": 1954,
+    "found_arm_b_strict": 1339,
+    "arm_a_only": 648,
+    "arm_a_only_on_pairs_across_water": 348,
+    "arm_a_route_used_a_ferry": 367,
+    "arm_a_route_used_no_ferry_but_a_way_this_graph_lacks": 9,
+    "arm_a_route_used_only_ways_this_graph_has": 272,
+    "highway_tags_of_those_ways_counted_per_route_and_way": {
+     "motorway_link": 68,
+     "motorway": 48,
+     "cycleway": 10,
+     "footway": 2
+    }
+   },
+   "BX": {
+    "found_arm_a": 1932,
+    "found_arm_b_strict": 1684,
+    "arm_a_only": 298,
+    "arm_a_only_on_pairs_across_water": 0,
+    "arm_a_route_used_a_ferry": 11,
+    "arm_a_route_used_no_ferry_but_a_way_this_graph_lacks": 26,
+    "arm_a_route_used_only_ways_this_graph_has": 261,
+    "highway_tags_of_those_ways_counted_per_route_and_way": {
+     "footway": 164,
+     "motorway": 23,
+     "residential": 14,
+     "service": 12,
+     "primary_link": 10,
+     "tertiary": 8,
+     "primary": 6,
+     "bridleway": 4,
+     "motorway_link": 3,
+     "corridor": 2,
+     "secondary_link": 2,
+     "cycleway": 1
+    }
+   },
+   "SI": {
+    "found_arm_a": 1965,
+    "found_arm_b_strict": 1619,
+    "arm_a_only": 361,
+    "arm_a_only_on_pairs_across_water": 0,
+    "arm_a_route_used_a_ferry": 0,
+    "arm_a_route_used_no_ferry_but_a_way_this_graph_lacks": 40,
+    "arm_a_route_used_only_ways_this_graph_has": 321,
+    "highway_tags_of_those_ways_counted_per_route_and_way": {
+     "tertiary_link": 34,
+     "secondary_link": 4,
+     "cycleway": 3,
+     "corridor": 2,
+     "track": 1
+    }
+   },
+   "citywide": {
+    "found_arm_a": 1957,
+    "found_arm_b_strict": 1098,
+    "arm_a_only": 879,
+    "arm_a_only_on_pairs_across_water": 686,
+    "arm_a_route_used_a_ferry": 698,
+    "arm_a_route_used_no_ferry_but_a_way_this_graph_lacks": 67,
+    "arm_a_route_used_only_ways_this_graph_has": 114,
+    "highway_tags_of_those_ways_counted_per_route_and_way": {
+     "footway": 3588,
+     "residential": 622,
+     "service": 189,
+     "tertiary": 68,
+     "secondary": 61,
+     "primary": 61,
+     "track": 7,
+     "motorway_link": 6,
+     "secondary_link": 4,
+     "tertiary_link": 4,
+     "motorway": 1
+    }
+   },
+   "brownsville": {
+    "found_arm_a": 420,
+    "found_arm_b_strict": 420,
+    "arm_a_only": 0,
+    "arm_a_only_on_pairs_across_water": 0,
+    "arm_a_route_used_a_ferry": 0,
+    "arm_a_route_used_no_ferry_but_a_way_this_graph_lacks": 0,
+    "arm_a_route_used_only_ways_this_graph_has": 0,
+    "highway_tags_of_those_ways_counted_per_route_and_way": {}
+   }
+  },
+  "foot_rec": {
+   "BK": {
+    "found_arm_a": 2000,
+    "found_arm_b_strict": 2000,
+    "arm_a_only": 0,
+    "arm_a_only_on_pairs_across_water": 0,
+    "note": "foot_rec routes carry no way ids, so ferry use cannot be read from them"
+   },
+   "QN": {
+    "found_arm_a": 1977,
+    "found_arm_b_strict": 1964,
+    "arm_a_only": 14,
+    "arm_a_only_on_pairs_across_water": 0,
+    "note": "foot_rec routes carry no way ids, so ferry use cannot be read from them"
+   },
+   "MN": {
+    "found_arm_a": 2000,
+    "found_arm_b_strict": 1642,
+    "arm_a_only": 358,
+    "arm_a_only_on_pairs_across_water": 349,
+    "note": "foot_rec routes carry no way ids, so ferry use cannot be read from them"
+   },
+   "BX": {
+    "found_arm_a": 1991,
+    "found_arm_b_strict": 1929,
+    "arm_a_only": 62,
+    "arm_a_only_on_pairs_across_water": 0,
+    "note": "foot_rec routes carry no way ids, so ferry use cannot be read from them"
+   },
+   "SI": {
+    "found_arm_a": 2000,
+    "found_arm_b_strict": 1977,
+    "arm_a_only": 23,
+    "arm_a_only_on_pairs_across_water": 0,
+    "note": "foot_rec routes carry no way ids, so ferry use cannot be read from them"
+   },
+   "citywide": {
+    "found_arm_a": 1995,
+    "found_arm_b_strict": 1286,
+    "arm_a_only": 709,
+    "arm_a_only_on_pairs_across_water": 698,
+    "note": "foot_rec routes carry no way ids, so ferry use cannot be read from them"
+   },
+   "brownsville": {
+    "found_arm_a": 420,
+    "found_arm_b_strict": 420,
+    "arm_a_only": 0,
+    "arm_a_only_on_pairs_across_water": 0,
+    "note": "foot_rec routes carry no way ids, so ferry use cannot be read from them"
+   }
+  }
+ },
+ "checks": [
+  {
+   "check": "ends of the BK set inside the Staten Island box",
+   "expected": 0,
+   "computed": 0,
+   "match": true
+  },
+  {
+   "check": "ends of the QN set inside the Staten Island box",
+   "expected": 0,
+   "computed": 0,
+   "match": true
+  },
+  {
+   "check": "ends of the MN set inside the Staten Island box",
+   "expected": 0,
+   "computed": 0,
+   "match": true
+  },
+  {
+   "check": "ends of the BX set inside the Staten Island box",
+   "expected": 0,
+   "computed": 0,
+   "match": true
+  },
+  {
+   "check": "ends of the SI set inside the Staten Island box",
+   "expected": 4000,
+   "computed": 4000,
+   "match": true
+  },
+  {
+   "check": "route found, all pairs, ours_wheelchair, BK",
+   "expected": 0.912,
+   "computed": 0.912,
+   "match": true
+  },
+  {
+   "check": "route found, all pairs, ours_wheelchair, MN",
+   "expected": 0.64,
+   "computed": 0.64,
+   "match": true
+  },
+  {
+   "check": "route found, all pairs, ors_a_rec_i10_k6, MN",
+   "expected": 0.977,
+   "computed": 0.977,
+   "match": true
+  },
+  {
+   "check": "found by both table, ors_a_rec_i10_k6, MN",
+   "expected": [
+    1256,
+    15,
+    633,
+    25
+   ],
+   "computed": [
+    1256,
+    15,
+    633,
+    25
+   ],
+   "match": true
+  },
+  {
+   "check": "route found, all pairs, valhalla_wheelchair, MN",
+   "expected": 0.942,
+   "computed": 0.9415,
+   "match": true
+  },
+  {
+   "check": "found by both table, valhalla_wheelchair, citywide",
+   "expected": [
+    887,
+    2,
+    960,
+    39
+   ],
+   "computed": [
+    887,
+    2,
+    960,
+    39
+   ],
+   "match": true
+  }
+ ]
+}

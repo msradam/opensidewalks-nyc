@@ -6,8 +6,15 @@ along a corridor has to use its crossing. `ask` routes end to end along each cor
 wheelchair limit and records whether ORS lets the route through.
 
 usage: python compare/ors_tag_probe.py write OUT.osm.pbf
-       python compare/ors_tag_probe.py ask BASE_URL OUT.json
+       python compare/ors_tag_probe.py ask BASE_URL OUT.json [ORS_CONFIG_YML] [IMAGE] [FIXTURE_PBF]
+
+`ask` writes a `_meta` block first: the date, what ORS reports about itself,
+and, when given, the text of the configuration file ORS was started with, the
+Docker image reference and the fixture's checksum. What is not given is
+written as "not recorded".
 """
+import datetime
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -70,9 +77,20 @@ def write(out):
     w.close()
 
 
-def ask(base, out):
+def ask(base, out, config=None, image="not recorded", fixture=None):
     assert base.startswith(("http://localhost", "http://127.0.0.1")), "local engines only"
-    res = {}
+    try:        # ORS reports its version and build date here
+        status = requests.get(f"{base}/ors/v2/status", timeout=30).json().get("engine", "not recorded")
+    except (requests.RequestException, ValueError):
+        status = "not recorded"
+    res = {"_meta": {
+        "run_date": datetime.datetime.now(datetime.UTC).isoformat(timespec="seconds"),
+        "ors_status": status,
+        "image": image,
+        "ors_config": Path(config).read_text() if config else "not recorded",
+        "fixture_sha256": hashlib.sha256(Path(fixture).read_bytes()).hexdigest() if fixture else "not recorded",
+        "profile": "wheelchair", "limits": LIMITS, "code": "compare/ors_tag_probe.py",
+    }}
     for i, form in enumerate(FORMS):
         (x0, y), (x1, _) = ends(i)
         o, d = [x0 + 5 * M, y], [x1 - 5 * M, y]      # inside the graph's bounding box, or ORS finds no point
@@ -89,6 +107,8 @@ def ask(base, out):
         json.dump(res, f, indent=1)
     print(f'{"":32}' + "  ".join(f"{k:>10}" for k in LIMITS))
     for form, row in res.items():
+        if form == "_meta":
+            continue
         print(f"{form:32}" + "  ".join(f"{v:>10}" for v in row.values()))
 
 

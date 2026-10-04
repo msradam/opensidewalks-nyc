@@ -1,4 +1,40 @@
 {
+ "_meta": {
+  "what": "For each tag form (one corridor of the fixture each) and each wheelchair limit: whether ORS returned a route along the corridor (passes) or error 2009, no route (blocked).",
+  "added": "This block was added on 2026-10-04 from the files named in `sources`. The results below are unchanged from the run.",
+  "ors_version": "10.0.1",
+  "ors_build_date": "2026-09-24T05:31:17Z",
+  "graphhopper_version": "v4.16.0",
+  "image": "openrouteservice/openrouteservice@sha256:b2f66b5e33949e86a279f3de654ef99e2964eb9112d16fb52788c6bb63ff941c",
+  "run_date": "2026-10-03 (container started 15:06 UTC, results written 15:40 UTC)",
+  "profile": "wheelchair",
+  "settings": {
+   "kerbs_on_crossings": true,
+   "elevation": false,
+   "maximum_snapping_radius": 400,
+   "ext_storages": [
+    "WayCategory",
+    "WaySurfaceType",
+    "Wheelchair",
+    "OsmId"
+   ],
+   "heap": "XMS 512m, XMX 1g"
+  },
+  "request": "POST /ors/v2/directions/wheelchair/geojson with instructions false; a limit is sent as options.profile_params.restrictions, and 'none given' sends no options",
+  "limits": {
+   "kerb 0.03, 0.06, 0.1": "maximum_sloped_kerb in metres",
+   "incline 6, 10": "maximum_incline in percent",
+   "width 0.9": "minimum_width in metres"
+  },
+  "fixture": "compare/ors_tag_probe.py write: 17 corridors, each a sidewalk, a crossing and a sidewalk in a line, the tag form on both crossing end nodes or on the crossing way",
+  "fixture_sha256": "3d876704573e5f41d7d0724844ce27b71b9a57461a9ed7a910300b8b30dfae56 (probe.osm.pbf as kept in the working archive)",
+  "code": "compare/ors_tag_probe.py",
+  "sources": [
+   "engines/ors/probe.sh (image digest, heap)",
+   "engines/ors/probe/config/ors-config.yml (settings)",
+   "the container's ors.log in the working archive (version, build date, times)"
+  ]
+ },
  "no tags": {
   "none given": "passes",
   "kerb 0.03": "passes",

@@ -1,0 +1,277 @@
+{
+ "_meta": {
+  "date": "2026-10-04",
+  "code": "evaluation/compare/results/code/kerb_raised_nodes.py",
+  "inputs": {
+   "osm": "engines/osm/nyc-261001.osm.pbf (the pinned clip)",
+   "graph": "research_notes/compare/graph/nyc.npz",
+   "routes": "research_notes/compare/routes/: ors_armA.with_way_ids.jsonl.gz (rec_i10_k6, default), valhalla.with_way_ids.jsonl.gz (wheelchair), ours.pkl",
+   "detail": "research_notes/compare/results/pairs_detail.jsonl.gz (which pairs are measured)"
+  },
+  "what": {
+   "routes": "routes found on measured pairs (snapped ends within 25 m across routers); the 17 landmark pairs are left out",
+   "way_level": "routes using a footway=crossing way with a node tagged kerb=raised anywhere on it, by the way ids of the route. tables.md counts the same flag after matching the route to this graph's edges, so the two can differ by a few routes",
+   "node_level": "routes with such a node within 1.0 m of the route's own line: the route passes over the tagged kerb",
+   "ours": "this graph's routes are counted on whole edges, the first and last included in full"
+  },
+  "in_the_clip": {
+   "nodes_tagged_kerb_raised": 1610,
+   "crossing_ways_with_such_a_node": 981
+  }
+ },
+ "ours_wheelchair": {
+  "BK": {
+   "routes": 1806,
+   "way_level": 497,
+   "node_level": 495,
+   "way_level_share": 0.2752,
+   "node_level_share": 0.2741
+  },
+  "QN": {
+   "routes": 1336,
+   "way_level": 51,
+   "node_level": 51,
+   "way_level_share": 0.0382,
+   "node_level_share": 0.0382
+  },
+  "MN": {
+   "routes": 1271,
+   "way_level": 307,
+   "node_level": 306,
+   "way_level_share": 0.2415,
+   "node_level_share": 0.2408
+  },
+  "BX": {
+   "routes": 986,
+   "way_level": 28,
+   "node_level": 28,
+   "way_level_share": 0.0284,
+   "node_level_share": 0.0284
+  },
+  "SI": {
+   "routes": 992,
+   "way_level": 234,
+   "node_level": 234,
+   "way_level_share": 0.2359,
+   "node_level_share": 0.2359
+  },
+  "citywide": {
+   "routes": 889,
+   "way_level": 262,
+   "node_level": 261,
+   "way_level_share": 0.2947,
+   "node_level_share": 0.2936
+  },
+  "brownsville": {
+   "routes": 362,
+   "way_level": 30,
+   "node_level": 30,
+   "way_level_share": 0.0829,
+   "node_level_share": 0.0829
+  }
+ },
+ "ours_walk": {
+  "BK": {
+   "routes": 1876,
+   "way_level": 904,
+   "node_level": 899,
+   "way_level_share": 0.4819,
+   "node_level_share": 0.4792
+  },
+  "QN": {
+   "routes": 1440,
+   "way_level": 236,
+   "node_level": 236,
+   "way_level_share": 0.1639,
+   "node_level_share": 0.1639
+  },
+  "MN": {
+   "routes": 1569,
+   "way_level": 779,
+   "node_level": 778,
+   "way_level_share": 0.4965,
+   "node_level_share": 0.4959
+  },
+  "BX": {
+   "routes": 1460,
+   "way_level": 162,
+   "node_level": 162,
+   "way_level_share": 0.111,
+   "node_level_share": 0.111
+  },
+  "SI": {
+   "routes": 1319,
+   "way_level": 507,
+   "node_level": 505,
+   "way_level_share": 0.3844,
+   "node_level_share": 0.3829
+  },
+  "citywide": {
+   "routes": 1029,
+   "way_level": 628,
+   "node_level": 628,
+   "way_level_share": 0.6103,
+   "node_level_share": 0.6103
+  },
+  "brownsville": {
+   "routes": 362,
+   "way_level": 73,
+   "node_level": 73,
+   "way_level_share": 0.2017,
+   "node_level_share": 0.2017
+  }
+ },
+ "ors_a_rec_i10_k6": {
+  "BK": {
+   "routes": 1930,
+   "way_level": 990,
+   "node_level": 988,
+   "way_level_share": 0.513,
+   "node_level_share": 0.5119
+  },
+  "QN": {
+   "routes": 1838,
+   "way_level": 463,
+   "node_level": 427,
+   "way_level_share": 0.2519,
+   "node_level_share": 0.2323
+  },
+  "MN": {
+   "routes": 1889,
+   "way_level": 1033,
+   "node_level": 1031,
+   "way_level_share": 0.5469,
+   "node_level_share": 0.5458
+  },
+  "BX": {
+   "routes": 1741,
+   "way_level": 140,
+   "node_level": 132,
+   "way_level_share": 0.0804,
+   "node_level_share": 0.0758
+  },
+  "SI": {
+   "routes": 1831,
+   "way_level": 823,
+   "node_level": 620,
+   "way_level_share": 0.4495,
+   "node_level_share": 0.3386
+  },
+  "citywide": {
+   "routes": 1848,
+   "way_level": 1232,
+   "node_level": 1217,
+   "way_level_share": 0.6667,
+   "node_level_share": 0.6585
+  },
+  "brownsville": {
+   "routes": 362,
+   "way_level": 76,
+   "node_level": 76,
+   "way_level_share": 0.2099,
+   "node_level_share": 0.2099
+  }
+ },
+ "ors_a_no_limits": {
+  "BK": {
+   "routes": 1933,
+   "way_level": 1059,
+   "node_level": 1056,
+   "way_level_share": 0.5479,
+   "node_level_share": 0.5463
+  },
+  "QN": {
+   "routes": 1838,
+   "way_level": 490,
+   "node_level": 472,
+   "way_level_share": 0.2666,
+   "node_level_share": 0.2568
+  },
+  "MN": {
+   "routes": 1889,
+   "way_level": 1033,
+   "node_level": 1031,
+   "way_level_share": 0.5469,
+   "node_level_share": 0.5458
+  },
+  "BX": {
+   "routes": 1741,
+   "way_level": 141,
+   "node_level": 133,
+   "way_level_share": 0.081,
+   "node_level_share": 0.0764
+  },
+  "SI": {
+   "routes": 1831,
+   "way_level": 826,
+   "node_level": 623,
+   "way_level_share": 0.4511,
+   "node_level_share": 0.3403
+  },
+  "citywide": {
+   "routes": 1849,
+   "way_level": 1246,
+   "node_level": 1233,
+   "way_level_share": 0.6739,
+   "node_level_share": 0.6668
+  },
+  "brownsville": {
+   "routes": 362,
+   "way_level": 76,
+   "node_level": 76,
+   "way_level_share": 0.2099,
+   "node_level_share": 0.2099
+  }
+ },
+ "valhalla_wheelchair": {
+  "BK": {
+   "routes": 1933,
+   "way_level": 492,
+   "node_level": 438,
+   "way_level_share": 0.2545,
+   "node_level_share": 0.2266
+  },
+  "QN": {
+   "routes": 1846,
+   "way_level": 67,
+   "node_level": 59,
+   "way_level_share": 0.0363,
+   "node_level_share": 0.032
+  },
+  "MN": {
+   "routes": 1827,
+   "way_level": 192,
+   "node_level": 153,
+   "way_level_share": 0.1051,
+   "node_level_share": 0.0837
+  },
+  "BX": {
+   "routes": 1767,
+   "way_level": 17,
+   "node_level": 6,
+   "way_level_share": 0.0096,
+   "node_level_share": 0.0034
+  },
+  "SI": {
+   "routes": 1832,
+   "way_level": 154,
+   "node_level": 132,
+   "way_level_share": 0.0841,
+   "node_level_share": 0.0721
+  },
+  "citywide": {
+   "routes": 1847,
+   "way_level": 265,
+   "node_level": 223,
+   "way_level_share": 0.1435,
+   "node_level_share": 0.1207
+  },
+  "brownsville": {
+   "routes": 362,
+   "way_level": 67,
+   "node_level": 64,
+   "way_level_share": 0.1851,
+   "node_level_share": 0.1768
+  }
+ }
+}

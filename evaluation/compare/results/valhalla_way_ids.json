@@ -5,7 +5,7 @@
   "engine": "Valhalla 3.9.0 (pyvalhalla), tiles in research_notes/compare/engines/valhalla",
   "way_ids": "trace_attributes on each route's own shape, shape_match edge_walk, walk_or_snap where edge_walk fails (compare/run_valhalla.py)",
   "matching": "compare/analyse.py `match`: only edges of the named ways are matched, as for ORS wheelchair on plain OSM",
-  "code": "research_notes/compare/results/valhalla_way_ids.py (working archive)"
+  "code": "evaluation/compare/results/code/valhalla_way_ids.py"
  },
  "routes_identical_to_first_run": {
   "foot same": 12437,

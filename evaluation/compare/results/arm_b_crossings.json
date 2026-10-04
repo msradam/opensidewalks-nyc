@@ -1,0 +1,141 @@
+{
+ "_meta": {
+  "date": "2026-10-04",
+  "code": "evaluation/compare/results/code/arm_b_crossings.py",
+  "inputs": {
+   "graph": "research_notes/compare/graph/nyc.npz (this graph as arrays, compare/graph.py)",
+   "converted_file": "research_notes/compare/armB/strict/nyc-osw-strict.osm.pbf and its .ways.json (scripts/osw_to_osm.py --no-ramp raised)",
+   "routes": "research_notes/compare/routes/ors_armB_strict.with_way_ids.jsonl.gz, config rec_i10_k6",
+   "detail": "research_notes/compare/results/pairs_detail.jsonl.gz (measured pairs and the published audit count)"
+  },
+  "what": {
+   "routes": "ORS routes on arm B strict at incline 10, kerb 0.06, on measured pairs",
+   "flagged_by_the_published_audit": "routes with crossing_no_ramp > 0 in pairs_detail, the tables.md row",
+   "with_a_flagged_crossing_edge_by_way_ids": "routes whose ORS way ids include a crossing edge of a crossing that lacks a ramp at some end; counted from the way ids alone, so it can exceed the audit, which also needs the edge to lie along the route line",
+   "with_a_flagged_edge_that_has_a_raised_node": "the converted way has a node tagged kerb=raised, kerb:height=0.14, which ORS refuses at 0.06 on the tag probe; such a way id on a route means ORS used the way without passing the kerb, or the audit and ORS differ",
+   "with_no_flagged_edge_that_has_a_raised_node": "every flagged edge on the route is a piece of a crossing whose converted way carries no raised node: the unramped end is on another piece",
+   "of_those_joining_or_leaving_a_flagged_edge_in_the_roadway": "the route also uses a street centreline that meets such a piece",
+   "edges": "the same per flagged edge on those routes"
+  },
+  "converted_file_counts": {
+   "nodes_by_kerb_value": {
+    "raised": 15599,
+    "lowered": 179383
+   },
+   "crossing_ways_by_kerb_on_their_nodes": {
+    "raised": 15846,
+    "lowered only": 190141,
+    "no kerb tag": 12741
+   },
+   "crossing_edges_the_audit_flags": 50068,
+   "crossing_edges": 437510
+  }
+ },
+ "routes": {
+  "BK": {
+   "routes": 1865,
+   "flagged_by_the_published_audit": 262,
+   "with_a_flagged_crossing_edge_by_way_ids": 262,
+   "with_a_flagged_edge_that_has_a_raised_node": 0,
+   "with_no_flagged_edge_that_has_a_raised_node": 262,
+   "of_those_joining_or_leaving_a_flagged_edge_in_the_roadway": 224,
+   "with_any_flagged_edge_met_in_the_roadway": 224
+  },
+  "QN": {
+   "routes": 1532,
+   "flagged_by_the_published_audit": 516,
+   "with_a_flagged_crossing_edge_by_way_ids": 516,
+   "with_a_flagged_edge_that_has_a_raised_node": 0,
+   "with_no_flagged_edge_that_has_a_raised_node": 516,
+   "of_those_joining_or_leaving_a_flagged_edge_in_the_roadway": 483,
+   "with_any_flagged_edge_met_in_the_roadway": 483
+  },
+  "MN": {
+   "routes": 1297,
+   "flagged_by_the_published_audit": 324,
+   "with_a_flagged_crossing_edge_by_way_ids": 324,
+   "with_a_flagged_edge_that_has_a_raised_node": 0,
+   "with_no_flagged_edge_that_has_a_raised_node": 324,
+   "of_those_joining_or_leaving_a_flagged_edge_in_the_roadway": 296,
+   "with_any_flagged_edge_met_in_the_roadway": 296
+  },
+  "BX": {
+   "routes": 1576,
+   "flagged_by_the_published_audit": 646,
+   "with_a_flagged_crossing_edge_by_way_ids": 646,
+   "with_a_flagged_edge_that_has_a_raised_node": 0,
+   "with_no_flagged_edge_that_has_a_raised_node": 646,
+   "of_those_joining_or_leaving_a_flagged_edge_in_the_roadway": 627,
+   "with_any_flagged_edge_met_in_the_roadway": 627
+  },
+  "SI": {
+   "routes": 1557,
+   "flagged_by_the_published_audit": 693,
+   "with_a_flagged_crossing_edge_by_way_ids": 693,
+   "with_a_flagged_edge_that_has_a_raised_node": 0,
+   "with_no_flagged_edge_that_has_a_raised_node": 693,
+   "of_those_joining_or_leaving_a_flagged_edge_in_the_roadway": 683,
+   "with_any_flagged_edge_met_in_the_roadway": 683
+  },
+  "citywide": {
+   "routes": 1042,
+   "flagged_by_the_published_audit": 358,
+   "with_a_flagged_crossing_edge_by_way_ids": 358,
+   "with_a_flagged_edge_that_has_a_raised_node": 0,
+   "with_no_flagged_edge_that_has_a_raised_node": 358,
+   "of_those_joining_or_leaving_a_flagged_edge_in_the_roadway": 340,
+   "with_any_flagged_edge_met_in_the_roadway": 340
+  },
+  "brownsville": {
+   "routes": 362,
+   "flagged_by_the_published_audit": 7,
+   "with_a_flagged_crossing_edge_by_way_ids": 7,
+   "with_a_flagged_edge_that_has_a_raised_node": 0,
+   "with_no_flagged_edge_that_has_a_raised_node": 7,
+   "of_those_joining_or_leaving_a_flagged_edge_in_the_roadway": 7,
+   "with_any_flagged_edge_met_in_the_roadway": 7
+  }
+ },
+ "edges": {
+  "BK": {
+   "lowered_nodes_only": 360,
+   "lowered_nodes_only, meets a street centreline the route uses": 303,
+   "no_kerb_tag": 29,
+   "no_kerb_tag, meets a street centreline the route uses": 23
+  },
+  "QN": {
+   "lowered_nodes_only": 868,
+   "lowered_nodes_only, meets a street centreline the route uses": 586,
+   "no_kerb_tag": 270,
+   "no_kerb_tag, meets a street centreline the route uses": 229
+  },
+  "MN": {
+   "lowered_nodes_only": 538,
+   "lowered_nodes_only, meets a street centreline the route uses": 488,
+   "no_kerb_tag": 25,
+   "no_kerb_tag, meets a street centreline the route uses": 10
+  },
+  "BX": {
+   "lowered_nodes_only": 978,
+   "lowered_nodes_only, meets a street centreline the route uses": 844,
+   "no_kerb_tag": 392,
+   "no_kerb_tag, meets a street centreline the route uses": 199
+  },
+  "SI": {
+   "lowered_nodes_only": 1098,
+   "lowered_nodes_only, meets a street centreline the route uses": 477,
+   "no_kerb_tag": 678,
+   "no_kerb_tag, meets a street centreline the route uses": 639
+  },
+  "citywide": {
+   "lowered_nodes_only": 577,
+   "lowered_nodes_only, meets a street centreline the route uses": 383,
+   "no_kerb_tag": 342,
+   "no_kerb_tag, meets a street centreline the route uses": 206
+  },
+  "brownsville": {
+   "lowered_nodes_only": 7,
+   "lowered_nodes_only, meets a street centreline the route uses": 7
+  }
+ }
+}

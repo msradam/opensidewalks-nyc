@@ -4,7 +4,7 @@ From `comparison.json`. Random areas have 2,000 pairs each. Measured pairs are t
 
 ## Key
 
-Added 2026-10-03 after external review. Everything below the key is as `code/tables.py` wrote it from `comparison.json`. The protocol is `../PROTOCOL.md`.
+Added 2026-10-03. Everything from "Pairs" to "This graph against the reference" is as `code/tables.py` wrote it from `comparison.json`. The key and the last section, "Ferries and pairs across water", were written by hand on 2026-10-04; that section's tables are as `code/ferries.py` wrote them. The protocol is `../PROTOCOL.md`.
 
 Columns. BK, QN, MN, BX, SI and citywide are 2,000 seeded random pairs each, drawn from graph nodes. Brownsville is 420 trips in Brooklyn Community District 16. "landmark hand-checked" is the 8 landmark pairs whose routes were checked over imagery in `../../reachability/hand_check.md`; the column name is the label the scripts use, and the check was done by a language-model rater, not by hand. "landmark structure" is the 9 landmark pairs meant to cross a bridge or other structure.
 
@@ -20,12 +20,12 @@ Rows, by router:
 | ORS on this graph, strict kerbs, 10/0.06 and 6/0.06 | ORS wheelchair, recommended weighting, incline 10 or 6, kerb 0.06 | Arm B strict: this graph converted to OSM, with a crossing end that has no surveyed ramp tagged `kerb=raised`, `kerb:height=0.14`, and LiDAR incline as `incline` | This graph's edge ids |
 | ORS on this graph, known kerbs only, 10/0.06 | The same at incline 10 | Arm B known: as strict, but ends without a surveyed ramp are left untagged | This graph's edge ids |
 | ORS raw OSM, foot | ORS foot-walking, recommended weighting | Arm A | Geometry only |
-| Valhalla wheelchair type | Valhalla 3.9.0 pedestrian costing, `type: wheelchair`, `use_hills` 0, built without elevation tiles, `sidewalk_factor` at its default 1.0. It has no kerb option, does not enforce `max_grade`, and penalises steps without forbidding them. It is a stair-avoiding foot baseline, not a wheelchair router | Arm A | OSM way ids Valhalla returns (from 2026-10-04) |
+| Valhalla wheelchair type | Valhalla 3.9.0 pedestrian costing, `type: wheelchair`, `use_hills` 0, built without elevation tiles, `sidewalk_factor` at its default 1.0. It excludes ways and nodes tagged `wheelchair=no` (also `bad`, `half`, `partial` and `impassable`) and surfaces rougher than `compacted`, and it penalises steps (600 s) without forbidding them. It neither penalises nor excludes escalators. It has no kerb option and does not enforce `max_grade`. It is a baseline that avoids stairs and honours `wheelchair=no`, not a wheelchair router | Arm A | OSM way ids Valhalla returns (from 2026-10-04) |
 | Valhalla foot | Valhalla pedestrian costing as shipped | Arm A | OSM way ids Valhalla returns (from 2026-10-04) |
 
 The ORS foot row is matched by geometry only and is not verified by the way-id method. Geometry matching overcounted steps for ORS before the way-id fix, so treat its steps, roadway and incline figures as less certain.
 
-Valhalla by way ids (2026-10-04). Until 2026-10-04 both Valhalla rows were matched by geometry only and were flagged as unverified. They are now matched by the OSM way ids of the edges Valhalla used, the same way as the ORS wheelchair rows on plain OSM. `compare/run_valhalla.py` reran every pair and passed each route's own shape to Valhalla's `trace_attributes` (`edge_walk`, or `walk_or_snap` for the 16% of routes where `edge_walk` failed). The routes are identical to the first run's, and every found route has way ids. The rows below are the way-id numbers, and the old and new numbers for every area are in `valhalla_way_ids.json`. Steps changed most. The wheelchair type takes steps on 0.0% of Brooklyn routes, not 4.5%, and on 0.2% of Manhattan routes, not 8.0%. The few that remain are escalators, which OSM tags `highway=steps` with `conveying=*` and Valhalla treats as escalators. Valhalla foot takes steps on 6.0% of Brooklyn routes (was 10.3%) and 16.4% of Manhattan routes (was 24.3%). That is the positive control: the same check finds steps on 1,156 Valhalla foot routes, and on each of them Valhalla's own edge use also says steps. The roadway rows did not change in any random area or in Brownsville (Brooklyn 89.5%, Manhattan 84.2% for the wheelchair type). In the random areas and Brownsville, the crossing and incline audit rows fell by at most 2.8 points. The raw OSM rows fell by at most 3.1 points, except steps and the `incline` tag (at most 6.5 points, Manhattan, foot). In the 8 landmark structure pairs, one wheelchair route moved off the roadway row (62.5% to 50.0%).
+Valhalla by way ids (2026-10-04). Until 2026-10-04 both Valhalla rows were matched by geometry only and were flagged as unverified. They are now matched by the OSM way ids of the edges Valhalla used, the same way as the ORS wheelchair rows on plain OSM. `compare/run_valhalla.py` reran every pair and passed each route's own shape to Valhalla's `trace_attributes` (`edge_walk`, or `walk_or_snap` for the 16% of routes where `edge_walk` failed). The routes are identical to the first run's, and every found route has way ids. The rows below are the way-id numbers, and the old and new numbers for every area are in `valhalla_way_ids.json`. Steps changed most. The wheelchair type takes steps on 0.0% of Brooklyn routes, not 4.5%, and on 0.2% of Manhattan routes, not 8.0%. The 10 wheelchair routes the audit still flags ride an escalator, which OSM tags `highway=steps` with `conveying=*`. Valhalla 3.9.0 classes these ways as escalators, and in its source the wheelchair type neither penalises nor excludes them, so the audit is right to flag them. Valhalla foot takes steps on 6.0% of Brooklyn routes (was 10.3%) and 16.4% of Manhattan routes (was 24.3%). That is the positive control. Valhalla's own edge use says steps on 1,193 foot routes. The way-id audit finds 1,156 of them (96.9%), misses 37, and flags 12 more, all on escalators (`valhalla_way_ids.json`, `steps_cross_check_all_pairs`). The roadway rows did not change in any random area or in Brownsville (Brooklyn 89.5%, Manhattan 84.2% for the wheelchair type). In the random areas and Brownsville, the crossing and incline audit rows fell by at most 2.8 points. The raw OSM rows fell by at most 3.1 points, except steps and the `incline` tag (at most 6.5 points, Manhattan, foot). Among the 8 measured landmark structure pairs (of 9), one wheelchair route moved off the roadway row (62.5% to 50.0%). The script is `code/valhalla_way_ids.py`.
 
 Tables, in order:
 
@@ -38,13 +38,18 @@ Tables, in order:
 | Overlap with this graph's wheelchair route | For pairs both found: the median of the smaller of two shares (this route within 10 m of this graph's route, and the reverse), and the share of pairs where that is 0.9 or more (the same route) |
 | Audit against this graph's data (five tables) | Share of the router's routes on measured pairs that this graph's data flags. "No surveyed ramp within reach" is a crossing without a surveyed ramp within 5 m of each end. "Over this profile's incline limits" is any non-street, non-step edge steeper than 8.3% up or 10% down in the direction of travel on this graph's LiDAR incline, short edges included. "Steps" is a steps edge. "Over 10 m in the roadway" is more than 10 m on edges this graph classes as streets, that is, street centrelines, including centrelines where OSM tags a sidewalk on the street (`sidewalk=*`), so it does not mean travel in the carriageway. "Any of the four" is any of these |
 | Unramped crossings per km | Crossings with no surveyed ramp within 5 m, per km of route |
-| Raw OSM audit (seven tables) | Share of the router's routes on measured pairs that use a way whose raw OSM tags a wheelchair router could refuse (`compare/osm_tags.py`, `barriers`). "incline": an `incline` tag over 8.3%, or up, down or steep. "kerb=raised": a `footway=crossing` way with any node tagged `kerb=raised`, which is a coarse way-level flag. "smoothness": intermediate or worse. "surface": a rough surface value. "steps": `highway=steps`. "wheelchair=no". "any": any of these |
+| Raw OSM audit (seven tables) | Share of the router's routes on measured pairs that use a way whose raw OSM tags a wheelchair router could refuse (`compare/osm_tags.py`, `barriers`). "incline": an `incline` tag over 8.3%, or up, down or steep. "kerb=raised": a `footway=crossing` way with any node tagged `kerb=raised`, a way-level flag; `kerb_raised_nodes.json` has the count by node. "smoothness": intermediate or worse. "surface": a rough surface value. "steps": `highway=steps`. "wheelchair=no". "any": any of these |
 | ORS settings matrix | Share of all pairs with a route for each ORS configuration in `compare/run_ors.py`. `foot` is foot-walking with `shortest`, `foot_rec` foot-walking as shipped, `default` wheelchair with no restrictions, `i6`/`i10` the incline limit, `k3`/`k6` the kerb limit in cm, `_w90` a minimum width of 0.9 m, `rec_` the recommended weighting (the others use `shortest`) |
 | This graph against the reference | Same or different route, found by one only, or neither, and the cause of each disagreement: the first thing on the ORS route that this profile refuses |
+| Ferries and pairs across water (four tables) | Pairs no walking route can serve, routes that use a ferry, and the "route found" and "found by both" tables with those pairs set apart (`ferries.json`) |
 
 The audit tables judge every router by this dataset's ramp survey and LiDAR incline, which only this graph and ORS arms B and C had. This graph's wheelchair profile scores 0% on them by construction. This graph's own walking profile scores 90.8% on "any of the four" in Brooklyn, against 91.3% for the ORS reference. On the raw OSM audit, which uses OSM's own tags, this graph's wheelchair routes score 43.7% in Brooklyn.
 
-`kerb=raised` and ORS. ORS 10.0.1 does not read `kerb=raised` as a kerb height: on the tag probe fixture a crossing with `kerb=raised` passes every kerb limit (`../probes/ors_tag_probe.json`). By the way-level raw OSM audit below, 51.3% of the reference's Brooklyn routes (66.7% city-wide) use a crossing way with a node tagged `kerb=raised`. The flag is coarse: the raised node can sit anywhere on the crossing way, for example at a median, and a node-level count for routes was not made. Part of the gap between ORS and this graph is therefore in how ORS reads OSM's own kerb tags, and part is the ramp survey. Separately, a bare `kerb:height` of 0.15 m or more passes every kerb limit on the probe; that parsing is ORS issue #2293 (https://github.com/GIScience/openrouteservice/issues/2293).
+`kerb=raised` and ORS. On the tag probe fixture, ORS 10.0.1 lets a crossing with `kerb=raised` on its end nodes pass every kerb limit (`../probes/ors_tag_probe.json`). This has not been reported to the ORS project. How much of the gap that explains is small. Of the 15,599 crossing ends with no surveyed ramp within 5 m, OSM tags 675 (4.3%) `kerb=raised`, and the whole extract has 1,610 nodes with that tag (`kerb_crosscheck.json`, `kerb_raised_nodes.json`). Counted by route, 51.2% of the reference's Brooklyn routes on measured pairs pass over a node tagged `kerb=raised` on a crossing way they use (65.9% city-wide). So do 27.4% of this graph's own wheelchair routes and 47.9% of its walking routes, because this graph takes kerbs from the ramp survey and does not read OSM's kerb tags either. A share of routes rises with route length for every router, so these figures say that long routes meet such a node somewhere, not that half of crossings are tagged. The count by node is within 0.2 points of the way-level table below in Brooklyn for ORS and for this graph, and 11 points lower for ORS on Staten Island (33.9% against 45.0%). An earlier version of this key quoted the way-level 51.3% without this graph's own figure beside it. Separately, a bare `kerb:height` of 0.15 m or more passes every kerb limit on the probe; that parsing is ORS issue #2293 (https://github.com/GIScience/openrouteservice/issues/2293).
+
+Arm B strict and crossings without a ramp. The row "ORS on this graph, strict kerbs, 10/0.06" still shows a crossing with no surveyed ramp on 14.1% of Brooklyn routes and 44.5% on Staten Island. ORS did not pass a raised kerb on any of them. In this graph a crossing is several edges, and the converter writes one OSM way per edge with the kerb tag on the crossing's end node. The audit flags every edge of a crossing that lacks a ramp at either end. On all 2,806 flagged routes in the six random samples and Brownsville, the flagged edges ORS used are pieces whose converted way has no `kerb=raised` node: the unramped end is on another piece. On 2,660 of them (94.8%) the route also uses a street centreline that meets such a piece, so it walked the ramped half of the crossing and joined or left the roadway in the middle. Arm B includes street centrelines, which this graph's wheelchair profile refuses. The other 146 were not classified further. Counts by area are in `arm_b_crossings.json` (`code/arm_b_crossings.py`). Arm C leaves the centrelines out.
+
+Ferries. This graph has no ferry edges. 349 of the 2,000 Manhattan pairs have one end on Governors, Liberty or Ellis Island and the other elsewhere, and 698 of the 2,000 city-wide pairs have their ends on different lands (647 with an end on Staten Island, 61 with an end on one of the three small islands, 10 with both). No walking route inside the city joins those lands, so this graph finds none of them, while ORS and Valhalla ride a `route=ferry` way. The last section sets those pairs apart. With them set apart, this graph's wheelchair profile finds 77.5% of Manhattan pairs (64.0% with them) and 69.3% city-wide (45.1%), and the ORS reference 97.3% and 97.6%. The engines also take a ferry where a walking route may exist: Valhalla's wheelchair type uses one on 35.4% of its Manhattan routes and 64.8% city-wide, ORS on 18.8% and 38.6%. The share of "ORS on this graph" under "no limits given" in the settings matrix (82.1% in Manhattan, 64.2% city-wide) is the same effect: of the 357 Manhattan pairs ORS finds on plain OSM and not on this graph, 348 used a ferry on plain OSM.
 
 ### Pairs
 
@@ -402,3 +407,53 @@ The audit tables judge every router by this dataset's ramp survey and LiDAR incl
 | cause: connectivity | 104 | 227 | 99 | 407 | 359 | 228 | 40 | 0 | 0 |
 | cause: rule | 106 | 30 | 30 | 19 | 18 | 18 | 46 | 0 | 0 |
 | ORS on this graph (strict, shortest) matches this graph | 11.4% | 21.6% | 33.1% | 10.5% | 15.2% | 43.5% | 67.4% | 28.6% | 0.0% |
+
+## Ferries and pairs across water
+
+Added 2026-10-04 from `ferries.json`, made by `code/ferries.py` from the archived routes and the `route=ferry` ways of the pinned OSM clip. A pair is across water when its two ends lie on different ones of Governors Island, Liberty Island, Ellis Island, Staten Island and the rest of the city. The two "with an end on" rows overlap where one end is on Staten Island and the other on a small island. The landmark pairs are left out. Routes using a ferry can be counted only for the routers that return OSM way ids.
+
+### Pairs across water
+
+| | BK | QN | MN | BX | SI | citywide | Brownsville |
+|---|---|---|---|---|---|---|---|
+| pairs | 2000 | 2000 | 2000 | 2000 | 2000 | 2000 | 420 |
+| across water | 0 | 0 | 349 | 0 | 0 | 698 | 0 |
+| of those, with an end on Governors, Liberty or Ellis Island | 0 | 0 | 349 | 0 | 0 | 61 | 0 |
+| of those, with an end on Staten Island | 0 | 0 | 0 | 0 | 0 | 647 | 0 |
+
+### Routes using a ferry: routes (share of the router's routes found; of them, on pairs not across water)
+
+| | BK | QN | MN | BX | SI | citywide | Brownsville |
+|---|---|---|---|---|---|---|---|
+| ORS raw OSM, incline 10 kerb 0.06 | 0 (0.0%; 0) | 0 (0.0%; 0) | 367 (18.8%; 19) | 13 (0.7%; 13) | 0 (0.0%; 0) | 755 (38.6%; 69) | 0 (0.0%; 0) |
+| ORS raw OSM, no limits given | 0 (0.0%; 0) | 0 (0.0%; 0) | 367 (18.8%; 19) | 13 (0.7%; 13) | 0 (0.0%; 0) | 749 (38.2%; 62) | 0 (0.0%; 0) |
+| Valhalla wheelchair type | 166 (8.5%; 166) | 55 (2.8%; 55) | 666 (35.4%; 390) | 13 (0.7%; 13) | 0 (0.0%; 0) | 1253 (64.8%; 587) | 0 (0.0%; 0) |
+| Valhalla foot | 161 (8.1%; 161) | 48 (2.4%; 48) | 725 (36.2%; 376) | 11 (0.5%; 11) | 0 (0.0%; 0) | 1248 (62.6%; 550) | 0 (0.0%; 0) |
+
+### Route found, all pairs, with the pairs across water set apart
+
+| | BK | QN | MN | BX | SI | citywide | Brownsville |
+|---|---|---|---|---|---|---|---|
+| this graph, wheelchair | 91.2% | 67.8% | 77.5% | 50.8% | 50.3% | 69.3% | 100.0% |
+| ORS raw OSM, incline 10 kerb 0.06 | 98.8% | 98.1% | 97.3% | 96.6% | 98.2% | 97.6% | 100.0% |
+| ORS raw OSM, incline 6 kerb 0.06 | 98.4% | 98.0% | 95.3% | 96.4% | 97.9% | 97.3% | 100.0% |
+| ORS raw OSM, no limits given | 99.0% | 98.1% | 97.3% | 96.6% | 98.2% | 97.6% | 100.0% |
+| ORS on this graph, strict kerbs, 10/0.06 | 95.4% | 81.5% | 81.1% | 84.2% | 81.0% | 84.3% | 100.0% |
+| ORS on this graph, strict kerbs, 6/0.06 | 91.2% | 77.1% | 67.4% | 72.9% | 66.2% | 44.9% | 97.6% |
+| ORS on this graph, known kerbs only, 10/0.06 | 97.4% | 83.5% | 85.0% | 88.8% | 89.6% | 86.9% | 100.0% |
+| Valhalla wheelchair type | 98.2% | 96.8% | 97.3% | 97.0% | 97.7% | 97.3% | 100.0% |
+| this graph, walk | 94.8% | 74.3% | 97.8% | 75.1% | 69.4% | 81.3% | 100.0% |
+| ORS raw OSM, foot | 100.0% | 98.9% | 100.0% | 99.6% | 100.0% | 99.6% | 100.0% |
+| Valhalla foot | 100.0% | 98.8% | 100.0% | 99.6% | 100.0% | 99.6% | 100.0% |
+
+### Found by both / this graph only / the other only / neither (measured pairs, pairs across water set apart)
+
+| | BK | QN | MN | BX | SI | citywide | Brownsville |
+|---|---|---|---|---|---|---|---|
+| ORS raw OSM, incline 10 kerb 0.06 | 1796 / 10 / 134 / 10 | 1335 / 1 / 503 / 35 | 1256 / 15 / 290 / 24 | 956 / 30 / 785 / 31 | 985 / 7 / 846 / 23 | 882 / 7 / 308 / 21 | 362 / 0 / 0 / 0 |
+| ORS raw OSM, incline 6 kerb 0.06 | 1790 / 16 / 132 / 12 | 1335 / 1 / 503 / 35 | 1234 / 37 / 279 / 35 | 954 / 32 / 782 / 34 | 982 / 10 / 841 / 28 | 880 / 9 / 307 / 22 | 362 / 0 / 0 / 0 |
+| ORS raw OSM, no limits given | 1798 / 8 / 135 / 9 | 1335 / 1 / 503 / 35 | 1256 / 15 / 290 / 24 | 956 / 30 / 785 / 31 | 985 / 7 / 846 / 23 | 882 / 7 / 308 / 21 | 362 / 0 / 0 / 0 |
+| ORS on this graph, strict kerbs, 10/0.06 | 1769 / 37 / 96 / 48 | 1312 / 24 / 220 / 318 | 1193 / 78 / 104 / 210 | 927 / 59 / 649 / 167 | 949 / 43 / 608 / 261 | 853 / 36 / 189 / 140 | 362 / 0 / 0 / 0 |
+| ORS on this graph, strict kerbs, 6/0.06 | 1729 / 77 / 56 / 88 | 1271 / 65 / 191 / 347 | 1046 / 225 / 31 / 283 | 852 / 134 / 520 / 296 | 857 / 135 / 428 / 441 | 482 / 407 / 79 / 250 | 352 / 10 / 0 / 0 |
+| ORS on this graph, known kerbs only, 10/0.06 | 1789 / 17 / 112 / 32 | 1328 / 8 / 245 / 293 | 1218 / 53 / 140 / 174 | 956 / 30 / 710 / 106 | 975 / 17 / 744 / 125 | 866 / 23 / 207 / 122 | 362 / 0 / 0 / 0 |
+| Valhalla wheelchair type | 1796 / 10 / 137 / 7 | 1335 / 1 / 511 / 27 | 1255 / 16 / 299 / 15 | 979 / 7 / 788 / 28 | 985 / 7 / 847 / 22 | 887 / 2 / 314 / 15 | 362 / 0 / 0 / 0 |
