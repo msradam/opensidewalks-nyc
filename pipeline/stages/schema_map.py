@@ -4,7 +4,7 @@ Input:  data/clean/{source_id}.geojson
 Output: data/staged/{feature_type}.geojson
 
 Transformations:
-  OSM edges → Sidewalk Edges, Crossing Edges, Footway Edges, Street Edges
+  OSM edges → Sidewalk, Crossing, Footway, Steps, Pedestrian Road and Street Edges
   DOT ramps → CurbRamp Point Nodes (barrier=kerb, kerb=lowered)
   Planimetric polygons → gap-fill Sidewalk Edges (centerline derived)
   Borough boundaries → per-feature ext:borough tags + root region MultiPolygon
@@ -64,13 +64,27 @@ def borough_code(value):
     return _BOROUGH_CODES.get(str(value).strip().lower().replace(" ", "_"), value)
 
 
+# The crossing:markings enum of opensidewalks.schema.json (v0.3), all 19 values.
 CROSSING_MARKINGS_ENUM = frozenset([
-    "zebra", "zebra:double", "zebra:paired", "zebra:bicolour",
-    "lines", "lines:paired", "lines:rainbow",
-    "dashes", "dots",
-    "ladder", "ladder:paired", "ladder:skewed",
-    "pictograms", "rainbow", "surface", "yes", "no",
+    "dashes", "dots", "ladder", "ladder:paired", "ladder:skewed",
+    "lines", "lines:paired", "lines:rainbow", "no", "pictograms", "rainbow",
+    "skewed", "surface", "yes", "zebra", "zebra:bicolour", "zebra:double",
+    "zebra:paired", "zebra:rainbow",
 ])
+
+# The schema's own guidance: crossing:markings may be derived from the
+# unambiguous crossing=* values only. traffic_signals, uncontrolled and the
+# rest say nothing about paint and give no value.
+_CROSSING_TO_MARKINGS = {"marked": "yes", "zebra": "yes", "unmarked": "no"}
+
+# The foot enum the schema allows on every Edge.
+FOOT_ENUM = frozenset([
+    "designated", "destination", "no", "permissive", "private", "use_sidepath", "yes",
+])
+
+# DOT counter slopes are percent. A magnitude over 100 (steeper than 45
+# degrees) is not a gutter slope, so it is treated as unmeasured.
+_MAX_COUNTER_SLOPE_PCT = 100.0
 
 # NYC DOT ramp survey codes. The slope and dimension fields use these values
 # for "no measurement" (999 is mostly cut-through ramps, which have no slope).
@@ -194,20 +208,39 @@ def _osm_surface(osm_surface: str | None) -> str | None:
     return mapping_table.get(s, None)
 
 
-def _osm_crossing_markings(osm_crossing: str | None) -> str | None:
-    """Map OSM crossing tag to OSW crossing:markings enum."""
-    if not osm_crossing:
-        return None
-    c = str(osm_crossing).lower().strip()
-    if c in CROSSING_MARKINGS_ENUM:
-        return c
-    mapping_table = {
-        "marked": "yes", "uncontrolled": "zebra",
-        "traffic_signals": "yes", "toucan": "yes",
-        "pelican": "yes", "pegasus": "yes",
-        "zebra_old_style": "zebra",
-    }
-    return mapping_table.get(c, None)
+def _tag(value) -> str:
+    """An OSM tag value as a lower-case string, '' when absent."""
+    v = "" if value is None else str(value).strip().lower()
+    return "" if v in ("nan", "none") else v
+
+
+def _osm_crossing_markings(osm_markings: str | None, osm_crossing: str | None) -> str | None:
+    """OSW crossing:markings from OSM's crossing:markings tag, else crossing=*.
+
+    A crossing:markings value in the schema enum is kept. A variant the
+    schema does not list ("zebra:skewed", "lines:surface") becomes its base
+    type, and a list of marking types ("zebra;lines;pictograms") becomes
+    "yes": there are markings, of more than one kind. Anything else falls
+    back to crossing=*, read as the schema says (marked and zebra give yes,
+    unmarked gives no, other values give nothing).
+    """
+    m = _tag(osm_markings).split("|")[0]
+    if m in CROSSING_MARKINGS_ENUM:
+        return m
+    if m.split(":")[0] in CROSSING_MARKINGS_ENUM - {"yes", "no"}:
+        return m.split(":")[0]
+    parts = [x.strip() for x in m.split(";") if x.strip()]
+    if len(parts) > 1 and all(x in CROSSING_MARKINGS_ENUM - {"yes", "no"} for x in parts):
+        return "yes"
+    derived = {_CROSSING_TO_MARKINGS.get(x.strip()) for x in _tag(osm_crossing).split("|")[0].split(";")}
+    derived.discard(None)
+    return derived.pop() if len(derived) == 1 else None
+
+
+def _osm_foot(osm_foot: str | None) -> str | None:
+    """OSM foot=* when it is one of the schema's values, else None."""
+    f = _tag(osm_foot).split("|")[0]
+    return f if f in FOOT_ENUM else None
 
 
 def _classify_osm_edge(row: pd.Series) -> str | None:
@@ -305,13 +338,19 @@ def _osm_edges_to_osw(edges_gdf: gpd.GeoDataFrame, pipeline_version: str,
         if "name" in row and row["name"] and str(row["name"]) not in ("nan", "None", ""):
             props["name"] = str(row["name"])
 
-        # Width from OSM (in metres if numeric).
+        # Width from OSM (in metres if numeric). Zero or less is not a width.
         width_raw = row.get("width")
         if width_raw and str(width_raw) not in ("nan", "None", ""):
             try:
-                props["width"] = float(str(width_raw).replace("m", "").strip())
+                width = float(str(width_raw).replace("m", "").strip())
             except ValueError:
-                pass
+                width = None
+            if width is not None and width > 0:
+                props["width"] = width
+
+        foot = _osm_foot(row.get("foot"))
+        if foot:
+            props["foot"] = foot
 
         osmid = row.get("osmid")
         if osmid is not None and str(osmid) not in ("nan", "None", ""):
@@ -346,14 +385,16 @@ def _osm_edges_to_osw(edges_gdf: gpd.GeoDataFrame, pipeline_version: str,
 
         elif edge_type == "crossing":
             props["footway"] = "crossing"
-            cross_mark = _osm_crossing_markings(str(row.get("crossing", "")))
+            cross_mark = _osm_crossing_markings(row.get("crossing:markings"), row.get("crossing"))
             if cross_mark:
                 props["crossing:markings"] = cross_mark
             crossing_rows.append({**props, "geometry": geom})
 
         elif edge_type == "footway":
-            if str(row.get("highway", "")).split("|")[0] == "steps":
-                props["highway"] = "steps"
+            # Steps and Pedestrian Road are their own schema entities and keep
+            # their highway value; path and shared paths are plain Footways.
+            if highway_osm in ("steps", "pedestrian"):
+                props["highway"] = highway_osm
             footway_rows.append({**props, "geometry": geom})
 
         elif edge_type == "street":
@@ -435,7 +476,12 @@ def _ramps_to_curb_nodes(ramps_gdf: gpd.GeoDataFrame, pipeline_version: str,
         # Tactile paving from the survey's detectable warning surface status.
         # "Missing" is the most common value, so a non-empty field does not
         # mean a surface exists. "Not Applicable" and blanks stay untagged.
-        dws = str(ramp.get("dws_conditions") or "").strip().lower()
+        # yes covers a defective or misplaced surface too, so DOT's own value
+        # is kept beside it.
+        dws_raw = str(ramp.get("dws_conditions") or "").strip()
+        if dws_raw and dws_raw.lower() not in ("nan", "none"):
+            props["ext:dws_condition"] = dws_raw
+        dws = dws_raw.lower()
         if dws in _DWS_PRESENT:
             props["tactile_paving"] = "yes"
         elif dws == "missing":
@@ -460,8 +506,11 @@ def _ramps_to_curb_nodes(ramps_gdf: gpd.GeoDataFrame, pipeline_version: str,
                 slope = float(ramp.get(orig_key))
             except (TypeError, ValueError):
                 continue
-            if slope not in _DOT_SENTINELS:
-                props[ext_key] = slope
+            if slope in _DOT_SENTINELS:
+                continue
+            if ext_key == "ext:counter_slope_pct" and abs(slope) > _MAX_COUNTER_SLOPE_PCT:
+                continue
+            props[ext_key] = slope
 
         rows.append({**props, "geometry": geom})
 

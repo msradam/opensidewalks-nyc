@@ -43,24 +43,26 @@ for f in fc["features"]:
         nrows.append((p["_id"], c[0], c[1], p.get("ext:elevation_m"), p.get("barrier"), p.get("kerb"),
                       p.get("tactile_paving"), p.get("ext:ramp_id"), p.get("ext:borough"), p.get("ext:source"),
                       p.get("ext:running_slope_pct"), p.get("ext:cross_slope_pct"), p.get("ext:counter_slope_pct"),
-                      p.get("ext:source_timestamp") is not None, p.get("ext:elevation_source")))
+                      p.get("ext:source_timestamp") is not None, p.get("ext:elevation_source"),
+                      p.get("ext:dws_condition")))
     else:
         c = g["coordinates"]
         bad_precision += not all(dec_ok(x) for pt in c for x in pt)
         L = sum(math.hypot((c[i + 1][0] - c[i][0]) * 111320 * math.cos(math.radians(c[i][1])),
                            (c[i + 1][1] - c[i][1]) * 111320) for i in range(len(c) - 1))
         hw, fw = p.get("highway"), p.get("footway")
-        kind = fw if (hw == "footway" and fw in ("sidewalk", "crossing")) else ("footway" if hw == "footway" else ("steps" if hw == "steps" else "street"))
+        # A Pedestrian Road is walked like a footway and counted with them.
+        kind = fw if (hw == "footway" and fw in ("sidewalk", "crossing")) else ("footway" if hw in ("footway", "pedestrian") else ("steps" if hw == "steps" else "street"))
         erows.append((p["_id"], p["_u_id"], p["_v_id"], kind, hw, p.get("ext:borough"), p.get("ext:source"),
                       p.get("incline"), p.get("width"), L, p.get("name"), c[0][0], c[0][1], c[-1][0], c[-1][1], len(c),
                       p.get("surface"), p.get("crossing:markings"), p.get("ext:osm_id") is not None,
-                      p.get("ext:source_timestamp") is not None, p.get("ext:structure")))
+                      p.get("ext:source_timestamp") is not None, p.get("ext:structure"), p.get("foot")))
 del fc
 N = pd.DataFrame(nrows, columns=["id", "lon", "lat", "elev", "barrier", "kerb", "tactile", "ramp", "borough", "source",
-                                 "run", "cross", "counter", "has_ts", "elev_source"])
+                                 "run", "cross", "counter", "has_ts", "elev_source", "dws"])
 E = pd.DataFrame(erows, columns=["id", "u", "v", "kind", "highway", "borough", "source", "incline", "width", "length",
                                  "name", "x0", "y0", "x1", "y1", "npts", "surface", "markings", "has_osm_id", "has_ts",
-                                 "structure"])
+                                 "structure", "foot"])
 del nrows, erows
 
 # --- counts and form -------------------------------------------------------
@@ -69,6 +71,9 @@ res["counts"] = {"features": len(N) + len(E), "nodes": len(N), "edges": len(E),
                  "edges_by_source": E.source.value_counts().to_dict(),
                  "edges_by_borough": E.borough.fillna("none").value_counts().to_dict(),
                  "street_edges_by_highway": E[E.kind == "street"].highway.value_counts().to_dict(),
+                 "pedestrian_road_edges": int((E.highway == "pedestrian").sum()),
+                 "crossing_markings": E[E.kind == "crossing"].markings.fillna("none").value_counts().to_dict(),
+                 "foot_by_kind": {k: d.foot.fillna("none").value_counts().to_dict() for k, d in E.groupby("kind")},
                  "duplicate_node_ids": int(N.id.duplicated().sum()), "duplicate_edge_ids": int(E.id.duplicated().sum())}
 nid = pd.Index(N.id)
 res["form"] = {"coordinates_over_7_decimals": int(bad_precision),
@@ -199,6 +204,9 @@ res["curb"] = {
     "tactile_agrees_with_survey": int(((want == got) | (want.isna() & got.isna())).sum()),
     "tactile_disagrees": int((~((want == got) | (want.isna() & got.isna()))).sum()),
     "nodes_with_sentinel_slope": int((curb.run.isin(S) | curb.cross.isin(S) | curb.counter.isin(S)).sum()),
+    "counter_slope_over_100_pct": int((curb.counter.abs() > 100).sum()),
+    "dws_condition": curb.dws.fillna("none").value_counts().to_dict(),
+    "dws_condition_agrees_with_survey": int((curb.dws == curb.ramp.map(raw.DWS_CONDITIONS)).sum()),
     "with_running_slope": int(curb.run.notna().sum()),
     "running_within_1_in_12": int((curb.run.abs() <= 100 / 12).sum()),
     "cross_within_1_in_48": int((curb.cross.abs() <= 100 / 48).sum()), "with_cross_slope": int(curb.cross.notna().sum()),
@@ -213,6 +221,7 @@ res["nodes_not_on_any_edge_by_source"] = N[~N.id.isin(ref)].source.fillna("none"
 # --- widths ----------------------------------------------------------------
 sw = E[(E.kind == "sidewalk")]
 res["width"] = {"sidewalk_edges": len(sw), "with_width": int(sw.width.notna().sum()),
+                "edges_with_width_0_or_less": int((E.width <= 0).sum()),
                 "median_m": round(float(sw.width.median()), 2),
                 "by_borough": {b: {"with_width": int(d.width.notna().sum()), "median_m": round(float(d.width.median()), 2)}
                                for b, d in sw.groupby(sw.borough.fillna("none"))}}

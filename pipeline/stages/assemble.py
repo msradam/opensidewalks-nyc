@@ -175,7 +175,7 @@ def _merge_near_endpoints(all_edges: gpd.GeoDataFrame,
         g = coo_matrix((np.ones(int(mask.sum())), (u[mask], v[mask])), shape=(n, n))
         return connected_components(g, directed=False)[1]
 
-    ped = all_edges["highway"].isin(["footway", "steps"]).values
+    ped = all_edges["highway"].isin(["footway", "pedestrian", "steps"]).values
     whole = _labels(np.ones(len(all_edges), dtype=bool))
     pedc = _labels(ped)
     in_ped = np.zeros(n, dtype=bool)
@@ -870,7 +870,7 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
         curb_fields = {"barrier", "kerb", "tactile_paving",
                        "ext:ramp_id", "ext:corner_id", "ext:street_1", "ext:street_2",
                        "ext:running_slope_pct", "ext:cross_slope_pct",
-                       "ext:counter_slope_pct"}
+                       "ext:counter_slope_pct", "ext:dws_condition"}
 
         def _merge_node_group(group: pd.DataFrame) -> pd.Series:
             # Start from the first row, then fill in curb fields from any row
@@ -995,8 +995,10 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
             "license": "ODbL-1.0",
             "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
             "attribution": (
-                "Pedestrian network derived from opensidewalks-nyc (ODbL-1.0). "
-                "\u00a9 OpenStreetMap contributors, NYC Open Data, NYS GIS."
+                "Pedestrian network from opensidewalks-nyc, ODbL-1.0. Map data "
+                "\u00a9 OpenStreetMap contributors (openstreetmap.org/copyright). "
+                "Also from NYC DOT and NYC OTI data on NYC Open Data, and LiDAR "
+                "from NYS GIS and NOAA."
             ),
             # Which OSM snapshot this build read: extract URL, SHA-256 and
             # the extract's own data timestamp.

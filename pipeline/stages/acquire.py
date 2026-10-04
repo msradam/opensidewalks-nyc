@@ -264,6 +264,12 @@ def _filter_extract(pbf: Path, out_xml: Path, custom_filter: str,
                 writer.add_way(obj)
 
 
+# OSM way tags kept beyond OSMnx's default useful_tags_way: the pedestrian
+# sub-tags Stage 3 reads.
+EXTRA_WAY_TAGS = ["footway", "crossing", "crossing:markings", "surface", "sidewalk",
+                  "tactile_paving", "kerb", "foot", "wheelchair", "layer"]
+
+
 def acquire_osm(source_cfg: dict, boroughs_file: Path, out_dir: Path,
                 manifest: dict, bbox: dict | None = None) -> Path:
     """Build the OSM walking graph from a dated regional extract.
@@ -281,11 +287,8 @@ def acquire_osm(source_cfg: dict, boroughs_file: Path, out_dir: Path,
     simplify      = retrieval.get("simplify", False)
     extract_url   = retrieval["extract_url"]
 
-    # Extend OSMnx's default useful_tags_way to preserve pedestrian sub-tags.
-    extra_tags = ["footway", "crossing", "surface", "sidewalk", "tactile_paving",
-                  "kerb", "foot", "wheelchair", "layer"]
     ox.settings.useful_tags_way = list(
-        dict.fromkeys(ox.settings.useful_tags_way + extra_tags)
+        dict.fromkeys(ox.settings.useful_tags_way + EXTRA_WAY_TAGS)
     )
 
     nodes_file = out_dir / "osm_nodes.geojson"

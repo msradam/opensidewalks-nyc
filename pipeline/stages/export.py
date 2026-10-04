@@ -239,12 +239,17 @@ def export_gapfill_sidecar(staged_dir: Path, fc: dict, output_dir: Path) -> Path
             "none of them touches it. In a sample of 18 checked over orthoimagery, "
             "9 lay on a sidewalk or walkway, 1 on other pedestrian paving, 4 were "
             "unclear and 4 were wrong (a parking lot, a truck apron, a cemetery "
-            "road). Check a segment on the ground or in imagery before using it."
+            "road). Check a segment on the ground or in imagery before using it. "
+            "The polygons are NYC Open Data (dataset 52n9-sdep); they were selected "
+            "by comparison with OpenStreetMap, so the file is licensed ODbL-1.0 "
+            "like the graph."
         ),
+        # Licence and attribution as in the graph's own root.
         "dataSource": {
             "name": "opensidewalks-nyc pipeline, planimetric gap-fill sidecar",
             "url": "https://github.com/msradam/opensidewalks-nyc",
-            "license": "Public Domain (NYC Open Data, dataset 52n9-sdep)",
+            **{k: v for k, v in (fc.get("dataSource") or {}).items()
+               if k in ("license", "licenseUrl", "attribution", "osmExtract")},
         },
         "pipelineVersion": fc.get("pipelineVersion"),
         "features": features,

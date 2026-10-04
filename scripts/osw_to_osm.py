@@ -93,7 +93,7 @@ def convert(feats, output, no_ramp="raised", pedestrian_only=False):
         # Opposite edges share a line and a class. Two ways of different classes can share a line too
         # (steps and the path beside them, drawn on the same nodes), and both must survive.
         key = (min(tuple(coords), tuple(reversed(coords))), p.get("highway"), p.get("footway"))
-        if key in done or p["_u_id"] == p["_v_id"] or (pedestrian_only and p.get("highway") not in ("footway", "steps")):
+        if key in done or p["_u_id"] == p["_v_id"] or (pedestrian_only and p.get("highway") not in ("footway", "pedestrian", "steps")):
             continue
         done.add(key)
         refs = [node_id[p["_u_id"]]]

@@ -28,21 +28,16 @@ sources:
       simplify: false
     expected_geometry: LineString
 
-  # Correction (2026-10-03): the description below is out of date. A contractor
-  # (Cyclomedia) collected this survey for NYC DOT from vehicle-mounted
-  # street-level imagery and LiDAR; the GeoCyclora capture dates run from March
-  # 2017 to January 2020, mostly 2018. The "Public Domain" licence labels in this
-  # file are also inaccurate: NYC Open Data carries terms of use (Admin Code
-  # 23-502(d)), and every release file is ODbL-1.0 as LICENSE-DATA.md states.
-  # The values are left unchanged in this pass so a rebuild matches the release.
   nyc_dot_ramps:
     description: >
-      NYC DOT Pedestrian Ramp Locations. 217k+ point features recording the
-      location, geometry, and condition of pedestrian curb ramps citywide.
-      Survey data collected April 2018 to October 2019. These become Curb Point Nodes in the
-      OSW graph with barrier=kerb, kerb=lowered.
+      NYC DOT Pedestrian Ramp Locations. 217,679 point features recording the
+      location, slopes and warning surface of pedestrian curb ramps citywide.
+      Collected for NYC DOT by a contractor, Cyclomedia, from vehicle-mounted
+      street-level imagery and LiDAR; the GeoCyclora capture dates run from
+      March 2017 to January 2020, 99% of them in 2018. These become Curb Ramp
+      Nodes in the OSW graph with barrier=kerb, kerb=lowered.
     type: socrata
-    license: Public Domain (NYC Open Data)
+    license: NYC Open Data terms of use (NYC Admin Code 23-502(d))
     license_url: https://data.cityofnewyork.us/Transportation/Pedestrian-Ramp-Locations/ufzp-rrqu
     retrieval:
       method: socrata
@@ -66,7 +61,7 @@ sources:
       where OSM has only sidewalk=* tags on street edges with no separate
       sidewalk geometry.
     type: socrata
-    license: Public Domain (NYC Open Data)
+    license: NYC Open Data terms of use (NYC Admin Code 23-502(d))
     license_url: https://data.cityofnewyork.us/City-Government/NYC-Planimetric-Database-Sidewalk/52n9-sdep
     retrieval:
       method: socrata
@@ -88,7 +83,7 @@ sources:
       OSW root metadata region field as a MultiPolygon, (2) tag every feature
       with ext:borough, and (3) bound OSM queries per borough.
     type: socrata
-    license: Public Domain (NYC Open Data)
+    license: NYC Open Data terms of use (NYC Admin Code 23-502(d))
     license_url: https://data.cityofnewyork.us/City-Government/Borough-Boundaries/7t3b-ywvw
     retrieval:
       method: socrata
@@ -117,7 +112,7 @@ sources:
       Captured May 2017 by Quantum Spatial using Leica ALS80. Used to compute
       edge incline (grade) for wheelchair routing and accessibility scoring.
     type: arcgis_imageserver
-    license: Public Domain (New York State)
+    license: No licence attached (NYS GIS ImageServer; OTI's copy is 7sc8-jtbz on NYC Open Data)
     license_url: https://data.cityofnewyork.us/City-Government/Topobathymetric-LiDAR-Data-2017-/7sc8-jtbz
     retrieval:
       method: arcgis_exportimage
@@ -137,7 +132,7 @@ sources:
       that the 2017 point cloud lacks. Only the tiles around structures are
       fetched (about 1 GB city-wide), into data/raw/lidar_points/.
     type: ept
-    license: Public Domain (NOAA Digital Coast; NYC OTI and USGS surveys)
+    license: No licence attached (NOAA Digital Coast; NYC OTI and USGS surveys)
     license_url: https://coast.noaa.gov/digitalcoast/data/coastallidar.html
     retrieval:
       method: ept
@@ -161,7 +156,7 @@ sources:
       named-place POI index and enables routing to arbitrary street addresses such as
       "85-26 123rd Street" (Queens block-house format) or "161 Amsterdam Avenue".
     type: socrata
-    license: Public Domain (NYC Open Data)
+    license: NYC Open Data terms of use (NYC Admin Code 23-502(d))
     license_url: https://data.cityofnewyork.us/City-Government/NYC-Address-Points/g6pj-hd8k
     retrieval:
       method: socrata
@@ -187,7 +182,7 @@ sources:
       transit-adjacent nodes in the pedestrian graph with ext:ada_accessible.
       Not part of the pedestrian graph topology. Informational annotation only.
     type: gtfs_static
-    license: Public Domain (MTA)
+    license: MTA terms of use (not used; this stage ships nothing)
     license_url: https://api.mta.info/
     retrieval:
       method: http_csv

@@ -82,7 +82,7 @@ def crossing_ends(feats, curb_ids, node_xy, reach_m):
         u, v = p.get("_u_id"), p.get("_v_id")
         if p.get("highway") == "footway" and p.get("footway") == "crossing":
             crossing_edges.append((p.get("_id"), u, v))
-        elif p.get("highway") in ("footway", "steps"):
+        elif p.get("highway") in WALK_HIGHWAYS:
             walk_nodes.update((u, v))
     parent = {}
 
@@ -127,6 +127,21 @@ def crossings_with_ramps(feats, curb_ids, node_xy, reach_m):
 
 
 # ----- main convert -------------------------------------------------------
+
+# Edges a person walks on. A Pedestrian Road (highway=pedestrian: a plaza or
+# a pedestrian street) is walked like a footway, not avoided like a street.
+WALK_HIGHWAYS = ("footway", "pedestrian", "steps")
+
+
+def edge_class(p):
+    """Unweaver (subclass, footway) for an OSW edge's properties."""
+    hw = p.get("highway")
+    if hw in ("footway", "pedestrian"):
+        return "footway", (p.get("footway") or None) if hw == "footway" else None
+    if hw == "steps":
+        return "steps", None
+    return "street", None
+
 
 def main():
     ap = argparse.ArgumentParser()
@@ -186,24 +201,7 @@ def main():
         else:
             curbramps = (u in curb_ids) or (v in curb_ids)
 
-        # Subclass
-        hw = p.get("highway")
-        fw = p.get("footway")
-        if hw == "footway" and fw == "sidewalk":
-            subclass = "footway"
-            footway_val = "sidewalk"
-        elif hw == "footway" and fw == "crossing":
-            subclass = "footway"
-            footway_val = "crossing"
-        elif hw == "footway":
-            subclass = "footway"
-            footway_val = fw or None
-        elif hw == "steps":
-            subclass = "steps"
-            footway_val = None
-        else:
-            subclass = "street"
-            footway_val = None
+        subclass, footway_val = edge_class(p)
 
         incline = p.get("incline")
         try:
