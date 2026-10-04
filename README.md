@@ -2,7 +2,7 @@
 
 An experimental pedestrian network dataset of New York City in the [OpenSidewalks Schema](https://github.com/OpenSidewalks/OpenSidewalks-Schema) v0.3.
 
-[Demo](https://msradam.github.io/opensidewalks-nyc/) · [Download](https://github.com/msradam/opensidewalks-nyc/releases/latest) · [Evidence](evaluation/)
+[Demo](https://msradam.github.io/opensidewalks-nyc/) · [How it is built](https://msradam.github.io/opensidewalks-nyc/how-it-works.html) · [Download](https://github.com/msradam/opensidewalks-nyc/releases/latest) · [Evidence](evaluation/)
 
 ![Pedestrian edges in Washington Heights and Inwood, coloured by incline](docs/img/incline-washington-heights.png)
 
@@ -162,7 +162,7 @@ uv pip install -e .
 python -m pipeline build          # about 48 minutes, 35 GB peak memory
 ```
 
-[METHODOLOGY.md](METHODOLOGY.md) describes each stage, and [scripts/README.md](scripts/README.md) turns a build into release files.
+[`notebooks/how-it-works.ipynb`](notebooks/how-it-works.ipynb) follows a few blocks through every stage using the pipeline's own functions, and runs in under a minute without a build ([rendered](https://msradam.github.io/opensidewalks-nyc/how-it-works.html)). [METHODOLOGY.md](METHODOLOGY.md) describes each stage, and [scripts/README.md](scripts/README.md) turns a build into release files.
 
 # License and Attribution
 
