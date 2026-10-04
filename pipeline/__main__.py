@@ -126,6 +126,10 @@ def clean_cmd():
         abort=True,
     )
 
+    # data/README.md is tracked; keep it.
+    readme = data_dir / "README.md"
+    readme_text = readme.read_text() if readme.exists() else None
+
     for directory in [data_dir, output_dir]:
         if directory.exists():
             shutil.rmtree(directory)
@@ -134,6 +138,8 @@ def clean_cmd():
     # Recreate empty directory structure.
     for sub in ["data/raw", "data/clean", "data/staged", "output"]:
         (REPO_ROOT / sub).mkdir(parents=True, exist_ok=True)
+    if readme_text is not None:
+        readme.write_text(readme_text)
 
     click.echo("Clean complete.")
 
