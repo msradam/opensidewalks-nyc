@@ -1,6 +1,12 @@
 """Run how-it-works.ipynb and write it to demo/how-it-works.html for the website.
 
 usage: python notebooks/render.py
+
+The notebook reads the latest release by URL. To render it against a local
+FlatGeobuf, set OSW_NYC_FGB to its path (absolute, or relative to the
+repository root); the kernel inherits the variable:
+
+    OSW_NYC_FGB=release-assets-v0.3.5/nyc-osw.fgb python notebooks/render.py
 """
 import re
 import subprocess
@@ -13,10 +19,10 @@ HTML = HERE.parent / "demo" / "how-it-works.html"
 # One per figure, in order. nbconvert has no field for alt text.
 ALT = [
     "Map of OpenSidewalks Edges by type and Curb Ramp Nodes around West 181st Street.",
-    "Map of surveyed curb ramp positions and the Edge endpoints they snap to, most within about a metre.",
-    "Map of planimetric sidewalk polygons with each sidewalk Edge coloured by the width it takes from them.",
+    "Map of surveyed curb ramp positions and the Edge endpoints they snap to, most within about a meter.",
+    "Map of planimetric sidewalk polygons with each sidewalk Edge colored by the width it takes from them.",
     "The terrain model of the area, and a scatter plot of recomputed against published incline lying close to the diagonal.",
-    "Map of pedestrian Edges coloured by incline, steepest on the slopes toward the parks.",
+    "Map of pedestrian Edges colored by incline, steepest on the slopes toward the parks.",
     "Brooklyn Bridge promenade heights: the published deck rises to about 45 m while the terrain model below is near 0 m over the water.",
     "Map of one trip: the walking route takes stairs and the wheelchair route goes round.",
 ]
