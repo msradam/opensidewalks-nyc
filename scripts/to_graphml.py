@@ -13,7 +13,7 @@ is one edge per travel direction and `incline` is signed for that direction.
 An undirected graph would keep one of the two and lose which way is uphill.
 
 With --undirected the graph is a simple undirected one, for code written
-against the releases before v0.3.2: one edge per pair of nodes, the first
+against an undirected graph: one edge per pair of nodes, the first
 the file holds for that pair. Its `_u_id` and `_v_id` attributes say which
 way its `incline` reads; parallel edges and the reverse direction are gone.
 

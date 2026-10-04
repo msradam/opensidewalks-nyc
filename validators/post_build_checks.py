@@ -1,7 +1,6 @@
 """Checks the official validator does not do, on a finished build, city-wide
-and by borough. Each one caught a defect in v0.3.1-nyc.1 that passed the
-validator: zero elevations, cut boroughs, false tactile_paving, detached and
-missing ramps, doubled widths, one-way gap-fill, long coordinates.
+and by borough: zero elevations, cut boroughs, tactile_paving against the
+survey, detached and missing ramps, widths, one-way edges, long coordinates.
 
 usage: python validators/post_build_checks.py OSW_GEOJSON OUT_JSON [DATA_DIR]
 
