@@ -15,7 +15,7 @@
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // One style table for the map and the legend, so they cannot drift apart.
-  // Every class differs in line pattern or shape as well as in colour.
+  // Every class differs in line pattern or shape as well as in color.
   const LINE = {
     flat: { color: "#46627a", weight: 2, label: "Sidewalk or path, up to 5% incline" },
     slope: { color: "#8a5200", weight: 3.5, dashArray: "7 5", label: "Sidewalk or path, 5% to 8.3%" },
@@ -25,13 +25,13 @@
     ramped: { color: "#0f6b5c", weight: 3.5, label: "Crossing with a surveyed ramp near both ends" },
     unramped: { color: "#8c1d78", weight: 3.5, dashArray: "4 5", label: "Crossing with no surveyed ramp near one or both ends" },
   };
-  // Ramp colours are not used by any line, all have at least 3:1 contrast with the map background, and each
+  // Ramp colors are not used by any line, all have at least 3:1 contrast with the map background, and each
   // marker gets a white outline so it stands out where it sits on a line. Compliant is a neutral dark slate,
-  // not a "go" colour.
+  // not a "go" color.
   const RAMP = [
     { shape: "cross", color: "#6e6e6e", label: "Surveyed ramp with no DOT assessment" },
     { shape: "circle", color: "#26323c", label: "DOT label: Compliant" },
-    { shape: "square", color: "#b05a00", label: "DOT label: Pending Technical Review (not decided yet)" },
+    { shape: "square", color: "#b05a00", label: "DOT label: Pending Technical Review (not decided as of December 2020)" },
     { shape: "triangle", color: "#c4001d", label: "DOT label: Non-Compliant" },
   ];
   const REBUILT = { shape: "diamond", color: "#6b3fa0", label: "Corner rebuilt after the survey (survey values may be out of date)" };
@@ -87,7 +87,7 @@
   for (const [coords, ramped, over] of D.network.crossings) {
     L.polyline(coords, { renderer: canvas, ...(ramped ? LINE.ramped : LINE.unramped) }).bindPopup(
       `<strong>Crossing${over ? " over " + over : ""}</strong><br>` +
-      (ramped ? "A surveyed ramp lies within 5 m of both ends." : "No surveyed ramp within 5 m of one or both ends. The wheelchair profile does not cross here.")).addTo(crossings);
+      (ramped ? "A surveyed ramp lies within 16 ft (5 m) of both ends." : "No surveyed ramp within 16 ft (5 m) of one or both ends. The wheelchair profile does not cross here.")).addTo(crossings);
   }
 
   // Ramp markers: a shape per DOT status, drawn on the canvas.
@@ -214,6 +214,7 @@
       const o = r.options[key], s = ROUTE[key];
       const card = el("article", { class: "card", style: `border-top-color:${s.color}` });
       card.append(el("h3", {}, lineSample(s), el("span", {}, s.label)));
+      card.append(el("p", { class: "flag" }, o.caution + " ", el("a", { href: "#disclaimer" }, "Disclaimer: what has not been checked")));
       if (!o.found) {
         card.append(el("p", { class: "none" }, o.note || "No route found."));
       } else {
@@ -225,7 +226,13 @@
         facts.append(bad);
         facts.append(el("li", {}, `Steepest stretch: ${o.steepest === null ? "not known" : o.steepest.toFixed(1) + "%"}`));
         if (o.steps) facts.append(el("li", { class: "flag" }, `Flights of steps: ${o.steps}`));
-        if (o.street_m > 10) facts.append(el("li", { class: "flag" }, `In the roadway, where no sidewalk is mapped: ${fmt(o.street_m)}`));
+        if (o.street_m > 10) facts.append(el("li", { class: "flag" }, `In the roadway, where OpenStreetMap has no separately drawn sidewalk: ${fmt(o.street_m)}`));
+        const rated = el("li", {}, `Ramps on this route that DOT rated Non-Compliant: ${o.ramps.non_compliant}. Rated Compliant: ${o.ramps.compliant}.` +
+          (o.ramps.pending ? ` Pending Technical Review: ${o.ramps.pending}.` : "") +
+          (o.ramps.no_assessment ? ` No DOT rating: ${o.ramps.no_assessment}.` : "") +
+          (o.ramps.non_compliant_rebuilt ? ` Of the Non-Compliant ratings, ${o.ramps.non_compliant_rebuilt} ${o.ramps.non_compliant_rebuilt === 1 ? "is" : "are"} older than a rebuild of the corner.` : ""));
+        if (o.ramps.non_compliant) rated.className = "flag";
+        facts.append(rated);
         if (o.rebuilt) facts.append(el("li", {}, `Crossing ends at corners rebuilt after the survey: ${o.rebuilt}`));
         card.append(facts, el("h4", {}, "Step by step"));
         const ol = el("ol");
@@ -273,8 +280,8 @@
       tbody.append(el("tr", {}, el("th", { scope: "row" }, name), el("td", { class: "num" }, String(n)), el("td", {}, assessed), el("td", {}, since)));
     }
     $("corner-count").textContent = hits.length > LIMIT
-      ? `Showing the first ${LIMIT} of ${hits.length} corners. Type a street name to narrow the list.`
-      : `${hits.length} ${hits.length === 1 ? "corner" : "corners"}.`;
+      ? `Showing the first ${LIMIT} of ${hits.length} intersections. Type a street name to narrow the list.`
+      : `${hits.length} ${hits.length === 1 ? "intersection" : "intersections"}.`;
   };
   $("corner-filter").addEventListener("input", renderCorners);
   renderCorners();
@@ -290,10 +297,10 @@
 
   const src = el("table");
   src.append(el("caption", {}, "Data and software on this page"));
-  src.append(el("thead", {}, el("tr", {}, el("th", { scope: "col" }, "What"), el("th", { scope: "col" }, "Source and date"), el("th", { scope: "col" }, "Licence or terms"))));
+  src.append(el("thead", {}, el("tr", {}, el("th", { scope: "col" }, "What"), el("th", { scope: "col" }, "Source and date"), el("th", { scope: "col" }, "License or terms"))));
   const sb = el("tbody");
-  for (const [what, source, url, licence] of D.meta.sources) {
-    sb.append(el("tr", {}, el("th", { scope: "row" }, what), el("td", {}, el("a", { href: url }, source)), el("td", {}, licence)));
+  for (const [what, source, url, license] of D.meta.sources) {
+    sb.append(el("tr", {}, el("th", { scope: "row" }, what), el("td", {}, el("a", { href: url }, source)), el("td", {}, license)));
   }
   src.append(sb);
   $("sources-body").append(src);

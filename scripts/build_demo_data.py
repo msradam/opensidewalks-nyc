@@ -50,6 +50,9 @@ NOTICE = ("Map data (c) OpenStreetMap contributors (openstreetmap.org/copyright)
           "NYC OTI data from NYC Open Data. DOT's ramp assessment labels come from a DOT map service with no published "
           "terms and are not relicensed. See https://github.com/msradam/opensidewalks-nyc/blob/main/LICENSE-DATA.md")
 FT = 3.28084
+REACH = f"{round(RAMP_REACH_M * FT)} ft ({RAMP_REACH_M:g} m)"
+CAUTION = "This route has not been checked on the street. Do not use it to plan a trip."
+CAUTION_NONE = "This result has not been checked on the street. A missing route can be a gap in the data."
 NOISE_M = 3.0       # an edge shorter than this does not set a route's "steepest stretch"
 
 
@@ -214,6 +217,7 @@ def describe(g, net, edges, dest):
         else:
             runs.append({"kind": k, "label": label, "edges": [e]})
     facts = {"crossings": 0, "no_ramp": 0, "steps": 0, "rebuilt": 0, "street_m": 0.0}
+    met = {}    # ramp id -> ramp, each ramp at a crossing end counted once however many crossings it serves
     long_edges = [e for e in edges if g.length[e] >= NOISE_M and not np.isnan(g.incline[e]) and g.kind[e] != "steps"]
     facts["steepest"] = round(float(max(abs(g.incline[e]) for e in long_edges)) * 100, 1) if long_edges else None
     text, prev = [], None
@@ -240,27 +244,33 @@ def describe(g, net, edges, dest):
                 facts["no_ramp"] += 1
             elif missing:
                 facts["no_ramp"] += 1
-                s += f" No surveyed ramp within 5 m of the {' or the '.join(missing)} end: this graph's wheelchair profile does not cross here."
+                s += f" No surveyed ramp within {REACH} of the {' or the '.join(missing)} end: this graph's wheelchair profile does not cross here."
             else:
-                s += " A surveyed ramp is within 5 m of both ends."
-            notes = []
+                s += f" A surveyed ramp is within {REACH} of both ends."
+            notes, replaced = [], []
             for nm, n in zip(names, order, strict=True):
                 ramp = net.ramp_near(n)
                 if ramp is None:
                     continue
-                note = f"{nm} ramp {STATUS_TEXT[ramp['status']]}"
+                met[ramp["ramp_id"]] = ramp
                 if ramp["rebuilt"]:
+                    # The label is older than the rebuild, so it gets its own sentence and never shares a clause with it.
                     facts["rebuilt"] += 1
-                    note += f", corner rebuilt{' in ' + str(ramp['built_year']) if ramp['built_year'] else ''} after the survey"
-                notes.append(note)
+                    year = f" in {ramp['built_year']}" if ramp["built_year"] else ""
+                    old = f"Its label, {STATUS_TEXT[ramp['status']]}, is from before the rebuild and may not describe the ramp there now." \
+                        if ramp["status"] else "The survey ramp there has no DOT assessment."
+                    replaced.append(f" {nm.capitalize()} ramp: DOT lists its corner as rebuilt{year}, after the survey. {old}")
+                else:
+                    notes.append(f"{nm} ramp {STATUS_TEXT[ramp['status']]}")
             if notes:
                 s += " DOT's assessment of its survey: " + "; ".join(notes) + "."
+            s += "".join(replaced)
         elif r["kind"] == "steps":
             facts["steps"] += 1
             s = f"{lead} {way} up or down a flight of steps ({dist})."
         elif r["kind"] == "street":
             facts["street_m"] += d
-            s = f"{lead} {way} in the roadway of {r['label'] or 'an unnamed street'} for {dist}. No sidewalk is mapped here."
+            s = f"{lead} {way} in the roadway of {r['label'] or 'an unnamed street'} for {dist}. OpenStreetMap has no separately drawn sidewalk here."
         else:
             where = f"along the sidewalk beside {r['label']}" if r["kind"] == "sidewalk" and r["label"] else \
                 "along the sidewalk" if r["kind"] == "sidewalk" else f"along the path{' (' + r['label'] + ')' if r['label'] else ''}"
@@ -277,6 +287,9 @@ def describe(g, net, edges, dest):
         text.append(s)
     text.append(f"Arrive near {dest}.")
     facts["street_m"] = round(facts["street_m"], 1)
+    by_label = Counter(r["status"] for r in met.values())
+    facts["ramps"] = {"non_compliant": by_label[3], "compliant": by_label[1], "pending": by_label[2], "no_assessment": by_label[0],
+                      "non_compliant_rebuilt": sum(r["status"] == 3 and r["rebuilt"] for r in met.values())}
     return facts, text
 
 
@@ -285,32 +298,34 @@ def describe(g, net, edges, dest):
 def verdict_text(rec, ours, ref):
     v = rec["verdict"]
     diff = (ours["length_m"] - ref["length_m"]) if ours["found"] and ref["found"] else None
-    longer = f"{abs(round(diff))} m {'longer' if diff > 0 else 'shorter'} than OpenRouteService's" if diff is not None else ""
+    longer = "" if diff is None else "the same length as OpenRouteService's, to the nearest meter" if round(diff) == 0 else \
+        f"{abs(round(diff * FT))} ft ({abs(round(diff))} m) {'longer' if diff > 0 else 'shorter'} than OpenRouteService's"
     if v["status"] == "same route":
         return ("Both route finders picked the same path.",
-                "This graph and OpenRouteService take the same path, within 10 m over at least 90% of its length. Neither route has been checked on the street.")
+                "This graph and OpenRouteService take the same path, within 33 ft (10 m) over at least 90% of its length. Neither route has been checked on the street.")
     if v["status"] == "neither":
-        return "Neither router finds a wheelchair route.", "Both this graph's wheelchair profile and OpenRouteService's report no route for this trip."
+        return "Neither route finder finds a wheelchair route.", "Both this graph's wheelchair profile and OpenRouteService's report no route for this trip."
     if v["status"] == "ours only":
-        return "This graph finds a wheelchair route and OpenRouteService does not.", v["detail"][0].upper() + v["detail"][1:] + "."
-    head = "This graph finds no wheelchair route; OpenRouteService does." if v["status"] == "reference only" else "The two wheelchair routes differ."
+        return ("This graph finds a wheelchair route and OpenRouteService does not.",
+                v["detail"][0].upper() + v["detail"][1:] + ". This graph's route has not been checked on the street.")
+    head = "This graph finds no wheelchair route; OpenRouteService does." if v["status"] == "reference only" else "The two route finders picked different paths."
     why = {
-        "kerb data": "OpenRouteService crosses where NYC DOT's survey has no ramp within 5 m of one end. OpenStreetMap carries no curb tag (kerb=*) that "
-                     "OpenRouteService reads as a barrier there, so it passes. This graph's profile refuses such a crossing",
+        "kerb data": f"OpenRouteService crosses where NYC DOT's survey has no ramp within {REACH} of one end. OpenStreetMap has no curb record there that "
+                     "OpenRouteService treats as a barrier, so OpenRouteService crosses. This graph's profile does not cross there",
         "incline data": "OpenRouteService takes a stretch that the LiDAR incline puts over this profile's limits (8.3% up, 10% down). "
-                        "OpenStreetMap has no incline tag there, so OpenRouteService passes it",
+                        "OpenStreetMap has no incline record there, so OpenRouteService uses it",
         "structure": "OpenRouteService takes a bridge, tunnel or raised way where this graph's deck heights give an incline over the profile's limits",
-        "connectivity": "OpenRouteService uses a way that this graph's wheelchair profile cannot: a street centerline where no sidewalk is mapped, "
-                        "or a way this graph does not include",
-        "rule": "By this graph's data OpenRouteService's route is passable too. The difference comes from OpenRouteService's own rules "
+        "connectivity": "OpenRouteService uses a way that this graph's wheelchair profile cannot: the street itself where OpenStreetMap has no "
+                        "separately drawn sidewalk, or a way this graph does not include",
+        "rule": "OpenRouteService's route also meets this graph's rules. The difference comes from OpenRouteService's own rules "
                 "(its surface and smoothness limits and its route weighting), not from the ramp or incline data",
     }[v["cause"]]
-    # Name this graph as the subject: after the incline data and connectivity
+    # Each tail names this graph as the subject: after the incline data and connectivity
     # clauses "its route" would read as OpenRouteService compared with itself.
-    tail = f". This graph's route is {longer}." if v["status"] == "different route" else ", and with it barred finds no way through."
-    if v["cause"] == "rule" and v["status"] != "different route":
-        tail = "."
-    return head, why + tail
+    if v["status"] == "different route":
+        return head, f"{why}. This graph's route is {longer}. Neither route has been checked on the street."
+    tail = "" if v["cause"] == "rule" else " Without that way, this graph's profile finds no route."
+    return head, f"{why}.{tail} OpenRouteService's route has not been checked on the street."
 
 
 def fix_name(s):
@@ -320,7 +335,11 @@ def fix_name(s):
 
 def dest_kind(p):
     # The Facilities Database files school-based health centres under HOSPITALS AND CLINICS, by the school's name.
-    return "health clinic in a school" if p["d_kind"] == "clinic" and "school" in p["d_name"].lower() else p["d_kind"]
+    if p["d_kind"] == "clinic" and "school" in p["d_name"].lower():
+        return "health clinic in a school"
+    # The pairs file says "cooling site". The entries are playground misting stations and spray features on a 2020 list,
+    # not the city's emergency cooling centers, and each name already says which.
+    return "on the Cool It! NYC 2020 list" if p["d_kind"] == "cooling site" else p["d_kind"]
 
 
 def subway_start(p):
@@ -371,14 +390,15 @@ def main(cfg):
                   r["slope"], r["corner"].title(), r["built_year"]] for r in ramps], out / "ramps.js")
 
     # ---- routes
-    g = Graph(cfg["graph_npz"])
-    matcher = Matcher(g)
     with open(cfg["pairs"]) as f:
         pairs = {p["id"]: p for p in json.load(f)["pairs"] if p["set"] == "brownsville"}
     with gzip.open(cfg["pairs_detail"], "rt") as f:
         recs = [r for r in map(json.loads, f) if r["set"] == "brownsville"]
+    # The pickle holds every pair in the city. Keep this district's and let the rest go before the city graph loads.
     with open(cfg["ours_pkl"], "rb") as f:
-        ours_routes = pickle.load(f)
+        ours_routes = {k: v for k, v in pickle.load(f).items() if k in pairs}
+    g = Graph(cfg["graph_npz"])
+    matcher = Matcher(g)
     ors = {}
     for path in cfg["ors_arm_a"]:       # later files win: the last one carries the way ids
         with gzip.open(path, "rt") as f:
@@ -395,22 +415,22 @@ def main(cfg):
         mine = ours_routes[p["id"]]["wheelchair"]
         if mine["edges"]:
             facts, text = describe(g, net, mine["edges"], p["d_name"])
-            options["ours"] = {"found": True, "length_m": mine["length_m"], **facts,
+            options["ours"] = {"found": True, "caution": CAUTION, "length_m": mine["length_m"], **facts,
                                "coords": latlon(g.line(mine["edges"], mine["skip_first_m"], mine["skip_last_m"])), "steps_text": text}
         else:
-            options["ours"] = {"found": False, "note": "This graph's wheelchair profile finds no route for this trip."}
+            options["ours"] = {"found": False, "caution": CAUTION_NONE, "note": "This graph's wheelchair profile finds no route for this trip."}
         for key, cfg_name in (("ors_wheelchair", "rec_i10_k6"), ("ors_foot", "foot_rec")):
             r = ors[(p["id"], cfg_name)]
             if not r["found"]:
-                options[key] = {"found": False, "note": "OpenRouteService finds no route for this trip."}
+                options[key] = {"found": False, "caution": CAUTION_NONE, "note": "OpenRouteService finds no route for this trip."}
                 continue
             matched, unmatched = matcher.match(line(r["coords"]), ways=np.array(r["osmid"], dtype=np.int64) if r.get("osmid") else None)
             facts, text = describe(g, net, matched, p["d_name"])
             if unmatched > 0.05:
                 text.insert(0, f"About {round(unmatched * 100)}% of this route runs on ways this graph does not include. Those parts are drawn on the map and are not described here.")
-            options[key] = {"found": True, "length_m": r["length_m"], **facts, "coords": latlon(r["coords"]), "steps_text": text}
+            options[key] = {"found": True, "caution": CAUTION, "length_m": r["length_m"], **facts, "coords": latlon(r["coords"]), "steps_text": text}
         head, reason = verdict_text(rec, rec["routes"]["ours_wheelchair"], rec["routes"]["ors_a_rec_i10_k6"])
-        trips.append({"id": p["id"], "from": {"name": p["o_name"], "kind": p["o_kind"].replace("centre", "center"), "lat": p["o"][1], "lon": p["o"][0]},
+        trips.append({"id": p["id"], "from": {"name": p["o_name"], "kind": {"NYCHA development": "NYCHA public housing development"}.get(p["o_kind"], p["o_kind"].replace("centre", "center")), "lat": p["o"][1], "lon": p["o"][0]},
                       "to": {"name": p["d_name"], "kind": dest_kind(p), "lat": p["d"][1], "lon": p["d"][0]},
                       "verdict": {"status": rec["verdict"]["status"], "cause": rec["verdict"].get("cause"), "headline": head, "reason": reason},
                       "options": options})
@@ -420,6 +440,7 @@ def main(cfg):
     def within(coords):
         return cd.contains(Point(coords[len(coords) // 2][1], coords[len(coords) // 2][0]))
     walks = [w for w in layers["walks"] if within(w[0])]
+    MI = 0.621371
     km = lambda rows: sum(LineString(metres([(x, y) for y, x in r[0]])).length for r in rows) / 1000
     cls = lambda pct: "no value" if pct is None else "over 8.3%" if pct > 8.3 else "5% to 8.3%" if pct > 5 else "up to 5%"
     by_cls = defaultdict(list)
@@ -430,14 +451,14 @@ def main(cfg):
                  and cd.contains(Point(f["geometry"]["coordinates"][0][:2]))}
     ramped = sum(bool(net.ends.get(gid)) and all(net.ends[gid].values()) for gid in groups_in)
     network_tables = [
-        {"caption": "Sidewalks and paths inside the district, by steepest incline", "head": ["Incline", "Length (km)", "Share of length"],
-         "rows": [[k, f"{km(by_cls[k]):.1f}", f"{km(by_cls[k]) / km(walks):.1%}"] for k in ("up to 5%", "5% to 8.3%", "over 8.3%", "no value") if by_cls[k]]},
-        {"caption": "Sidewalk width, where the planimetric survey gives one", "head": ["Average mapped width, curb to building line", "Length (km)", "Share of length with a width"],
-         "rows": [[label, f"{km(rows):.1f}", f"{km(rows) / km(wide):.1%}"] for label, rows in (
+        {"caption": "Sidewalks and paths inside the district, by steepest incline", "head": ["Incline", "Length (miles)", "Length (km)", "Share of length"],
+         "rows": [[k, f"{km(by_cls[k]) * MI:.1f}", f"{km(by_cls[k]):.1f}", f"{km(by_cls[k]) / km(walks):.1%}"] for k in ("up to 5%", "5% to 8.3%", "over 8.3%", "no value") if by_cls[k]]},
+        {"caption": "Sidewalk width, where the planimetric survey gives one", "head": ["Average mapped width, curb to building line", "Length (miles)", "Length (km)", "Share of length with a width"],
+         "rows": [[label, f"{km(rows) * MI:.1f}", f"{km(rows):.1f}", f"{km(rows) / km(wide):.1%}"] for label, rows in (
              ("under 5 ft (1.5 m)", [w for w in wide if w[2] < 1.5]), ("5 ft to 10 ft (1.5 m to 3 m)", [w for w in wide if 1.5 <= w[2] < 3]),
              ("10 ft (3 m) and over", [w for w in wide if w[2] >= 3]))]},
         {"caption": "Crossings inside the district", "head": ["Crossings", "Count", "Share"],
-         "rows": [["A surveyed ramp within 5 m of every end", ramped, f"{ramped / len(groups_in):.1%}"],
+         "rows": [[f"A surveyed ramp within {REACH} of every end", ramped, f"{ramped / len(groups_in):.1%}"],
                   ["No surveyed ramp near at least one end", len(groups_in) - ramped, f"{1 - ramped / len(groups_in):.1%}"]]},
     ]
     n = len(in_cd)
@@ -445,6 +466,13 @@ def main(cfg):
     ramp_rows = [[STATUS_TEXT[s], by_status[(s, False)] + by_status[(s, True)], by_status[(s, False)], by_status[(s, True)]] for s in (3, 2, 1, 0) if by_status[(s, False)] + by_status[(s, True)]]
     ramp_rows.append(["All surveyed ramps", n, sum(not r["rebuilt"] for r in in_cd), sum(r["rebuilt"] for r in in_cd)])
     dates = sorted(r["surveyed"] for r in in_cd if r["surveyed"])
+    # Lead with the year most ramps were captured in, so the range does not read as an even spread.
+    by_year = Counter(d.year for d in dates)
+    main = by_year.most_common(1)[0][0]
+    in_main = [d for d in dates if d.year == main]
+    others = [f"{c:,} in {y}" for y, c in sorted(by_year.items()) if y != main]
+    captured = (f"{len(in_main):,} of the {n:,} surveyed ramps in the district were captured between {in_main[0].strftime('%B')} and "
+                f"{in_main[-1].strftime('%B %Y')}" + (", and " + " and ".join(others) if others else "") + ". ")
     # One row per intersection: its corners share a name in the survey.
     corners = defaultdict(lambda: defaultdict(list))
     for r in in_cd:
@@ -456,18 +484,19 @@ def main(cfg):
         rebuilt = [group[0] for group in by_corner.values() if group[0]["rebuilt"]]
         years = [r["built_year"] for r in rebuilt if r["built_year"]]
         if rebuilt:
-            since = f"{len(rebuilt)} of {len(by_corner)} surveyed corners rebuilt" + (f", latest in {max(years)}" if years else "") + ". Survey values there are out of date."
+            since = f"{len(rebuilt)} of {len(by_corner)} surveyed corners rebuilt" + (f", latest in {max(years)}" if years else "") + ". The survey values for those corners may describe ramps that have since been replaced."
         else:
             labels = {group[0]["progress"] for group in by_corner.values()}
             labels = sorted(f"{x}, on or before the survey date" if x in BUILT else x for x in labels)
-            since = "No rebuild after the survey. DOT's corner status: " + "; ".join(labels) + "."
+            lead = "DOT's corner status: " if len(labels) == 1 else "The corners here have different DOT statuses: "
+            since = "No rebuild after the survey. " + lead + "; ".join(labels) + "."
         corner_rows.append([name, len(rs), ", ".join(f"{k}: {v}" for k, v in sorted(c.items())), since])
     cmp_ = cfg["numbers"]
     meta = {
         "bounds": [[cd.bounds[1], cd.bounds[0]], [cd.bounds[3], cd.bounds[2]]],
         "boundary": [latlon(poly.exterior.coords) for poly in (cd.geoms if cd.geom_type == "MultiPolygon" else [cd])],
         "network_tables": network_tables,
-        "ramp_dates": f"The {n:,} surveyed ramps in the district were captured between {dates[0].strftime('%B %Y')} and {dates[-1].strftime('%B %Y')}. "
+        "ramp_dates": captured +
                       f"DOT's assessment layer was last edited in December 2020. DOT's corner progress file, read on {cfg['progress_retrieved']}, lists the corners of "
                       f"{sum(r['rebuilt'] for r in in_cd):,} of these ramps as rebuilt after the survey. A rebuilt corner is drawn as a hollow diamond: the survey's slope and "
                       f"status may describe a ramp that was replaced, and the progress file does not say which ramps at the corner were rebuilt. "
