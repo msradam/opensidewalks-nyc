@@ -44,6 +44,27 @@ references:
         given-names: Nick
     url: "https://github.com/nbolten/unweaver"
     license: Apache-2.0
+  - type: article
+    title: "Towards routine, city-scale accessibility metrics: Graph theoretic interpretations of pedestrian access using personalized pedestrian network analysis"
+    authors:
+      - family-names: Bolten
+        given-names: Nick
+      - family-names: Caspi
+        given-names: Anat
+    journal: "PLOS ONE"
+    year: 2021
+    doi: "10.1371/journal.pone.0248399"
+  - type: conference-paper
+    title: "AccessMap Website Demonstration"
+    authors:
+      - family-names: Bolten
+        given-names: Nick
+      - family-names: Caspi
+        given-names: Anat
+    conference:
+      name: "ASSETS 2019, the 21st International ACM SIGACCESS Conference on Computers and Accessibility"
+    year: 2019
+    doi: "10.1145/3308561.3354598"
   - type: data
     title: "OpenStreetMap"
     authors:
