@@ -1,6 +1,6 @@
 # Methodology
 
-This document records the data sources, transformations and schema mapping decisions of the OpenSidewalks NYC pipeline. OpenSidewalks NYC is an independent project by Adam Munawar Rahman. It is not made or endorsed by the Taskar Center for Accessible Technology, OpenSidewalks or TDEI, nor by NYC DOT or the City of New York.
+This document records the data sources, transformations and schema mapping decisions of the OpenSidewalks NYC pipeline, as of v0.3.5-nyc.1. OpenSidewalks NYC is an independent project by Adam Munawar Rahman. It is not made or endorsed by the Taskar Center for Accessible Technology, OpenSidewalks or the Transportation Data Equity Initiative (TDEI), nor by NYC DOT or the City of New York. No wheelchair user or disability organization has reviewed the data or the wheelchair profile. This project has not checked any of the data on the ground. Do not use it to tell anyone that a route is accessible, and do not rely on it, or on an app built from it, to plan a trip. The full [Disclaimer](README.md#disclaimer) is in the README.
 
 ---
 
@@ -14,7 +14,7 @@ The OpenStreetMap pedestrian walking network for NYC. Footways, paths, crossings
 
 #### Where it came from
 
-One dated regional extract from Geofabrik, named by URL and SHA-256 in `config/sources.yaml`. The v0.3.3 and v0.3.4 builds read `new-york-261001.osm.pbf` (data timestamp 2026-10-01T20:22:06Z). Geofabrik may remove daily files, so the release itself is the copy to rebuild from. Stage 1 downloads it once, refuses a file whose checksum differs from the pin, filters its ways with pyosmium, and hands the result to [OSMnx](https://github.com/gboeing/osmnx) to build the graph. No Overpass query is made.
+One dated regional extract from Geofabrik, named by URL and SHA-256 in `config/sources.yaml`. The v0.3.3, v0.3.4 and v0.3.5 builds read `new-york-261001.osm.pbf` (data timestamp 2026-10-01T20:22:06Z). Geofabrik may remove daily files, so the release itself is the copy to rebuild from. Stage 1 downloads it once, refuses a file whose checksum differs from the pin, filters its ways with pyosmium, and hands the result to [OSMnx](https://github.com/gboeing/osmnx) to build the graph. No Overpass query is made.
 
 #### License
 
@@ -22,7 +22,7 @@ One dated regional extract from Geofabrik, named by URL and SHA-256 in `config/s
 
 #### Snapshot
 
-The extract's own data timestamp (from the PBF header), its URL and its SHA-256 are written to `data/raw/manifest.json` and to `dataSource.osmExtract` in the root of every output file. To move to newer OSM data, change the URL and the checksum together.
+The extract's own data timestamp (from the PBF header), its URL and its SHA-256 are written to `data/raw/manifest.json` and to `dataSource.osmExtract` in the root of every output file. From v0.3.5 the root `dataTimestamp` is that same OSM data timestamp, because the schema defines the field as how current the data is. The time of the build is `pipelineVersion.builtAt`. To move to newer OSM data, change the URL and the checksum together.
 
 #### Borough seams
 
@@ -34,7 +34,7 @@ It covers New York State. A way that crosses into New Jersey is kept whole, but 
 
 #### Why explicit custom_filter, not `network_type='walk'`
 
-OSMnx's `network_type='walk'` applies its own undocumented heuristics for what counts as walkable. To keep the inclusion criteria explicit, we prefer our own filter: we whitelist specific `highway` tag values and exclude `foot=no` and `access=no`. This makes the inclusion criteria auditable.
+OSMnx's `network_type='walk'` applies its own heuristics for what counts as walkable. The pipeline uses an explicit filter instead: it lists the `highway` values it keeps and excludes `foot=no`, `access=no` and `access=private`. Anyone can read the inclusion rule in one line of `config/sources.yaml`.
 
 #### Custom filter used
 
@@ -46,16 +46,23 @@ The syntax is Overpass's and so are the semantics: each regex is an unanchored s
 
 #### How it was transformed
 
-OSM edges are classified into six OSW feature types based on `highway` and `footway` tag values:
+OSM edges are classified into OSW entity types based on their `highway`, `footway` and `area` tag values:
 - `highway=footway` + `footway=sidewalk` → Sidewalk Edge
 - `highway=footway` + `footway=crossing` → Crossing Edge
-- `highway=footway|path` (other) → Footway Edge. `path` has no schema entity.
-- `highway=pedestrian` → Pedestrian Road Edge, unless it is tagged `footway=sidewalk` or `footway=crossing`, which makes it a Sidewalk or Crossing. Stage 4's endpoint merge counts it as pedestrian, and the routing layer walks it like a Footway.
+- `highway=footway|path` (other) → Footway Edge. `path` has no schema entity, so an OSM path is written as `highway=footway` and keeps `ext:osm_highway=path`. In NYC parks a path is often an unpaved trail, and the extension lets a user tell it from a footway.
+- `highway=pedestrian` on a linear way → Pedestrian Road Edge, unless it is tagged `footway=sidewalk` or `footway=crossing`, which makes it a Sidewalk or Crossing. Stage 4's endpoint merge counts it as pedestrian, and the routing layer walks it like a Footway.
+- `highway=pedestrian`, `footway` or `path` with `area=yes` on a closed way → Pedestrian Zone, a Polygon (see "Pedestrian areas" below).
 - `highway=steps` → Steps Edge, its own entity in the schema
 - `highway=cycleway|track` with `foot=yes`, `designated` or `permissive` → the same classes, with `ext:osm_highway` keeping the OSM value. Without one of those foot values the way is dropped.
 - `highway=residential|service|...` → the schema's motor vehicle road Edges (Residential Street, Service Road and so on). `service=*` subtags are not kept, so Driveway, Alley and Parking Aisle appear as Service Road.
 
 The graph is built without OSMnx's walk mode, so a way tagged `oneway=yes` arrives in one direction. Stage 3 adds the missing reverse of every edge, street edges included, because OSM's `oneway` binds vehicles and bicycles, not people on foot. It also reverses steps, although `oneway` on `highway=steps` (for example an escalator tagged `conveying`) applies to pedestrians; that is a known limitation. The schema lets consumers infer reverse edges, so a consumer must not add them again.
+
+#### Pedestrian areas
+
+An OSM way tagged `area=yes` is a surface, such as a plaza, and people walk across it in any direction. Up to v0.3.4 the pipeline wrote the outline of each such way as Pedestrian Road or Footway Edges, so a route followed the edge of a plaza and the plaza was counted as a road. From v0.3.5 it writes each one as the schema's Pedestrian Zone (`pipeline/utils/zones.py`). The test is `area=yes` with `highway=pedestrian`, `footway` or `path`, without `footway=sidewalk` or `footway=crossing`, on a way whose edges join into one closed ring that is a valid polygon. A way that fails the ring test stays Edges.
+
+A Pedestrian Zone is a Polygon with `highway=pedestrian` and `_w_id`, the list of the Nodes on its ring in ring order, so that `_w_id[i]` is ring vertex `i`. It keeps the way's `name`, `surface`, `foot` and `ext:osm_id`. A zone made from a footway or path area keeps `ext:osm_highway`. It carries no `width` and no `incline`. v0.3.5 has 2,201 zones. `python-osw-validation` 0.5.0 accepts the entity: a fixture with a zone passed, and a negative control failed.
 
 An edge whose OSM way is a bridge or a tunnel is marked `ext:structure` (`bridge` or `tunnel`; a building passage is not marked), and a way with `layer` above 0 and no bridge tag is marked `elevated`. Stage 4 reads deck heights for bridge and elevated edges from LiDAR returns (section 5b) and writes no incline on tunnel edges.
 
@@ -123,15 +130,17 @@ Slopes are percentages, signed by direction (running and counter slope from the 
 
 #### Survey date
 
-The records were captured from March 2017 to January 2020, mostly in 2018. DOT says the imagery was captured between March 2017 and October 2018 and that data collection was completed by October 2019. The dataset has not changed since October 2021. Ramps rebuilt since then keep their old measurements here.
+The records were captured from March 2017 to January 2020, mostly in 2018. DOT says the imagery was captured between March 2017 and October 2018 and that data collection was completed by October 2019. Record dates run to January 2020, later than that stated completion. This project uses the record dates and has not resolved the difference. The dataset has not changed since October 2021. A ramp rebuilt after its survey date keeps the survey's measurements here.
 
 #### Sentinel value handling
 
-The DOT data dictionary does not define `999`, `888`, `777` or `555`. This project reads them as no measurement because they fall far outside the physical range and recur together on the same rows (`999` on a running slope probably marks a cut-through ramp, which has no ramp run). Stage 3 omits these from the artifact rather than carrying them (the validator rejects null-valued `ext:*` tags, and the codes would poison any downstream statistics). A counter slope with a magnitude over 100% (steeper than 45 degrees) is not a gutter slope; Stage 3 leaves it off as unmeasured. Six survey values were dropped this way, from -300% to 473%.
+The DOT data dictionary does not define `999`, `888`, `777` or `555`. This project reads them as no measurement because they fall far outside the physical range and recur together on the same rows (`999` on a running slope is probably a cut-through ramp, which has no ramp run). Stage 3 omits these from the artifact and does not carry them (the validator rejects null-valued `ext:*` tags, and the codes would poison any downstream statistics). A counter slope with a magnitude over 100% (steeper than 45 degrees) is not a gutter slope; Stage 3 leaves it off as unmeasured. Six survey values were dropped this way, from -300% to 473%.
 
 #### Stage 4 snapping
 
-In Stage 4, curb nodes are snapped to the nearest edge endpoint within 5 m. Ramp survey coordinates are not always exactly at the OSM edge endpoint. The snap step reconciles the ~meter-level discrepancy between survey coordinates and OSM node positions. A node holds one ramp's fields, so when several ramps land on the same node the first keeps it and the others stay in the file at their surveyed position, unattached.
+In Stage 4, curb nodes are snapped to the nearest edge endpoint within 5 m. Ramp survey coordinates are not always exactly at the OSM edge endpoint. The snap step reconciles the ~meter-level discrepancy between survey coordinates and OSM node positions. The ring vertices of a Pedestrian Zone count as endpoints for this snap. A node holds one ramp's fields, so when several ramps land on the same node the first keeps it and the others stay in the file at their surveyed position, unattached.
+
+A ramp that lands on an OSM vertex shares that vertex's Node. The Node's position is the OSM vertex, and every other value on it comes from the survey. From v0.3.5 such a Node says so: it carries `ext:source=nyc_dot_ramps` and the survey's `ext:source_timestamp`, and `ext:ramp_id` traces it to the survey record. Up to v0.3.4 it said `ext:source=osm_walk`.
 
 ---
 
@@ -163,7 +172,7 @@ Implemented in `schema_map.py::_polygon_centerline()`. Compute the polygon's min
 
 #### Known limitation
 
-Planimetric-derived sidewalk edges have approximate centerline geometry only. They may not connect cleanly to adjacent OSM nodes. The Stage 4 assemble step injects bare nodes at their endpoints to satisfy the OSW structural requirement that all `_u_id`/`_v_id` references resolve to Node features.
+Planimetric-derived sidewalk edges have approximate centerline geometry only, and nearly all are unconnected to OSM nodes. They are not part of the graph and ship as `nyc-gapfill-sidewalks.geojson`.
 
 ---
 
@@ -183,9 +192,7 @@ ODbL-1.0 (OpenStreetMap).
 
 #### How it was used
 
-1. **Root metadata `region`:** The five borough polygons are unioned into a single MultiPolygon and written to the OSW root-level `region` field. This is the geographic scope declaration of the dataset.
-2. **Per-feature `ext:borough`:** A spatial join assigns each feature to the borough whose polygon contains its centroid. Used for downstream filtering and analysis.
-3. **OSM cut:** Each borough polygon is used to cut that borough's graph from the city graph in Stage 1.
+The boundaries have three uses. The five borough polygons are unioned into a single MultiPolygon and written to the root `region` field, which declares the geographic scope of the dataset. A spatial join assigns each feature to the borough whose polygon contains its centroid and writes it as `ext:borough`, for filtering and per-borough splits. Each borough polygon also cuts that borough's graph from the city graph in Stage 1.
 
 ---
 
@@ -207,11 +214,11 @@ Public data, no licence attached (NY State GIS Program Office; NYC OTI survey).
 
 Stage 4 samples the DTM at every node coordinate, interpolating bilinearly between pixel centres. Each node whose sample lands on valid data gets `ext:elevation_m`; each edge whose two endpoint heights are both known gets `incline` = rise / run. Values outside the OSW range of -1.0 to 1.0 are noise on very short edges and are dropped.
 
-**Smoothing over short edges.** The graph keeps every OSM vertex as a node, so half its edges are shorter than 6 m, and a few decimetres of height error, or a kerb, between two nodes a metre apart reads as a 30% grade. Before the difference is taken, each node's height is averaged with its neighbours' along the path, weighted 1 minus length / 5 m, in two passes, so a node 1 m away counts almost as much as the node itself and one 5 m away not at all. A steady slope comes through unchanged, because the neighbours up and down the path cancel. A step of 0.5 m or more between two close nodes is a real change of level (a wall, untagged steps, a deck beside the ground) and is left alone; steps and tunnel edges take no part. The test of the setting is that real steepness does not depend on how finely a mapper cut a path: in a study area at 1 m resolution the share of footway edges over the wheelchair limits was 6.6% for edges under 2 m against 1.0% for edges of 10 to 25 m before smoothing, and about 1.3% in every length band after. The heights written on the nodes are not smoothed.
+The heights are smoothed over short edges. The graph keeps every OSM vertex as a node, so half its edges are shorter than 6 m, and a few decimetres of height error, or a kerb, between two nodes a metre apart reads as a 30% grade. Before the difference is taken, each node's height is averaged with its neighbours' along the path, weighted 1 minus length / 5 m, in two passes, so a node 1 m away counts almost as much as the node itself and one 5 m away not at all. A steady slope comes through unchanged, because the neighbours up and down the path cancel. A step of 0.5 m or more between two close nodes is a real change of level (a wall, untagged steps, a deck beside the ground) and is left alone; steps and tunnel edges take no part. The test of the setting is that real steepness does not depend on how finely a mapper cut a path: in a study area at 1 m resolution the share of footway edges over the wheelchair limits was 6.6% for edges under 2 m against 1.0% for edges of 10 to 25 m before smoothing, and about 1.3% in every length band after. The heights written on the nodes are not smoothed.
 
 A node is only sampled from a tile whose extent contains it. The tiles have no nodata value, and a point outside a tile reads as 0.0.
 
-The rest of this paragraph describes an earlier build that read the model at 5 to 12 m per pixel. At that resolution, against a median edge length of 7 m, the two ends of a short edge usually fall in the same or neighbouring pixels. Reading the nearest pixel gave them either the same elevation or a whole pixel's step; interpolating between pixel centres removes that. In a Midtown window the share of sidewalk edges steeper than 8.33% fell from 4.8% to 2.5% at 7 m per pixel, and the edges over that limit at 7 m and at 10 m per pixel now largely agree. On Staten Island the agreement with the ramp survey's gutter slopes rose a little (rank correlation 0.38 to 0.42).
+An earlier build read the model at 5 to 12 m per pixel, and these figures are from that build. At that resolution, against that build's median edge length of 7 m, the two ends of a short edge usually fall in the same or neighbouring pixels. Reading the nearest pixel gave them either the same elevation or a whole pixel's step; interpolating between pixel centres removes that. In a Midtown window the share of sidewalk edges steeper than 8.33% fell from 4.8% to 2.5% at 7 m per pixel, and the edges over that limit at 7 m and at 10 m per pixel now largely agree. On Staten Island the agreement with the ramp survey's gutter slopes rose a little (rank correlation 0.38 to 0.42).
 
 The model is bare earth and includes the river bed. On a bridge, a deck or a pier it describes what is underneath, so the pipeline reads deck heights from the point clouds instead (next section).
 
@@ -231,15 +238,17 @@ The classified point clouds behind the city's 2017 topobathymetric LiDAR (22.8 b
 
 Public data on NOAA's Digital Coast archive, no licence attached (NYC OTI and USGS surveys).
 
-**How it was used** (`pipeline/utils/ept.py`, `pipeline/utils/deck.py`, `assemble._structure_elevations`): starting from the nodes of edges tagged `bridge` or `elevated`, plus two hops of neighbours, the returns within 2 m of each node are read from the 2017 survey, and from the 2014 survey where the 2017 one has none (it lacks the main spans over open water). Returns are grouped into surfaces by a 0.5 m height gap. A surface is classified if the survey's class says ground or bridge deck; it is solid if it is classified, or flat (interquartile range of 0.15 m) and populated by at least eight returns, which is how a plaza over a road or a deck on a building looks, since the bridge deck class does not cover them. Tree crowns, fences and cables are neither. The walking surface is then chosen by continuity: a node OSM does not put on a structure is on the ground wherever the survey classified ground at terrain height, whatever hangs above it, and from those nodes each next node along the path takes the solid surface nearest in height to the one before, within 0.6 m plus 12% of the edge length (plus the whole length on steps). A node OSM puts on a structure prefers a solid surface off the ground, so the ground seen past the edge of a deck does not pull the deck down. A deck that runs on past the tagged part claims untagged nodes until it meets the ground, and the region of nodes read grows with it. A structure no labelled node leads onto (its approaches are untagged, or it is reached by lift) is started from the node with the clearest solid surface, unless that node sits beside a labelled one whose surfaces were all out of reach, which is what a bridge tower looks like; such nodes, and covered spans, are interpolated between their labelled ends. Structure nodes with no surface at all get no height and their edges no incline.
+#### How it was used
+
+The code is in `pipeline/utils/ept.py`, `pipeline/utils/deck.py` and `assemble._structure_elevations`. Starting from the nodes of edges tagged `bridge` or `elevated`, plus two hops of neighbours, the returns within 2 m of each node are read from the 2017 survey, and from the 2014 survey where the 2017 one has none (it lacks the main spans over open water). Returns are grouped into surfaces by a 0.5 m height gap. A surface is classified if the survey's class says ground or bridge deck; it is solid if it is classified, or flat (interquartile range of 0.15 m) and populated by at least eight returns, which is how a plaza over a road or a deck on a building looks, since the bridge deck class does not cover them. Tree crowns, fences and cables are neither. The walking surface is then chosen by continuity: a node OSM does not put on a structure is on the ground wherever the survey classified ground at terrain height, whatever hangs above it, and from those nodes each next node along the path takes the solid surface nearest in height to the one before, within 0.6 m plus 12% of the edge length (plus the whole length on steps). A node OSM puts on a structure prefers a solid surface off the ground, so the ground seen past the edge of a deck does not pull the deck down. A deck that runs on past the tagged part claims untagged nodes until it meets the ground, and the region of nodes read grows with it. A structure no labelled node leads onto (its approaches are untagged, or it is reached by lift) is started from the node with the clearest solid surface, unless that node sits beside a labelled one whose surfaces were all out of reach, which is what a bridge tower looks like; such nodes, and covered spans, are interpolated between their labelled ends. Structure nodes with no surface at all get no height and their edges no incline.
 
 #### Validation
 
-heights taken from the 2017 survey were compared with the 2014 survey, which the fix did not use for them: at the node, is there a surface in the 2014 returns at the same height? The numbers are in `validators/QUALITY_REPORT.md` and [`evaluation/structure_incline/`](evaluation/structure_incline/). The places where the surveys disagree by more than 2 m are mostly places rebuilt between the two flights (Hudson Yards, Empire Outlets, the Bayonne Bridge, LaGuardia). Nodes lifted 2 m or more above the terrain model were also checked against the city's planimetric transport structure polygons, which come from photogrammetry and know nothing of OSM tags or LiDAR.
+Heights taken from the 2017 survey were compared with the 2014 survey, which the fix did not use for them: at the node, is there a surface in the 2014 returns at the same height? The numbers are in `validators/QUALITY_REPORT.md` and [`evaluation/structure_incline/`](evaluation/structure_incline/). The places where the surveys disagree by more than 2 m are mostly places rebuilt between the two flights (Hudson Yards, Empire Outlets, the Bayonne Bridge, LaGuardia). Nodes lifted 2 m or more above the terrain model were also checked against the city's planimetric transport structure polygons, which come from photogrammetry and know nothing of OSM tags or LiDAR.
 
 #### Limits
 
-a structure built after May 2017 (LaGuardia's new terminals, the new Kosciuszko span) is read as whatever the 2017 survey saw there. Covered walkways and lower decks under an upper deck are interpolated. A station entrance that OSM joins to the sidewalk by a plain edge, without steps, comes out as a near-vertical edge, because the pipeline does not carry OSM node tags such as elevators. Deck heights have about 5 cm of survey noise, so incline on a 3 m deck edge is still noisy.
+A structure built after May 2017 (LaGuardia's new terminals, the new Kosciuszko span) is read as whatever the 2017 survey saw there. Covered walkways and lower decks under an upper deck are interpolated. A station entrance that OSM joins to the sidewalk by a plain edge, without steps, comes out as a near-vertical edge, because the pipeline does not carry OSM node tags such as elevators. Deck heights have about 5 cm of survey noise, so incline on a 3 m deck edge is still noisy.
 
 ---
 
@@ -283,14 +292,14 @@ Per source:
 - Null/empty geometries are dropped
 - Invalid geometries are repaired with `shapely.validation.make_valid()`
 - CRS is normalized to EPSG:4326
-- Column names are normalized to lowercase/underscore
+- Column names are normalized to lower case with `_` between words
 - Source-specific normalization (DOT sentinel values, planimetric slivers, OSM list-valued columns)
 
 All decisions are recorded in `data/clean/cleaning_report.md`.
 
 ### Stage 3: Schema Map
 
-Maps cleaned source data to OSW-conformant feature types. Every transformation is also documented in a code comment beside it.
+Maps cleaned source data to schema entity types, and writes OSM pedestrian areas as Pedestrian Zones. Every transformation is also documented in a code comment beside it.
 
 The most complex transformation is the planimetric gap-fill: deriving sidewalk centerlines from polygon geometry and filtering by OSM coverage. See the Planimetric section above for the method.
 
@@ -298,15 +307,16 @@ The most complex transformation is the planimetric gap-fill: deriving sidewalk c
 
 Builds the single canonical FeatureCollection from staged feature files:
 1. Snap CurbRamp nodes to edge endpoints within 5 m (reconciles survey/OSM positional discrepancy)
+   A Pedestrian Zone takes part in steps 1 to 7 through its ring, as one temporary edge per pair of consecutive ring Nodes. Those rows are dropped before the file is written, and the zone ships as a Polygon whose `_w_id` follows any Node the merge renamed.
 2. Close near-miss gaps within 2 m. A node takes another node's ID only when that closes a gap: one of the two is a dead end, or the two are in different connected components of the whole graph or of the pedestrian graph. A dead end is not moved onto a neighbour or onto a node it already reaches within 10 m. Pairs are taken nearest first, a node that has moved is never a target and a target never moves, so no endpoint moves more than 2 m. Curb nodes are carried along with the endpoint they snapped to. The only edges that can collapse are street segments under 2 m whose two ends are in different pedestrian components; they are dropped. The measurements behind the change are in the git history of `release-notes/`.
 3. Combine all nodes (OSM nodes + snapped curb nodes)
 4. Inject bare nodes for any edge endpoint not yet in the node set
-5. Deduplicate nodes by `_id`, preserving curb-ramp annotations when a ramp and an OSM node share a location
+5. Deduplicate nodes by `_id`, preserving curb-ramp annotations when a ramp and an OSM node share a location. The merged Node takes the survey's `ext:source` and `ext:source_timestamp`
 6. Compute per-edge `incline`: sample the LiDAR DTM at node coordinates, replace the heights of nodes on and beside bridges and elevated ways with deck heights from the LiDAR point clouds (section 5b), smooth over edges shorter than 5 m, then rise over run; values outside the OSW range of -1.0 to 1.0 are dropped
 7. Write topology report (connected components, fragmentation)
 8. Serialize to `data/staged/nyc-osw-unvalidated.geojson`
 
-Root metadata (`$schema`, `dataSource`, `dataTimestamp`, `pipelineVersion`, `region`) is written here.
+Root metadata (`$schema`, `dataSource`, `dataTimestamp`, `pipelineVersion`, `region`) is written here. `dataSource.name` names the sources. `dataTimestamp` is the OSM extract's data timestamp. `pipelineVersion` holds the software's `name`, `version`, `url`, `gitSHA` and the build time, `builtAt`.
 
 ### Stage 5: Validate (internal pre-check)
 
@@ -320,14 +330,16 @@ This stage is a fast pre-check, not the conformance gate. The gate is the Taskar
 
 ### Post-build: endpoint snap
 
-`scripts/snap_endpoints.py` runs after the build. The Stage 4 endpoint merge remaps `_u_id`/`_v_id` without moving edge terminal vertices, which leaves a gap of up to 2 m between a merged edge end and its referenced node coordinate. `python-osw-validation` 0.4.0+ checks those coordinates exactly, so the snap moves every edge endpoint onto its node's coordinate, rounds every coordinate to 7 decimal places (the limit `python-osw-validation` 0.5.0 enforces), rewrites `output/nyc-osw.geojson` in place, and emits the split node/edge files plus `output/nyc-osw-osw-split.zip` for the validator.
+`scripts/snap_endpoints.py` runs after the build. The Stage 4 endpoint merge remaps `_u_id`/`_v_id` without moving edge terminal vertices, which leaves a gap of up to 2 m between a merged edge end and its referenced node coordinate. `python-osw-validation` 0.4.0+ checks those coordinates exactly, so the snap moves every edge endpoint onto its node's coordinate and every Pedestrian Zone ring vertex onto the coordinate of the Node its `_w_id` names. It rounds every coordinate to 7 decimal places (the limit `python-osw-validation` 0.5.0 enforces), rewrites `output/nyc-osw.geojson` in place, and emits the split files (`nyc.nodes.geojson`, `nyc.edges.geojson` and, from v0.3.5, `nyc.zones.geojson`) plus `output/nyc-osw-osw-split.zip` for the validator.
 
 ### Stage 6: Export
 
 Three output formats from the same staged FeatureCollection:
-- **nyc-osw.geojson**. Copy of the canonical FeatureCollection (the OSW deliverable)
-- **nyc.graphml**. NetworkX MultiDiGraph, one edge per OSW edge from `_u_id` to `_v_id`
-- **nyc-routing.json**. Compact JSON with approximate edge lengths, intended for downstream routing engine consumption
+- `nyc-osw.geojson` is a copy of the canonical FeatureCollection (the OSW deliverable).
+- `nyc.graphml` is a NetworkX MultiDiGraph with one edge per OSW edge from `_u_id` to `_v_id`.
+- `nyc-routing.json` is a compact JSON with approximate edge lengths, for a routing engine to load.
+
+A graph has no polygons, so the GraphML and the routing JSON hold each Pedestrian Zone as the edges a person can walk across it (see the routing layer below). Each of those edges carries `ext:zone`, the zone's `_id`.
 
 Stage 6 runs before the endpoint snap, so its GraphML and routing JSON predate the snap and the coordinate rounding. Release assets are made afterwards from the snapped `output/nyc-osw.geojson` with the scripts in `scripts/` (see `scripts/README.md`), and every asset carries the licence, the attribution and the OSM snapshot.
 
@@ -335,23 +347,27 @@ Stage 6 runs before the endpoint snap, so its GraphML and routing JSON predate t
 
 ## Routing layer: the 5 m ramp to crossing rule
 
-**The rule.** `scripts/osw_to_unweaver.py` builds the layer the wheelchair profile reads. It counts a crossing as having curb ramps when a surveyed ramp lies within 5 m (`RAMP_REACH_M`) of each end of the crossing; the crossing edges of one street crossing are grouped through nodes no sidewalk reaches, and the rule is applied to the group's two ends. The profile in `unweaver-project/cost-wheelchair.py` is adapted from the example wheelchair profile of [Unweaver](https://github.com/nbolten/unweaver) (Nick Bolten, Apache-2.0), whose limits follow AccessMap's manual wheelchair profile; this project added the refusals for steps and street centrelines. It walks a Pedestrian Road like a Footway (`osw_to_unweaver.py` gives it `subclass=footway`). It refuses a crossing without ramps at both ends, refuses steps and street centrelines, and refuses an edge steeper than 8.3% up or 10% down. The strict reading (a ramp on the crossing's own end node) was rejected because it left about 1% of Queens pairs routable.
+**The rule.** `scripts/osw_to_unweaver.py` builds the layer the wheelchair profile reads. It counts a crossing as having curb ramps when a surveyed ramp lies within 5 m (`RAMP_REACH_M`) of each end of the crossing; the crossing edges of one street crossing are grouped through nodes no sidewalk reaches, and the rule is applied to the group's two ends. The profile in `unweaver-project/cost-wheelchair.py` is adapted from the example wheelchair profile of [Unweaver](https://github.com/nbolten/unweaver) (Nick Bolten, Apache-2.0), whose limits follow AccessMap's manual wheelchair profile; this project added the refusals for steps and street centrelines. It walks a Pedestrian Road like a Footway (`osw_to_unweaver.py` gives it `subclass=footway`). It walks a Pedestrian Zone as two kinds of edge, both made by `zone_edges` in `pipeline/utils/zones.py`: the ring, between consecutive `_w_id` Nodes, and a straight chord between every two ring Nodes that an Edge also touches (the zone's entrances), kept only when the whole chord lies inside the polygon. A route can then cross a plaza between any two of its entrances or follow its edge, and it never cuts across a courtyard the ring bends around. Each of these edges is walked like a Footway and carries `ext:zone`. Its incline is the rise over the run between the two Nodes' heights, and is left off for a chord shorter than 5 m. It refuses a crossing without ramps at both ends, refuses steps and street centrelines, and refuses an edge steeper than 8.3% up or 10% down. The strict reading (a ramp on the crossing's own end node) was rejected because it left about 1% of Queens pairs routable.
 
 **How it was checked.** 200 crossings were drawn at random, 40 per borough (seed 20261002). Each was drawn on a sheet over the city's 2018 orthoimagery, the main year of the ramp survey, with the survey's ramp positions marked and no rule's verdict shown. For each end a rater answered whether a surveyed ramp sits where the crossing meets the kerb (yes, no or unclear). The raters were language-model agents following a written protocol: four took 50 sheets each, and a fifth rated every third sheet again without seeing the other ratings. No person rated the sheets and no crossing was visited. The two ratings agreed on 96% of the 132 ends both rated (Cohen's kappa 0.81 over three classes), and on all 125 ends both called yes or no. This kappa is between instances of one language model, so it measures consistency, not accuracy.
 
-**Result.** Of the 191 crossings with no unclear end, 164 are ramped at both ends. The 5 m rule calls 166 ramped, of which 164 are (precision 0.988), and it misses none of the 164 (recall 1.0). The strict rule finds 56%. A 3 m survey rule passes no unramped crossing but misses 5. With 2 errors against 0, the sample cannot tell these rules apart. The 5 m rule was kept because it was fixed before the check and because the narrower rules leave fewer routes.
+**Result.** Of the 191 crossings with no unclear end, 164 were rated ramped at both ends. The 5 m rule calls 166 ramped, and 164 of those were rated ramped (precision 0.988). It misses none of the 164 (recall 1.0). The strict rule finds 56%. A 3 m survey rule passes no unramped crossing but misses 5. With 2 errors against 0, the sample cannot tell these rules apart. The 5 m rule was kept because it was fixed before the check and because the narrower rules leave fewer routes.
 
-**Limits.** The existence of each ramp rests on DOT's survey, collected by a contractor from vehicle-mounted imagery and LiDAR, mostly in 2018: the imagery showed a ramp directly at 9 of the 400 ends. The rating tests which crossing a surveyed ramp serves, not whether the ramp is there today or usable. The false pass rate is 1.2% (2 of 166), with an exact 95% interval of 0.1% to 4.3%. Recall is measured only against ramps that are in the survey, so it cannot detect a crossing refused because the survey missed a ramp. Crossings with zero, one, or three or more ends (2.5%) were not sampled.
+**Limits.** The existence of each ramp rests on DOT's survey, collected by a contractor from vehicle-mounted imagery and LiDAR, mostly in 2018: the imagery showed a ramp directly at 9 of the 400 ends. The rating tests which crossing a surveyed ramp serves, not whether the ramp is there today or usable. The false pass rate is 1.2% (2 of 166), with an exact 95% interval of 0.15% to 4.3%. Recall is measured only against ramps that are in the survey, so it cannot detect a crossing refused because the survey missed a ramp. Crossings with zero, one, or three or more ends (2.5%) were not sampled.
 
-The protocol, the sample, every rating and the scores are in [`evaluation/crossing_rule/`](evaluation/crossing_rule/).
+The protocol, the sample, every rating and the scores are in [`evaluation/crossing_rule/`](evaluation/crossing_rule/). All 200 rating sheets are in `evaluation-sheets.zip` on the release.
 
 ---
 
 ## Schema Mapping Decisions
 
-### Why `footway=sidewalk` on all OSM sidewalk-type edges
+### Sidewalk and plain Footway
 
-The OpenSidewalks spec treats sidewalks as distinct from generic footways: a `footway=sidewalk` edge is a pedestrian path that runs parallel to a road, physically separated from it. OSM edges tagged `highway=footway` without a `footway` sub-tag are mapped to the `footway` Edge type (generic pedestrian path), not the `sidewalk` type. This distinction matters for accessibility analysis: sidewalks have a known relationship to the adjacent road, which enables inferring crossing locations and street-side context.
+OSM ways tagged `footway=sidewalk` become Sidewalks, which the schema defines as a designated pedestrian path to the side of a street. Other `highway=footway` ways become plain Footways. The pipeline does not add `footway=sidewalk` to any way. The difference matters for analysis, because a Sidewalk belongs to a street and a plain Footway does not.
+
+### Why plazas are Pedestrian Zones, not Edges
+
+The schema has a LineString entity for a pedestrian road and a Polygon entity, the Pedestrian Zone, which its JSON Schema describes as "an area where pedestrians can travel freely in all directions". An OSM `area=yes` way is the second. Written as Edges, its outline sends a route round the edge of a plaza and counts the plaza as a road. Written as a Polygon with `_w_id`, it says which Nodes the area joins and leaves the paths across it to the consumer. The routing layer of this project draws those paths as straight chords between entrances that stay inside the polygon. That is this project's choice, not part of the schema.
 
 ### Why Curb Ramps are Nodes, not edge attributes
 
@@ -359,11 +375,11 @@ The schema models a curb as a Core Node at an edge endpoint. A curb ramp has its
 
 ### Why crossings are structurally separated from sidewalks
 
-The schema places Crossings on the road surface only. A plain Footway joins each Crossing to its Sidewalk, and the curb Node sits where that Footway meets the Crossing. The Crossing is split where it meets the street centreline. NYC's OSM data usually skips the joining Footway, and this pipeline does not add it, so many Crossings join Sidewalks directly (in Manhattan, 52% of the nodes on a Crossing also touch a Sidewalk). Curb Ramps are snapped to the nearest edge endpoint within 5 m, so many sit on that junction or on a Sidewalk vertex. Routing can still apply different costs to crossing and sidewalk edges.
+The schema places Crossings on the road surface only. A plain Footway joins each Crossing to its Sidewalk, and the curb Node sits where that Footway meets the Crossing. The Crossing is split where it meets the street centreline. NYC's OSM data usually skips the joining Footway, and this pipeline does not add it, so many Crossings join Sidewalks directly (in Manhattan, 52% of the nodes on a Crossing also touch a Sidewalk, measured on v0.3.4). Curb Ramps are snapped to the nearest edge endpoint within 5 m, so many sit on that junction or on a Sidewalk vertex. Routing can still apply different costs to crossing and sidewalk edges.
 
 ### Handling OSM `sidewalk=both` on street centerlines
 
-Where OSM has `sidewalk=both` or `sidewalk=left/right` tags on a street centerline rather than separate sidewalk geometry, the OSM edge is classified as a road Edge (not a Sidewalk Edge) and the planimetric gap-fill pass derives a candidate sidewalk centreline from the planimetric polygon layer, shipped as a sidecar file. This is a simplification: the rectangle axis only stands for the sidewalk when the polygon is a strip, and it is not connected to the rest of the network.
+Where OSM has `sidewalk=both` or `sidewalk=left/right` tags on a street centerline and no separate sidewalk geometry, the OSM edge is classified as a road Edge (not a Sidewalk Edge) and the planimetric gap-fill pass derives a candidate sidewalk centreline from the planimetric polygon layer, shipped as a sidecar file. This is a simplification: the rectangle axis only stands for the sidewalk when the polygon is a strip, and it is not connected to the rest of the network.
 
 ---
 
@@ -376,7 +392,8 @@ Where OSM has `sidewalk=both` or `sidewalk=left/right` tags on a street centerli
 5. **No live feeds.** The pipeline is a point-in-time snapshot. Rerun to refresh.
 6. **MTA ADA annotation not implemented.** No station index is produced (see the MTA section above).
 7. **OSM node tags and `sidewalk=*` are not read.** OSM kerbs, elevators and crossing nodes are absent, and streets whose sidewalks OSM maps as tags have no Sidewalk Edge.
-8. **36,180 Curb Ramp Nodes are on no edge.** The schema maps curbs at edge endpoints.
+8. **36,180 Curb Ramp Nodes are on no Edge and no Pedestrian Zone ring.** The schema maps curbs at edge endpoints.
+9. **A Pedestrian Zone has no interior detail.** The file does not know about planters, fountains, steps or level changes inside a plaza, and the routing layer's chords are straight lines between entrances. A zone has an outer ring only. An OSM pedestrian area that does not close into one valid ring stays Pedestrian Road or Footway Edges along its outline.
 
 ---
 
@@ -390,5 +407,5 @@ Where OSM has `sidewalk=both` or `sidewalk=left/right` tags on a street centerli
 
 ### Later
 - Sidewalk condition from 311 sidewalk violation data
-- Live feed support (rolling updates rather than full rebuilds)
+- Live feed support (rolling updates in place of full rebuilds)
 - Vector tiles export for web visualization

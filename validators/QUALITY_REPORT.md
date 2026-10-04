@@ -1,31 +1,31 @@
-# Quality Report: OpenSidewalks NYC v0.3.3-nyc.1
+# Quality Report: OpenSidewalks NYC v0.3.5-nyc.1
 
-> Note for v0.3.4-nyc.1 (2026-10-04): this report was measured on v0.3.3. v0.3.4 changes only the fields listed in its [release notes](../release-notes/v0.3.4-nyc.1.md). Geometry, incline and wheelchair reachability are unchanged on all 4,068,058 features, and v0.3.4 passes `python-osw-validation` 0.5.0 with zero errors. Every post-build check and routing result in this report is the same on v0.3.4. Three checks are new: `ext:dws_condition` agrees with the survey on 217,679 of 217,679 ramps, no counter slope is over 100%, and no width is 0 or less. Where this report counts Footway edges (544,672) or `crossing:markings` values, v0.3.4 has 459,570 Footway and 85,102 Pedestrian Road edges, and the markings come from a different rule.
-
-> Audit date: 2026-10-03. Artifact audited: `nyc-osw.geojson` of the v0.3.3-nyc.1 build, made by one run of `python -m pipeline build` from an empty cache at commit `2442db2` plus the post-build endpoint snap (`scripts/snap_endpoints.py`). OpenStreetMap data as of 2026-10-01T20:22:06Z (Geofabrik extract `new-york-261001.osm.pbf`). Schema target: **OSW v0.3**. Validator: **`python-osw-validation` 0.5.0**.
+> Audit date: 2026-10-04. Artifact audited: `nyc-osw.geojson` of the v0.3.5-nyc.1 build, made by one run of `python -m pipeline build` from an empty cache at commit `5d04a19` plus the post-build endpoint snap (`scripts/snap_endpoints.py`). OpenStreetMap data as of 2026-10-01T20:22:06Z (Geofabrik extract `new-york-261001.osm.pbf`). Schema target: **OSW v0.3**. Validator: **`python-osw-validation` 0.5.0**.
 >
-> Every number here comes from a script: `validators/post_build_checks.py` for the artifact ([`evaluation/build/checks.json`](../evaluation/build/checks.json)), and the routing, bridge, deck-height and imagery checks described in their sections, whose result files are named there and are kept under [`evaluation/`](../evaluation/).
+> The counts and checks of the artifact were measured on v0.3.5 by `validators/post_build_checks.py` ([`evaluation/v0.3.5/checks.json`](../evaluation/v0.3.5/checks.json)). The routing, landmark, deck-height and imagery sections were measured on v0.3.3 and say so; their result files are named there and are kept under [`evaluation/`](../evaluation/). What v0.3.5 changed in them is in [`evaluation/v0.3.5/`](../evaluation/v0.3.5/).
 
 ## Headline verdict
 
-**The artifact passes `python-osw-validation` 0.5.0 against OSW v0.3, which checks form, not the schema's topology rules (the README lists the known deviations from the schema). Incline describes the walking surface on bridges and elevated ways. It is not yet one to present a route from without checking.**
+**The artifact passes `python-osw-validation` 0.5.0 against OSW v0.3, which checks form, not the schema's topology rules (the README lists the known deviations from the schema). Incline describes the walking surface on bridges and elevated ways. Do not present a route from it to anyone without checking the route.**
 
-- `python-osw-validation` 0.5.0 returns `is_valid: True` with zero errors across all 4,068,058 features (1,186,910 nodes, 2,881,148 edges).
+- `python-osw-validation` 0.5.0 returns `is_valid: True` with zero errors across all 3,986,649 features (1,186,910 nodes, 2,797,538 edges, 2,201 zones).
 - The validator checks form. The checks in this report are the ones it does not do, and each number below is traceable to a result file.
 - What changed in v0.3.3: nodes on and beside bridges and elevated ways take their height from the LiDAR point clouds, not the terrain under the deck; the terrain model is read at 2 m; node heights are smoothed along the path over short edges so survey noise no longer reads as a grade; and the rule that ties a surveyed ramp to a crossing has been checked remotely against aerial imagery by language-model raters (nothing was checked on the ground). The step-free route from the Brooklyn Bridge's Manhattan end to DUMBO is 3.8 km.
+- What changed in v0.3.5: the 2,201 pedestrian areas that OSM maps as `area=yes` are Pedestrian Zones, not Edges along their outlines; the root `dataTimestamp` is the OSM data time; a curb ramp's provenance names the survey; an OSM `path` keeps its origin. No geometry changed on the features shared with v0.3.4 ([`compare_v034.json`](../evaluation/v0.3.5/compare_v034.json)).
 - What remains weak, in order of how much it matters: the curb ramp survey is mostly from 2018; a sixth of the ramps are not on the graph; incline cannot see a curb ramp and is still wrong where this pipeline's height estimate jumps across one short edge at the foot of a ramp; a fifth to a third of pairs outside Brooklyn have no route on pedestrian edges, mostly because the graph has no edge where OSM maps sidewalks as `sidewalk=*` tags on the street, which this pipeline does not read.
 
 ## Schema validation
 
 | Check | Result |
 |---|---|
-| Input | `nyc-osw-osw-split.zip` (split `nyc.nodes.geojson` + `nyc.edges.geojson`) |
-| `python-osw-validation` 0.5.0 | `is_valid: True, errors: 0` ([`evaluation/build/validator.json`](../evaluation/build/validator.json)) |
+| Input | `nyc-osw-osw-split.zip` (`nyc.nodes.geojson`, `nyc.edges.geojson` and `nyc.zones.geojson`), SHA-256 `eced270f93849811ea9857801d71bc6a011bbd3ec1dd8b2fe24533fb3e37aa96` |
+| `python-osw-validation` 0.5.0 | `is_valid: True, errors: 0` ([`evaluation/v0.3.5/validator.json`](../evaluation/v0.3.5/validator.json), run 2026-10-04T16:12:55Z) |
 | Coordinates over 7 decimal places | 0 |
 | Edge ends that differ from their node's coordinate | 0 |
 | Edges with unresolved `_u_id`/`_v_id`, self-loops, zero-length edges, duplicate IDs | 0 of each |
+| Zones with a `_w_id` that names no node, or a ring vertex off its node | 0 of each |
 | `$schema` | `https://sidewalks.washington.edu/opensidewalks/0.3/schema.json` |
-| Root metadata | `dataSource` (with licence, attribution and OSM extract), `dataTimestamp`, `pipelineVersion` (`0.3.3+nyc.1`, git SHA), `region` |
+| Root metadata | `dataSource` (with licence, attribution and OSM extract), `dataTimestamp` (the OSM data time, 2026-10-01T20:22:06Z), `pipelineVersion` (name, `0.3.5+nyc.1`, URL, git SHA `5d04a19`, `builtAt`), `region` |
 
 ## Feature composition
 
@@ -33,22 +33,24 @@
 |---|---|
 | Sidewalk edges | 933,110 |
 | Crossing edges | 437,510 |
-| Footway edges | 544,672 (26,756 from OSM cycleways and tracks open to walkers) |
+| Footway edges | 449,626 (45,616 from OSM paths and 26,756 from cycleways and tracks open to walkers, each marked in `ext:osm_highway`) |
+| Pedestrian Road edges | 11,402 (linear pedestrian streets) |
 | Steps edges | 15,470 |
-| Motor vehicle road edges | 950,386 (residential 418,875; service 289,376; secondary 89,629; tertiary 71,654; primary 58,632; unclassified 21,042; living_street 1,178) |
+| Motor vehicle road edges | 950,420 (residential 418,888; service 289,378; secondary 89,644; tertiary 71,658; primary 58,632; unclassified 21,042; living_street 1,178) |
+| Pedestrian Zones | 2,201 (1,936 pedestrian areas, 262 footway areas, 3 path areas), with 41,826 ring vertices; median 12, largest 256. Manhattan 1,460, Brooklyn 398, Queens 160, Bronx 122, Staten Island 61 |
 | Curb nodes | 217,679, one per surveyed ramp |
 | Bare nodes | 969,231 |
 
-Every edge is directed and every segment has its reverse (965,381 pedestrian segments). Edges marked `ext:structure`: bridge 14,992, elevated 5,158, tunnel 2,762.
+Every edge is directed and every segment has its reverse (923,559 pedestrian segments). Edges marked `ext:structure`: bridge 14,604, elevated 3,718, tunnel 2,762. The fall from v0.3.4 (bridge 14,992, elevated 5,158) is plaza outlines on structures that are now zones; 44 zones carry `ext:structure`.
 
 ## Graph integrity
 
-The pedestrian graph is the sidewalk, crossing, footway and steps edges.
+The pedestrian graph is the Sidewalk, Crossing, Footway, Pedestrian Road and Steps edges, with each zone's outline counted as a connection between its consecutive ring nodes.
 
 | Metric | Value |
 |---|---|
 | Pedestrian-graph nodes | 853,644 |
-| Pedestrian-graph directed edges | 1,930,762 |
+| Pedestrian-graph directed edges | 1,847,118, plus 41,826 zone outline segments |
 | Connected components | 4,975 (1,110 with 10 or more nodes) |
 | Largest component | 611,968 nodes (71.7%) |
 | Second largest | 136,141 nodes: Staten Island |
@@ -60,11 +62,11 @@ Share of each borough's pedestrian nodes in the largest component:
 |---|---|---|---|---|
 | 96.3% | 84.2% | 89.6% | 86.2% | 0% (a separate component) |
 
-Much of the rest lies along streets whose sidewalks OSM maps as `sidewalk=*` tags on the street. That is a valid OSM scheme, and this pipeline does not read it, so the graph has no sidewalk edge there. The pipeline's tag filter also drops some ways that plain OSM routing uses, such as cycleways with no `foot` tag, which the US default treats as walkable: OpenRouteService's walking profile on this graph routes 82.1% of Manhattan pairs, against 100% on plain OSM ([`evaluation/compare/results/tables.md`](../evaluation/compare/results/tables.md), ORS settings matrix).
+Much of the rest lies along streets whose sidewalks OSM maps as `sidewalk=*` tags on the street. That is a valid OSM scheme, and this pipeline does not read it, so the graph has no sidewalk edge there. This graph also has no ferry edges. OpenRouteService's walking profile on this graph routes 82.1% of Manhattan pairs, against 100% on plain OSM (measured on v0.3.3). Of the 358 pairs it loses, 349 have one end on Governors Island, Liberty Island or Ellis Island, which plain OSM reaches by ferry. With the wheelchair profile and no limits, 348 of the 357 lost routes used a ferry on plain OSM, so the pipeline's tag filter, which drops ways such as cycleways with no `foot` tag, accounts for at most 9 ([`evaluation/compare/results/ferries.json`](../evaluation/compare/results/ferries.json)).
 
 ### Borough joins, bridge by bridge
 
-The bridge check snaps each end of 23 bridges with a pedestrian path to the nearest pedestrian node in the right borough and compares the walking distance with the straight line ([`evaluation/bridges/bridges.json`](../evaluation/bridges/bridges.json)). With the points on the walkways' own landings, 20 of 23 are joined on pedestrian edges (ratio 1.0 to 2.1). The three that are not:
+The bridge check snaps each end of 23 bridges with a pedestrian path to the nearest pedestrian node in the right borough and compares the walking distance with the straight line ([`evaluation/v0.3.5/bridges.json`](../evaluation/v0.3.5/bridges.json); the v0.3.3 result, which is the same, is in `evaluation/bridges/bridges.json`). With the points on the walkways' own landings, 20 of 23 are joined on pedestrian edges (ratio 1.0 to 2.1). The three that are not:
 
 | Bridge | Pedestrian path | With street edges | Cause ([`evaluation/bridges/FINDINGS.md`](../evaluation/bridges/FINDINGS.md)) |
 |---|---|---|---|
@@ -76,15 +78,15 @@ Nothing has been posted to OSM, and no OSM edit would be made from these finding
 
 ### Nodes on no edge
 
-36,180 nodes are not an endpoint of any edge, all of them curb ramps (see below).
+36,180 nodes are not an endpoint of any edge or a vertex of any zone, all of them curb ramps (see below). 32,578 nodes are on a zone outline and on no edge.
 
 ## Curb ramps
 
-All 217,679 ramps of the NYC DOT survey are in the file, one node each. 181,499 (83.4%) are an endpoint of a pedestrian edge; 126,152 are on a crossing. `tactile_paving` agrees with the survey's `DWS_CONDITIONS` on all 217,679. No node carries a sentinel slope.
+All 217,679 ramps of the NYC DOT survey are in the file, one node each. 181,499 (83.4%) are an endpoint of a pedestrian edge or a zone vertex (330 of them on a zone outline only); 126,152 are on a crossing. Every one carries `ext:source=nyc_dot_ramps`, and `ext:dws_condition` agrees with the survey on all 217,679. `tactile_paving` agrees with the survey's `DWS_CONDITIONS` on all 217,679. No node carries a sentinel slope.
 
 ### The ramp to crossing rule
 
-The routing layer counts a crossing as having ramps when a surveyed ramp lies within 5 m of each of its ends. That rule was checked remotely ([`evaluation/crossing_rule/RESULT.md`](../evaluation/crossing_rule/RESULT.md), `score.json`): 200 crossings drawn at random, 40 per borough, each end rated over the city's 2018 orthoimagery (the main survey year) by language-model agents following a written protocol, and every third sheet rated again by another agent that saw nothing of the first ratings. No person rated the sheets and no crossing was visited. Agreement 96%, kappa 0.81 (between model instances, so a measure of consistency, not accuracy); on the ends both called yes or no, 100%. Of the 166 crossings the 5 m rule calls ramped, 164 were rated as having a surveyed ramp positioned to serve them at both ends (precision 0.988), and it misses none of the 164. The false pass rate of 1.2% (2 of 166) has an exact 95% interval of 0.1% to 4.3%. The strict rule (a ramp on the crossing's own node) finds 56%. A 3 m survey rule passes no unramped crossing but misses 5; with 2 errors against 0, the sample cannot tell these rules apart, and the 5 m rule was fixed before the check. The rating says where a surveyed ramp sits relative to the real crosswalk; the imagery showed a ramp directly at 9 of 400 ends, so the ramp's existence rests on DOT's survey, which a contractor (Cyclomedia) collected from vehicle-mounted imagery and LiDAR.
+The routing layer counts a crossing as having ramps when a surveyed ramp lies within 5 m of each of its ends. That rule was checked remotely ([`evaluation/crossing_rule/RESULT.md`](../evaluation/crossing_rule/RESULT.md), `score.json`): 200 crossings drawn at random, 40 per borough, each end rated over the city's 2018 orthoimagery (the main survey year) by language-model agents following a written protocol, and every third sheet rated again by another agent that saw nothing of the first ratings. No person rated the sheets and no crossing was visited. Agreement 96%, kappa 0.81 (between model instances, so a measure of consistency, not accuracy); on the ends both called yes or no, 100%. Of the 166 crossings the 5 m rule calls ramped, 164 were rated as having a surveyed ramp positioned to serve them at both ends (precision 0.988), and it misses none of the 164. The false pass rate of 1.2% (2 of 166) has an exact 95% interval of 0.15% to 4.3%. The strict rule (a ramp on the crossing's own node) finds 56%. A 3 m survey rule passes no unramped crossing but misses 5; with 2 errors against 0, the sample cannot tell these rules apart, and the 5 m rule was fixed before the check. The rating says where a surveyed ramp sits relative to the real crosswalk; the imagery showed a ramp directly at 9 of 400 ends, so the ramp's existence rests on DOT's survey, which a contractor (Cyclomedia) collected from vehicle-mounted imagery and LiDAR.
 
 ### NYC DOT curb-ramp slopes
 
@@ -97,21 +99,21 @@ The survey records running and cross slopes in percent: 212,194 ramps carry a ru
 | Nodes with `ext:elevation_m` | 1,186,860 of 1,186,910 |
 | Nodes at exactly 0.0 m | 218 (0.02%) |
 | Highest node by borough | Staten Island 122.4 m, Brooklyn 112.2 m (a boardwalk on a hill), Bronx 84.9 m, Manhattan 80.5 m, Queens 79.4 m |
-| Nodes with a deck height (`ext:elevation_source`) | 14,402: 13,943 from the 2017 survey, 45 from the 2014 survey, 414 interpolated |
+| Nodes with a deck height (`ext:elevation_source`) | 14,402: 13,942 from the 2017 survey, 45 from the 2014 survey, 415 interpolated |
 | Structure nodes with no height | 48 |
-| Edges with `incline` | 2,877,100 of 2,881,148 (99.9%) |
-| Bridge edges with incline | 98.5%; elevated 98.8%; tunnel 0% |
+| Edges with `incline` | 2,793,720 of 2,797,538 (99.9%). Zones carry no incline |
+| Bridge edges with incline | 98.6%; elevated 99.1%; tunnel 0% |
 | Sidewalk edges steeper than 5% | 4.3% |
 | Sidewalk edges outside the wheelchair limits (up 8.3%, down 10%) | 0.8% |
-| Footway edges outside the limits, by length | 1.4% under 2 m, 1.3% at 2 to 5 m, 2.4% at 5 to 10 m, 3.1% at 10 to 20 m, 1.9% at 20 to 50 m, 0.5% over 50 m |
+| Footway and Pedestrian Road edges outside the limits, by length | 1.3% under 2 m, 1.2% at 2 to 5 m, 2.3% at 5 to 10 m, 3.2% at 10 to 20 m, 1.9% at 20 to 50 m, 0.5% over 50 m |
 
 Read incline as an estimate from an airborne survey, not a measurement of the path.
 
 1. **The terrain model is bare earth.** On a bridge, a deck or a pier it holds the ground or water below. v0.3.3 reads the classified LiDAR point clouds instead (the 2017 city survey, and the 2014 USGS survey where the 2017 one has no returns, which is the main spans over open water), around every edge OSM tags as a bridge or as `layer` above 0 and outward along the path until the deck meets the ground. The method is in `METHODOLOGY.md`, section 5b.
-2. **Deck heights against a survey the fix did not use.** Of the 13,943 nodes whose height came from the 2017 survey, 13,930 have a surface in the 2014 survey to compare with (13 have none). Among those, the 2014 surface is within 0.25 m at 83% and within 1 m at 92%; the median difference is 5 cm ([`evaluation/structure_incline/structure_validate_2014.json`](../evaluation/structure_incline/structure_validate_2014.json)). The large disagreements are mostly places rebuilt between the two flights: Hudson Yards, Empire Outlets, the Bayonne Bridge, LaGuardia. Of the nodes lifted 2 m or more above the terrain model, 74% lie within 5 m of a transport structure polygon of the city's planimetric database, which comes from photogrammetry and knows nothing of OSM tags or LiDAR (78% for OSM-tagged structures, 54% for untagged approaches; boardwalks, piers and plazas are not in that database).
-3. **The remaining steep edges on structures.** 1,708 edges of 3 m or more touching a deck node read steeper than 15%. They cluster at station entrances, where the graph has a plain edge because this pipeline does not carry OSM node tags such as elevators; at airport terminals; and at the foot of ramps, where this pipeline's height estimate jumps by several metres across one short edge.
-4. **Short edges.** The graph keeps every OSM vertex as a node, so half its edges are shorter than 6 m. Before incline is taken, each node's height is averaged with its neighbours' along the path over edges shorter than 5 m (never across a step of 0.5 m or more, and not on steps or tunnel edges).
-5. **What no airborne survey can see.** A kerb ramp a metre long, a step, a cross slope. The limits in the wheelchair profile are applied to estimates with about 0.1 m of noise per node.
+2. **Deck heights against a survey the fix did not use (measured on v0.3.3).** Of the 13,943 nodes whose height came from the 2017 survey, 13,930 have a surface in the 2014 survey to compare with (13 have none). Among those, the 2014 surface is within 0.25 m at 83% and within 1 m at 92%; the median difference is 5 cm ([`evaluation/structure_incline/structure_validate_2014.json`](../evaluation/structure_incline/structure_validate_2014.json)). The large disagreements are mostly places rebuilt between the two flights: Hudson Yards, Empire Outlets, the Bayonne Bridge, LaGuardia. Of the nodes lifted 2 m or more above the terrain model, 74% lie within 5 m of a transport structure polygon of the city's planimetric database, which comes from photogrammetry and knows nothing of OSM tags or LiDAR (78% for OSM-tagged structures, 54% for untagged approaches; boardwalks, piers and plazas are not in that database).
+3. **The remaining steep edges on structures.** 1,582 edges of 3 m or more touching a deck node read steeper than 15%. They cluster at station entrances, where the graph has a plain edge because this pipeline does not carry OSM node tags such as elevators; at airport terminals; and at the foot of ramps, where this pipeline's height estimate jumps by several metres across one short edge.
+4. **Short edges.** The graph keeps every OSM vertex as a node, so half its edges are shorter than 7.4 m. Before incline is taken, each node's height is averaged with its neighbours' along the path over edges shorter than 5 m (never across a step of 0.5 m or more, and not on steps or tunnel edges).
+5. **What no airborne survey can see.** A curb ramp a meter long, a step, a cross slope. The limits in the wheelchair profile are applied to estimates with about 0.1 m of noise per node.
 
 ## Sidewalk width
 
@@ -119,23 +121,27 @@ Read incline as an estimate from an airborne survey, not a measurement of the pa
 
 ## Planimetric gap-fill sidewalks
 
-Not in the graph. The 2,318 directed edges (1,159 segments, 60 km) derived from planimetric polygons with no OSM sidewalk within 10 m ship as `nyc-gapfill-sidewalks.geojson`, whose root states a sample result (9 of 18 on a sidewalk or walkway, 4 plainly wrong) and that they are not part of the graph.
+Not in the graph. The 2,348 directed edges (1,174 segments) derived from planimetric polygons with no OSM sidewalk within 10 m ship as `nyc-gapfill-sidewalks.geojson`, whose root states a sample result (9 of 18 on a sidewalk or walkway, 4 plainly wrong) and that they are not part of the graph.
 
 ## Attribute coverage
 
 | Attribute | Coverage | Notes |
 |---|---|---|
-| `surface` | 1,260,426 edges (43.8%) | asphalt 766,676; concrete 358,354; paving_stones 69,556 |
-| `crossing:markings` | 380,888 of 437,510 crossings (87.1%) | `yes` 272,110; `zebra` 108,778. Inferred from OSM `crossing=*`; OSM's `crossing:markings` tag is not read. `crossing=uncontrolled` is mapped to `zebra`, which asserts more than the source says, `traffic_signals` to `yes`, and `unmarked` is dropped, so no crossing carries `no`. |
+| `surface` | 1,200,310 edges (42.9%) | asphalt 749,394; concrete 344,360; paving_stones 46,982 |
+| `crossing:markings` | 400,006 of 437,510 Crossing edges (91.4%) | `zebra` 227,508; `yes` 64,992; `no` 57,616; `ladder` 44,206. Read from OSM's `crossing:markings` tag first, then from `crossing=*` as the schema advises (see SCHEMA.md). |
+| `foot` | 75,314 edges | OSM's tag where it is one of the schema's values; 12,662 on roads |
+| `ext:osm_highway` | 72,372 edges and 265 zones | `path` 45,616, `cycleway` 26,168, `track` 588 on edges |
 | `kerb` | 217,679 curb nodes | `lowered` on all. `ufzp-rrqu` has no ramp type column; DOT's cut-through ramps may be flush curbs in schema terms |
-| `ext:structure` | 22,912 edges | bridge, elevated, tunnel |
+| `ext:structure` | 21,084 edges and 44 zones | bridge, elevated, tunnel |
 | `ext:elevation_source` | 14,402 nodes | `lidar_2017`, `lidar_2014`, `interpolated` |
-| `ext:source`, `ext:pipeline_version` | every feature | `0.3.3+nyc.1` |
-| `ext:source_timestamp` | every edge; 36,180 nodes | OSM-derived nodes lack it |
+| `ext:source`, `ext:pipeline_version` | every feature | `0.3.5+nyc.1`; `ext:source` is `nyc_dot_ramps` on every curb ramp |
+| `ext:source_timestamp` | every edge and zone; 217,679 nodes | Bare nodes lack it |
 | `ext:osm_id` | every OSM-derived edge | |
 | `ext:borough` | every feature | |
 
 ## Routing
+
+The figures in this section were measured on v0.3.3. On v0.3.5 the same node pairs were routed again: no pair lost its route under any profile, and the wheelchair profile gained 8 pairs in Manhattan, 5 in the Bronx and 2 of the pairs with ends anywhere, where a route now crosses a plaza ([`evaluation/v0.3.5/reach_same_pairs_v0.3.5.json`](../evaluation/v0.3.5/reach_same_pairs_v0.3.5.json)). On v0.3.5 the landmark routes below are the same to within 20 m, except that the wheelchair route beside the High Line is 1,780 m, not 1,835 m ([`evaluation/v0.3.5/reach.json`](../evaluation/v0.3.5/reach.json)). A zone edge under 5 m carries no incline unless its ends differ by more than 0.5 m, so part of these gains may come from short plaza edges whose small height differences are no longer read as a grade.
 
 The check uses the repository's own Unweaver inputs: `scripts/osw_to_unweaver.py` makes the layer Unweaver would read, `unweaver-project/cost-wheelchair.py` decides edge by edge, and only the graph search is re-implemented (results in [`evaluation/reachability/reach.json`](../evaluation/reachability/reach.json)). For the router comparison Unweaver itself was later run in a container: it agrees with this search on whether a route exists for all 1,354 requests tried and on length to within 7 m, when built with `--changes-sign incline`.
 
@@ -184,8 +190,8 @@ Do not present a route from this graph as wheelchair accessible. The ramp data i
 uv venv --python 3.11 && source .venv/bin/activate
 uv pip install -e .
 
-# 1. Build (city-wide: about 48 min, 35 GB peak (with swap) on a 32 GB
-#    Apple Silicon machine, 14 GB under data/ including 2.2 GB of LiDAR tiles
+# 1. Build (city-wide: about 54 minutes; peak memory 35 GB, which ran with
+#    swap on a 32 GB machine, 14 GB under data/ including 2.2 GB of LiDAR tiles
 #    and 1.1 GB of terrain tiles, 5.5 GB under output/)
 python -m pipeline build
 
@@ -203,7 +209,7 @@ print('valid:', r.is_valid, 'errors:', len(r.errors or []))"
 python validators/post_build_checks.py output/nyc-osw.geojson output/post_build_checks.json
 ```
 
-The v0.3.3 build was made in one run at commit `2442db2` from an empty `data/` (the pinned OSM extract was placed in it first and checked against its SHA-256). The tests (`tests/`) pass.
+The v0.3.5 build was made in one run at commit `5d04a19` from an empty `data/` ([`evaluation/v0.3.5/build.json`](../evaluation/v0.3.5/build.json)) (the pinned OSM extract was placed in it first and checked against its SHA-256). The tests (`tests/`) pass.
 
 ## Open work
 

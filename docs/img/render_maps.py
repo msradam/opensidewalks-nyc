@@ -23,12 +23,12 @@ if mode == "incline":
 else:
     kind = np.select([ped["footway"] == "sidewalk", ped["footway"] == "crossing", ped["highway"] == "steps", ped["highway"] == "pedestrian"], ["#333333", "#1f6fd1", "#c0392b", "#7a5c99"], "#8a8a8a")
     ped.plot(ax=ax, color=kind, linewidth=2.2)
-    h = [Line2D([], [], color=c, lw=2.5, label=l) for c, l in [("#333333", "Sidewalk Edge"), ("#1f6fd1", "Crossing Edge"), ("#8a8a8a", "Footway Edge"), ("#c0392b", "Steps Edge"), ("#7a5c99", "Pedestrian Road Edge"), ("#dddddd", "Street Edge")]]
+    h = [Line2D([], [], color=c, lw=2.5, label=l) for c, l in [("#333333", "Sidewalk Edge"), ("#1f6fd1", "Crossing Edge"), ("#8a8a8a", "Footway Edge"), ("#c0392b", "Steps Edge"), ("#7a5c99", "Pedestrian Road Edge"), ("#dddddd", "Road Edge")]]
     h.append(plt.Rectangle((0, 0), 1, 1, facecolor="#d9cfe8", edgecolor="#7a5c99", label="Pedestrian Zone"))
 ramps = n[n.get("barrier") == "kerb"] if "barrier" in n else n.iloc[0:0]
 ramps.plot(ax=ax, color="#3b2f8f", markersize=3 if mode == "incline" else 22, zorder=3)
 ax.set_xlim(x0, x1); ax.set_ylim(y0, y1); ax.set_axis_off()
-h.append(Line2D([], [], color="#3b2f8f", marker="o", lw=0, ms=4, label="Curb Node (surveyed ramp)" if mode != "incline" else "surveyed curb ramp"))
+h.append(Line2D([], [], color="#3b2f8f", marker="o", lw=0, ms=4, label="Curb Ramp Node" if mode != "incline" else "surveyed curb ramp"))
 ax.legend(handles=h, loc="lower right", frameon=True, fontsize=9, facecolor="white")
 ax.set_title(title, loc="left", fontsize=12)
 fig.text(0.01, 0.01, "Map data \u00a9 OpenStreetMap contributors (openstreetmap.org/copyright), ODbL. Also NYC DOT, NYC OTI, NYS GIS, NOAA. OpenSidewalks NYC v0.3.5", fontsize=7, color="#555")

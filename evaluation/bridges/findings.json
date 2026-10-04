@@ -1,5 +1,5 @@
 {
- "_note_2026_10_03": "Added 2026-10-03 after external review. The verdict and proposed_change strings are the first version's wording and are superseded by FINDINGS.md. 145th Street Bridge: the cause is modelling, not OSM; OSM records the sidewalks as sidewalk=right on East 149th Street, which this graph does not read. Broadway Bridge: the missing 9th Avenue crossing is unconfirmed. RFK Bronx span: the cause is the pipeline rule that drops cycleways with no foot tag, stricter than the US default foot=yes; no OSM edit is proposed. Two proposed_change strings named a mapper note that was removed from the repository; that reference was cut. No computed value in this file was changed.",
+ "_note_2026_10_03": "Added 2026-10-03. The verdict and proposed_change strings are the first version's wording and are superseded by FINDINGS.md. 145th Street Bridge: the cause is modelling, not OSM; OSM records the sidewalks as sidewalk=right on East 149th Street, which this graph does not read. Broadway Bridge: the missing 9th Avenue crossing is unconfirmed. RFK Bronx span: the cause is the pipeline rule that drops cycleways with no foot tag, stricter than the US default foot=yes; no OSM edit is proposed. Two proposed_change strings named a mapper note that was removed from the repository; that reference was cut. No computed value in this file was changed.",
  "inputs": {
   "osm_extract": "research_notes/next/cache/new-york-261001.osm.pbf",
   "built_graph": "v032_harlem_river_tables.pkl (v0.3.2)"
@@ -1676,7 +1676,7 @@
     }
    ],
    "pipeline_rule": "Stage 3, schema_map._classify_osm_edge: highway in SHARED_TYPES (cycleway, track) is kept only when foot is in FOOT_ALLOWED (yes, designated, permissive). Way 1414563386 has no foot tag.",
-   "proposed_change": "Preferred: add foot=designated to OSM way 1414563386 and move the pin to a newer extract. No rule change. If the pipeline must fix it against the pinned extract, add an allow list of way IDs read by _classify_osm_edge with the single entry 1414563386. Do not relax the foot rule (see side_effects).",
+   "proposed_change": "Preferred: add foot=designated to OSM way 1414563386 and move the pin to a newer extract. No rule change. If the pipeline must fix it against the pinned extract, add an allow list of way IDs read by _classify_osm_edge with the single entry 1414563386. Do not relax the foot rule (see side_effects). [Superseded 2026-10-03: see _note_2026_10_03. No OSM edit is proposed; the fix belongs in the pipeline.]",
    "sources": [
     {
      "url": "https://www.mta.info/press-release/mta-celebrates-new-bike-and-pedestrian-paths-robert-f-kennedy-henry-hudson-and-cross",

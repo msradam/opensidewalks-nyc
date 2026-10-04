@@ -1,22 +1,54 @@
 OpenSidewalks NYC
 Copyright 2026 Adam Munawar Rahman
 
+----------------------------------------------------------------------
+Disclaimer
+----------------------------------------------------------------------
+
+OpenSidewalks NYC is an experimental dataset. This project has not
+checked any of it on the ground. Do not use it to tell anyone that a
+route is accessible, and do not rely on it, or on an app built from it,
+to plan a trip.
+
+The curb ramp survey shows that a ramp was there when it was captured,
+mostly in 2018, not that it is usable today. Incline and width are
+estimates, not measurements.
+
 OpenSidewalks NYC is an independent project by Adam Munawar Rahman. It is
 not made or endorsed by the Taskar Center for Accessible Technology,
-OpenSidewalks or TDEI, nor by NYC DOT or the City of New York. It uses the
-OpenSidewalks Schema, which the Taskar Center at the University of
-Washington develops. Contact: GitHub issues,
+OpenSidewalks or the Transportation Data Equity Initiative (TDEI), nor by
+NYC DOT or the City of New York. No wheelchair user or disability
+organization has reviewed the data or the wheelchair profile.
+
+Language models drafted most of the code and documentation and did the
+imagery ratings. "How this was made", at the end of this file, says how
+they were used.
+
+It uses the OpenSidewalks Schema, which the Taskar Center at the
+University of Washington develops. Contact: GitHub issues,
 https://github.com/msradam/opensidewalks-nyc/issues
+
+----------------------------------------------------------------------
+Licences
+----------------------------------------------------------------------
 
 This product is licensed as follows:
   - Pipeline code, scripts, and notebooks: Apache License 2.0 (see LICENSE).
-  - Distributed graph data (every GitHub Release asset): Open Database
-    License v1.0 (ODbL-1.0), because it is derived from OpenStreetMap. See
-    LICENSE-DATA.md. This includes nyc-gapfill-sidewalks.geojson.
+  - Distributed graph data (every GitHub Release asset except
+    evaluation-sheets.zip): Open Database License v1.0 (ODbL-1.0),
+    because it is derived from OpenStreetMap. See LICENSE-DATA.md. This
+    includes nyc-gapfill-sidewalks.geojson.
+  - evaluation-sheets.zip (the 248 rating sheets: 200 crossing sheets
+    and 48 disagreement sheets) and the example sheets under
+    evaluation/: the imagery is NYC orthoimagery (NYC OTI, 2018 and
+    2024) under CC BY 4.0. The lines and points drawn on it are
+    OpenStreetMap data (ODbL-1.0) and NYC DOT ramp positions. The
+    sheets are not ODbL.
   - The demo's data files (demo/data/) and the result files under
     evaluation/: derived from OpenStreetMap and the city sources below,
-    and licensed ODbL-1.0 like the graph, except the DOT assessment
-    statuses noted below, which this project does not relicense.
+    and licensed ODbL-1.0 like the graph, except the rating sheets
+    above and the DOT assessment statuses noted below, which this
+    project does not relicense.
 
 ----------------------------------------------------------------------
 Source data attributions
@@ -27,10 +59,12 @@ section 4.2). Anyone who publishes a map or other Produced Work from it
 must credit it (section 4.3). The attribution string, as written into
 the root of every release file:
 
-  Pedestrian network from OpenSidewalks NYC, ODbL-1.0. Map data © OpenStreetMap contributors (openstreetmap.org/copyright). Also from NYC DOT and NYC OTI data on NYC Open Data, and LiDAR from NYS GIS and NOAA.
+  Pedestrian network from OpenSidewalks NYC, an independent dataset in the OpenSidewalks Schema, ODbL-1.0. Map data © OpenStreetMap contributors (openstreetmap.org/copyright). Also from NYC DOT and NYC OTI data on NYC Open Data, and LiDAR from NYS GIS and NOAA.
 
-Files in releases up to v0.3.4-nyc.1 spell the name "opensidewalks-nyc"
-in this line.
+Files in v0.3.3-nyc.1 and v0.3.4-nyc.1 carry earlier forms of this line.
+They lack the words "an independent dataset in the OpenSidewalks
+Schema", and they spell the name "opensidewalks-nyc". Use the line above
+for them too.
 
 Used in the graph:
 
@@ -74,10 +108,17 @@ Used in the graph:
 Used in the Brownsville demo only:
 
   - NYC DOT survey assessment map layer (CMT_SURVEY_COMPLIANCY_TOLERANCE_PROD)
-    on DOT's ArcGIS service, linked from https://www.nycpedramps.info/survey,
-    last edited December 2020, read 2 October 2026. Used for each ramp's
-    DOT status. DOT publishes it with no stated terms. It is not an NYC
-    Open Data data set, and this project does not relicense it.
+    on DOT's ArcGIS service, linked from https://www.nycpedramps.info/survey.
+    Service URL:
+    https://services.arcgis.com/wmZOI9vyUBq1zTZx/arcgis/rest/services/CMT_SURVEY_COMPLIANCY_TOLERANCE_PROD/FeatureServer
+    Query: layer 0, /0/query with where=1=1, outFields=*,
+    returnGeometry=true, outSR=4326, orderByFields=OBJECTID, f=json, in
+    pages of 2,000 rows (resultOffset, resultRecordCount). 217,679 rows
+    in 109 pages. Retrieved 2 October 2026, between 16:55 and 16:58 UTC.
+    The layer's own metadata gives its last edit as 28 December 2020,
+    and its copyrightText is empty. Used for each ramp's DOT status. DOT
+    publishes it with no stated terms. It is not an NYC Open Data data
+    set, and this project does not relicense it.
   - NYC DOT Pedestrian Ramp Program Progress (e7gc-ub6z), read 2 October
     2026. NYC Open Data terms of use.
   - NYC DCP Community Districts (5crt-au7u). NYC Open Data terms of use.
@@ -88,9 +129,15 @@ Used in the Brownsville demo only:
     terms of use.
   - MTA Subway Entrances and Exits 2024 (i9wp-a4ja, data.ny.gov).
     New York State open data terms of use.
-  - NYC OTI, NYC Orthos 2024, flown 14 to 24 March 2024, CC BY 4.0
-    (https://github.com/CityOfNewYork/nyc-geo-metadata/blob/master/Metadata/Metadata_AerialImagery.md).
-    Used for the imagery checks, not shown in the demo or the graph.
+  - NYC OTI orthoimagery, CC BY 4.0
+    (https://github.com/CityOfNewYork/nyc-geo-metadata/blob/master/Metadata/Metadata_AerialImagery.md):
+    NYC Orthos 2018 (captured by the New York State orthoimagery
+    programme), under the 200 crossing sheets, and NYC Orthos 2024,
+    flown 14 to 24 March 2024, under the 48 disagreement sheets. The
+    imagery is shown in the rating sheets under evaluation/ and in
+    evaluation-sheets.zip on the release. It is not in the demo or the
+    graph. The overlays on the sheets are OpenStreetMap data (ODbL-1.0)
+    and NYC DOT ramp positions.
   - OpenRouteService 10.0.1 (HeiGIT, GNU GPL 3.0), run locally for the
     reference routes.
   - Leaflet 1.9.4 (BSD 2-Clause), the map library.
@@ -107,8 +154,11 @@ Schema, validator and routing:
     Bolten, Apache License 2.0. The routing setup and the wheelchair cost
     function in unweaver-project/ are adapted from Unweaver's example
     wheelchair profile, whose limits (8.3% up, 10% down) follow AccessMap's
-    manual wheelchair profile. This project modified it to refuse steps
-    and street centrelines.
+    manual wheelchair profile. Modification notice (Apache-2.0 section
+    4(b)): unweaver-project/cost-wheelchair.py is a modified file. Changes
+    by OpenSidewalks NYC (Adam Munawar Rahman, 2026): the function refuses
+    steps and street centrelines. The uphill and downhill limits are the
+    example's. The file carries the same notice at its head.
 
 ----------------------------------------------------------------------
 How this was made
@@ -120,7 +170,9 @@ models, run through Claude Code; exact versions were not recorded)
 drafted most of the code and documentation, did the imagery ratings, and
 diagnosed the routes and bridges. Every agreement statistic (kappa)
 quoted in this repository is agreement between model instances. No
-person rated imagery, and nothing was checked on the ground. Tools
-(axe-core, pa11y, python-osw-validation, the test suite) checked the
-rest. Language models did not generate or modify the source data. The
-protocols and ratings are in evaluation/.
+person rated imagery, and nothing was checked on the ground. Scripts
+checked the build: python-osw-validation checked form,
+validators/post_build_checks.py checked elevation, connectivity, ramps
+and widths, and the test suite checked the pipeline functions. axe-core
+and pa11y checked the demo page. Language models did not generate or
+modify the source data. The protocols and ratings are in evaluation/.

@@ -18,6 +18,6 @@ data/
 
 GitHub LFS free-tier quotas fill quickly with several versions of large geodata, and release assets have no such cap. Each release tag pins a reproducible build that can be dated to its source-fetch timestamps. `releases/latest/download/nyc-osw.fgb` always resolves to the newest asset.
 
-Every release asset is ODbL-1.0 (see [`../LICENSE-DATA.md`](../LICENSE-DATA.md)).
+Every release asset is ODbL-1.0 except `evaluation-sheets.zip`, whose imagery is NYC orthoimagery (NYC OTI, 2018 and 2024) under CC BY 4.0 with overlays from OpenStreetMap (ODbL) and NYC DOT ramp positions (see [`../LICENSE-DATA.md`](../LICENSE-DATA.md)).
 
 See [`../README.md`](../README.md#download) for the download commands.

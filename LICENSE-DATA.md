@@ -1,10 +1,12 @@
 # Data license: ODbL-1.0
 
-Every data file distributed in the GitHub Releases of this repository is licensed under the **[Open Database License v1.0 (ODbL)](https://opendatacommons.org/licenses/odbl/1-0/)**. That covers `nyc-osw.geojson`, `nyc-osw.fgb`, both GraphML files, the routing JSON, the per-borough splits, the validator ZIP, `nyc-gapfill-sidewalks.geojson` and any derived format. The same licence covers the demo's data files under `demo/data/` and the result files under `evaluation/`, except the DOT assessment statuses described under "Sources used only in the demo".
+Every data file distributed in the GitHub Releases of this repository is licensed under the **[Open Database License v1.0 (ODbL)](https://opendatacommons.org/licenses/odbl/1-0/)**, except `evaluation-sheets.zip`. That covers `nyc-osw.geojson`, `nyc-osw.fgb`, both GraphML files, the routing JSON, the per-borough splits, the validator ZIP, `nyc-gapfill-sidewalks.geojson` and any derived format. The same licence covers the demo's data files under `demo/data/` and the result files under `evaluation/`, except the rating sheets and the DOT assessment statuses described under "Sources used only in the demo".
+
+`evaluation-sheets.zip` holds the 248 rating sheets (200 crossing sheets and 48 disagreement sheets), and a few example sheets are in `evaluation/`. Their imagery is NYC orthoimagery (NYC OTI, 2018 and 2024) under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The lines and points drawn on it are OpenStreetMap data (ODbL) and NYC DOT ramp positions. The sheets are not ODbL. From v0.3.5 the ZIP is listed in the release's `SHA256SUMS`.
 
 The licence is inherited from OpenStreetMap, which is the source of the network geometry (footways, crossings, steps, road centrelines). Under ODbL section 4.4, a database derived from an ODbL database must itself be offered under ODbL, so this dataset is released under ODbL.
 
-OpenSidewalks NYC is an independent project by Adam Munawar Rahman. It is not made or endorsed by the Taskar Center for Accessible Technology, OpenSidewalks or TDEI, nor by NYC DOT or the City of New York.
+OpenSidewalks NYC is an independent project by Adam Munawar Rahman. It is not made or endorsed by the Taskar Center for Accessible Technology, OpenSidewalks or the Transportation Data Equity Initiative (TDEI), nor by NYC DOT or the City of New York. No wheelchair user or disability organization has reviewed the data or the wheelchair profile. This project has not checked any of the data on the ground. Do not use it to tell anyone that a route is accessible, and do not rely on it, or on an app built from it, to plan a trip. The full [Disclaimer](README.md#disclaimer) is in the README.
 
 ## Attribution
 
@@ -22,9 +24,9 @@ The borough boundaries in the region polygon are OpenStreetMap data (fetched thr
 
 The attribution string, as written into the root of every release file:
 
-> Pedestrian network from OpenSidewalks NYC, ODbL-1.0. Map data © OpenStreetMap contributors (openstreetmap.org/copyright). Also from NYC DOT and NYC OTI data on NYC Open Data, and LiDAR from NYS GIS and NOAA.
+> Pedestrian network from OpenSidewalks NYC, an independent dataset in the OpenSidewalks Schema, ODbL-1.0. Map data © OpenStreetMap contributors (openstreetmap.org/copyright). Also from NYC DOT and NYC OTI data on NYC Open Data, and LiDAR from NYS GIS and NOAA.
 
-The files of v0.3.3-nyc.1 carry an older, shorter string without the copyright link and NOAA. Files in releases up to v0.3.4-nyc.1 spell the name `opensidewalks-nyc` in this line. Use the string above for them too.
+The files of v0.3.3-nyc.1 carry an older, shorter string without the copyright link and NOAA. Files in v0.3.3-nyc.1 and v0.3.4-nyc.1 spell the name `opensidewalks-nyc` in this line and lack the words "an independent dataset in the OpenSidewalks Schema". Use the string above for them too.
 
 ## What ODbL requires of you (summary, not legal advice)
 
@@ -44,11 +46,11 @@ The NYC Open Data sources (`ufzp-rrqu`, `52n9-sdep`) and the NYC 2017 LiDAR elev
 
 | Source | Terms |
 |---|---|
-| NYC DOT survey assessment map layer (`CMT_SURVEY_COMPLIANCY_TOLERANCE_PROD`) on DOT's ArcGIS service, linked from [nycpedramps.info/survey](https://www.nycpedramps.info/survey), read 2 October 2026 | No stated terms. It is not an NYC Open Data data set, and this project does not relicense the statuses taken from it. |
+| NYC DOT survey assessment map layer (`CMT_SURVEY_COMPLIANCY_TOLERANCE_PROD`) on DOT's ArcGIS service, linked from [nycpedramps.info/survey](https://www.nycpedramps.info/survey), read 2 October 2026. `NOTICE` gives the service URL and the query. | No stated terms. It is not an NYC Open Data data set, and this project does not relicense the statuses taken from it. |
 | NYC DOT Pedestrian Ramp Program Progress (`e7gc-ub6z`), read 2 October 2026 | NYC Open Data terms of use |
 | NYC DCP Community Districts (`5crt-au7u`) | NYC Open Data terms of use |
 | NYC DCP Facilities Database (`ji82-xba5`) | NYC Open Data terms of use |
 | NYCHA Public Housing Developments (`phvi-damg`) | NYC Open Data terms of use |
 | NYC Parks Cool It! NYC 2020 cooling sites (`h2bn-gu9k`) | NYC Open Data terms of use |
 | MTA Subway Entrances and Exits 2024 (`i9wp-a4ja`, data.ny.gov) | New York State open data terms of use |
-| NYC OTI, NYC Orthos 2024 (used for the imagery checks, not shown) | CC BY 4.0 |
+| NYC OTI orthoimagery: NYC Orthos 2018 and NYC Orthos 2024. Shown in the rating sheets under `evaluation/` and in `evaluation-sheets.zip`, with overlays of OpenStreetMap data (ODbL) and NYC DOT ramp positions. Not shown in the demo. | CC BY 4.0 |
