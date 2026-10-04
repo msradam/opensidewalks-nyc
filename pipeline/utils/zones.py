@@ -18,10 +18,17 @@ from shapely.prepared import prep
 
 from pipeline.utils.ids import feature_id, node_id
 
-# Chords shorter than this get no incline: Stage 4 smooths heights over
-# edges this short, and a raw difference of two 0.1 m heights over 3 m reads
-# as a 3% grade.
+# Edges shorter than this get no incline unless the two heights differ by
+# more than _LEVEL_BREAK_M: Stage 4 smooths heights over edges this short,
+# and a raw difference of two 0.1 m heights over 3 m reads as a 3% grade. A
+# larger difference is a real change of level (Stage 4 does not smooth
+# across one either), and without its incline a route would cross a drop
+# between two levels of a plaza as if it were flat.
+# ponytail: a short edge with 0.5 m or less of height difference carries no
+# incline, where Stage 4 would give a smoothed one. To close that, keep the
+# smoothed heights from Stage 4 on the zone's nodes and read them here.
 _MIN_CHORD_INCLINE_M = 5.0
+_LEVEL_BREAK_M = 0.5
 
 
 def ring_from_edges(geoms: list[LineString]) -> list[tuple[float, float]] | None:
@@ -77,7 +84,7 @@ def zone_edges(zone: dict, node_xy: dict, referenced: set, node_z: dict | None =
     its entrances, or follow its edge, and never cut across a courtyard the
     ring bends around. Each edge is one direction; the reverse is emitted
     too. Incline is rise over run from the Nodes' `ext:elevation_m`, left
-    off for chords under 5 m.
+    off for edges under 5 m whose ends differ by 0.5 m or less.
     """
     p = zone.get("properties") or {}
     w = p.get("_w_id") or []
@@ -99,7 +106,8 @@ def zone_edges(zone: dict, node_xy: dict, referenced: set, node_z: dict | None =
         length = _haversine_m(node_xy[a], node_xy[b])
         for u, v in ((a, b), (b, a)):
             incline = None
-            if node_z and u in node_z and v in node_z and length >= _MIN_CHORD_INCLINE_M:
+            if node_z and u in node_z and v in node_z and length > 0 and (
+                    length >= _MIN_CHORD_INCLINE_M or abs(node_z[v] - node_z[u]) > _LEVEL_BREAK_M):
                 incline = round((node_z[v] - node_z[u]) / length, 4)
                 if abs(incline) > 1.0:
                     incline = None

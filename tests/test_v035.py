@@ -62,11 +62,16 @@ def test_a_route_crosses_a_plaza_between_entrances_but_not_outside_it():
     # No incline without a height at both ends.
     ab = next(e for e in out if (e["_u_id"], e["_v_id"]) == ("a", "b"))
     assert ab["incline"] is None
-    # Nor on a chord under 5 m.
-    short = zone_edges({"properties": {"_id": "s", "_w_id": ["a", "b", "c"]}},
-                       {"a": (-74, 40.7), "b": (-74 + 3e-5, 40.7), "c": (-74, 40.7 + 3e-5)},
-                       referenced={"a", "b"}, node_z={"a": 1.0, "b": 2.0})
+    # Nor on an edge under 5 m whose ends are within survey noise of each other.
+    tri = ({"properties": {"_id": "s", "_w_id": ["a", "b", "c"]}},
+           {"a": (-74, 40.7), "b": (-74 + 3e-5, 40.7), "c": (-74, 40.7 + 3e-5)})
+    short = zone_edges(*tri, referenced={"a", "b"}, node_z={"a": 1.0, "b": 1.3})
     assert all(e["incline"] is None for e in short)
+    # A real change of level on a short edge keeps its incline, so a route
+    # cannot cross a drop between two levels of a plaza as if it were flat.
+    drop = zone_edges(*tri, referenced={"a", "b"}, node_z={"a": 1.0, "b": 2.0})
+    ab = next(e for e in drop if (e["_u_id"], e["_v_id"]) == ("a", "b"))
+    assert ab["length_m"] < 5 and ab["incline"] > 0.3
 
 
 def test_root_timestamps_mean_what_the_schema_says():
