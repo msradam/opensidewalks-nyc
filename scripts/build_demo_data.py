@@ -44,7 +44,10 @@ BUILT = {"Constructed", "Complex Constructed"}
 STATUS = {"Compliant": 1, "Pending": 2, "Non-Compliant": 3}
 STATUS_TEXT = {0: "no DOT assessment", 1: "Compliant", 2: "Pending Technical Review", 3: "Non-Compliant"}
 COMPASS = ["north", "north-east", "east", "south-east", "south", "south-west", "west", "north-west"]
-TRIPS = 12
+TRIPS = 10
+NOTICE = ("Data (c) OpenStreetMap contributors (openstreetmap.org/copyright), NYC DOT, NYC Open Data. ODbL-1.0. "
+          "See https://github.com/msradam/opensidewalks-nyc/blob/main/LICENSE-DATA.md")
+FT = 3.28084
 NOISE_M = 3.0       # an edge shorter than this does not set a route's "steepest stretch"
 
 
@@ -58,7 +61,7 @@ def bearing(a, b):
 
 
 def js(name, value, path):
-    path.write_text(f"window.DEMO = window.DEMO || {{}};\nwindow.DEMO.{name} = {json.dumps(value, separators=(',', ':'))};\n")
+    path.write_text(f"// {NOTICE}\nwindow.DEMO = window.DEMO || {{}};\nwindow.DEMO.{name} = {json.dumps(value, separators=(',', ':'))};\n")
 
 
 # ---------------------------------------------------------------- ramps
@@ -86,7 +89,7 @@ def load_ramps(nodes, compliance_glob, progress_csv):
                 end = datetime.strptime(corner["Construction_End_Date"], "%Y/%m/%d").date()  # noqa: DTZ007 (a calendar day)
             except ValueError:
                 end = None
-            # As in the ramp backlog method (evaluation/ramp_backlog/METHOD.md): a built corner with no usable date counts as rebuilt.
+            # A built corner with no usable date counts as rebuilt.
             usable = end is not None and 1990 <= end.year and end <= date.today()  # noqa: DTZ011
             rebuilt = not usable or surveyed is None or end > surveyed
             built_year = end.year if usable and rebuilt else None
@@ -220,7 +223,7 @@ def describe(g, net, edges, dest):
         way = COMPASS[round(bearing(first[0], last[-1]) / 45) % 8]
         lead = "Head" if prev is None else turn(prev, b_in)
         prev = b_out
-        dist = f"{round(d)} m" if d >= 1 else "under 1 m"
+        dist = f"{round(d * FT)} ft ({round(d)} m)" if d >= 1 else "under 3 ft (1 m)"
         if r["kind"] == "crossing":
             facts["crossings"] += 1
             ends = net.ends.get(r["label"], {})
@@ -229,7 +232,7 @@ def describe(g, net, edges, dest):
             names = ["near", "far"] if len(order) == 2 else [f"end {i + 1}" for i in range(len(order))]
             missing = [nm for nm, n in zip(names, order, strict=True) if not ends[n]]
             over = f"Cross {r['label'] and net.over.get(r['label']) or 'the street'}" if lead in ("Head", "Continue") else f"{lead.split(',')[0]} and cross {net.over.get(r['label']) or 'the street'}"
-            s = f"{over} ({dist})."
+            s = f"{over}, {dist}."
             if not ends:
                 s += " This crossing does not join the mapped sidewalks, so its ramps cannot be judged."
                 facts["no_ramp"] += 1
@@ -264,10 +267,11 @@ def describe(g, net, edges, dest):
             if steep:
                 e = max(steep, key=lambda e: abs(g.incline[e]))
                 pct = abs(float(g.incline[e])) * 100
-                s += f" Steepest stretch {pct:.1f}% {'uphill' if g.incline[e] > 0 else 'downhill'}." if pct >= 2 else " Close to level."
+                s += f" Steepest stretch {pct:.1f}% {'uphill' if g.incline[e] > 0 else 'downhill'}." if pct >= 2 else " Close to level (under 2%)."
             widths = g.width[es][~np.isnan(g.width[es])]
             if len(widths):
-                s += f" Mapped width at least {float(widths.min()):.1f} m."
+                w = float(widths.min())
+                s += f" Mapped sidewalk width about {round(w * FT)} ft ({w:.1f} m), an average from curb to building line, not the clear path."
         text.append(s)
     text.append(f"Arrive near {dest}.")
     facts["street_m"] = round(facts["street_m"], 1)
@@ -281,7 +285,8 @@ def verdict_text(rec, ours, ref):
     diff = (ours["length_m"] - ref["length_m"]) if ours["found"] and ref["found"] else None
     longer = f"{abs(round(diff))} m {'longer' if diff > 0 else 'shorter'} than OpenRouteService's" if diff is not None else ""
     if v["status"] == "same route":
-        return "The two wheelchair routes agree.", "This graph and OpenRouteService take the same path, within 10 m over at least 90% of its length."
+        return ("Both route finders picked the same path.",
+                "This graph and OpenRouteService take the same path, within 10 m over at least 90% of its length. Neither route has been checked on the street.")
     if v["status"] == "neither":
         return "Neither router finds a wheelchair route.", "Both this graph's wheelchair profile and OpenRouteService's report no route for this trip."
     if v["status"] == "ours only":
@@ -306,14 +311,28 @@ def verdict_text(rec, ours, ref):
     return head, why + tail
 
 
+def dest_kind(p):
+    # The Facilities Database files school-based health centres under HOSPITALS AND CLINICS, by the school's name.
+    return "health clinic in a school" if p["d_kind"] == "clinic" and "school" in p["d_name"].lower() else p["d_kind"]
+
+
+def stair_start(p):
+    return p["o_kind"] == "subway entrance" and "stair" in p["o_name"].lower()
+
+
 def choose(recs, pairs, inside):
-    """A fixed, mixed selection of Brownsville trips: agreement first, then each kind of disagreement."""
-    want = [("same route", None, 3), ("different route", "kerb data", 4), ("different route", "incline data", 2),
+    """A fixed, mixed selection of Brownsville trips: agreement first, then each kind of disagreement.
+
+    No trip starts at a subway entrance whose name says Stair (the pairs file builds the name from the
+    MTA entrance type): a wheelchair user cannot begin there.
+    """
+    want = [("same route", None, 3), ("different route", "kerb data", 4), ("different route", "incline data", 1),
             ("different route", "rule", 1), ("different route", "connectivity", 1), ("reference only", None, 2), ("ours only", None, 1)]
     picked, used = [], set()
     for status, cause, n in want:
         pool = [r for r in recs if r["verdict"]["status"] == status and (cause is None or r["verdict"].get("cause") == cause)
-                and r["snap_apart_m"] <= 25 and inside(pairs[r["id"]]) and r["routes"].get("ors_a_foot", {}).get("found")]
+                and r["snap_apart_m"] <= 25 and inside(pairs[r["id"]]) and r["routes"].get("ors_a_foot", {}).get("found")
+                and not stair_start(pairs[r["id"]])]
         pool.sort(key=lambda r: (pairs[r["id"]]["pick"] != "nearest", abs(r["routes"]["ors_a_foot"]["length_m"] - 900), r["id"]))
         for r in pool:
             o = pairs[r["id"]]["o_name"]
@@ -384,7 +403,7 @@ def main(cfg):
             options[key] = {"found": True, "length_m": r["length_m"], **facts, "coords": latlon(r["coords"]), "steps_text": text}
         head, reason = verdict_text(rec, rec["routes"]["ours_wheelchair"], rec["routes"]["ors_a_rec_i10_k6"])
         trips.append({"id": p["id"], "from": {"name": p["o_name"], "kind": p["o_kind"], "lat": p["o"][1], "lon": p["o"][0]},
-                      "to": {"name": p["d_name"], "kind": p["d_kind"], "lat": p["d"][1], "lon": p["d"][0]},
+                      "to": {"name": p["d_name"], "kind": dest_kind(p), "lat": p["d"][1], "lon": p["d"][0]},
                       "verdict": {"status": rec["verdict"]["status"], "cause": rec["verdict"].get("cause"), "headline": head, "reason": reason},
                       "options": options})
     js("routes", trips, out / "routes.js")
@@ -405,9 +424,10 @@ def main(cfg):
     network_tables = [
         {"caption": "Sidewalks and paths inside the district, by steepest incline", "head": ["Incline", "Length (km)", "Share of length"],
          "rows": [[k, f"{km(by_cls[k]):.1f}", f"{km(by_cls[k]) / km(walks):.1%}"] for k in ("up to 5%", "5% to 8.3%", "over 8.3%", "no value") if by_cls[k]]},
-        {"caption": "Sidewalk width, where the planimetric survey gives one", "head": ["Mapped width", "Length (km)", "Share of length with a width"],
+        {"caption": "Sidewalk width, where the planimetric survey gives one", "head": ["Average mapped width, curb to building line", "Length (km)", "Share of length with a width"],
          "rows": [[label, f"{km(rows):.1f}", f"{km(rows) / km(wide):.1%}"] for label, rows in (
-             ("under 1.5 m", [w for w in wide if w[2] < 1.5]), ("1.5 m to 3 m", [w for w in wide if 1.5 <= w[2] < 3]), ("3 m and over", [w for w in wide if w[2] >= 3]))]},
+             ("under 5 ft (1.5 m)", [w for w in wide if w[2] < 1.5]), ("5 ft to 10 ft (1.5 m to 3 m)", [w for w in wide if 1.5 <= w[2] < 3]),
+             ("10 ft (3 m) and over", [w for w in wide if w[2] >= 3]))]},
         {"caption": "Crossings inside the district", "head": ["Crossings", "Count", "Share"],
          "rows": [["A surveyed ramp within 5 m of every end", ramped, f"{ramped / len(groups_in):.1%}"],
                   ["No surveyed ramp near at least one end", len(groups_in) - ramped, f"{1 - ramped / len(groups_in):.1%}"]]},
@@ -430,7 +450,9 @@ def main(cfg):
         if rebuilt:
             since = f"{len(rebuilt)} of {len(by_corner)} surveyed corners rebuilt" + (f", latest in {max(years)}" if years else "") + ". Survey values there are out of date."
         else:
-            since = "Not rebuilt. DOT status: " + ", ".join(sorted({group[0]["progress"] for group in by_corner.values()})) + "."
+            labels = {group[0]["progress"] for group in by_corner.values()}
+            labels = sorted(f"{x}, on or before the survey date" if x in BUILT else x for x in labels)
+            since = "No rebuild after the survey. DOT's corner status: " + "; ".join(labels) + "."
         corner_rows.append([name, len(rs), ", ".join(f"{k}: {v}" for k, v in sorted(c.items())), since])
     cmp_ = cfg["numbers"]
     meta = {
@@ -440,7 +462,8 @@ def main(cfg):
         "ramp_dates": f"The {n:,} surveyed ramps in the district were captured between {dates[0].strftime('%B %Y')} and {dates[-1].strftime('%B %Y')}. "
                       f"DOT's assessment layer was last edited in December 2020. DOT's corner progress file, read on {cfg['progress_retrieved']}, lists the corners of "
                       f"{sum(r['rebuilt'] for r in in_cd):,} of these ramps as rebuilt after the survey. A rebuilt corner is drawn as a hollow diamond: the survey's slope and "
-                      f"status describe the ramp that was replaced, and the progress file does not say which ramps at the corner were rebuilt.",
+                      f"status may describe a ramp that was replaced, and the progress file does not say which ramps at the corner were rebuilt. "
+                      f"The map also draws {len(ramps) - n:,} ramps just outside the district. The tables count only the ramps inside it.",
         "ramp_table": {"caption": "Surveyed ramps inside the district, by DOT's assessment", "head": ["DOT's assessment of its survey", "Ramps", "Corner not rebuilt since", "Corner rebuilt since"],
                        "rows": ramp_rows},
         "corners": corner_rows,

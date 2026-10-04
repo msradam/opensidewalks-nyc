@@ -11,6 +11,7 @@
     for (const kid of kids) n.append(kid);
     return n;
   };
+  const feet = (m, digits = 1) => `${Math.round(m * 3.28084)} ft (${m.toFixed(digits)} m)`;
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // One style table for the map and the legend, so they cannot drift apart.
@@ -26,11 +27,11 @@
   };
   const RAMP = [
     { shape: "cross", color: "#555555", label: "Surveyed ramp with no DOT assessment" },
-    { shape: "circle", color: "#1a5fb4", label: "DOT: Compliant" },
-    { shape: "square", color: "#8a5200", label: "DOT: Pending Technical Review" },
-    { shape: "triangle", color: "#a3172b", label: "DOT: Non-Compliant" },
+    { shape: "circle", color: "#1a5fb4", label: "DOT label: Compliant" },
+    { shape: "square", color: "#8a5200", label: "DOT label: Pending Technical Review (not decided yet)" },
+    { shape: "triangle", color: "#a3172b", label: "DOT label: Non-Compliant" },
   ];
-  const REBUILT = { shape: "diamond", color: "#4b2e83", label: "Corner rebuilt after the survey (survey values are out of date)" };
+  const REBUILT = { shape: "diamond", color: "#4b2e83", label: "Corner rebuilt after the survey (survey values may be out of date)" };
   const ROUTE = {
     ours: { color: "#0050a0", weight: 6, label: "This graph, wheelchair profile" },
     ors_wheelchair: { color: "#c2410c", weight: 5, dashArray: "11 7", label: "OpenRouteService wheelchair, plain OSM" },
@@ -74,7 +75,7 @@
     L.polyline(coords, { renderer: canvas, ...s }).bindPopup(
       `<strong>${beside ? "Sidewalk beside " + beside : "Sidewalk or path"}</strong><br>` +
       `Steepest incline: ${pct === null ? "not known" : pct.toFixed(1) + "%"}<br>` +
-      `Mapped width: ${width === null ? "not known" : width.toFixed(1) + " m (kerb to property line)"}`).addTo(sidewalks);
+      `Average mapped width: ${width === null ? "not known" : feet(width) + ", curb to building line. The clear path is narrower."}`).addTo(sidewalks);
   }
   for (const [coords] of D.network.steps) {
     L.polyline(coords, { renderer: canvas, ...LINE.steps }).bindPopup("<strong>Steps</strong>").addTo(sidewalks);
@@ -113,7 +114,7 @@
     }).bindPopup(
       `<strong>Curb ramp at ${corner}</strong><br>Surveyed ${surveyed}. DOT's assessment of that survey: ${STATUS_TEXT[status]}.<br>` +
       `Running slope in the survey: ${slope === null ? "not recorded" : slope.toFixed(1) + "%"}.<br>` +
-      (rebuilt ? `<strong>DOT lists this corner as rebuilt${builtYear ? " in " + builtYear : ""}, after the survey.</strong> The values above describe the old ramp.` : "DOT does not list this corner as rebuilt since the survey.")).addTo(ramps);
+      (rebuilt ? `<strong>DOT lists this corner as rebuilt${builtYear ? " in " + builtYear : ""}, after the survey.</strong> The values above may describe a ramp that has since been replaced.` : "DOT does not list this corner as rebuilt since the survey.")).addTo(ramps);
   }
 
   const zoomRadius = () => {
@@ -179,7 +180,7 @@
   const select = $("route-select");
   D.routes.forEach((r, i) => select.append(el("option", { value: String(i) }, `${r.from.name} (${r.from.kind}) to ${r.to.name} (${r.to.kind})`)));
 
-  const fmt = (m) => m >= 1000 ? (m / 1000).toFixed(2) + " km" : Math.round(m) + " m";
+  const fmt = (m) => m >= 400 ? `${(m / 1609.344).toFixed(2)} mi (${(m / 1000).toFixed(2)} km)` : feet(m, 0);
   const showRoute = (i, move) => {
     const r = D.routes[i];
     routeLayer.clearLayers();
@@ -258,8 +259,8 @@
   const tbody = document.querySelector("#corner-table tbody");
   const LIMIT = 60;
   const renderCorners = () => {
-    const q = $("corner-filter").value.trim().toUpperCase();
-    const hits = D.meta.corners.filter((c) => !q || c[0].includes(q));
+    const q = $("corner-filter").value.trim().toLowerCase();
+    const hits = D.meta.corners.filter((c) => !q || c[0].toLowerCase().includes(q));
     tbody.replaceChildren();
     for (const [name, n, assessed, since] of hits.slice(0, LIMIT)) {
       tbody.append(el("tr", {}, el("th", { scope: "row" }, name), el("td", { class: "num" }, String(n)), el("td", {}, assessed), el("td", {}, since)));

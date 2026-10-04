@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Brownsville sidewalks and curb ramps: a wheelchair routing demo</title>
-<meta name="description" content="Sidewalks, crossings and surveyed curb ramps in Brownsville, Brooklyn, with wheelchair routes from the opensidewalks-nyc graph beside routes from OpenRouteService. Not yet checked on the ground.">
+<title>Brownsville sidewalks and curb ramps: what public data shows</title>
+<meta name="description" content="Sidewalks, crossings and surveyed curb ramps in Brownsville, Brooklyn, from public city and OpenStreetMap data, with routes from a computer route finder. Not checked on the ground.">
 <link rel="stylesheet" href="vendor/leaflet-1.9.4/leaflet.css">
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -12,10 +12,17 @@
 <a class="skip" href="#routes">Skip to the routes as text</a>
 <header>
   <h1>Brownsville sidewalks and curb ramps</h1>
-  <p class="lede">A wheelchair routing demo for Brooklyn Community District 16, built from the
+  <p class="lede">What city and OpenStreetMap data say about sidewalks and curb ramps in Brooklyn Community District 16
+    (Brownsville), and how a computer route finder uses that data. The page is a test of the
     <a href="https://github.com/msradam/opensidewalks-nyc">opensidewalks-nyc</a> pedestrian graph.</p>
   <p class="warning" role="note"><strong>Not checked on the ground.</strong> Nobody has travelled these routes or
     measured these ramps for this project. Do not rely on this page to plan a trip.</p>
+  <p id="about">Made by Adam Munawar Rahman as an independent project. It is not made or endorsed by the Taskar Center
+    for Accessible Technology, OpenSidewalks or TDEI, nor by NYC DOT or the City of New York. The code and text were
+    drafted with language models and reviewed by the author. The imagery checks under
+    <a href="#status">What is verified</a> were done by language-model raters (Anthropic Claude models, exact versions
+    not recorded) following a written protocol, not by people. Questions and corrections go to the project's
+    <a href="https://github.com/msradam/opensidewalks-nyc/issues">GitHub issues</a>.</p>
   <nav aria-label="Sections">
     <ul>
       <li><a href="#map-section">Map</a></li>
@@ -23,7 +30,6 @@
       <li><a href="#network">Network in numbers</a></li>
       <li><a href="#ramps">Curb ramps</a></li>
       <li><a href="#status">What is verified</a></li>
-      <li><a href="#audit">Field audit</a></li>
       <li><a href="#sources">Sources</a></li>
       <li><a href="how-it-works.html">How the graph is built</a></li>
     </ul>
@@ -33,10 +39,19 @@
 <main>
 <section id="map-section" aria-labelledby="map-h">
   <h2 id="map-h">Map</h2>
-  <p>Everything drawn on the map is also given as text on this page: routes under
-    <a href="#routes">Routes</a>, the network under <a href="#network">Network in numbers</a> and every corner's
-    ramps under <a href="#ramps">Curb ramps</a>. With the map focused, the arrow keys move it and the plus and minus
-    keys zoom.</p>
+  <p id="profile">The routes on this page come from this project's wheelchair profile. It is a fixed set of rules
+    that the author adapted from the Unweaver routing engine. It refuses steps. It refuses the roadway where no
+    sidewalk is mapped (street centerlines). It refuses a crossing unless the ramp survey has a ramp within 5 m (16 ft)
+    of each end. It refuses any stretch steeper than 8.3% uphill or 10% downhill. It does not read a ramp's slope or
+    DOT's rating, so it will send you over ramps DOT rated Non-Compliant. These rules have not been tested with
+    wheelchair users.</p>
+  <p>Incline is given in percent. An incline of 8.3% is a rise of 1 inch for every 12 inches of length (1 in 12). That
+    is the steepest a new curb ramp may be under the ADA design standards. 5% is 1 in 20. A stretch called close to
+    level in the route steps is under 2%, or 1 in 50.</p>
+  <p>What the map draws is also given as text on this page: routes under <a href="#routes">Routes</a>, the network
+    under <a href="#network">Network in numbers</a> and every corner's ramps under <a href="#ramps">Curb ramps</a>.
+    Where part of a route runs on ways this graph does not include, its route card says so. With the map focused, the
+    arrow keys move it and the plus and minus keys zoom.</p>
   <div class="layers" role="group" aria-labelledby="layers-h">
     <p id="layers-h" class="group-title">Show on the map</p>
     <label for="show-sidewalks"><input type="checkbox" id="show-sidewalks" checked> <span>Sidewalks and paths</span></label>
@@ -52,10 +67,16 @@
 
 <section id="routes" aria-labelledby="routes-h">
   <h2 id="routes-h">Routes</h2>
+  <p class="warning" role="note"><strong>Not checked on the ground.</strong> Do not use these routes to plan a trip.</p>
   <p>Each trip below was computed three ways on the same OpenStreetMap extract of 1 October 2026: by this graph's
-    wheelchair profile, by OpenRouteService's wheelchair profile on plain OpenStreetMap data, and by
-    OpenRouteService's ordinary walking profile. The trips run from public housing developments, senior centres and
-    subway entrances to clinics, schools, libraries and cooling sites, all taken from public city datasets.</p>
+    <a href="#profile">wheelchair profile</a>, by OpenRouteService's wheelchair profile on plain OpenStreetMap data,
+    and by OpenRouteService's ordinary walking profile. The trips run from public housing developments, senior centres
+    and subway station house entrances to clinics, schools, libraries and cooling sites, all taken from public city
+    datasets. No trip starts at a subway entrance the MTA names as a stair. Whether an entrance has steps or an
+    elevator is not in the data, so a station house entrance may still have steps.</p>
+  <p>Lengths and widths are in feet, with metres in brackets. A mapped sidewalk width is the average width of the
+    city's sidewalk outline from the curb to the building line. The clear path past poles, trees and stoops is
+    narrower and was not measured.</p>
   <p>
     <label for="route-select">Trip</label>
     <select id="route-select"></select>
@@ -66,22 +87,57 @@
 
 <section id="network" aria-labelledby="network-h">
   <h2 id="network-h">Network in numbers</h2>
-  <p>The same network the map draws, as counts. Sidewalk width is the mapped strip between kerb and property line
-    from the city's planimetric survey, which is wider than the clear path left by poles, trees and stoops. Incline
-    comes from the city's 2017 airborne LiDAR.</p>
+  <p>The same network the map draws, as counts. Sidewalk width is the average width of the city's mapped sidewalk
+    outline between the curb and the building line, from the planimetric survey. The clear path left by poles, trees
+    and stoops is narrower and was not measured. Incline comes from the city's 2017 airborne LiDAR.</p>
   <div id="network-tables"></div>
 </section>
 
 <section id="ramps" aria-labelledby="ramps-h">
   <h2 id="ramps-h">Curb ramps</h2>
-  <p>Ramp positions and measurements come from NYC DOT's pedestrian ramp survey of April 2018 to October 2019.
-    Nobody on this project has checked them with a level on the ramp. The status shown is DOT's own published assessment of
-    that survey. DOT's caveat applies to all of it:</p>
+  <p>Ramp positions and measurements come from NYC DOT's Pedestrian Ramp Locations data. DOT's contractor, Cyclomedia,
+    collected them from street-level imagery and LiDAR (laser scanning) recorded from vehicles. Most ramps were captured
+    in 2018, and the records span March 2017 to January 2020. The survey was not a hand measurement with a level, and
+    nobody on this project has measured a ramp.</p>
+  <p>Each ramp carries a label from DOT's assessment of that survey. The assessment layer was last edited in December
+    2020. The labels are DOT's, not a finding of this project. DOT's own caveats apply to all of them:</p>
   <blockquote cite="https://data.cityofnewyork.us/d/ufzp-rrqu">
     <p>Please note that measurements shown are not indicative of whether a particular ramp is compliant with design
-      and construction standards pursuant to the Americans with Disabilities Act (ADA).</p>
-    <footer>NYC DOT, description of the Pedestrian Ramp Locations dataset</footer>
+      and construction standards pursuant to the Americans with Disabilities Act (ADA). DOT applies additional
+      parameters in its compliance assessment of the data collected by Cyclomedia, including specific site constraints
+      located at or near a pedestrian ramp, otherwise referred to as a technical infeasibility in the ADA. [...] As
+      such, compliance determinations at some locations require further analysis and site inspection. These locations
+      are noted as &ldquo;Pending Technical Review&rdquo; in the published assessment.</p>
+    <footer>NYC DOT, description of the <a href="https://data.cityofnewyork.us/d/ufzp-rrqu">Pedestrian Ramp Locations
+      dataset</a></footer>
   </blockquote>
+  <blockquote cite="https://www.nycpedramps.info/survey">
+    <p>Please note that this information may contain errors and may not be complete.</p>
+    <p>Pending Technical Review means that the survey data received for a particular ramp is being reviewed to
+      determine its compliance with the 2010 American&rsquo;s With Disabilities Act (ADA) Standards for Accessible
+      Design.</p>
+    <p>Some locations that have been included may be outside of DOT&rsquo;s jurisdiction.</p>
+    <footer>NYC DOT, <a href="https://www.nycpedramps.info/survey">Survey Assessment Map page</a></footer>
+  </blockquote>
+  <h3 id="key-h">What the labels mean</h3>
+  <table aria-labelledby="key-h">
+      <caption>DOT's labels on this page, in plain words</caption>
+      <thead><tr><th scope="col">Label</th><th scope="col">Meaning</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Compliant</th><td>DOT's assessment of the survey found that the ramp met the standard DOT applies. It is not a ground check.</td></tr>
+        <tr><th scope="row">Non-Compliant</th><td>DOT's assessment of the survey found that the ramp did not meet that standard.</td></tr>
+        <tr><th scope="row">Pending Technical Review</th><td>Not decided yet. DOT says the survey data for the ramp is still being reviewed, often because of site conditions the imagery cannot show.</td></tr>
+        <tr><th scope="row">No DOT assessment</th><td>The ramp is in the survey but has no row in DOT's assessment layer.</td></tr>
+        <tr><th scope="row">Constructed</th><td>DOT: &ldquo;locations that were constructed since July 2017.&rdquo; This page calls a corner rebuilt only when DOT's construction end date falls after the ramp's survey date. Otherwise it says the work was on or before the survey date.</td></tr>
+        <tr><th scope="row">Planned Construction</th><td>DOT: &ldquo;locations that were recently resurfaced and are undergoing assessment and planning, or are part of other projects that trigger pedestrian ramp work.&rdquo;</td></tr>
+        <tr><th scope="row">Not Assigned</th><td>DOT: corners that &ldquo;have not been resurfaced since July 2017.&rdquo;</td></tr>
+        <tr><th scope="row">Not Required</th><td>DOT: &ldquo;locations where an upgrade or installation is not required.&rdquo;</td></tr>
+        <tr><th scope="row">Complex</th><td>DOT: &ldquo;A complex corner requires the development of a unique design drawing prior to installation or upgrade of a pedestrian ramp due to existing site conditions and therefore may take longer to construct.&rdquo;</td></tr>
+        <tr><th scope="row">No progress record</th><td>The corner is not in DOT's progress file.</td></tr>
+      </tbody>
+  </table>
+  <p class="credit">Corner labels quoted from NYC DOT's <a href="https://www.nycpedramps.info/program-progress">program
+    progress page</a>. Corner statuses come from DOT's progress file, read 2 October 2026.</p>
   <p id="ramp-dates"></p>
   <div id="ramp-table"></div>
   <h3 id="corner-h">Find a corner</h3>
@@ -103,20 +159,6 @@
   <div id="status-body"></div>
 </section>
 
-<section id="audit" aria-labelledby="audit-h">
-  <h2 id="audit-h">The planned field audit, and an invitation</h2>
-  <p>The check that matters has not been done: people measuring ramps with a level and wheelchair users travelling
-    the routes. A field audit of Brownsville is planned and has no partner yet. In outline it covers about 70 corners
-    (roughly 125 ramps, measured for slope, lip, width and warning surface), 40 block faces (clear width, surface and
-    slope) and 12 trips, each travelled twice by wheelchair users who judge whether a route is passable. The sample is
-    drawn at random before anyone goes out, the people measuring do not see the survey's values, and the result is
-    published whatever it shows.</p>
-  <p><strong>Disability organisations and wheelchair users in Brooklyn are invited to take part,</strong> as
-    co-researchers who set the pass and fail criteria, not as subjects. We are seeking funding to pay co-researchers. If you or your organisation would consider
-    it, or if you can see from this page that something is wrong, please open an issue on the
-    <a href="https://github.com/msradam/opensidewalks-nyc/issues">project's issue tracker</a>.</p>
-</section>
-
 <section id="sources" aria-labelledby="sources-h">
   <h2 id="sources-h">Sources, licences and credit</h2>
   <div id="sources-body"></div>
@@ -124,6 +166,9 @@
 </main>
 
 <footer>
+  <p>Made by Adam Munawar Rahman. Source code and data are in the
+    <a href="https://github.com/msradam/opensidewalks-nyc">opensidewalks-nyc repository</a>. Questions and corrections
+    go to its <a href="https://github.com/msradam/opensidewalks-nyc/issues">GitHub issues</a>.</p>
   <p>Graph data: Open Database License 1.0. Code: Apache License 2.0. City-wide files are on the
     <a href="https://github.com/msradam/opensidewalks-nyc/releases">releases page</a>.</p>
 </footer>
