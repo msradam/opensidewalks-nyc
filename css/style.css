@@ -6,8 +6,6 @@
   --rule: #c9cdd2;
   --link: #0b4f8a;
   --focus: #b3470d;
-  --warn-bg: #fff3d6;
-  --warn-rule: #8a5a00;
 }
 
 * { box-sizing: border-box; }
@@ -41,7 +39,6 @@ a:hover { text-decoration-thickness: 2px; }
 .skip { position: absolute; left: 0.5rem; top: -4rem; background: var(--panel); padding: 0.5rem 0.75rem; border: 2px solid var(--focus); z-index: 2000; }
 .skip:focus { top: 0.5rem; }
 
-.warning { background: var(--warn-bg); border-left: 0.4rem solid var(--warn-rule); padding: 0.75rem 1rem; margin: 0.75rem 0; }
 
 nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; padding: 0; margin: 0.5rem 0 0; }
 nav a { display: inline-block; padding: 0.35rem 0; }
