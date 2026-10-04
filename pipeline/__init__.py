@@ -1,4 +1,4 @@
-"""opensidewalks-nyc: OpenSidewalks v0.3-conformant NYC pedestrian graph pipeline."""
+"""OpenSidewalks NYC: OpenSidewalks v0.3-conformant NYC pedestrian graph pipeline."""
 
 from importlib.metadata import PackageNotFoundError, version
 

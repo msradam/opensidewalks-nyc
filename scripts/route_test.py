@@ -1,4 +1,4 @@
-"""End-to-end Unweaver routing tests against the OSW NYC graph.
+"""End-to-end Unweaver routing tests against the OpenSidewalks NYC graph.
 
 Picks endpoints near real NYC landmarks and snaps each to its nearest node
 in the giant connected component before querying. Without this, queries can

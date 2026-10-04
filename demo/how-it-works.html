@@ -3,7 +3,7 @@
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>How opensidewalks-nyc is pieced together</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>How OpenSidewalks NYC is pieced together</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -7809,10 +7809,10 @@ a { text-decoration: underline !important; }
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="How-opensidewalks-nyc-is-pieced-together">How opensidewalks-nyc is pieced together<a class="anchor-link" href="#How-opensidewalks-nyc-is-pieced-together">¶</a></h1><p><a href="https://msradam.github.io/opensidewalks-nyc/">Brownsville demo</a> · <a href="https://github.com/msradam/opensidewalks-nyc">Repository</a> · <a href="https://github.com/msradam/opensidewalks-nyc/releases/latest">Download</a></p>
+<h1 id="How-OpenSidewalks-NYC-is-pieced-together">How OpenSidewalks NYC is pieced together<a class="anchor-link" href="#How-OpenSidewalks-NYC-is-pieced-together">¶</a></h1><p><a href="https://msradam.github.io/opensidewalks-nyc/">Brownsville demo</a> · <a href="https://github.com/msradam/opensidewalks-nyc">Repository</a> · <a href="https://github.com/msradam/opensidewalks-nyc/releases/latest">Download</a></p>
 <p>This notebook follows a few blocks of Washington Heights in Manhattan from the public sources to the published graph. Each step shows a raw source, the pipeline function that turns it into OpenSidewalks Nodes and Edges, and what that step left in the published release.</p>
 <p>It reads the published release over the network, a few blocks at a time, so it does not need the full build (about 48 minutes and 35 GB of memory). It calls the same functions as <code>python -m pipeline build</code>, imported from this repository.</p>
-<p>opensidewalks-nyc is an independent project by Adam Munawar Rahman. It is not made or endorsed by the Taskar Center for Accessible Technology, OpenSidewalks or TDEI, nor by NYC DOT or the City of New York. The dataset is experimental and nothing in it has been checked on the ground. The evidence behind its numbers, and what that evidence does not show, is in <a href="https://github.com/msradam/opensidewalks-nyc/tree/main/evaluation"><code>evaluation/</code></a>. Questions and corrections go to the project's <a href="https://github.com/msradam/opensidewalks-nyc/issues">GitHub issues</a>.</p>
+<p>Read the <a href="#Disclaimer">Disclaimer</a> at the end before using the data. The evidence behind its numbers, and what that evidence does not show, is in <a href="https://github.com/msradam/opensidewalks-nyc/tree/main/evaluation"><code>evaluation/</code></a>. Questions and corrections go to the project's <a href="https://github.com/msradam/opensidewalks-nyc/issues">GitHub issues</a>.</p>
 <p>Map data in every figure: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a> (ODbL), NYC DOT, NYC OTI, NY State GIS and NOAA.</p>
 <p>To run it yourself:</p>
 <div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/msradam/opensidewalks-nyc<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>opensidewalks-nyc
@@ -9032,7 +9032,13 @@ jupyter<span class="w"> </span>lab<span class="w"> </span>notebooks/how-it-works
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>walking: 538 m
-wheelchair: 815 m
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>wheelchair: 815 m
 </pre>
 </div>
 </div>
@@ -9059,6 +9065,20 @@ wheelchair: 815 m
 <li>The 5 m ramp rule was checked on 200 crossings over aerial imagery by language-model raters (Anthropic Claude models, exact versions not recorded), not by people.</li>
 </ul>
 <p>The full list, with the evidence for each claim, is in <a href="https://github.com/msradam/opensidewalks-nyc/blob/main/evaluation/README.md"><code>evaluation/README.md</code></a>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=disclaimer">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Disclaimer">Disclaimer<a class="anchor-link" href="#Disclaimer">¶</a></h2><p>OpenSidewalks NYC is an experimental dataset. Nothing in it has been checked on the ground. Do not use it to tell anyone that a route is accessible.</p>
+<p>The curb ramp survey shows that a ramp was there when it was captured, mostly in 2018, not that it is usable today. Incline and width are estimates.</p>
+<p>OpenSidewalks NYC is an independent project by Adam Munawar Rahman. It is not made or endorsed by the Taskar Center for Accessible Technology, OpenSidewalks or TDEI, nor by NYC DOT or the City of New York.</p>
+<p>Language models drafted most of the code and documentation and did the imagery ratings. <a href="https://github.com/msradam/opensidewalks-nyc#how-this-was-made">How This Was Made</a> says how they were used.</p>
 </div>
 </div>
 </div>

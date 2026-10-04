@@ -7,7 +7,7 @@ mode = sys.argv[5] if len(sys.argv) > 5 else "incline"
 bbox = tuple(map(float, sys.argv[4].split(",")))
 g = gpd.read_file(fgb, bbox=bbox).to_crs(3857)
 e = g[g.geom_type == "LineString"]; n = g[g.geom_type == "Point"]
-ped = e[e["highway"].isin(["footway", "steps"])]
+ped = e[e["highway"].isin(["footway", "steps", "pedestrian"])]
 street = e[~e.index.isin(ped.index)]
 inc = ped["incline"].abs() * 100
 cls = np.select([inc.isna(), inc <= 5, inc <= 8.33], ["#b8b8b8", "#2b7a3d", "#d69a00"], "#c0392b")
@@ -19,14 +19,14 @@ if mode == "incline":
     ped.plot(ax=ax, color=cls, linewidth=1.3)
     h = [Line2D([], [], color=c, lw=2.5, label=l) for c, l in [("#2b7a3d", "incline up to 5%"), ("#d69a00", "5% to 8.3%"), ("#c0392b", "over 8.3%"), ("#b8b8b8", "no incline")]]
 else:
-    kind = np.select([ped["footway"] == "sidewalk", ped["footway"] == "crossing", ped["highway"] == "steps"], ["#333333", "#1f6fd1", "#c0392b"], "#8a8a8a")
+    kind = np.select([ped["footway"] == "sidewalk", ped["footway"] == "crossing", ped["highway"] == "steps", ped["highway"] == "pedestrian"], ["#333333", "#1f6fd1", "#c0392b", "#7a5c99"], "#8a8a8a")
     ped.plot(ax=ax, color=kind, linewidth=2.2)
-    h = [Line2D([], [], color=c, lw=2.5, label=l) for c, l in [("#333333", "Sidewalk Edge"), ("#1f6fd1", "Crossing Edge"), ("#8a8a8a", "Footway Edge"), ("#c0392b", "Steps Edge"), ("#dddddd", "Street Edge")]]
+    h = [Line2D([], [], color=c, lw=2.5, label=l) for c, l in [("#333333", "Sidewalk Edge"), ("#1f6fd1", "Crossing Edge"), ("#8a8a8a", "Footway Edge"), ("#c0392b", "Steps Edge"), ("#7a5c99", "Pedestrian Road Edge"), ("#dddddd", "Street Edge")]]
 ramps = n[n.get("barrier") == "kerb"] if "barrier" in n else n.iloc[0:0]
 ramps.plot(ax=ax, color="#3b2f8f", markersize=3 if mode == "incline" else 22, zorder=3)
 ax.set_xlim(x0, x1); ax.set_ylim(y0, y1); ax.set_axis_off()
 h.append(Line2D([], [], color="#3b2f8f", marker="o", lw=0, ms=4, label="Curb Node (surveyed ramp)" if mode != "incline" else "surveyed curb ramp"))
 ax.legend(handles=h, loc="lower right", frameon=True, fontsize=9, facecolor="white")
 ax.set_title(title, loc="left", fontsize=12)
-fig.text(0.01, 0.01, "Data: OpenStreetMap contributors (ODbL), NYC DOT, NYS GIS, NOAA. opensidewalks-nyc v0.3.3", fontsize=7, color="#555")
+fig.text(0.01, 0.01, "Data: OpenStreetMap contributors (ODbL), NYC DOT, NYS GIS, NOAA. OpenSidewalks NYC v0.3.4", fontsize=7, color="#555")
 fig.tight_layout(); fig.savefig(out, facecolor=fig.get_facecolor()); print(len(ped), len(ramps), inc.describe().round(1).to_dict())

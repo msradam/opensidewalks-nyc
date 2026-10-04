@@ -4,14 +4,14 @@ Every data file distributed in the GitHub Releases of this repository is license
 
 The licence is inherited from OpenStreetMap, which is the source of the network geometry (footways, crossings, steps, road centrelines). Under ODbL section 4.4, a database derived from an ODbL database must itself be offered under ODbL, so this dataset is released under ODbL.
 
-opensidewalks-nyc is an independent project by Adam Munawar Rahman. It is not made or endorsed by the Taskar Center for Accessible Technology, OpenSidewalks or TDEI, nor by NYC DOT or the City of New York.
+OpenSidewalks NYC is an independent project by Adam Munawar Rahman. It is not made or endorsed by the Taskar Center for Accessible Technology, OpenSidewalks or TDEI, nor by NYC DOT or the City of New York.
 
 ## Attribution
 
 If you use this dataset, you must:
 
 1. Credit **OpenStreetMap contributors**, with a link to [openstreetmap.org/copyright](https://www.openstreetmap.org/copyright).
-2. Credit **opensidewalks-nyc** with a link to this repository or to a release.
+2. Credit **OpenSidewalks NYC** with a link to this repository or to a release.
 3. Indicate that the data is licensed under ODbL-1.0.
 4. Where applicable, also credit:
    - **New York City Department of Transportation** for the curb-ramp survey (`ufzp-rrqu`), which a contractor (Cyclomedia) collected for DOT from vehicle-mounted street-level imagery and LiDAR, with records captured March 2017 to January 2020, mostly in 2018
@@ -22,9 +22,9 @@ The borough boundaries in the region polygon are OpenStreetMap data (fetched thr
 
 The attribution string, as written into the root of every release file:
 
-> Pedestrian network from opensidewalks-nyc, ODbL-1.0. Map data © OpenStreetMap contributors (openstreetmap.org/copyright). Also from NYC DOT and NYC OTI data on NYC Open Data, and LiDAR from NYS GIS and NOAA.
+> Pedestrian network from OpenSidewalks NYC, ODbL-1.0. Map data © OpenStreetMap contributors (openstreetmap.org/copyright). Also from NYC DOT and NYC OTI data on NYC Open Data, and LiDAR from NYS GIS and NOAA.
 
-The files of v0.3.3-nyc.1 carry an older, shorter string without the copyright link and NOAA. Use the string above for them too.
+The files of v0.3.3-nyc.1 carry an older, shorter string without the copyright link and NOAA. Files in releases up to v0.3.4-nyc.1 spell the name `opensidewalks-nyc` in this line. Use the string above for them too.
 
 ## What ODbL requires of you (summary, not legal advice)
 

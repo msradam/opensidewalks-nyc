@@ -990,12 +990,12 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
         ),
         "type": "FeatureCollection",
         "dataSource": {
-            "name": "opensidewalks-nyc pipeline",
+            "name": "OpenSidewalks NYC pipeline",
             "url": "https://github.com/msradam/opensidewalks-nyc",
             "license": "ODbL-1.0",
             "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
             "attribution": (
-                "Pedestrian network from opensidewalks-nyc, ODbL-1.0. Map data "
+                "Pedestrian network from OpenSidewalks NYC, ODbL-1.0. Map data "
                 "\u00a9 OpenStreetMap contributors (openstreetmap.org/copyright). "
                 "Also from NYC DOT and NYC OTI data on NYC Open Data, and LiDAR "
                 "from NYS GIS and NOAA."

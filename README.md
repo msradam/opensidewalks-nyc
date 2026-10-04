@@ -1,10 +1,8 @@
-# _opensidewalks-nyc_<!-- omit from toc -->
+# _OpenSidewalks NYC_<!-- omit from toc -->
 
-An experimental pedestrian network dataset of New York City in the [OpenSidewalks Schema](https://github.com/OpenSidewalks/OpenSidewalks-Schema) v0.3. This project has checked none of it on the ground. Do not use it to tell anyone that a route is accessible.
+A pedestrian network dataset of New York City in the [OpenSidewalks Schema](https://github.com/OpenSidewalks/OpenSidewalks-Schema) v0.3. Report a problem in [GitHub issues](https://github.com/msradam/opensidewalks-nyc/issues).
 
-opensidewalks-nyc is an independent project by Adam Munawar Rahman. It is not made or endorsed by the Taskar Center for Accessible Technology, OpenSidewalks or TDEI, nor by NYC DOT or the City of New York. Report a problem in [GitHub issues](https://github.com/msradam/opensidewalks-nyc/issues).
-
-[Demo](https://msradam.github.io/opensidewalks-nyc/) · [How it is built](https://msradam.github.io/opensidewalks-nyc/how-it-works.html) · [Download](https://github.com/msradam/opensidewalks-nyc/releases/latest) · [Evidence](evaluation/)
+[Demo](https://msradam.github.io/opensidewalks-nyc/) · [How it is built](https://msradam.github.io/opensidewalks-nyc/how-it-works.html) · [Download](https://github.com/msradam/opensidewalks-nyc/releases/latest) · [Evidence](evaluation/) · [Disclaimer](#disclaimer)
 
 ![Pedestrian edges in Washington Heights and Inwood, coloured by incline](docs/img/incline-washington-heights.png)
 
@@ -27,6 +25,7 @@ opensidewalks-nyc is an independent project by Adam Munawar Rahman. It is not ma
 - [Related Work](#related-work)
 - [Building the Dataset](#building-the-dataset)
 - [How This Was Made](#how-this-was-made)
+- [Disclaimer](#disclaimer)
 - [License and Attribution](#license-and-attribution)
 - [Versions](#versions)
 
@@ -34,7 +33,7 @@ opensidewalks-nyc is an independent project by Adam Munawar Rahman. It is not ma
 
 <a id="introduction"></a>
 
-opensidewalks-nyc is a pedestrian network of all five boroughs of New York City: sidewalks, street crossings, footways, pedestrian roads, steps and curb ramps, encoded as OpenSidewalks Nodes and Edges so that it loads as a routable graph.
+OpenSidewalks NYC is a pedestrian network of all five boroughs of New York City: sidewalks, street crossings, footways, pedestrian roads, steps and curb ramps, encoded as OpenSidewalks Nodes and Edges so that it loads as a routable graph.
 
 Following the OpenSidewalks approach, this dataset labels no path as wheelchair accessible. It stores values that an application can read against a person's own needs, with rules like "no incline greater than 8.3 percent". Only the curb ramp slopes are measurements, taken from NYC DOT's vehicle-based survey. Incline and width are estimates.
 
@@ -155,7 +154,7 @@ Trip ends were snapped to the nearest usable edge. Snapping to graph nodes gives
 
 The [demo](https://msradam.github.io/opensidewalks-nyc/) shows Brooklyn Community District 16: sidewalks by incline, crossings, every surveyed curb ramp by NYC DOT's assessment, and ten trips routed by this dataset and by OpenRouteService, each also written out as text. The page passes axe-core and pa11y with zero violations and has not been tested by a screen-reader user.
 
-![The demo's opening view with its warning](docs/img/demo-overview.png)
+![The demo's opening view](docs/img/demo-overview.png)
 
 ![A trip routed three ways: this dataset in blue, OpenRouteService wheelchair in orange, OpenRouteService walking in black](docs/img/demo-trip.png)
 
@@ -198,6 +197,18 @@ python scripts/snap_endpoints.py --input output/nyc-osw.geojson
 <a id="how-this-was-made"></a>
 
 The author designed and directed the project and reviewed and accepted the code, documents and results. Language models (Anthropic Claude models, run through Claude Code; exact versions were not recorded) drafted most of the code and documentation, did the imagery ratings, and diagnosed the routes and bridges. Every kappa quoted here is agreement between model instances. No person rated imagery. Tools (axe-core, pa11y, `python-osw-validation`, the test suite) checked the rest.
+
+# Disclaimer
+
+<a id="disclaimer"></a>
+
+OpenSidewalks NYC is an experimental dataset. Nothing in it has been checked on the ground. Do not use it to tell anyone that a route is accessible.
+
+The curb ramp survey shows that a ramp was there when it was captured, mostly in 2018, not that it is usable today. Incline and width are estimates, not measurements.
+
+OpenSidewalks NYC is an independent project by Adam Munawar Rahman. It is not made or endorsed by the Taskar Center for Accessible Technology, OpenSidewalks or TDEI, nor by NYC DOT or the City of New York.
+
+Language models drafted most of the code and documentation and did the imagery ratings. [How This Was Made](#how-this-was-made) says how they were used.
 
 # License and Attribution
 

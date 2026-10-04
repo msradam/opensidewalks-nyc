@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-title: "opensidewalks-nyc: an OpenSidewalks v0.3 pedestrian graph of New York City"
+title: "OpenSidewalks NYC: an OpenSidewalks v0.3 pedestrian graph of New York City"
 message: "If you use this dataset, please cite as below."
 type: dataset
 abstract: >-
@@ -7,7 +7,7 @@ abstract: >-
   Schema v0.3, built from OpenStreetMap, the NYC DOT curb ramp survey, NYC
   planimetric sidewalks and LiDAR. Nothing in it has been checked on the
   ground. Dataset version 0.3.4-nyc.1 is this project's own version; it uses
-  OpenSidewalks Schema v0.3. opensidewalks-nyc is an independent project by
+  OpenSidewalks Schema v0.3. OpenSidewalks NYC is an independent project by
   Adam Munawar Rahman. It is not made or endorsed by the Taskar Center for
   Accessible Technology, OpenSidewalks or TDEI, nor by NYC DOT or the City of
   New York.

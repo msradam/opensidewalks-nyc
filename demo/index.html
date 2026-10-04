@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Brownsville sidewalks and curb ramps: what public data shows</title>
-<meta name="description" content="Sidewalks, crossings and surveyed curb ramps in Brownsville, Brooklyn, from public city and OpenStreetMap data, with routes from a computer route finder. Not checked on the ground.">
+<meta name="description" content="Sidewalks, crossings and surveyed curb ramps in Brownsville, Brooklyn, from public city and OpenStreetMap data, with routes from a computer route finder.">
 <link rel="stylesheet" href="vendor/leaflet-1.9.4/leaflet.css">
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -14,18 +14,11 @@
   <h1>Brownsville sidewalks and curb ramps</h1>
   <p class="lede">What city and OpenStreetMap data say about sidewalks and curb ramps in Brooklyn Community District 16
     (Brownsville), and how a computer route finder uses that data. The page is a test of the
-    <a href="https://github.com/msradam/opensidewalks-nyc">opensidewalks-nyc</a> pedestrian graph.</p>
+    <a href="https://github.com/msradam/opensidewalks-nyc">OpenSidewalks NYC</a> pedestrian graph.</p>
   <p id="why">Brownsville is a first demonstration area, chosen because it is flat, its sidewalks are fully mapped in
     OpenStreetMap and it has many public facilities, so this graph and OpenRouteService both find a route for all 420
     trips drawn there.</p>
-  <p class="warning" role="note"><strong>Not checked on the ground.</strong> Nobody has traveled these routes or
-    measured these ramps for this project. Do not rely on this page to plan a trip.</p>
-  <p id="about">Made by Adam Munawar Rahman as an independent project. It is not made or endorsed by the Taskar Center
-    for Accessible Technology, OpenSidewalks or TDEI, nor by NYC DOT or the City of New York. The code and text were
-    drafted with language models and reviewed by the author. The imagery checks under
-    <a href="#status">What is verified</a> were done by language-model raters (Anthropic Claude models, exact versions
-    not recorded) following a written protocol, not by people. Questions and corrections go to the project's
-    <a href="https://github.com/msradam/opensidewalks-nyc/issues">GitHub issues</a>.</p>
+  <p id="about">Made by Adam Munawar Rahman. Read the <a href="#disclaimer">Disclaimer</a> before using this page.</p>
   <nav aria-label="Sections">
     <ul>
       <li><a href="#map-section">Map</a></li>
@@ -33,6 +26,7 @@
       <li><a href="#network">Network in numbers</a></li>
       <li><a href="#ramps">Curb ramps</a></li>
       <li><a href="#status">What is verified</a></li>
+      <li><a href="#disclaimer">Disclaimer</a></li>
       <li><a href="#sources">Sources</a></li>
       <li><a href="how-it-works.html">How the graph is built</a></li>
     </ul>
@@ -70,7 +64,7 @@
 
 <section id="routes" aria-labelledby="routes-h">
   <h2 id="routes-h">Routes</h2>
-  <p class="warning" role="note"><strong>Not checked on the ground.</strong> Do not use these routes to plan a trip.</p>
+  <p>Read the <a href="#disclaimer">Disclaimer</a> before using these routes.</p>
   <p>Each trip below was computed three ways on the same OpenStreetMap extract of 1 October 2026: by this graph's
     <a href="#profile">wheelchair profile</a>, by OpenRouteService's wheelchair profile on plain OpenStreetMap data,
     and by OpenRouteService's ordinary walking profile. The trips run from public housing developments and senior
@@ -161,6 +155,21 @@
   <div id="status-body"></div>
 </section>
 
+<section id="disclaimer" aria-labelledby="disclaimer-h">
+  <h2 id="disclaimer-h">Disclaimer</h2>
+  <p>OpenSidewalks NYC is an experimental dataset. Nothing in it or on this page has been checked on the ground.
+    Nobody has traveled these routes or measured these ramps for this project. Do not use it to tell anyone that a
+    route is accessible, and do not rely on this page to plan a trip.</p>
+  <p>The curb ramp survey shows that a ramp was there when it was captured, mostly in 2018, not that it is usable
+    today. Incline and sidewalk width are estimates.</p>
+  <p>OpenSidewalks NYC is an independent project by Adam Munawar Rahman. It is not made or endorsed by the Taskar
+    Center for Accessible Technology, OpenSidewalks or TDEI, nor by NYC DOT or the City of New York.</p>
+  <p>The code and text were drafted with language models and reviewed by the author. The imagery checks under
+    <a href="#status">What is verified</a> were done by language-model raters (Anthropic Claude models, exact versions
+    not recorded) following a written protocol, not by people.
+    <a href="https://github.com/msradam/opensidewalks-nyc#how-this-was-made">How This Was Made</a> says more.</p>
+</section>
+
 <section id="sources" aria-labelledby="sources-h">
   <h2 id="sources-h">Sources, licences and credit</h2>
   <div id="sources-body"></div>
@@ -169,7 +178,7 @@
 
 <footer>
   <p>Made by Adam Munawar Rahman. Source code and data are in the
-    <a href="https://github.com/msradam/opensidewalks-nyc">opensidewalks-nyc repository</a>. Questions and corrections
+    <a href="https://github.com/msradam/opensidewalks-nyc">OpenSidewalks NYC repository</a>. Questions and corrections
     go to its <a href="https://github.com/msradam/opensidewalks-nyc/issues">GitHub issues</a>.</p>
   <p>Graph data: Open Database License 1.0. Code: Apache License 2.0. City-wide files are on the
     <a href="https://github.com/msradam/opensidewalks-nyc/releases">releases page</a>.</p>

@@ -235,7 +235,7 @@ def export_gapfill_sidecar(staged_dir: Path, fc: dict, output_dir: Path) -> Path
             "Candidate sidewalk centrelines derived from NYC Planimetric sidewalk "
             "polygons that have no OpenStreetMap sidewalk within 10 m. Each is the "
             "long axis of the polygon's minimum rotated rectangle, written once per "
-            "direction. They are NOT part of the opensidewalks-nyc graph and almost "
+            "direction. They are NOT part of the OpenSidewalks NYC graph and almost "
             "none of them touches it. In a sample of 18 checked over orthoimagery, "
             "9 lay on a sidewalk or walkway, 1 on other pedestrian paving, 4 were "
             "unclear and 4 were wrong (a parking lot, a truck apron, a cemetery "
@@ -246,7 +246,7 @@ def export_gapfill_sidecar(staged_dir: Path, fc: dict, output_dir: Path) -> Path
         ),
         # Licence and attribution as in the graph's own root.
         "dataSource": {
-            "name": "opensidewalks-nyc pipeline, planimetric gap-fill sidecar",
+            "name": "OpenSidewalks NYC pipeline, planimetric gap-fill sidecar",
             "url": "https://github.com/msradam/opensidewalks-nyc",
             **{k: v for k, v in (fc.get("dataSource") or {}).items()
                if k in ("license", "licenseUrl", "attribution", "osmExtract")},

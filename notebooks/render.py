@@ -45,6 +45,6 @@ def scoped(table):
     th = re.compile(r"<th(?=[ >])")
     return th.sub('<th scope="col"', head) + "</thead>" + th.sub('<th scope="row"', body)
 html = re.sub(r'<table border="1" class="dataframe">.*?</table>', scoped, html, flags=re.S)
-html = html.replace("<title>how-it-works</title>", "<title>How opensidewalks-nyc is pieced together</title>")
+html = html.replace("<title>how-it-works</title>", "<title>How OpenSidewalks NYC is pieced together</title>")
 HTML.write_text(html)
 print("wrote", HTML)

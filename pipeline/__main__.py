@@ -50,7 +50,7 @@ def _load_config():
 
 @click.group()
 def main():
-    """opensidewalks-nyc: OpenSidewalks-conformant NYC pedestrian graph pipeline."""
+    """OpenSidewalks NYC: OpenSidewalks-conformant NYC pedestrian graph pipeline."""
     pass
 
 
@@ -67,7 +67,7 @@ def build(stage: int):
     sources, build_cfg = _load_config()
 
     click.echo(f"\n{'='*60}")
-    click.echo("  opensidewalks-nyc pipeline .  OpenSidewalks v0.3 NYC")
+    click.echo("  OpenSidewalks NYC pipeline .  OpenSidewalks v0.3")
     click.echo(f"{'='*60}")
     if stage > 1:
         click.echo(f"  Resuming from stage {stage}")

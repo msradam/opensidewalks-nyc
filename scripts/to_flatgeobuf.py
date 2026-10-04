@@ -35,7 +35,7 @@ def main(in_path: Path, out_path: Path) -> None:
 
     print(f"writing {out_path.name} (FlatGeobuf, spatial index)...", flush=True)
     gdf.to_file(out_path, driver="FlatGeobuf", spatial_index=True,
-                TITLE="opensidewalks-nyc", DESCRIPTION=description)
+                TITLE="OpenSidewalks NYC", DESCRIPTION=description)
     size_mb = out_path.stat().st_size / 1024 / 1024
     print(f"  wrote {size_mb:.1f} MB")
 

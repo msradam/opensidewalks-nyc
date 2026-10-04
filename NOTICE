@@ -1,7 +1,7 @@
-opensidewalks-nyc
+OpenSidewalks NYC
 Copyright 2026 Adam Munawar Rahman
 
-opensidewalks-nyc is an independent project by Adam Munawar Rahman. It is
+OpenSidewalks NYC is an independent project by Adam Munawar Rahman. It is
 not made or endorsed by the Taskar Center for Accessible Technology,
 OpenSidewalks or TDEI, nor by NYC DOT or the City of New York. It uses the
 OpenSidewalks Schema, which the Taskar Center at the University of
@@ -27,7 +27,10 @@ section 4.2). Anyone who publishes a map or other Produced Work from it
 must credit it (section 4.3). The attribution string, as written into
 the root of every release file:
 
-  Pedestrian network from opensidewalks-nyc, ODbL-1.0. Map data © OpenStreetMap contributors (openstreetmap.org/copyright). Also from NYC DOT and NYC OTI data on NYC Open Data, and LiDAR from NYS GIS and NOAA.
+  Pedestrian network from OpenSidewalks NYC, ODbL-1.0. Map data © OpenStreetMap contributors (openstreetmap.org/copyright). Also from NYC DOT and NYC OTI data on NYC Open Data, and LiDAR from NYS GIS and NOAA.
+
+Files in releases up to v0.3.4-nyc.1 spell the name "opensidewalks-nyc"
+in this line.
 
 Used in the graph:
 

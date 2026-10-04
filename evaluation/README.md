@@ -1,4 +1,4 @@
-# Evaluation evidence for opensidewalks-nyc v0.3.3
+# Evaluation evidence for OpenSidewalks NYC v0.3.3
 
 The evidence was produced on v0.3.3 and still describes v0.3.4's geometry, incline and routing inputs, which v0.3.4 did not change.
 

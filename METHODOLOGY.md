@@ -1,6 +1,6 @@
 # Methodology
 
-This document records the data sources, transformations and schema mapping decisions of the opensidewalks-nyc pipeline. opensidewalks-nyc is an independent project by Adam Munawar Rahman. It is not made or endorsed by the Taskar Center for Accessible Technology, OpenSidewalks or TDEI, nor by NYC DOT or the City of New York.
+This document records the data sources, transformations and schema mapping decisions of the OpenSidewalks NYC pipeline. OpenSidewalks NYC is an independent project by Adam Munawar Rahman. It is not made or endorsed by the Taskar Center for Accessible Technology, OpenSidewalks or TDEI, nor by NYC DOT or the City of New York.
 
 ---
 
