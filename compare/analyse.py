@@ -58,6 +58,8 @@ SNAP_FAR_M = 25.0
 SAME_ROUTE = 0.9                # both routes within 10 m of each other over this share of their length
 G = M = TAGS = OURS = ENGINE = None
 WAYS = {}        # arm B source -> the matcher geometry behind each OSM way id the converter wrote
+# Sources whose routes carry the OSM way ids they used. Valhalla added 2026-10-04 (compare/run_valhalla.py traces each route).
+OSM_WAY_IDS = ("ors_armA", "valhalla")
 
 
 def structure(tags):
@@ -76,6 +78,16 @@ def describe(edges, unmatched=0.0):
         tags = TAGS.get(str(int(G.osm_id[first["edge"]])), {})
         first = {**first, "xy": G.xy[G.u[first["edge"]]].round(6).tolist(), "osm_way": int(G.osm_id[first["edge"]]), "structure": structure(tags)}
     return {**a, "first_barrier": first, "unmatched": round(unmatched, 3), "osm_flags": dict(flags)}
+
+
+def match(src, r, geom):
+    """(edges, unmatched share) for one engine route, by the engine's own way ids where it gave them."""
+    ids = np.array(r.get("osmid") or [], dtype=np.int64)
+    if len(ids) and src in OSM_WAY_IDS:     # the engine names the OSM ways it used
+        return M.match(geom, ways=ids)
+    if len(ids) and src in WAYS:            # on this graph, its way ids are this graph's own edges
+        return M.match(geom, among=WAYS[src][ids - 1])
+    return M.match(geom)                    # no way ids (ORS foot-walking): geometry alone
 
 
 def snapped(lonlat):
@@ -106,13 +118,7 @@ def one(p):
         if geom is None or geom.length == 0:      # both ends snapped to one point
             rec["routes"][key].update(length_m=0.0, **describe([]))
             continue
-        ids = np.array(r.get("osmid") or [], dtype=np.int64)
-        if len(ids) and src == "ors_armA":      # ORS names the OSM ways it used
-            edges, unmatched = M.match(geom, ways=ids)
-        elif len(ids) and src in WAYS:          # on this graph, its way ids are this graph's own edges
-            edges, unmatched = M.match(geom, among=WAYS[src][ids - 1])
-        else:                                   # foot-walking and Valhalla give no way ids
-            edges, unmatched = M.match(geom)
+        edges, unmatched = match(src, r, geom)
         rec["routes"][key].update(length_m=round(r["length_m"], 1), **describe(edges, unmatched))
         lines[key] = geom
         if role == "wheelchair":

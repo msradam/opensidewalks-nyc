@@ -1,0 +1,738 @@
+{
+ "_meta": {
+  "date": "2026-10-04",
+  "what": "Valhalla audit rows redone by the OSM way ids Valhalla used, against the first run's geometry match",
+  "engine": "Valhalla 3.9.0 (pyvalhalla), tiles in research_notes/compare/engines/valhalla",
+  "way_ids": "trace_attributes on each route's own shape, shape_match edge_walk, walk_or_snap where edge_walk fails (compare/run_valhalla.py)",
+  "matching": "compare/analyse.py `match`: only edges of the named ways are matched, as for ORS wheelchair on plain OSM",
+  "code": "research_notes/compare/results/valhalla_way_ids.py (working archive)"
+ },
+ "routes_identical_to_first_run": {
+  "foot same": 12437,
+  "wheelchair same": 12437
+ },
+ "found_routes": {
+  "foot": 12400,
+  "wheelchair": 12047
+ },
+ "found_routes_with_way_ids": {
+  "foot": 12400,
+  "wheelchair": 12047
+ },
+ "shape_match_used": {
+  "foot": {
+   "edge_walk": 10324,
+   "walk_or_snap": 2076
+  },
+  "wheelchair": {
+   "edge_walk": 10090,
+   "walk_or_snap": 1957
+  }
+ },
+ "route_minus_traced_length_m": {
+  "median": 5.0,
+  "max": 16301.0,
+  "over_50m": 568,
+  "over_50m_using_a_ferry": 563
+ },
+ "routes_whose_audit_changed": {
+  "valhalla_foot": {
+   "routes": 12400,
+   "unmatched": 1374,
+   "street_m": 1044,
+   "crossing_no_ramp": 464,
+   "steps": 383,
+   "osm_flags": 529,
+   "over_incline": 171
+  },
+  "valhalla_wheelchair": {
+   "unmatched": 1268,
+   "routes": 12047,
+   "street_m": 1013,
+   "crossing_no_ramp": 437,
+   "steps": 314,
+   "osm_flags": 430,
+   "over_incline": 148
+  }
+ },
+ "steps_cross_check_all_pairs": {
+  "foot": {
+   "valhalla_use_steps_and_way_id_steps": 1156,
+   "valhalla_use_only": 37,
+   "way_id_only": 12,
+   "way_id_only_on_a_valhalla_escalator": 12,
+   "neither": 11195
+  },
+  "wheelchair": {
+   "valhalla_use_steps_and_way_id_steps": 0,
+   "valhalla_use_only": 0,
+   "way_id_only": 10,
+   "way_id_only_on_a_valhalla_escalator": 10,
+   "neither": 12037
+  }
+ },
+ "positive_control_pair": {
+  "pair": "random-BK-0004",
+  "area": "BK",
+  "foot": {
+   "steps_by_way_id": 1,
+   "valhalla_steps_m": 7.0
+  },
+  "wheelchair": {
+   "steps_by_way_id": null,
+   "valhalla_steps_m": 0
+  }
+ },
+ "by_area": {
+  "random/BK": {
+   "valhalla_foot": {
+    "with_steps": {
+     "geometry": 0.1026,
+     "way_ids": 0.0605
+    },
+    "with_over_10m_of_street_centreline": {
+     "geometry": 0.8877,
+     "way_ids": 0.8877
+    },
+    "with_an_edge_over_the_incline_limits": {
+     "geometry": 0.2887,
+     "way_ids": 0.2841
+    },
+    "with_a_crossing_without_a_surveyed_ramp": {
+     "geometry": 0.6995,
+     "way_ids": 0.6979
+    },
+    "with_any_of_these": {
+     "geometry": 0.9626,
+     "way_ids": 0.9626
+    },
+    "unramped_crossings_per_km": {
+     "geometry": 0.234,
+     "way_ids": 0.232
+    },
+    "median_share_off_this_graph": {
+     "geometry": 0.0,
+     "way_ids": 0.001
+    }
+   },
+   "valhalla_wheelchair": {
+    "with_steps": {
+     "geometry": 0.0445,
+     "way_ids": 0.0
+    },
+    "with_over_10m_of_street_centreline": {
+     "geometry": 0.8955,
+     "way_ids": 0.8955
+    },
+    "with_an_edge_over_the_incline_limits": {
+     "geometry": 0.2737,
+     "way_ids": 0.269
+    },
+    "with_a_crossing_without_a_surveyed_ramp": {
+     "geometry": 0.6896,
+     "way_ids": 0.687
+    },
+    "with_any_of_these": {
+     "geometry": 0.9638,
+     "way_ids": 0.9638
+    },
+    "unramped_crossings_per_km": {
+     "geometry": 0.228,
+     "way_ids": 0.226
+    },
+    "median_share_off_this_graph": {
+     "geometry": 0.0,
+     "way_ids": 0.001
+    }
+   }
+  },
+  "random/BX": {
+   "valhalla_foot": {
+    "with_steps": {
+     "geometry": 0.1532,
+     "way_ids": 0.1515
+    },
+    "with_over_10m_of_street_centreline": {
+     "geometry": 0.9684,
+     "way_ids": 0.9684
+    },
+    "with_an_edge_over_the_incline_limits": {
+     "geometry": 0.5017,
+     "way_ids": 0.5
+    },
+    "with_a_crossing_without_a_surveyed_ramp": {
+     "geometry": 0.7214,
+     "way_ids": 0.7087
+    },
+    "with_any_of_these": {
+     "geometry": 0.9933,
+     "way_ids": 0.9933
+    },
+    "unramped_crossings_per_km": {
+     "geometry": 0.321,
+     "way_ids": 0.311
+    },
+    "median_share_off_this_graph": {
+     "geometry": 0.0,
+     "way_ids": 0.001
+    }
+   },
+   "valhalla_wheelchair": {
+    "with_steps": {
+     "geometry": 0.0,
+     "way_ids": 0.0
+    },
+    "with_over_10m_of_street_centreline": {
+     "geometry": 0.9706,
+     "way_ids": 0.9706
+    },
+    "with_an_edge_over_the_incline_limits": {
+     "geometry": 0.4873,
+     "way_ids": 0.4867
+    },
+    "with_a_crossing_without_a_surveyed_ramp": {
+     "geometry": 0.7301,
+     "way_ids": 0.7182
+    },
+    "with_any_of_these": {
+     "geometry": 0.9938,
+     "way_ids": 0.9938
+    },
+    "unramped_crossings_per_km": {
+     "geometry": 0.328,
+     "way_ids": 0.317
+    },
+    "median_share_off_this_graph": {
+     "geometry": 0.0,
+     "way_ids": 0.002
+    }
+   }
+  },
+  "random/MN": {
+   "valhalla_foot": {
+    "with_steps": {
+     "geometry": 0.2431,
+     "way_ids": 0.1643
+    },
+    "with_over_10m_of_street_centreline": {
+     "geometry": 0.8455,
+     "way_ids": 0.8455
+    },
+    "with_an_edge_over_the_incline_limits": {
+     "geometry": 0.6376,
+     "way_ids": 0.6345
+    },
+    "with_a_crossing_without_a_surveyed_ramp": {
+     "geometry": 0.8009,
+     "way_ids": 0.7978
+    },
+    "with_any_of_these": {
+     "geometry": 0.987,
+     "way_ids": 0.9865
+    },
+    "unramped_crossings_per_km": {
+     "geometry": 0.298,
+     "way_ids": 0.296
+    },
+    "median_share_off_this_graph": {
+     "geometry": 0.032,
+     "way_ids": 0.034
+    }
+   },
+   "valhalla_wheelchair": {
+    "with_steps": {
+     "geometry": 0.0799,
+     "way_ids": 0.0016
+    },
+    "with_over_10m_of_street_centreline": {
+     "geometry": 0.8418,
+     "way_ids": 0.8418
+    },
+    "with_an_edge_over_the_incline_limits": {
+     "geometry": 0.6256,
+     "way_ids": 0.6229
+    },
+    "with_a_crossing_without_a_surveyed_ramp": {
+     "geometry": 0.8035,
+     "way_ids": 0.7997
+    },
+    "with_any_of_these": {
+     "geometry": 0.9825,
+     "way_ids": 0.9825
+    },
+    "unramped_crossings_per_km": {
+     "geometry": 0.302,
+     "way_ids": 0.3
+    },
+    "median_share_off_this_graph": {
+     "geometry": 0.015,
+     "way_ids": 0.016
+    }
+   }
+  },
+  "random/QN": {
+   "valhalla_foot": {
+    "with_steps": {
+     "geometry": 0.0465,
+     "way_ids": 0.0427
+    },
+    "with_over_10m_of_street_centreline": {
+     "geometry": 0.9627,
+     "way_ids": 0.9627
+    },
+    "with_an_edge_over_the_incline_limits": {
+     "geometry": 0.3739,
+     "way_ids": 0.3739
+    },
+    "with_a_crossing_without_a_surveyed_ramp": {
+     "geometry": 0.6942,
+     "way_ids": 0.6818
+    },
+    "with_any_of_these": {
+     "geometry": 0.9881,
+     "way_ids": 0.9881
+    },
+    "unramped_crossings_per_km": {
+     "geometry": 0.164,
+     "way_ids": 0.158
+    },
+    "median_share_off_this_graph": {
+     "geometry": 0.0,
+     "way_ids": 0.0
+    }
+   },
+   "valhalla_wheelchair": {
+    "with_steps": {
+     "geometry": 0.0027,
+     "way_ids": 0.0
+    },
+    "with_over_10m_of_street_centreline": {
+     "geometry": 0.9615,
+     "way_ids": 0.9615
+    },
+    "with_an_edge_over_the_incline_limits": {
+     "geometry": 0.3678,
+     "way_ids": 0.3678
+    },
+    "with_a_crossing_without_a_surveyed_ramp": {
+     "geometry": 0.6934,
+     "way_ids": 0.6836
+    },
+    "with_any_of_these": {
+     "geometry": 0.9881,
+     "way_ids": 0.9875
+    },
+    "unramped_crossings_per_km": {
+     "geometry": 0.159,
+     "way_ids": 0.154
+    },
+    "median_share_off_this_graph": {
+     "geometry": 0.0,
+     "way_ids": 0.0
+    }
+   }
+  },
+  "random/SI": {
+   "valhalla_foot": {
+    "with_steps": {
+     "geometry": 0.0258,
+     "way_ids": 0.0247
+    },
+    "with_over_10m_of_street_centreline": {
+     "geometry": 0.9807,
+     "way_ids": 0.9807
+    },
+    "with_an_edge_over_the_incline_limits": {
+     "geometry": 0.5137,
+     "way_ids": 0.5105
+    },
+    "with_a_crossing_without_a_surveyed_ramp": {
+     "geometry": 0.6652,
+     "way_ids": 0.6588
+    },
+    "with_any_of_these": {
+     "geometry": 0.9914,
+     "way_ids": 0.9914
+    },
+    "unramped_crossings_per_km": {
+     "geometry": 0.165,
+     "way_ids": 0.162
+    },
+    "median_share_off_this_graph": {
+     "geometry": 0.0,
+     "way_ids": 0.0
+    }
+   },
+   "valhalla_wheelchair": {
+    "with_steps": {
+     "geometry": 0.0016,
+     "way_ids": 0.0016
+    },
+    "with_over_10m_of_street_centreline": {
+     "geometry": 0.9793,
+     "way_ids": 0.9793
+    },
+    "with_an_edge_over_the_incline_limits": {
+     "geometry": 0.4416,
+     "way_ids": 0.4378
+    },
+    "with_a_crossing_without_a_surveyed_ramp": {
+     "geometry": 0.6097,
+     "way_ids": 0.6015
+    },
+    "with_any_of_these": {
+     "geometry": 0.9913,
+     "way_ids": 0.9913
+    },
+    "unramped_crossings_per_km": {
+     "geometry": 0.144,
+     "way_ids": 0.141
+    },
+    "median_share_off_this_graph": {
+     "geometry": 0.0,
+     "way_ids": 0.0
+    }
+   }
+  },
+  "random/citywide": {
+   "valhalla_foot": {
+    "with_steps": {
+     "geometry": 0.1439,
+     "way_ids": 0.1089
+    },
+    "with_over_10m_of_street_centreline": {
+     "geometry": 0.9734,
+     "way_ids": 0.9734
+    },
+    "with_an_edge_over_the_incline_limits": {
+     "geometry": 0.7706,
+     "way_ids": 0.7706
+    },
+    "with_a_crossing_without_a_surveyed_ramp": {
+     "geometry": 0.8816,
+     "way_ids": 0.8678
+    },
+    "with_any_of_these": {
+     "geometry": 0.9952,
+     "way_ids": 0.9952
+    },
+    "unramped_crossings_per_km": {
+     "geometry": 0.123,
+     "way_ids": 0.119
+    },
+    "median_share_off_this_graph": {
+     "geometry": 0.369,
+     "way_ids": 0.369
+    }
+   },
+   "valhalla_wheelchair": {
+    "with_steps": {
+     "geometry": 0.0379,
+     "way_ids": 0.0011
+    },
+    "with_over_10m_of_street_centreline": {
+     "geometry": 0.9767,
+     "way_ids": 0.9767
+    },
+    "with_an_edge_over_the_incline_limits": {
+     "geometry": 0.7656,
+     "way_ids": 0.7656
+    },
+    "with_a_crossing_without_a_surveyed_ramp": {
+     "geometry": 0.8766,
+     "way_ids": 0.8581
+    },
+    "with_any_of_these": {
+     "geometry": 0.9951,
+     "way_ids": 0.9951
+    },
+    "unramped_crossings_per_km": {
+     "geometry": 0.115,
+     "way_ids": 0.112
+    },
+    "median_share_off_this_graph": {
+     "geometry": 0.391,
+     "way_ids": 0.391
+    }
+   }
+  },
+  "landmark/hand-checked": {
+   "valhalla_foot": {
+    "with_steps": {
+     "geometry": 0.0,
+     "way_ids": 0.0
+    },
+    "with_over_10m_of_street_centreline": {
+     "geometry": 0.4286,
+     "way_ids": 0.4286
+    },
+    "with_an_edge_over_the_incline_limits": {
+     "geometry": 0.2857,
+     "way_ids": 0.2857
+    },
+    "with_a_crossing_without_a_surveyed_ramp": {
+     "geometry": 0.7143,
+     "way_ids": 0.7143
+    },
+    "with_any_of_these": {
+     "geometry": 1.0,
+     "way_ids": 1.0
+    },
+    "unramped_crossings_per_km": {
+     "geometry": 0.697,
+     "way_ids": 0.697
+    },
+    "median_share_off_this_graph": {
+     "geometry": 0.086,
+     "way_ids": 0.086
+    }
+   },
+   "valhalla_wheelchair": {
+    "with_steps": {
+     "geometry": 0.0,
+     "way_ids": 0.0
+    },
+    "with_over_10m_of_street_centreline": {
+     "geometry": 0.5714,
+     "way_ids": 0.5714
+    },
+    "with_an_edge_over_the_incline_limits": {
+     "geometry": 0.2857,
+     "way_ids": 0.2857
+    },
+    "with_a_crossing_without_a_surveyed_ramp": {
+     "geometry": 0.7143,
+     "way_ids": 0.7143
+    },
+    "with_any_of_these": {
+     "geometry": 1.0,
+     "way_ids": 1.0
+    },
+    "unramped_crossings_per_km": {
+     "geometry": 0.536,
+     "way_ids": 0.536
+    },
+    "median_share_off_this_graph": {
+     "geometry": 0.086,
+     "way_ids": 0.086
+    }
+   }
+  },
+  "landmark/structure": {
+   "valhalla_foot": {
+    "with_steps": {
+     "geometry": 0.25,
+     "way_ids": 0.125
+    },
+    "with_over_10m_of_street_centreline": {
+     "geometry": 0.625,
+     "way_ids": 0.5
+    },
+    "with_an_edge_over_the_incline_limits": {
+     "geometry": 0.75,
+     "way_ids": 0.75
+    },
+    "with_a_crossing_without_a_surveyed_ramp": {
+     "geometry": 0.625,
+     "way_ids": 0.625
+    },
+    "with_any_of_these": {
+     "geometry": 1.0,
+     "way_ids": 1.0
+    },
+    "unramped_crossings_per_km": {
+     "geometry": 0.407,
+     "way_ids": 0.407
+    },
+    "median_share_off_this_graph": {
+     "geometry": 0.021,
+     "way_ids": 0.021
+    }
+   },
+   "valhalla_wheelchair": {
+    "with_steps": {
+     "geometry": 0.125,
+     "way_ids": 0.0
+    },
+    "with_over_10m_of_street_centreline": {
+     "geometry": 0.625,
+     "way_ids": 0.5
+    },
+    "with_an_edge_over_the_incline_limits": {
+     "geometry": 0.875,
+     "way_ids": 0.875
+    },
+    "with_a_crossing_without_a_surveyed_ramp": {
+     "geometry": 0.75,
+     "way_ids": 0.75
+    },
+    "with_any_of_these": {
+     "geometry": 1.0,
+     "way_ids": 1.0
+    },
+    "unramped_crossings_per_km": {
+     "geometry": 0.594,
+     "way_ids": 0.594
+    },
+    "median_share_off_this_graph": {
+     "geometry": 0.071,
+     "way_ids": 0.071
+    }
+   }
+  },
+  "brownsville/BK16": {
+   "valhalla_foot": {
+    "with_steps": {
+     "geometry": 0.0497,
+     "way_ids": 0.0497
+    },
+    "with_over_10m_of_street_centreline": {
+     "geometry": 0.3315,
+     "way_ids": 0.3315
+    },
+    "with_an_edge_over_the_incline_limits": {
+     "geometry": 0.0746,
+     "way_ids": 0.047
+    },
+    "with_a_crossing_without_a_surveyed_ramp": {
+     "geometry": 0.3398,
+     "way_ids": 0.3398
+    },
+    "with_any_of_these": {
+     "geometry": 0.5331,
+     "way_ids": 0.5221
+    },
+    "unramped_crossings_per_km": {
+     "geometry": 0.431,
+     "way_ids": 0.427
+    },
+    "median_share_off_this_graph": {
+     "geometry": 0.042,
+     "way_ids": 0.042
+    }
+   },
+   "valhalla_wheelchair": {
+    "with_steps": {
+     "geometry": 0.0,
+     "way_ids": 0.0
+    },
+    "with_over_10m_of_street_centreline": {
+     "geometry": 0.3536,
+     "way_ids": 0.3536
+    },
+    "with_an_edge_over_the_incline_limits": {
+     "geometry": 0.0829,
+     "way_ids": 0.0552
+    },
+    "with_a_crossing_without_a_surveyed_ramp": {
+     "geometry": 0.3591,
+     "way_ids": 0.3591
+    },
+    "with_any_of_these": {
+     "geometry": 0.5304,
+     "way_ids": 0.5166
+    },
+    "unramped_crossings_per_km": {
+     "geometry": 0.483,
+     "way_ids": 0.479
+    },
+    "median_share_off_this_graph": {
+     "geometry": 0.038,
+     "way_ids": 0.038
+    }
+   }
+  }
+ },
+ "raw_osm_any_by_area": {
+  "random/BK": {
+   "valhalla_foot": {
+    "geometry": 0.4405,
+    "way_ids": 0.4133
+   },
+   "valhalla_wheelchair": {
+    "geometry": 0.3921,
+    "way_ids": 0.3611
+   }
+  },
+  "random/BX": {
+   "valhalla_foot": {
+    "geometry": 0.5749,
+    "way_ids": 0.5744
+   },
+   "valhalla_wheelchair": {
+    "geometry": 0.4426,
+    "way_ids": 0.442
+   }
+  },
+  "random/MN": {
+   "valhalla_foot": {
+    "geometry": 0.6397,
+    "way_ids": 0.6242
+   },
+   "valhalla_wheelchair": {
+    "geometry": 0.5057,
+    "way_ids": 0.4877
+   }
+  },
+  "random/QN": {
+   "valhalla_foot": {
+    "geometry": 0.2312,
+    "way_ids": 0.2269
+   },
+   "valhalla_wheelchair": {
+    "geometry": 0.1544,
+    "way_ids": 0.1501
+   }
+  },
+  "random/SI": {
+   "valhalla_foot": {
+    "geometry": 0.3364,
+    "way_ids": 0.3326
+   },
+   "valhalla_wheelchair": {
+    "geometry": 0.1348,
+    "way_ids": 0.1305
+   }
+  },
+  "random/citywide": {
+   "valhalla_foot": {
+    "geometry": 0.6352,
+    "way_ids": 0.6144
+   },
+   "valhalla_wheelchair": {
+    "geometry": 0.5474,
+    "way_ids": 0.5225
+   }
+  },
+  "landmark/hand-checked": {
+   "valhalla_foot": {
+    "geometry": 0.2857,
+    "way_ids": 0.2857
+   },
+   "valhalla_wheelchair": {
+    "geometry": 0.2857,
+    "way_ids": 0.2857
+   }
+  },
+  "landmark/structure": {
+   "valhalla_foot": {
+    "geometry": 0.5,
+    "way_ids": 0.25
+   },
+   "valhalla_wheelchair": {
+    "geometry": 0.625,
+    "way_ids": 0.375
+   }
+  },
+  "brownsville/BK16": {
+   "valhalla_foot": {
+    "geometry": 0.1934,
+    "way_ids": 0.1934
+   },
+   "valhalla_wheelchair": {
+    "geometry": 0.1851,
+    "way_ids": 0.1851
+   }
+  }
+ }
+}

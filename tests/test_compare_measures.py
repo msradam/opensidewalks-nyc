@@ -124,6 +124,16 @@ def test_match_tells_coincident_ways_apart_by_their_ids():
     assert fid(g, m.match(route, among=m.base_of([e for e in range(g.m) if str(g.fid[e]) == "tr"]))[0]) == ["t"]
 
 
+def test_valhalla_routes_are_matched_by_their_way_ids():
+    import compare.analyse as an
+    g = graph()
+    an.M = Matcher(g)
+    route = line([ll(112, 0), ll(112, 50)])
+    assert fid(g, an.match("valhalla", {"osmid": [1]}, route)[0]) == ["t"], "the way-id path can find steps"
+    assert an.match("valhalla", {"osmid": [999]}, route)[0] == [], "way ids, not geometry, decide"
+    assert fid(g, an.match("valhalla", {"osmid": None}, route)[0]) == ["t"], "no way ids: geometry alone"
+
+
 def test_audit_names_the_first_barrier_and_respects_direction():
     g = graph()
     m = Matcher(g)

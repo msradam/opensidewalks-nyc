@@ -15,6 +15,15 @@ Configurations:
                exists, the grade limit is not enforced, and steps are
                penalised (600 s), not forbidden, so this is a stair-avoiding
                foot baseline, not a wheelchair router.
+
+Way ids. Each route's shape is walked back over the graph with
+trace_attributes (same costing) and the OSM way ids of its edges are stored
+as "osmid", as compare/run_ors.py does for ORS, with the metres per Valhalla
+edge use as "edge_use_m" and the traced length as "traced_m". shape_match
+edge_walk follows the shape edge by edge; where it fails (4,033 of 24,447
+found routes in the 2026-10-04 run) walk_or_snap is used and "trace" says so.
+Added 2026-10-04: the first run stored no way ids and its routes were matched
+to edges by geometry alone.
 """
 import gzip
 import json
@@ -64,6 +73,20 @@ def decode(shape, precision=6):
     return out
 
 
+def way_ids(actor, shape, opts):
+    """The edges a route shape runs along: their OSM way ids, metres per edge use, total metres, and the shape_match used."""
+    q = {"encoded_polyline": shape, "costing": "pedestrian", "costing_options": opts,
+         "filters": {"attributes": ["edge.way_id", "edge.use", "edge.length"], "action": "include"}}
+    try:
+        how, t = "edge_walk", actor.trace_attributes({**q, "shape_match": "edge_walk"})
+    except RuntimeError:        # edge_walk rejects some route shapes outright; walk_or_snap then map-matches them
+        how, t = "walk_or_snap", actor.trace_attributes({**q, "shape_match": "walk_or_snap"})
+    use = {}
+    for e in t["edges"]:
+        use[e["use"]] = round(use.get(e["use"], 0) + e["length"] * 1000, 1)
+    return sorted({int(e["way_id"]) for e in t["edges"]}), use, round(sum(e["length"] for e in t["edges"]) * 1000, 1), how
+
+
 def route(tile_dir, pairs_json, out):
     from valhalla import Actor
     actor = Actor(str(Path(tile_dir) / "valhalla.json"))
@@ -82,6 +105,11 @@ def route(tile_dir, pairs_json, out):
                          "snap_m": [snap(c[0], p["o"]), snap(c[-1], p["d"])], "coords": c}
                 except RuntimeError as e:      # Valhalla raises on "no path" and "no edge near location"
                     r = {"found": False, "error": str(e)[:160]}
+                else:
+                    try:
+                        r["osmid"], r["edge_use_m"], r["traced_m"], r["trace"] = way_ids(actor, leg["shape"], opts)
+                    except RuntimeError as e:  # kept, and counted by the analysis as a route with no way ids
+                        r["osmid"], r["trace_error"] = None, str(e)[:160]
                 f.write(json.dumps({"id": p["id"], "config": name, **r}) + "\n")
             if n % 2000 == 0:
                 print(n, len(pairs), flush=True)

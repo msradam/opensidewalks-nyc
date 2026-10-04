@@ -20,10 +20,12 @@ Rows, by router:
 | ORS on this graph, strict kerbs, 10/0.06 and 6/0.06 | ORS wheelchair, recommended weighting, incline 10 or 6, kerb 0.06 | Arm B strict: this graph converted to OSM, with a crossing end that has no surveyed ramp tagged `kerb=raised`, `kerb:height=0.14`, and LiDAR incline as `incline` | This graph's edge ids |
 | ORS on this graph, known kerbs only, 10/0.06 | The same at incline 10 | Arm B known: as strict, but ends without a surveyed ramp are left untagged | This graph's edge ids |
 | ORS raw OSM, foot | ORS foot-walking, recommended weighting | Arm A | Geometry only |
-| Valhalla wheelchair type | Valhalla 3.9.0 pedestrian costing, `type: wheelchair`, `use_hills` 0, built without elevation tiles, `sidewalk_factor` at its default 1.0. It has no kerb option, does not enforce `max_grade`, and penalises steps without forbidding them. It is a stair-avoiding foot baseline, not a wheelchair router | Arm A | Geometry only |
-| Valhalla foot | Valhalla pedestrian costing as shipped | Arm A | Geometry only |
+| Valhalla wheelchair type | Valhalla 3.9.0 pedestrian costing, `type: wheelchair`, `use_hills` 0, built without elevation tiles, `sidewalk_factor` at its default 1.0. It has no kerb option, does not enforce `max_grade`, and penalises steps without forbidding them. It is a stair-avoiding foot baseline, not a wheelchair router | Arm A | OSM way ids Valhalla returns (from 2026-10-04) |
+| Valhalla foot | Valhalla pedestrian costing as shipped | Arm A | OSM way ids Valhalla returns (from 2026-10-04) |
 
-Rows matched by geometry only (ORS foot, both Valhalla rows) are not verified by the way-id method. Geometry matching overcounted steps for ORS before the way-id fix, so treat their steps, roadway and incline figures as less certain.
+The ORS foot row is matched by geometry only and is not verified by the way-id method. Geometry matching overcounted steps for ORS before the way-id fix, so treat its steps, roadway and incline figures as less certain.
+
+Valhalla by way ids (2026-10-04). Until 2026-10-04 both Valhalla rows were matched by geometry only and were flagged as unverified. They are now matched by the OSM way ids of the edges Valhalla used, the same way as the ORS wheelchair rows on plain OSM. `compare/run_valhalla.py` reran every pair and passed each route's own shape to Valhalla's `trace_attributes` (`edge_walk`, or `walk_or_snap` for the 16% of routes where `edge_walk` failed). The routes are identical to the first run's, and every found route has way ids. The rows below are the way-id numbers, and the old and new numbers for every area are in `valhalla_way_ids.json`. Steps changed most. The wheelchair type takes steps on 0.0% of Brooklyn routes, not 4.5%, and on 0.2% of Manhattan routes, not 8.0%. The few that remain are escalators, which OSM tags `highway=steps` with `conveying=*` and Valhalla treats as escalators. Valhalla foot takes steps on 6.0% of Brooklyn routes (was 10.3%) and 16.4% of Manhattan routes (was 24.3%). That is the positive control: the same check finds steps on 1,156 Valhalla foot routes, and on each of them Valhalla's own edge use also says steps. The roadway rows did not change in any random area or in Brownsville (Brooklyn 89.5%, Manhattan 84.2% for the wheelchair type). In the random areas and Brownsville, the crossing and incline audit rows fell by at most 2.8 points. The raw OSM rows fell by at most 3.1 points, except steps and the `incline` tag (at most 6.5 points, Manhattan, foot). In the 8 landmark structure pairs, one wheelchair route moved off the roadway row (62.5% to 50.0%).
 
 Tables, in order:
 
@@ -135,10 +137,10 @@ The audit tables judge every router by this dataset's ramp survey and LiDAR incl
 | ORS on this graph, strict kerbs, 10/0.06 | 14.1% | 33.7% | 25.0% | 41.0% | 44.5% | 34.4% | 1.9% | 57.1% | 14.3% |
 | ORS on this graph, strict kerbs, 6/0.06 | 15.3% | 36.0% | 26.4% | 66.0% | 59.2% | 35.6% | 2.0% | 50.0% | 33.3% |
 | ORS on this graph, known kerbs only, 10/0.06 | 89.2% | 93.7% | 94.0% | 95.7% | 93.6% | 97.7% | 41.2% | 100.0% | 100.0% |
-| Valhalla wheelchair type | 69.0% | 69.3% | 80.3% | 73.0% | 61.0% | 87.7% | 35.9% | 71.4% | 75.0% |
+| Valhalla wheelchair type | 68.7% | 68.4% | 80.0% | 71.8% | 60.2% | 85.8% | 35.9% | 71.4% | 75.0% |
 | this graph, walk | 88.1% | 92.2% | 95.0% | 95.3% | 92.1% | 96.7% | 40.9% | 100.0% | 75.0% |
 | ORS raw OSM, foot | 86.4% | 93.2% | 91.7% | 91.5% | 91.2% | 97.1% | 43.6% | 100.0% | 75.0% |
-| Valhalla foot | 70.0% | 69.4% | 80.1% | 72.1% | 66.5% | 88.2% | 34.0% | 71.4% | 62.5% |
+| Valhalla foot | 69.8% | 68.2% | 79.8% | 70.9% | 65.9% | 86.8% | 34.0% | 71.4% | 62.5% |
 
 ### Routes with an edge over this profile's incline limits (audit against this graph's data)
 
@@ -151,10 +153,10 @@ The audit tables judge every router by this dataset's ramp survey and LiDAR incl
 | ORS on this graph, strict kerbs, 10/0.06 | 7.7% | 32.7% | 22.4% | 57.8% | 70.3% | 39.2% | 1.4% | 14.3% | 0.0% |
 | ORS on this graph, strict kerbs, 6/0.06 | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% |
 | ORS on this graph, known kerbs only, 10/0.06 | 10.9% | 27.1% | 18.6% | 51.9% | 71.3% | 36.8% | 1.4% | 14.3% | 0.0% |
-| Valhalla wheelchair type | 27.4% | 36.8% | 62.6% | 48.7% | 44.2% | 76.6% | 8.3% | 28.6% | 87.5% |
+| Valhalla wheelchair type | 26.9% | 36.8% | 62.3% | 48.7% | 43.8% | 76.6% | 5.5% | 28.6% | 87.5% |
 | this graph, walk | 34.5% | 64.7% | 65.5% | 81.8% | 87.6% | 80.6% | 3.0% | 28.6% | 87.5% |
 | ORS raw OSM, foot | 36.7% | 63.7% | 74.3% | 72.8% | 82.0% | 86.8% | 4.1% | 28.6% | 87.5% |
-| Valhalla foot | 28.9% | 37.4% | 63.8% | 50.2% | 51.4% | 77.1% | 7.5% | 28.6% | 75.0% |
+| Valhalla foot | 28.4% | 37.4% | 63.4% | 50.0% | 51.0% | 77.1% | 4.7% | 28.6% | 75.0% |
 
 ### Routes with steps (audit against this graph's data)
 
@@ -167,10 +169,10 @@ The audit tables judge every router by this dataset's ramp survey and LiDAR incl
 | ORS on this graph, strict kerbs, 10/0.06 | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% |
 | ORS on this graph, strict kerbs, 6/0.06 | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% |
 | ORS on this graph, known kerbs only, 10/0.06 | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% |
-| Valhalla wheelchair type | 4.5% | 0.3% | 8.0% | 0.0% | 0.2% | 3.8% | 0.0% | 0.0% | 12.5% |
+| Valhalla wheelchair type | 0.0% | 0.0% | 0.2% | 0.0% | 0.2% | 0.1% | 0.0% | 0.0% | 0.0% |
 | this graph, walk | 17.5% | 24.5% | 48.8% | 46.0% | 5.6% | 54.6% | 8.0% | 14.3% | 25.0% |
 | ORS raw OSM, foot | 18.8% | 28.2% | 51.7% | 39.9% | 11.5% | 58.1% | 7.5% | 14.3% | 37.5% |
-| Valhalla foot | 10.3% | 4.7% | 24.3% | 15.3% | 2.6% | 14.4% | 5.0% | 0.0% | 25.0% |
+| Valhalla foot | 6.0% | 4.3% | 16.4% | 15.2% | 2.5% | 10.9% | 5.0% | 0.0% | 12.5% |
 
 ### Routes with over 10 m in the roadway (audit against this graph's data)
 
@@ -183,10 +185,10 @@ The audit tables judge every router by this dataset's ramp survey and LiDAR incl
 | ORS on this graph, strict kerbs, 10/0.06 | 23.9% | 53.6% | 32.6% | 72.0% | 80.0% | 59.9% | 1.9% | 57.1% | 57.1% |
 | ORS on this graph, strict kerbs, 6/0.06 | 25.4% | 54.3% | 34.4% | 89.8% | 92.3% | 61.0% | 4.8% | 50.0% | 66.7% |
 | ORS on this graph, known kerbs only, 10/0.06 | 8.4% | 28.1% | 4.5% | 49.8% | 67.4% | 37.4% | 1.9% | 0.0% | 14.3% |
-| Valhalla wheelchair type | 89.5% | 96.2% | 84.2% | 97.1% | 97.9% | 97.7% | 35.4% | 57.1% | 62.5% |
+| Valhalla wheelchair type | 89.5% | 96.2% | 84.2% | 97.1% | 97.9% | 97.7% | 35.4% | 57.1% | 50.0% |
 | this graph, walk | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% |
 | ORS raw OSM, foot | 85.8% | 94.8% | 66.6% | 94.1% | 97.5% | 96.5% | 53.3% | 42.9% | 62.5% |
-| Valhalla foot | 88.8% | 96.3% | 84.5% | 96.8% | 98.1% | 97.3% | 33.1% | 42.9% | 62.5% |
+| Valhalla foot | 88.8% | 96.3% | 84.5% | 96.8% | 98.1% | 97.3% | 33.1% | 42.9% | 50.0% |
 
 ### Routes with any of the four (audit against this graph's data)
 
@@ -199,10 +201,10 @@ The audit tables judge every router by this dataset's ramp survey and LiDAR incl
 | ORS on this graph, strict kerbs, 10/0.06 | 29.2% | 69.0% | 48.6% | 85.5% | 92.7% | 75.5% | 5.2% | 57.1% | 57.1% |
 | ORS on this graph, strict kerbs, 6/0.06 | 27.4% | 56.5% | 36.9% | 90.0% | 92.3% | 62.6% | 6.8% | 50.0% | 66.7% |
 | ORS on this graph, known kerbs only, 10/0.06 | 90.3% | 95.4% | 94.7% | 97.7% | 97.4% | 98.2% | 42.3% | 100.0% | 100.0% |
-| Valhalla wheelchair type | 96.4% | 98.8% | 98.2% | 99.4% | 99.1% | 99.5% | 53.0% | 100.0% | 100.0% |
+| Valhalla wheelchair type | 96.4% | 98.8% | 98.2% | 99.4% | 99.1% | 99.5% | 51.7% | 100.0% | 100.0% |
 | this graph, walk | 90.8% | 94.4% | 97.9% | 98.0% | 96.7% | 98.0% | 47.2% | 100.0% | 100.0% |
 | ORS raw OSM, foot | 98.3% | 99.4% | 98.6% | 99.3% | 99.6% | 99.9% | 74.9% | 100.0% | 100.0% |
-| Valhalla foot | 96.3% | 98.8% | 98.7% | 99.3% | 99.1% | 99.5% | 53.3% | 100.0% | 100.0% |
+| Valhalla foot | 96.3% | 98.8% | 98.7% | 99.3% | 99.1% | 99.5% | 52.2% | 100.0% | 100.0% |
 
 ### Unramped crossings per km of route
 
@@ -215,10 +217,10 @@ The audit tables judge every router by this dataset's ramp survey and LiDAR incl
 | ORS on this graph, strict kerbs, 10/0.06 | 0.024 | 0.06 | 0.055 | 0.096 | 0.076 | 0.029 | 0.014 | 0.273 | 0.018 |
 | ORS on this graph, strict kerbs, 6/0.06 | 0.029 | 0.066 | 0.059 | 0.161 | 0.103 | 0.046 | 0.014 | 0.379 | 0.066 |
 | ORS on this graph, known kerbs only, 10/0.06 | 0.799 | 0.715 | 1.015 | 1.146 | 0.916 | 0.891 | 0.699 | 2.481 | 1.327 |
-| Valhalla wheelchair type | 0.228 | 0.159 | 0.302 | 0.328 | 0.144 | 0.115 | 0.483 | 0.536 | 0.594 |
+| Valhalla wheelchair type | 0.226 | 0.154 | 0.3 | 0.317 | 0.141 | 0.112 | 0.479 | 0.536 | 0.594 |
 | this graph, walk | 0.697 | 0.62 | 1.033 | 1.083 | 0.887 | 0.763 | 0.713 | 2.219 | 0.815 |
 | ORS raw OSM, foot | 0.63 | 0.619 | 0.62 | 0.895 | 0.781 | 0.508 | 0.751 | 2.406 | 0.748 |
-| Valhalla foot | 0.234 | 0.164 | 0.298 | 0.321 | 0.165 | 0.123 | 0.431 | 0.697 | 0.407 |
+| Valhalla foot | 0.232 | 0.158 | 0.296 | 0.311 | 0.162 | 0.119 | 0.427 | 0.697 | 0.407 |
 
 ### Raw OSM audit: routes with any
 
@@ -231,10 +233,10 @@ The audit tables judge every router by this dataset's ramp survey and LiDAR incl
 | ORS on this graph, strict kerbs, 10/0.06 | 44.6% | 31.1% | 52.5% | 32.2% | 40.5% | 66.6% | 13.8% | 57.1% | 71.4% |
 | ORS on this graph, strict kerbs, 6/0.06 | 44.1% | 23.2% | 51.8% | 28.7% | 30.3% | 38.1% | 13.6% | 50.0% | 66.7% |
 | ORS on this graph, known kerbs only, 10/0.06 | 61.9% | 31.7% | 69.5% | 38.2% | 58.0% | 76.0% | 20.2% | 57.1% | 71.4% |
-| Valhalla wheelchair type | 39.2% | 15.4% | 50.6% | 44.3% | 13.5% | 54.7% | 18.5% | 28.6% | 62.5% |
+| Valhalla wheelchair type | 36.1% | 15.0% | 48.8% | 44.2% | 13.1% | 52.2% | 18.5% | 28.6% | 37.5% |
 | this graph, walk | 64.9% | 44.0% | 80.0% | 70.8% | 72.5% | 81.6% | 26.5% | 42.9% | 37.5% |
 | ORS raw OSM, foot | 63.3% | 50.2% | 81.9% | 70.0% | 72.8% | 87.0% | 26.2% | 57.1% | 62.5% |
-| Valhalla foot | 44.0% | 23.1% | 64.0% | 57.5% | 33.6% | 63.5% | 19.3% | 28.6% | 50.0% |
+| Valhalla foot | 41.3% | 22.7% | 62.4% | 57.4% | 33.3% | 61.4% | 19.3% | 28.6% | 25.0% |
 
 ### Raw OSM audit: routes with incline
 
@@ -247,10 +249,10 @@ The audit tables judge every router by this dataset's ramp survey and LiDAR incl
 | ORS on this graph, strict kerbs, 10/0.06 | 2.3% | 10.3% | 6.9% | 5.6% | 0.8% | 3.5% | 0.0% | 14.3% | 14.3% |
 | ORS on this graph, strict kerbs, 6/0.06 | 0.9% | 0.5% | 5.1% | 1.5% | 0.5% | 0.9% | 0.0% | 16.7% | 0.0% |
 | ORS on this graph, known kerbs only, 10/0.06 | 3.3% | 5.9% | 9.3% | 5.7% | 0.9% | 9.6% | 0.0% | 14.3% | 14.3% |
-| Valhalla wheelchair type | 6.5% | 7.3% | 13.0% | 10.2% | 4.5% | 23.0% | 0.0% | 0.0% | 12.5% |
+| Valhalla wheelchair type | 6.2% | 7.1% | 6.9% | 10.2% | 2.9% | 20.6% | 0.0% | 0.0% | 0.0% |
 | this graph, walk | 21.2% | 16.5% | 43.0% | 41.0% | 8.9% | 53.9% | 8.0% | 28.6% | 25.0% |
 | ORS raw OSM, foot | 20.7% | 21.3% | 46.5% | 35.6% | 13.7% | 56.9% | 7.5% | 28.6% | 50.0% |
-| Valhalla foot | 10.9% | 10.4% | 25.6% | 19.1% | 5.5% | 28.9% | 5.0% | 0.0% | 25.0% |
+| Valhalla foot | 10.4% | 10.2% | 19.1% | 19.0% | 4.0% | 26.2% | 5.0% | 0.0% | 12.5% |
 
 ### Raw OSM audit: routes with kerb=raised
 
@@ -263,10 +265,10 @@ The audit tables judge every router by this dataset's ramp survey and LiDAR incl
 | ORS on this graph, strict kerbs, 10/0.06 | 28.4% | 8.2% | 34.2% | 4.5% | 22.4% | 32.2% | 13.8% | 0.0% | 14.3% |
 | ORS on this graph, strict kerbs, 6/0.06 | 29.5% | 7.9% | 36.3% | 3.4% | 23.7% | 22.6% | 13.6% | 0.0% | 0.0% |
 | ORS on this graph, known kerbs only, 10/0.06 | 53.0% | 21.2% | 53.2% | 6.5% | 42.4% | 57.2% | 20.2% | 42.9% | 42.9% |
-| Valhalla wheelchair type | 25.6% | 3.9% | 10.7% | 1.0% | 8.6% | 14.5% | 18.5% | 0.0% | 0.0% |
+| Valhalla wheelchair type | 25.4% | 3.6% | 10.5% | 1.0% | 8.4% | 14.3% | 18.5% | 0.0% | 0.0% |
 | this graph, walk | 48.2% | 16.4% | 49.6% | 11.1% | 38.4% | 61.0% | 20.2% | 28.6% | 0.0% |
 | ORS raw OSM, foot | 44.0% | 22.5% | 37.2% | 7.3% | 36.9% | 53.5% | 19.9% | 28.6% | 0.0% |
-| Valhalla foot | 26.1% | 5.3% | 17.5% | 1.1% | 8.8% | 17.1% | 14.6% | 0.0% | 0.0% |
+| Valhalla foot | 25.9% | 5.1% | 17.5% | 1.1% | 8.6% | 16.9% | 14.6% | 0.0% | 0.0% |
 
 ### Raw OSM audit: routes with smoothness
 
@@ -279,7 +281,7 @@ The audit tables judge every router by this dataset's ramp survey and LiDAR incl
 | ORS on this graph, strict kerbs, 10/0.06 | 17.8% | 6.9% | 22.7% | 22.2% | 16.6% | 21.5% | 0.0% | 28.6% | 0.0% |
 | ORS on this graph, strict kerbs, 6/0.06 | 18.3% | 5.7% | 20.9% | 24.0% | 4.7% | 13.2% | 0.0% | 33.3% | 0.0% |
 | ORS on this graph, known kerbs only, 10/0.06 | 16.9% | 6.5% | 29.9% | 34.4% | 15.7% | 26.1% | 0.0% | 28.6% | 0.0% |
-| Valhalla wheelchair type | 8.0% | 2.5% | 12.6% | 39.3% | 1.0% | 17.6% | 0.0% | 14.3% | 0.0% |
+| Valhalla wheelchair type | 7.9% | 2.5% | 12.6% | 39.3% | 1.0% | 17.6% | 0.0% | 14.3% | 0.0% |
 | this graph, walk | 21.0% | 6.9% | 28.7% | 35.8% | 17.7% | 29.6% | 0.0% | 14.3% | 0.0% |
 | ORS raw OSM, foot | 18.7% | 6.3% | 12.0% | 36.9% | 10.7% | 30.9% | 0.0% | 14.3% | 0.0% |
 | Valhalla foot | 7.3% | 2.9% | 12.9% | 42.8% | 1.1% | 17.5% | 0.0% | 14.3% | 0.0% |
@@ -295,10 +297,10 @@ The audit tables judge every router by this dataset's ramp survey and LiDAR incl
 | ORS on this graph, strict kerbs, 10/0.06 | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% |
 | ORS on this graph, strict kerbs, 6/0.06 | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% |
 | ORS on this graph, known kerbs only, 10/0.06 | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% |
-| Valhalla wheelchair type | 4.5% | 0.3% | 8.0% | 0.0% | 0.2% | 3.8% | 0.0% | 0.0% | 12.5% |
+| Valhalla wheelchair type | 0.0% | 0.0% | 0.2% | 0.0% | 0.2% | 0.1% | 0.0% | 0.0% | 0.0% |
 | this graph, walk | 17.5% | 24.5% | 48.8% | 46.0% | 5.6% | 54.6% | 8.0% | 14.3% | 25.0% |
 | ORS raw OSM, foot | 18.8% | 28.2% | 51.7% | 39.9% | 11.5% | 58.1% | 7.5% | 14.3% | 37.5% |
-| Valhalla foot | 10.3% | 4.7% | 24.3% | 15.3% | 2.6% | 14.4% | 5.0% | 0.0% | 25.0% |
+| Valhalla foot | 6.0% | 4.3% | 16.4% | 15.2% | 2.5% | 10.9% | 5.0% | 0.0% | 12.5% |
 
 ### Raw OSM audit: routes with surface
 
@@ -311,10 +313,10 @@ The audit tables judge every router by this dataset's ramp survey and LiDAR incl
 | ORS on this graph, strict kerbs, 10/0.06 | 9.1% | 19.1% | 21.2% | 6.7% | 8.0% | 48.9% | 0.0% | 28.6% | 71.4% |
 | ORS on this graph, strict kerbs, 6/0.06 | 6.7% | 7.8% | 21.2% | 3.1% | 3.6% | 8.0% | 0.0% | 0.0% | 66.7% |
 | ORS on this graph, known kerbs only, 10/0.06 | 8.6% | 10.2% | 23.8% | 3.9% | 8.9% | 47.4% | 0.0% | 28.6% | 71.4% |
-| Valhalla wheelchair type | 10.6% | 3.2% | 31.8% | 4.8% | 2.7% | 21.3% | 0.0% | 28.6% | 50.0% |
+| Valhalla wheelchair type | 10.4% | 3.2% | 30.5% | 4.7% | 2.5% | 20.4% | 0.0% | 28.6% | 37.5% |
 | this graph, walk | 15.3% | 19.4% | 31.7% | 11.7% | 40.8% | 35.8% | 0.0% | 14.3% | 37.5% |
 | ORS raw OSM, foot | 17.4% | 17.0% | 39.6% | 19.5% | 46.7% | 43.7% | 0.0% | 42.9% | 50.0% |
-| Valhalla foot | 15.8% | 8.3% | 38.7% | 13.0% | 24.1% | 32.8% | 0.0% | 28.6% | 37.5% |
+| Valhalla foot | 15.8% | 8.3% | 37.8% | 13.0% | 23.9% | 31.9% | 0.0% | 28.6% | 25.0% |
 
 ### Raw OSM audit: routes with wheelchair=no
 
@@ -327,10 +329,10 @@ The audit tables judge every router by this dataset's ramp survey and LiDAR incl
 | ORS on this graph, strict kerbs, 10/0.06 | 0.1% | 3.9% | 0.5% | 0.1% | 0.2% | 1.9% | 0.0% | 0.0% | 0.0% |
 | ORS on this graph, strict kerbs, 6/0.06 | 0.1% | 3.5% | 0.0% | 0.1% | 0.0% | 2.9% | 0.0% | 0.0% | 0.0% |
 | ORS on this graph, known kerbs only, 10/0.06 | 0.1% | 2.2% | 0.5% | 0.1% | 10.3% | 2.8% | 0.0% | 0.0% | 0.0% |
-| Valhalla wheelchair type | 0.1% | 0.0% | 0.0% | 0.0% | 0.0% | 0.2% | 0.0% | 0.0% | 12.5% |
+| Valhalla wheelchair type | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% |
 | this graph, walk | 1.9% | 2.3% | 0.7% | 0.1% | 3.3% | 18.5% | 0.0% | 0.0% | 0.0% |
 | ORS raw OSM, foot | 1.8% | 2.1% | 0.6% | 3.4% | 3.4% | 7.7% | 0.0% | 0.0% | 12.5% |
-| Valhalla foot | 0.5% | 0.5% | 0.4% | 1.4% | 0.8% | 2.4% | 0.0% | 0.0% | 12.5% |
+| Valhalla foot | 0.4% | 0.5% | 0.4% | 1.4% | 0.8% | 2.3% | 0.0% | 0.0% | 0.0% |
 
 ### ORS settings matrix, raw OSM: share of all pairs with a route
 

@@ -442,23 +442,23 @@
    },
    "valhalla_foot": {
     "routes": 1950,
-    "with_steps": 0.1026,
-    "with_a_crossing_without_a_surveyed_ramp": 0.6995,
-    "with_an_edge_over_the_incline_limits": 0.2887,
+    "with_steps": 0.0605,
+    "with_a_crossing_without_a_surveyed_ramp": 0.6979,
+    "with_an_edge_over_the_incline_limits": 0.2841,
     "with_over_10m_of_street_centreline": 0.8877,
     "with_any_of_these": 0.9626,
-    "unramped_crossings_per_km": 0.234,
-    "median_share_off_this_graph": 0.0
+    "unramped_crossings_per_km": 0.232,
+    "median_share_off_this_graph": 0.001
    },
    "valhalla_wheelchair": {
     "routes": 1933,
-    "with_steps": 0.0445,
-    "with_a_crossing_without_a_surveyed_ramp": 0.6896,
-    "with_an_edge_over_the_incline_limits": 0.2737,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.687,
+    "with_an_edge_over_the_incline_limits": 0.269,
     "with_over_10m_of_street_centreline": 0.8955,
     "with_any_of_these": 0.9638,
-    "unramped_crossings_per_km": 0.228,
-    "median_share_off_this_graph": 0.0
+    "unramped_crossings_per_km": 0.226,
+    "median_share_off_this_graph": 0.001
    }
   },
   "audit_against_raw_osm": {
@@ -597,23 +597,21 @@
    },
    "valhalla_foot": {
     "routes": 1950,
-    "with_incline": 0.1087,
-    "with_kerb=raised": 0.261,
-    "with_smoothness": 0.0733,
-    "with_steps": 0.1026,
-    "with_surface": 0.1585,
-    "with_wheelchair=no": 0.0046,
-    "with_any": 0.4405
+    "with_incline": 0.1041,
+    "with_kerb=raised": 0.2595,
+    "with_smoothness": 0.0728,
+    "with_steps": 0.0605,
+    "with_surface": 0.1579,
+    "with_wheelchair=no": 0.0041,
+    "with_any": 0.4133
    },
    "valhalla_wheelchair": {
     "routes": 1933,
-    "with_incline": 0.0647,
-    "with_kerb=raised": 0.2561,
-    "with_smoothness": 0.0802,
-    "with_steps": 0.0445,
-    "with_surface": 0.1061,
-    "with_wheelchair=no": 0.0005,
-    "with_any": 0.3921
+    "with_incline": 0.0616,
+    "with_kerb=raised": 0.2545,
+    "with_smoothness": 0.0792,
+    "with_surface": 0.1045,
+    "with_any": 0.3611
    }
   },
   "ors_setting_matrix_found": {
@@ -1124,23 +1122,23 @@
    },
    "valhalla_foot": {
     "routes": 1802,
-    "with_steps": 0.1532,
-    "with_a_crossing_without_a_surveyed_ramp": 0.7214,
-    "with_an_edge_over_the_incline_limits": 0.5017,
+    "with_steps": 0.1515,
+    "with_a_crossing_without_a_surveyed_ramp": 0.7087,
+    "with_an_edge_over_the_incline_limits": 0.5,
     "with_over_10m_of_street_centreline": 0.9684,
     "with_any_of_these": 0.9933,
-    "unramped_crossings_per_km": 0.321,
-    "median_share_off_this_graph": 0.0
+    "unramped_crossings_per_km": 0.311,
+    "median_share_off_this_graph": 0.001
    },
    "valhalla_wheelchair": {
     "routes": 1767,
     "with_steps": 0.0,
-    "with_a_crossing_without_a_surveyed_ramp": 0.7301,
-    "with_an_edge_over_the_incline_limits": 0.4873,
+    "with_a_crossing_without_a_surveyed_ramp": 0.7182,
+    "with_an_edge_over_the_incline_limits": 0.4867,
     "with_over_10m_of_street_centreline": 0.9706,
     "with_any_of_these": 0.9938,
-    "unramped_crossings_per_km": 0.328,
-    "median_share_off_this_graph": 0.0
+    "unramped_crossings_per_km": 0.317,
+    "median_share_off_this_graph": 0.002
    }
   },
   "audit_against_raw_osm": {
@@ -1276,21 +1274,21 @@
    },
    "valhalla_foot": {
     "routes": 1802,
-    "with_incline": 0.1909,
+    "with_incline": 0.1903,
     "with_kerb=raised": 0.0105,
     "with_smoothness": 0.4284,
-    "with_steps": 0.1532,
+    "with_steps": 0.1515,
     "with_surface": 0.1299,
-    "with_wheelchair=no": 0.0144,
-    "with_any": 0.5749
+    "with_wheelchair=no": 0.0139,
+    "with_any": 0.5744
    },
    "valhalla_wheelchair": {
     "routes": 1767,
     "with_incline": 0.1024,
-    "with_kerb=raised": 0.0102,
+    "with_kerb=raised": 0.0096,
     "with_smoothness": 0.3928,
-    "with_surface": 0.0475,
-    "with_any": 0.4426
+    "with_surface": 0.047,
+    "with_any": 0.442
    }
   },
   "ors_setting_matrix_found": {
@@ -1801,23 +1799,23 @@
    },
    "valhalla_foot": {
     "routes": 1929,
-    "with_steps": 0.2431,
-    "with_a_crossing_without_a_surveyed_ramp": 0.8009,
-    "with_an_edge_over_the_incline_limits": 0.6376,
+    "with_steps": 0.1643,
+    "with_a_crossing_without_a_surveyed_ramp": 0.7978,
+    "with_an_edge_over_the_incline_limits": 0.6345,
     "with_over_10m_of_street_centreline": 0.8455,
-    "with_any_of_these": 0.987,
-    "unramped_crossings_per_km": 0.298,
-    "median_share_off_this_graph": 0.032
+    "with_any_of_these": 0.9865,
+    "unramped_crossings_per_km": 0.296,
+    "median_share_off_this_graph": 0.034
    },
    "valhalla_wheelchair": {
     "routes": 1827,
-    "with_steps": 0.0799,
-    "with_a_crossing_without_a_surveyed_ramp": 0.8035,
-    "with_an_edge_over_the_incline_limits": 0.6256,
+    "with_steps": 0.0016,
+    "with_a_crossing_without_a_surveyed_ramp": 0.7997,
+    "with_an_edge_over_the_incline_limits": 0.6229,
     "with_over_10m_of_street_centreline": 0.8418,
     "with_any_of_these": 0.9825,
-    "unramped_crossings_per_km": 0.302,
-    "median_share_off_this_graph": 0.015
+    "unramped_crossings_per_km": 0.3,
+    "median_share_off_this_graph": 0.016
    }
   },
   "audit_against_raw_osm": {
@@ -1954,22 +1952,22 @@
    },
    "valhalla_foot": {
     "routes": 1929,
-    "with_incline": 0.2556,
+    "with_incline": 0.1908,
     "with_kerb=raised": 0.1747,
     "with_smoothness": 0.1286,
-    "with_steps": 0.2431,
-    "with_surface": 0.3872,
+    "with_steps": 0.1643,
+    "with_surface": 0.3784,
     "with_wheelchair=no": 0.0036,
-    "with_any": 0.6397
+    "with_any": 0.6242
    },
    "valhalla_wheelchair": {
     "routes": 1827,
-    "with_incline": 0.1303,
-    "with_kerb=raised": 0.1067,
+    "with_incline": 0.069,
+    "with_kerb=raised": 0.1051,
     "with_smoothness": 0.1259,
-    "with_steps": 0.0799,
-    "with_surface": 0.3175,
-    "with_any": 0.5057
+    "with_steps": 0.0016,
+    "with_surface": 0.3054,
+    "with_any": 0.4877
    }
   },
   "ors_setting_matrix_found": {
@@ -2480,22 +2478,22 @@
    },
    "valhalla_foot": {
     "routes": 1851,
-    "with_steps": 0.0465,
-    "with_a_crossing_without_a_surveyed_ramp": 0.6942,
+    "with_steps": 0.0427,
+    "with_a_crossing_without_a_surveyed_ramp": 0.6818,
     "with_an_edge_over_the_incline_limits": 0.3739,
     "with_over_10m_of_street_centreline": 0.9627,
     "with_any_of_these": 0.9881,
-    "unramped_crossings_per_km": 0.164,
+    "unramped_crossings_per_km": 0.158,
     "median_share_off_this_graph": 0.0
    },
    "valhalla_wheelchair": {
     "routes": 1846,
-    "with_steps": 0.0027,
-    "with_a_crossing_without_a_surveyed_ramp": 0.6934,
+    "with_steps": 0.0,
+    "with_a_crossing_without_a_surveyed_ramp": 0.6836,
     "with_an_edge_over_the_incline_limits": 0.3678,
     "with_over_10m_of_street_centreline": 0.9615,
-    "with_any_of_these": 0.9881,
-    "unramped_crossings_per_km": 0.159,
+    "with_any_of_these": 0.9875,
+    "unramped_crossings_per_km": 0.154,
     "median_share_off_this_graph": 0.0
    }
   },
@@ -2635,22 +2633,21 @@
    },
    "valhalla_foot": {
     "routes": 1851,
-    "with_incline": 0.1037,
-    "with_kerb=raised": 0.0529,
+    "with_incline": 0.1016,
+    "with_kerb=raised": 0.0508,
     "with_smoothness": 0.0286,
-    "with_steps": 0.0465,
+    "with_steps": 0.0427,
     "with_surface": 0.0827,
     "with_wheelchair=no": 0.0054,
-    "with_any": 0.2312
+    "with_any": 0.2269
    },
    "valhalla_wheelchair": {
     "routes": 1846,
-    "with_incline": 0.0731,
-    "with_kerb=raised": 0.0385,
+    "with_incline": 0.0715,
+    "with_kerb=raised": 0.0363,
     "with_smoothness": 0.0249,
-    "with_steps": 0.0027,
     "with_surface": 0.0325,
-    "with_any": 0.1544
+    "with_any": 0.1501
    }
   },
   "ors_setting_matrix_found": {
@@ -3161,22 +3158,22 @@
    },
    "valhalla_foot": {
     "routes": 1861,
-    "with_steps": 0.0258,
-    "with_a_crossing_without_a_surveyed_ramp": 0.6652,
-    "with_an_edge_over_the_incline_limits": 0.5137,
+    "with_steps": 0.0247,
+    "with_a_crossing_without_a_surveyed_ramp": 0.6588,
+    "with_an_edge_over_the_incline_limits": 0.5105,
     "with_over_10m_of_street_centreline": 0.9807,
     "with_any_of_these": 0.9914,
-    "unramped_crossings_per_km": 0.165,
+    "unramped_crossings_per_km": 0.162,
     "median_share_off_this_graph": 0.0
    },
    "valhalla_wheelchair": {
     "routes": 1832,
     "with_steps": 0.0016,
-    "with_a_crossing_without_a_surveyed_ramp": 0.6097,
-    "with_an_edge_over_the_incline_limits": 0.4416,
+    "with_a_crossing_without_a_surveyed_ramp": 0.6015,
+    "with_an_edge_over_the_incline_limits": 0.4378,
     "with_over_10m_of_street_centreline": 0.9793,
     "with_any_of_these": 0.9913,
-    "unramped_crossings_per_km": 0.144,
+    "unramped_crossings_per_km": 0.141,
     "median_share_off_this_graph": 0.0
    }
   },
@@ -3315,22 +3312,22 @@
    },
    "valhalla_foot": {
     "routes": 1861,
-    "with_incline": 0.0548,
-    "with_kerb=raised": 0.0876,
+    "with_incline": 0.0398,
+    "with_kerb=raised": 0.086,
     "with_smoothness": 0.0113,
-    "with_steps": 0.0258,
-    "with_surface": 0.2407,
+    "with_steps": 0.0247,
+    "with_surface": 0.2391,
     "with_wheelchair=no": 0.0075,
-    "with_any": 0.3364
+    "with_any": 0.3326
    },
    "valhalla_wheelchair": {
     "routes": 1832,
-    "with_incline": 0.0448,
-    "with_kerb=raised": 0.0857,
+    "with_incline": 0.0295,
+    "with_kerb=raised": 0.0841,
     "with_smoothness": 0.0104,
     "with_steps": 0.0016,
-    "with_surface": 0.0273,
-    "with_any": 0.1348
+    "with_surface": 0.0246,
+    "with_any": 0.1305
    }
   },
   "ors_setting_matrix_found": {
@@ -3841,22 +3838,22 @@
    },
    "valhalla_foot": {
     "routes": 1883,
-    "with_steps": 0.1439,
-    "with_a_crossing_without_a_surveyed_ramp": 0.8816,
+    "with_steps": 0.1089,
+    "with_a_crossing_without_a_surveyed_ramp": 0.8678,
     "with_an_edge_over_the_incline_limits": 0.7706,
     "with_over_10m_of_street_centreline": 0.9734,
     "with_any_of_these": 0.9952,
-    "unramped_crossings_per_km": 0.123,
+    "unramped_crossings_per_km": 0.119,
     "median_share_off_this_graph": 0.369
    },
    "valhalla_wheelchair": {
     "routes": 1847,
-    "with_steps": 0.0379,
-    "with_a_crossing_without_a_surveyed_ramp": 0.8766,
+    "with_steps": 0.0011,
+    "with_a_crossing_without_a_surveyed_ramp": 0.8581,
     "with_an_edge_over_the_incline_limits": 0.7656,
     "with_over_10m_of_street_centreline": 0.9767,
     "with_any_of_these": 0.9951,
-    "unramped_crossings_per_km": 0.115,
+    "unramped_crossings_per_km": 0.112,
     "median_share_off_this_graph": 0.391
    }
   },
@@ -3996,23 +3993,22 @@
    },
    "valhalla_foot": {
     "routes": 1883,
-    "with_incline": 0.2889,
-    "with_kerb=raised": 0.1705,
+    "with_incline": 0.2618,
+    "with_kerb=raised": 0.1694,
     "with_smoothness": 0.1753,
-    "with_steps": 0.1439,
-    "with_surface": 0.3277,
-    "with_wheelchair=no": 0.0244,
-    "with_any": 0.6352
+    "with_steps": 0.1089,
+    "with_surface": 0.3186,
+    "with_wheelchair=no": 0.0228,
+    "with_any": 0.6144
    },
    "valhalla_wheelchair": {
     "routes": 1847,
-    "with_incline": 0.2296,
-    "with_kerb=raised": 0.1446,
+    "with_incline": 0.2057,
+    "with_kerb=raised": 0.1435,
     "with_smoothness": 0.1765,
-    "with_steps": 0.0379,
-    "with_surface": 0.2133,
-    "with_wheelchair=no": 0.0016,
-    "with_any": 0.5474
+    "with_steps": 0.0011,
+    "with_surface": 0.2036,
+    "with_any": 0.5225
    }
   },
   "ors_setting_matrix_found": {
@@ -5066,20 +5062,20 @@
    },
    "valhalla_foot": {
     "routes": 8,
-    "with_steps": 0.25,
+    "with_steps": 0.125,
     "with_a_crossing_without_a_surveyed_ramp": 0.625,
     "with_an_edge_over_the_incline_limits": 0.75,
-    "with_over_10m_of_street_centreline": 0.625,
+    "with_over_10m_of_street_centreline": 0.5,
     "with_any_of_these": 1.0,
     "unramped_crossings_per_km": 0.407,
     "median_share_off_this_graph": 0.021
    },
    "valhalla_wheelchair": {
     "routes": 8,
-    "with_steps": 0.125,
+    "with_steps": 0.0,
     "with_a_crossing_without_a_surveyed_ramp": 0.75,
     "with_an_edge_over_the_incline_limits": 0.875,
-    "with_over_10m_of_street_centreline": 0.625,
+    "with_over_10m_of_street_centreline": 0.5,
     "with_any_of_these": 1.0,
     "unramped_crossings_per_km": 0.594,
     "median_share_off_this_graph": 0.071
@@ -5176,19 +5172,15 @@
    },
    "valhalla_foot": {
     "routes": 8,
-    "with_incline": 0.25,
-    "with_steps": 0.25,
-    "with_surface": 0.375,
-    "with_wheelchair=no": 0.125,
-    "with_any": 0.5
+    "with_incline": 0.125,
+    "with_steps": 0.125,
+    "with_surface": 0.25,
+    "with_any": 0.25
    },
    "valhalla_wheelchair": {
     "routes": 8,
-    "with_incline": 0.125,
-    "with_steps": 0.125,
-    "with_surface": 0.5,
-    "with_wheelchair=no": 0.125,
-    "with_any": 0.625
+    "with_surface": 0.375,
+    "with_any": 0.375
    }
   },
   "ors_setting_matrix_found": {
@@ -5650,20 +5642,20 @@
     "routes": 362,
     "with_steps": 0.0497,
     "with_a_crossing_without_a_surveyed_ramp": 0.3398,
-    "with_an_edge_over_the_incline_limits": 0.0746,
+    "with_an_edge_over_the_incline_limits": 0.047,
     "with_over_10m_of_street_centreline": 0.3315,
-    "with_any_of_these": 0.5331,
-    "unramped_crossings_per_km": 0.431,
+    "with_any_of_these": 0.5221,
+    "unramped_crossings_per_km": 0.427,
     "median_share_off_this_graph": 0.042
    },
    "valhalla_wheelchair": {
     "routes": 362,
     "with_steps": 0.0,
     "with_a_crossing_without_a_surveyed_ramp": 0.3591,
-    "with_an_edge_over_the_incline_limits": 0.0829,
+    "with_an_edge_over_the_incline_limits": 0.0552,
     "with_over_10m_of_street_centreline": 0.3536,
-    "with_any_of_these": 0.5304,
-    "unramped_crossings_per_km": 0.483,
+    "with_any_of_these": 0.5166,
+    "unramped_crossings_per_km": 0.479,
     "median_share_off_this_graph": 0.038
    }
   },
