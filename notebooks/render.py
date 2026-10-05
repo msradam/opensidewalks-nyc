@@ -6,7 +6,7 @@ The notebook reads the latest release by URL. To render it against a local
 FlatGeobuf, set OSW_NYC_FGB to its path (absolute, or relative to the
 repository root); the kernel inherits the variable:
 
-    OSW_NYC_FGB=release-assets-v0.3.5/nyc-osw.fgb python notebooks/render.py
+    OSW_NYC_FGB=release-assets-v0.3.6/nyc-osw.fgb python notebooks/render.py
 """
 import re
 import subprocess
