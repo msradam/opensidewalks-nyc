@@ -54,7 +54,7 @@ The schema adds `foot` so applications can warn before routing someone along a r
 
 ### Zones (Polygons)
 
-A Pedestrian Zone is the schema's entity for "an area where pedestrians can travel freely in all directions". This dataset writes one for each OSM closed way tagged `area=yes` with `highway=pedestrian`, `footway` or `path`: a plaza, a square, a paved forecourt. v0.3.5 has 2,201 (1,936 from pedestrian areas, 262 from footway areas and 3 from path areas) zones. Up to v0.3.4 the outlines of these areas were Pedestrian Road and Footway Edges.
+A Pedestrian Zone is the schema's entity for "an area where pedestrians can travel freely in all directions". This dataset writes one for each OSM closed way tagged `area=yes` with `highway=pedestrian`, `footway` or `path`: a plaza, a square, a paved forecourt. v0.3.5 has 2,201 zones (1,936 from pedestrian areas, 262 from footway areas and 3 from path areas). Up to v0.3.4 the outlines of these areas were Pedestrian Road and Footway Edges.
 
 | Property | Notes |
 |---|---|
@@ -90,7 +90,7 @@ All nodes carry `_id`. A node with nothing else is a Bare Node. OSM node tags ar
 
 The slopes are signed, so compare magnitudes. They come from DOT's survey, which a contractor (Cyclomedia) collected for DOT from vehicle-mounted street-level imagery and LiDAR. The records were captured from March 2017 to January 2020, 216,220 of the 217,679 (99.3%) in 2018, and are not updated when a ramp is rebuilt. DOT says the measurements do not establish ADA compliance. A counter slope with a magnitude over 100% is not a gutter slope and is left off as unmeasured (six survey values, from -300% to 473%).
 
-A ramp is attached to the graph when its node is an edge endpoint. The schema maps curbs at edge endpoints and expects a Footway between a Sidewalk and a Crossing, with the curb where that Footway meets the Crossing. This dataset follows OSM's geometry, which joins many Crossings directly to Sidewalks (in Manhattan, 52% of the nodes on a Crossing also touch a Sidewalk, measured on v0.3.4), so many ramps sit on that junction or on a Sidewalk vertex. A node holds one ramp's fields, so where several surveyed ramps land on one node the others are kept as separate nodes at their surveyed position, on no edge. 36,180 Curb Ramp nodes are on no edge and no zone ring, either for that reason or because no pedestrian vertex lies within 5 m.
+A ramp is attached to the graph when its node is an edge endpoint or a vertex of a zone ring. The schema maps curbs at edge endpoints and expects a Footway between a Sidewalk and a Crossing, with the curb where that Footway meets the Crossing. This dataset follows OSM's geometry, which joins many Crossings directly to Sidewalks (in Manhattan, 52% of the nodes on a Crossing also touch a Sidewalk, measured on v0.3.4), so many ramps sit on that junction or on a Sidewalk vertex. A node holds one ramp's fields, so where several surveyed ramps land on one node the others are kept as separate nodes at their surveyed position, on no edge. 36,180 Curb Ramp nodes are on no edge and no zone ring, either for that reason or because no pedestrian vertex lies within 5 m.
 
 Nodes carry `ext:elevation_m` (metres NAVD88, rounded to 0.1 m): the LiDAR terrain model interpolated between pixel centres of a 2 m tile, or on a bridge or elevated way the height of the deck read from LiDAR returns, in which case `ext:elevation_source` says which survey (`lidar_2017`, `lidar_2014`) or `interpolated` for a covered span. A node on a structure whose deck could not be read has no elevation.
 

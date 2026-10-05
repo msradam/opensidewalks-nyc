@@ -98,14 +98,14 @@ The survey records running and cross slopes in percent: 212,194 ramps carry a ru
 |---|---|
 | Nodes with `ext:elevation_m` | 1,186,860 of 1,186,910 |
 | Nodes at exactly 0.0 m | 218 (0.02%) |
-| Highest node by borough | Staten Island 122.4 m, Brooklyn 112.2 m (a boardwalk on a hill), Bronx 84.9 m, Manhattan 80.5 m, Queens 79.4 m |
+| Highest node by borough | Staten Island 122.4 m, Bronx 84.9 m, Manhattan 80.5 m, Queens 79.4 m, Brooklyn 62.6 m (nodes inside each borough's polygon) |
 | Nodes with a deck height (`ext:elevation_source`) | 14,402: 13,942 from the 2017 survey, 45 from the 2014 survey, 415 interpolated |
 | Structure nodes with no height | 48 |
 | Edges with `incline` | 2,793,720 of 2,797,538 (99.9%). Zones carry no incline |
 | Bridge edges with incline | 98.6%; elevated 99.1%; tunnel 0% |
 | Sidewalk edges steeper than 5% | 4.3% |
 | Sidewalk edges outside the wheelchair limits (up 8.3%, down 10%) | 0.8% |
-| Footway and Pedestrian Road edges outside the limits, by length | 1.3% under 2 m, 1.2% at 2 to 5 m, 2.3% at 5 to 10 m, 3.2% at 10 to 20 m, 1.9% at 20 to 50 m, 0.5% over 50 m |
+| Sidewalk, Crossing, Footway and Pedestrian Road edges outside the limits, by length | 1.3% under 2 m, 1.2% at 2 to 5 m, 2.3% at 5 to 10 m, 3.2% at 10 to 20 m, 1.9% at 20 to 50 m, 0.5% over 50 m |
 
 Read incline as an estimate from an airborne survey, not a measurement of the path.
 
