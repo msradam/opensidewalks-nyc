@@ -113,7 +113,7 @@
    ],
    [
     "The pedestrian graph",
-    "OpenSidewalks NYC v0.3.3-nyc.1 by Adam Munawar Rahman, released 3 October 2026. This page's map, routes and counts all come from that release. The latest release, v0.3.5-nyc.1, writes plazas as Pedestrian Zones. Every other feature has the same geometry, and incline differs on 16 edges.",
+    "OpenSidewalks NYC v0.3.3-nyc.1 by Adam Munawar Rahman, released 3 October 2026. This page's map, routes and counts all come from that release. The latest release, v0.3.6-nyc.1, writes plazas as Pedestrian Zones and corrects node heights where the terrain model has no data and in tunnels. An edge whose two end heights cannot be a slope has no incline and is marked, and the wheelchair profile refuses it. Every GraphML edge has a length.",
     "https://github.com/msradam/opensidewalks-nyc/releases/tag/v0.3.3-nyc.1",
     "Data: Open Database License 1.0. Code: Apache License 2.0"
    ],
