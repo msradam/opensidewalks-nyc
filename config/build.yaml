@@ -47,7 +47,7 @@ osm_street_types:
 # Stage 1: DEM resolution for incline computation in metres.
 # Source: NYC 2017 LiDAR terrain model, 1 m grid. City-wide the boroughs are
 # fetched as a grid of tiles at this resolution (about 60 requests at 2 m).
-# A study area is one tile, capped at 3000 px a side.
+# A study area is one tile, capped at 2048 px a side.
 dem_resolution_meters: 2
 
 # Stage 4: topology connectivity analysis

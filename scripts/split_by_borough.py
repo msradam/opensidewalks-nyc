@@ -2,9 +2,9 @@
 
 Two-pass streaming, bounded memory:
 
-    Pass 1: scan all LineStrings and Polygons (zones), bucket their _id by
-            `ext:borough`, and collect the set of node _ids referenced via
-            _u_id/_v_id and _w_id.
+    Pass 1: scan all LineStrings and Polygons (zones) and collect, by
+            `ext:borough`, the set of node _ids referenced via _u_id/_v_id
+            and _w_id.
     Pass 2: stream all features again, write each LineString and Polygon
             into its borough file and each Point into every borough file whose
             edge-endpoint set contains its _id. A Point that no edge
@@ -96,7 +96,7 @@ def main(in_path: Path, out_dir: Path) -> None:
     print("\npass 2: writing per-borough files...", flush=True)
     handles = {b: (out_dir / f"nyc-osw-{b}.geojson").open("w", encoding="utf-8")
                for b in BOROUGHS}
-    counts = {b: {"edges": 0, "nodes": 0} for b in BOROUGHS}
+    counts = {b: {"edges": 0, "zones": 0, "nodes": 0} for b in BOROUGHS}
     first = {b: True for b in BOROUGHS}
 
     # write FeatureCollection prelude
@@ -120,7 +120,7 @@ def main(in_path: Path, out_dir: Path) -> None:
                         h.write(",")
                     h.write(json.dumps(feat, default=_default, separators=(",", ":")))
                     first[boro] = False
-                    counts[boro]["edges"] += 1
+                    counts[boro]["edges" if gtype == "LineString" else "zones"] += 1
             elif gtype == "Point":
                 fid = props.get("_id")
                 if not fid:
@@ -145,7 +145,7 @@ def main(in_path: Path, out_dir: Path) -> None:
     for b in BOROUGHS:
         path = out_dir / f"nyc-osw-{b}.geojson"
         size_mb = path.stat().st_size / 1024 / 1024
-        print(f"  {path.name}: {counts[b]['edges']:,} edges, "
+        print(f"  {path.name}: {counts[b]['edges']:,} edges, {counts[b]['zones']:,} zones, "
               f"{counts[b]['nodes']:,} nodes, {size_mb:.1f} MB")
 
 

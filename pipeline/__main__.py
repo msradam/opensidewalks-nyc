@@ -2,7 +2,8 @@
 
 Commands:
   build            Run all six stages (or from a given stage onward).
-  validate         Run only the OSW validator on existing staged output.
+  validate         Run only Stage 5, the structural pre-check, on existing staged
+                   output. It is not python-osw-validation, the conformance gate.
   clean            Wipe data/ and output/ for a fresh build.
 
 Examples:
@@ -107,7 +108,10 @@ def build(stage: int):
 
 @main.command()
 def validate():
-    """Run the OSW validator on existing staged output only."""
+    """Run the Stage 5 pre-check on staged output.
+
+    This is not python-osw-validation, the conformance gate.
+    """
     sources, build_cfg = _load_config()
     click.echo("\nRunning OSW validator on existing staged output...")
     validate_module = __import__("pipeline.stages.validate", fromlist=["run"])
