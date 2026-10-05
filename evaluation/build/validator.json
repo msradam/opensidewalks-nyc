@@ -4,5 +4,5 @@
  "errors": [],
  "input": "output/nyc-osw-osw-split.zip",
  "input_sha256": "b3e29e23c9507bd7466fc3b520f9c5efb89105761c9c65c768e2564edbe4194d",
- "_note_2026-10-04": "Added after external review: input_sha256 is the SHA-256 of output/nyc-osw-osw-split.zip, which matches the nyc-osw-osw-split.zip line of SHA256SUMS in the v0.3.3-nyc.1 release. The validator ran in its own environment (uv run --no-project --isolated --with python-osw-validation), which pins geopandas 0.14.4. The run date was not recorded; the file was first committed on 2026-10-03."
+ "_note_2026-10-04": "Added 2026-10-04: input_sha256 is the SHA-256 of output/nyc-osw-osw-split.zip, which matches the nyc-osw-osw-split.zip line of SHA256SUMS in the v0.3.3-nyc.1 release. The validator ran in its own environment (uv run --no-project --isolated --with python-osw-validation), which pins geopandas 0.14.4. The run date was not recorded; the file was first committed on 2026-10-03."
 }
