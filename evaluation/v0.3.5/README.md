@@ -27,7 +27,7 @@ The pedestrian graph has the same 4,975 components and the same largest componen
 
 Reachability needs care. `reach.py` draws pairs from each borough's pool of Nodes, and the zones changed which Nodes are in the Brooklyn and Queens pools by a few Nodes, so its Brooklyn and Queens pairs in `reach.json` are different trips from the ones measured on v0.3.3 and v0.3.4. On the same pairs, no pair lost its route under any profile. The wheelchair profile gained 8 pairs in Manhattan (1,060 to 1,068 of 2,000), 5 in the Bronx (874 to 879) and none in Brooklyn (1,696), Queens (1,259) or Staten Island (861). The gains are routes that cross a plaza. A zone edge under 5 m carries no incline unless its ends differ by more than 0.5 m, so part of the gain may come from short plaza edges whose small height differences are no longer read as a grade; this was not separated.
 
-The GraphML files, the routing JSON and these reachability results were made with the zone expansion as committed after the build (`build.json` says what differs). With the rule as it stood at the build commit, which gave no incline to any zone edge under 5 m, the Manhattan Bridge landmark pair found a wheelchair route across a change of level. With the committed rule it finds none, as in v0.3.3.
+The GraphML files, the routing JSON and these reachability results were made with the zone expansion as committed after the build, in commit `e997165` (`build.json` says what differs). With the rule as it stood at the build commit, which gave no incline to any zone edge under 5 m, the Manhattan Bridge landmark pair found a wheelchair route across a change of level. With the committed rule it finds none, as in v0.3.3.
 
 ## Licence
 

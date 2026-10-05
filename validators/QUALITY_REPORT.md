@@ -33,7 +33,7 @@
 |---|---|
 | Sidewalk edges | 933,110 |
 | Crossing edges | 437,510 |
-| Footway edges | 449,626 (45,600 from OSM paths and 26,756 from cycleways and tracks open to walkers, each marked in `ext:osm_highway`) |
+| Footway edges | 449,626 (45,600 from OSM paths and 25,520 from cycleways and tracks open to walkers, each marked in `ext:osm_highway`) |
 | Pedestrian Road edges | 11,402 (linear pedestrian streets) |
 | Steps edges | 15,470 |
 | Motor vehicle road edges | 950,420 (residential 418,888; service 289,378; secondary 89,644; tertiary 71,658; primary 58,632; unclassified 21,042; living_street 1,178) |
