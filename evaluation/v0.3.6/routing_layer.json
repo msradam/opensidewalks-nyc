@@ -1,0 +1,14 @@
+{
+ "made_from": "the layer scripts/osw_to_unweaver.py writes from the v0.3.6 canonical GeoJSON (evaluation/v0.3.6/code/reach_same_pairs.py builds it)",
+ "file_edges": {
+  "with_incline": 2792346,
+  "marked_incline_unknown": 2068,
+  "no_incline_and_no_mark": 3124
+ },
+ "zone_edges": {
+  "with_incline": 32510,
+  "marked_incline_unknown": 410,
+  "no_incline_and_no_mark": 63730
+ },
+ "note": "A file edge with no incline and no mark is a tunnel edge (2,762) or has an end with no height (362). A zone edge with neither is under 5 m with ends within 0.5 m of each other, or has an end with no height."
+}

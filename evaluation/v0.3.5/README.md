@@ -1,6 +1,6 @@
 # Result files for v0.3.5-nyc.1
 
-Each claim the v0.3.5 release notes and the README make about v0.3.5 itself has a file here. The build ran once on 2026-10-04 from commit `5d04a19`, after `python -m pipeline clean`.
+v0.3.5-nyc.1 was an internal build. It was not released, and v0.3.6 is the release that carries its changes (see [`../v0.3.6/`](../v0.3.6/)). Each claim the documents made about v0.3.5 has a file here. The build ran once on 2026-10-04 from commit `5d04a19`, after `python -m pipeline clean`.
 
 | File | What it is | Made by |
 |---|---|---|
