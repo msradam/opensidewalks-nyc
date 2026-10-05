@@ -80,9 +80,14 @@ def crossing_ends(feats, curb_ids, node_xy, reach_m):
     """
     crossing_edges, walk_nodes = [], set()
     for f in feats:
-        if (f.get("geometry") or {}).get("type") != "LineString":
-            continue
+        gt = (f.get("geometry") or {}).get("type")
         p = f.get("properties") or {}
+        if gt == "Polygon":
+            # A Pedestrian Zone is walked, so its ring nodes end a crossing
+            # as a sidewalk's do, whether or not the caller expanded it.
+            walk_nodes.update(p.get("_w_id") or [])
+        if gt != "LineString":
+            continue
         u, v = p.get("_u_id"), p.get("_v_id")
         if p.get("highway") == "footway" and p.get("footway") == "crossing":
             crossing_edges.append((p.get("_id"), u, v))

@@ -43,6 +43,17 @@ def test_a_crossing_with_no_end_on_the_network_is_not_ramped():
     assert crossings_with_ramps(feats, {"r"}, xy, 5.0) == set()
 
 
+def test_a_crossing_that_ends_on_a_plaza_needs_a_ramp_there_too():
+    # Sidewalk s - a, crossing a-b, and b is a ring node of a Pedestrian Zone
+    # (a Polygon with _w_id, no edges of its own). The plaza end is an end.
+    xy = {"s": (0, 0), "a": (0, 10 * M), "b": (0, 20 * M), "p": (5 * ME, 25 * M), "q": (0, 30 * M)}
+    zone = {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": []},
+            "properties": {"_id": "z", "_w_id": ["b", "p", "q"], "highway": "pedestrian"}}
+    feats = [_edge("e", "s", "a"), _edge("c", "a", "b", footway="crossing"), zone]
+    assert crossings_with_ramps(feats, {"a"}, xy, 5.0) == set()
+    assert crossings_with_ramps(feats, {"a", "b"}, xy, 5.0) == {"c"}
+
+
 if __name__ == "__main__":
     for name, fn in list(globals().items()):
         if name.startswith("test_"):
