@@ -1,7 +1,9 @@
 """Checks the official validator does not do, on a finished build, city-wide
 and by borough: zero elevations, cut boroughs, tactile_paving against the
 survey, detached and missing ramps, widths, one-way edges, long coordinates,
-and the Pedestrian Zones (ring vertices on their nodes, nodes only a zone holds).
+the Pedestrian Zones (ring vertices on their nodes, nodes only a zone holds),
+and heights: terrain "no data" taken as 0 m, nodes inside tunnels, and
+edges whose two heights are not a slope.
 
 usage: python validators/post_build_checks.py OSW_GEOJSON OUT_JSON [DATA_DIR]
 
@@ -63,13 +65,14 @@ for f in fc["features"]:
         erows.append((p["_id"], p["_u_id"], p["_v_id"], kind, hw, p.get("ext:borough"), p.get("ext:source"),
                       p.get("incline"), p.get("width"), L, p.get("name"), c[0][0], c[0][1], c[-1][0], c[-1][1], len(c),
                       p.get("surface"), p.get("crossing:markings"), p.get("ext:osm_id") is not None,
-                      p.get("ext:source_timestamp") is not None, p.get("ext:structure"), p.get("foot")))
+                      p.get("ext:source_timestamp") is not None, p.get("ext:structure"), p.get("foot"),
+                      p.get("ext:incline_unknown")))
 del fc
 N = pd.DataFrame(nrows, columns=["id", "lon", "lat", "elev", "barrier", "kerb", "tactile", "ramp", "borough", "source",
                                  "run", "cross", "counter", "has_ts", "elev_source", "dws"])
 E = pd.DataFrame(erows, columns=["id", "u", "v", "kind", "highway", "borough", "source", "incline", "width", "length",
                                  "name", "x0", "y0", "x1", "y1", "npts", "surface", "markings", "has_osm_id", "has_ts",
-                                 "structure", "foot"])
+                                 "structure", "foot", "unknown"])
 Z = pd.DataFrame(zrows, columns=["id", "w", "highway", "borough", "osm_highway", "source", "nvert", "ring"])
 del nrows, erows, zrows
 
@@ -153,6 +156,71 @@ res["incline_outside_limits_by_edge_length"] = {
 res["incline_by_borough"] = {b: {"edges": len(d), "share_with_incline": round(float(d.incline.notna().mean()), 4),
                                  "share_zero": round(float((d.incline == 0).mean()), 4)}
                              for b, d in E[E.kind != "street"].groupby(E.borough.fillna("none"))}
+
+# --- heights that are not heights, and grades that are not slopes -----------
+# A plain edge does not climb at a staircase's pitch (1 in 2): the pipeline
+# writes no incline there and marks the edge. A node all of whose edges are
+# tunnel edges is underground and has no height. The terrain service writes
+# "no data" as exactly 0.0, which is not a height.
+zmap0 = N.set_index("id").elev
+tun = E.structure == "tunnel"
+only_tunnel = (set(E.u[tun]) | set(E.v[tun])) - (set(E.u[~tun]) | set(E.v[~tun]))
+no_inc = E[E.incline.isna()]
+end_missing = zmap0.reindex(no_inc.u.values).isna().values | zmap0.reindex(no_inc.v.values).isna().values
+reason = np.where(no_inc.unknown.notna(), "marked ext:incline_unknown",
+                  np.where(no_inc.structure == "tunnel", "tunnel edge",
+                           np.where(end_missing, "an end has no height", "other")))
+res["heights"] = {
+    "plain_edges_at_stair_pitch_or_steeper": int(((E.kind != "steps") & (E.incline.abs() >= 0.5)).sum()),
+    "edges_with_incline_beyond_1": int((E.incline.abs() > 1).sum()),
+    "edges_marked_incline_unknown": int(E.unknown.notna().sum()),
+    "marked_by_kind": E[E.unknown.notna()].kind.value_counts().to_dict(),
+    "marked_by_structure": E[E.unknown.notna()].structure.fillna("none").value_counts().to_dict(),
+    "marked_edges_that_carry_an_incline": int((E.unknown.notna() & E.incline.notna()).sum()),
+    "edges_without_incline": len(no_inc),
+    "edges_without_incline_by_reason": pd.Series(reason).value_counts().to_dict(),
+    "nodes_only_on_tunnel_edges": len(only_tunnel),
+    "of_those_with_a_height": int(N[N.id.isin(only_tunnel)].elev.notna().sum()),
+    "nodes_without_a_height": int(N.elev.isna().sum())}
+# Each terrain node against its tile: is any of the four pixels it is
+# interpolated from "no data", and if so, does its height match the blend
+# with those zeros (the defect) or the pixels that hold data?
+tiles = sorted((data / "raw/dem_nyc").glob("dem*.tif"))
+if tiles:
+    import rasterio
+    T0 = N[N.elev_source.isna()]
+    lon, lat, elev = T0.lon.values, T0.lat.values, T0.elev.values
+    seen = np.zeros(len(T0), bool)
+    stencil_has_nodata = np.zeros(len(T0), bool); blend = np.full(len(T0), np.nan); clean = np.full(len(T0), np.nan)
+    for t in tiles:
+        with rasterio.open(t) as src:
+            b = src.bounds
+            m = ~seen & (b.left <= lon) & (lon < b.right) & (b.bottom < lat) & (lat <= b.top)
+            if not m.any():
+                continue
+            band = src.read(1).astype("float64")
+            c, r = ~src.transform * (lon[m], lat[m])
+            c, r = c - 0.5, r - 0.5
+            c0 = np.clip(np.floor(c).astype(int), 0, band.shape[1] - 1); r0 = np.clip(np.floor(r).astype(int), 0, band.shape[0] - 1)
+            c1 = np.clip(c0 + 1, 0, band.shape[1] - 1); r1 = np.clip(r0 + 1, 0, band.shape[0] - 1)
+            fc_, fr = np.clip(c - c0, 0, 1), np.clip(r - r0, 0, 1)
+            px = np.stack([band[r0, c0], band[r0, c1], band[r1, c0], band[r1, c1]])
+            wt = np.stack([(1 - fr) * (1 - fc_), (1 - fr) * fc_, fr * (1 - fc_), fr * fc_])
+            ok = px != 0.0
+            stencil_has_nodata[m] = ~ok.all(axis=0)
+            blend[m] = (px * wt).sum(axis=0)
+            with np.errstate(invalid="ignore", divide="ignore"):
+                clean[m] = (px * wt * ok).sum(axis=0) / (wt * ok).sum(axis=0)
+            seen |= m
+    near = stencil_has_nodata & ~np.isnan(elev)
+    is_blend = near & (np.abs(elev - np.round(blend, 1)) < 0.05) & ~(np.abs(elev - np.round(clean, 1)) < 0.05)
+    res["heights"]["terrain_no_data"] = {
+        "terrain_nodes_checked": int(seen.sum()),
+        "nodes_with_a_no_data_pixel_among_their_four": int(stencil_has_nodata.sum()),
+        "of_those_with_no_height": int((stencil_has_nodata & np.isnan(elev)).sum()),
+        "of_those_with_a_height": int(near.sum()),
+        "heights_that_match_the_blend_with_no_data_zeros": int(is_blend.sum()),
+        "nodes_in_a_tile_with_no_no_data_pixel_and_no_height": int((seen & ~stencil_has_nodata & np.isnan(elev)).sum())}
 
 # --- structures: deck heights and their inclines ----------------------------
 # Bridges and elevated ways take their height from LiDAR returns, not the

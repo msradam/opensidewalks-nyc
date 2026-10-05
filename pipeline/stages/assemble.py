@@ -26,6 +26,7 @@ import pandas as pd
 from shapely.geometry import LineString, Point, mapping
 
 from pipeline.stages.schema_map import borough_code
+from pipeline.utils.deck import grade
 from pipeline.utils.ids import node_id
 from pipeline.utils.provenance import get_git_sha, load_manifest
 
@@ -620,6 +621,42 @@ def _smoothed_for_incline(all_edges: gpd.GeoDataFrame,
     return {ids[i]: float(z[i]) for i in np.flatnonzero(known)}
 
 
+def _sample_terrain(band: np.ndarray, rows: np.ndarray, cols: np.ndarray) -> np.ndarray:
+    """Terrain heights at fractional pixel positions, NaN where there is no data.
+
+    Heights are interpolated between pixel centres: the nearest pixel gives
+    two neighbouring nodes either the same elevation or a whole pixel's step.
+    The terrain service writes "no data" (open water, mostly) as exactly 0.0
+    and the tiles carry no nodata tag, so a pixel of exactly 0.0 is no height.
+    A node whose four pixels all hold data is interpolated as usual. On a
+    shoreline, where some do not, the height is taken from the pixels that
+    do if they carry at least half the weight; otherwise the node has none.
+    """
+    from scipy.ndimage import map_coordinates
+
+    at = [np.asarray(rows) - 0.5, np.asarray(cols) - 0.5]
+    valid = (band != 0.0) & ~np.isnan(band)
+    weight = map_coordinates(valid.astype("float64"), at, order=1, mode="nearest")
+    z = map_coordinates(np.where(valid, band, 0.0), at, order=1, mode="nearest")
+    partial = weight < 1 - 1e-9
+    z[partial] = np.where(weight[partial] >= 0.5, z[partial] / np.maximum(weight[partial], 0.5), np.nan)
+    return z
+
+
+def _tunnel_only_nodes(all_edges: gpd.GeoDataFrame) -> set[str]:
+    """Nodes every one of whose edges is a tunnel edge.
+
+    Such a node is underground, and the terrain model there is the ground
+    above it. A node where a tunnel edge meets any other edge is the mouth of
+    the tunnel, in the open, and keeps its terrain height.
+    """
+    if "ext:structure" not in all_edges.columns:
+        return set()
+    tunnel = (all_edges["ext:structure"] == "tunnel").values
+    ends = all_edges[["_u_id", "_v_id"]]
+    return set(ends[tunnel].values.ravel()) - set(ends[~tunnel].values.ravel())
+
+
 def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
                             all_nodes: gpd.GeoDataFrame,
                             dem_tiles: list[Path],
@@ -630,13 +667,14 @@ def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
     incline = (v_elevation - u_elevation) / edge_length_m
     Positive values indicate uphill travel from _u_id to _v_id.
     Nodes on bridges and elevated ways take their height from LiDAR returns
-    (_structure_elevations); tunnel edges get no incline.
+    (_structure_elevations); tunnel edges get no incline, and nodes inside a
+    tunnel no height. An edge whose two heights cannot be a slope
+    (pipeline.utils.deck.grade) gets no incline and `ext:incline_unknown`.
     """
     try:
         import math
         import numpy as np
         import rasterio
-        from scipy.ndimage import map_coordinates
 
         node_coords: dict[str, tuple[float, float]] = {}
         for _, row in all_nodes.iterrows():
@@ -654,6 +692,7 @@ def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
         ids = list(node_coords)
         lonlat = np.array([node_coords[i] for i in ids])
         sampled = np.full(len(ids), np.nan)
+        water = np.zeros(len(ids), dtype=bool)
         for tile in dem_tiles:
             todo = np.flatnonzero(np.isnan(sampled))
             if len(todo) == 0:
@@ -679,15 +718,15 @@ def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
                 inside = (b.left <= x) & (x < b.right) & (b.bottom < y) & (y <= b.top)
                 if not inside.any():
                     continue
-                # Interpolate between pixel centres: the nearest pixel gives
-                # two neighbouring nodes either the same elevation or a whole
-                # pixel's step.
                 band = src.read(1).astype("float64")
                 if src.nodata is not None and not np.isnan(src.nodata):
                     band[band == src.nodata] = np.nan
                 cols, rows = ~src.transform * (x[inside], y[inside])
-                sampled[todo[inside]] = map_coordinates(
-                    band, [rows - 0.5, cols - 0.5], order=1, mode="nearest")
+                # A node on the seam of two tiles that has no data in this
+                # one is left for the next.
+                z = _sample_terrain(band, rows, cols)
+                sampled[todo[inside]] = z
+                water[todo[inside]] = np.isnan(z)
         node_elevs: dict[str, float] = {ids[i]: float(sampled[i])
                                         for i in np.flatnonzero(~np.isnan(sampled))}
 
@@ -703,13 +742,23 @@ def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
             no_height = set(all_edges.loc[on, "_u_id"]) | set(all_edges.loc[on, "_v_id"])
         if lidar_surveys and lidar_cache is not None and no_height:
             try:
+                # Where the terrain model has no data there is open water
+                # under the node, and the deck rules need that floor: with
+                # none, the water's own LiDAR returns pass for a deck. Sea
+                # level stands in for it here and is not written as a height.
+                floor = {**node_elevs, **{ids[i]: 0.0 for i in np.flatnonzero(water & np.isnan(sampled))}}
                 deck_elevs, deck_source, _ = _structure_elevations(
-                    all_edges, node_coords, node_elevs, lidar_surveys, lidar_cache)
+                    all_edges, node_coords, floor, lidar_surveys, lidar_cache)
                 node_elevs.update(deck_elevs)
                 no_height -= set(deck_source)
             except Exception as exc:
                 click.echo(f"  Warning: structure elevations failed ({exc}). "
                            "Bridges get no incline.")
+        # Underground, neither the terrain model nor a deck above is the
+        # walking surface.
+        for nid in _tunnel_only_nodes(all_edges):
+            node_elevs.pop(nid, None)
+            deck_source.pop(nid, None)
 
         # Mutates the caller's all_nodes: sampled elevations ship on the nodes
         # as ext:elevation_m alongside the per-edge incline.
@@ -734,7 +783,7 @@ def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
                 total += math.sqrt(dx * dx + dy * dy)
             return total
 
-        inclines = []
+        inclines, unknown = [], []
         for _, row in all_edges.iterrows():
             uid = row.get("_u_id")
             vid = row.get("_v_id")
@@ -743,26 +792,25 @@ def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
             # same goes for a bridge or elevated edge with an end that has
             # no deck height.
             structure = row.get("ext:structure")
+            incline, cannot = None, False
             if structure == "tunnel" or (structure in ("bridge", "elevated")
                                          and (uid in no_height or vid in no_height)):
-                inclines.append(None)
+                pass
             elif uid in slope_elevs and vid in slope_elevs:
-                dz = slope_elevs[vid] - slope_elevs[uid]
-                length = _length_m(row.geometry)
-                raw = round(dz / length, 4) if length > 0 else None
-                # Clamp to OSW schema range [-1.0, 1.0]; values outside are DEM
-                # noise on very short edges (steep apparent grade from sub-metre
-                # elevation uncertainty), not real walkable grade.
-                if raw is not None and abs(raw) > 1.0:
-                    raw = None
-                inclines.append(raw)
-            else:
-                inclines.append(None)
+                # Heights that cannot be a slope along the edge (the ground
+                # at one end and a deck at the other, or noise on a very
+                # short edge) are not written as one; the edge says so.
+                incline, cannot = grade(slope_elevs[vid] - slope_elevs[uid],
+                                        _length_m(row.geometry), row.get("highway") == "steps")
+            inclines.append(incline)
+            unknown.append("yes" if cannot else None)
 
         all_edges = all_edges.copy()
         all_edges["incline"] = inclines
+        all_edges["ext:incline_unknown"] = unknown
         n_with = sum(1 for v in inclines if v is not None)
-        click.echo(f"    Incline set on {n_with:,}/{len(all_edges):,} edges")
+        click.echo(f"    Incline set on {n_with:,}/{len(all_edges):,} edges; "
+                   f"{sum(1 for v in unknown if v):,} with heights that are not a slope")
         return all_edges
 
     except Exception as exc:

@@ -4,7 +4,8 @@ The graph is built from the LineString edges:
   - each edge contributes one networkx edge from _u_id to _v_id (its OSW ID
     is the `_id` attribute; NetworkX numbers parallel edges itself)
   - each Point feature contributes a node keyed by _id, with x/y coords
-  - edge attributes: all OSW properties (flattened to strings/numbers)
+  - edge attributes: all OSW properties (flattened to strings/numbers), and
+    `length_m`, the length of the edge's line in metres
   - node attributes: x, y (lon, lat), plus any OSW point properties
   - graph attributes: licence, attribution and the OSM snapshot
   - each Pedestrian Zone (a Polygon) contributes the edges a person can walk
@@ -25,6 +26,7 @@ Usage:
 
 from __future__ import annotations
 
+import itertools
 import sys
 from decimal import Decimal
 from pathlib import Path
@@ -33,7 +35,7 @@ import ijson
 import networkx as nx
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from pipeline.utils.zones import zone_edges
+from pipeline.utils.zones import _haversine_m, zone_edges
 
 
 PRIMITIVE = (str, int, float, bool)
@@ -98,6 +100,8 @@ def main(in_path: Path, out_path: Path, undirected: bool = False) -> None:
                 if undirected and G.has_edge(u, v):
                     continue
                 attrs = _flatten(props)
+                line = [(float(c[0]), float(c[1])) for c in geom.get("coordinates") or []]
+                attrs["length_m"] = round(sum(_haversine_m(a, b) for a, b in itertools.pairwise(line)), 3)
                 G.add_edge(u, v, **attrs)
                 n_edges += 1
 

@@ -10,6 +10,11 @@ Unweaver schema (per nbolten/unweaver example/layers/uw.geojson):
                            comment in main). Elsewhere: True if either
                            endpoint has a Curb Node.
     incline         float  signed grade (rise/run)
+    incline_unknown int    1 where the file says ext:incline_unknown: the
+                           heights of the two ends are not a slope the edge
+                           could have, so there is a change of level the data
+                           cannot grade. 0 elsewhere, including an edge with
+                           no incline because nothing measured it (a tunnel).
     length          float  edge length, metres (great-circle)
     surface         str    OSW canonical surface
     width           float  metres if known
@@ -258,6 +263,7 @@ def main():
                 "footway":     footway_val,
                 "curbramps":   1 if curbramps else 0,
                 "incline":     incline,
+                "incline_unknown": 1 if p.get("ext:incline_unknown") else 0,
                 "length":      length_m,
                 "surface":     surface,
                 "width":       width,

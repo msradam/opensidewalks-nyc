@@ -200,12 +200,12 @@ def test_sources_manifest_describes_the_survey_and_carries_no_public_domain_labe
     assert not [k for k, s in sources.items() if "public domain" in s["license"].lower()]
 
 
-def test_version_is_0_3_5():
+def test_version_is_0_3_6():
     with open(ROOT / "pyproject.toml", "rb") as f:
-        assert tomllib.load(f)["project"]["version"] == "0.3.5+nyc.1"
+        assert tomllib.load(f)["project"]["version"] == "0.3.6+nyc.1"
     # The installed metadata, which ext:pipeline_version is read from, follows
     # after uv pip install -e .
-    assert version("opensidewalks-nyc") == "0.3.5+nyc.1"
+    assert version("opensidewalks-nyc") == "0.3.6+nyc.1"
 
 
 if __name__ == "__main__":

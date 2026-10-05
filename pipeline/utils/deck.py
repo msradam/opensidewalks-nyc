@@ -31,6 +31,27 @@ LOW_DECK_M = 3.0
 # where the two agree this closely. Until then the LiDAR ground height is
 # kept, so the last edge of a ramp does not read the terrain model's error.
 HANDOVER_M = 0.3
+# A staircase climbs at about 1 in 2. Nothing that is not steps is built
+# steeper, so two heights that give a plain edge that pitch or more are on two
+# surfaces (the ground and a deck, a wall, unmapped steps), or are survey
+# noise on an edge a few centimetres long. Either way they are not a slope.
+STAIR_PITCH = 0.5
+
+
+def grade(rise: float, run: float, steps: bool = False) -> tuple[float | None, bool]:
+    """(incline, unknown) for an edge from the heights of its two ends.
+
+    incline is rise over run. It is None, and unknown is True, when the
+    heights cannot be a slope along the edge: STAIR_PITCH or more on an edge
+    that is not steps, or beyond the schema's limit of 1.0 on any edge. An
+    edge of no length has no incline and nothing unknown about it.
+    """
+    if run <= 0:
+        return None, False
+    raw = round(rise / run, 4)
+    if abs(raw) > 1.0 or (not steps and abs(raw) >= STAIR_PITCH):
+        return None, True
+    return raw, False
 
 
 def surface_levels(returns: np.ndarray, surface_classes=()) -> list[tuple[float, int, bool, bool]]:

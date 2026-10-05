@@ -16,6 +16,7 @@ from shapely.geometry import LineString, Polygon
 from shapely.ops import linemerge, unary_union
 from shapely.prepared import prep
 
+from pipeline.utils.deck import grade
 from pipeline.utils.ids import feature_id, node_id
 
 # Edges shorter than this get no incline unless the two heights differ by
@@ -84,7 +85,9 @@ def zone_edges(zone: dict, node_xy: dict, referenced: set, node_z: dict | None =
     its entrances, or follow its edge, and never cut across a courtyard the
     ring bends around. Each edge is one direction; the reverse is emitted
     too. Incline is rise over run from the Nodes' `ext:elevation_m`, left
-    off for edges under 5 m whose ends differ by 0.5 m or less.
+    off for edges under 5 m whose ends differ by 0.5 m or less. An edge whose
+    heights cannot be a slope (pipeline.utils.deck.grade) has no incline and
+    says `ext:incline_unknown`, as an Edge of the file does.
     """
     p = zone.get("properties") or {}
     w = p.get("_w_id") or []
@@ -105,12 +108,10 @@ def zone_edges(zone: dict, node_xy: dict, referenced: set, node_z: dict | None =
             continue
         length = _haversine_m(node_xy[a], node_xy[b])
         for u, v in ((a, b), (b, a)):
-            incline = None
-            if node_z and u in node_z and v in node_z and length > 0 and (
+            incline, unknown = None, False
+            if node_z and u in node_z and v in node_z and (
                     length >= _MIN_CHORD_INCLINE_M or abs(node_z[v] - node_z[u]) > _LEVEL_BREAK_M):
-                incline = round((node_z[v] - node_z[u]) / length, 4)
-                if abs(incline) > 1.0:
-                    incline = None
+                incline, unknown = grade(node_z[v] - node_z[u], length)
             out.append({
                 "_id": f"{p.get('_id')}:{u}:{v}",
                 "_u_id": u, "_v_id": v,
@@ -118,6 +119,7 @@ def zone_edges(zone: dict, node_xy: dict, referenced: set, node_z: dict | None =
                 "ext:zone": p.get("_id"),
                 "length_m": round(length, 3),
                 "incline": incline,
+                "ext:incline_unknown": "yes" if unknown else None,
                 **{k: p[k] for k in ("name", "surface", "foot", "ext:borough", "ext:osm_id", "ext:structure") if p.get(k) is not None},
                 "coordinates": [list(node_xy[u]), list(node_xy[v])],
             })
