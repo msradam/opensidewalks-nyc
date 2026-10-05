@@ -1,6 +1,6 @@
 # Evaluation evidence for OpenSidewalks NYC
 
-Most of the evidence here was produced on v0.3.3. v0.3.4 did not change geometry, incline or routing inputs. v0.3.5 writes plazas and other pedestrian areas as Pedestrian Zones in place of Edges along their outlines, so it has its own validator result, post-build checks, comparison with v0.3.4 and reachability figures: the files in [`v0.3.5/`](v0.3.5/), which its own README lists. The crossing rule check, the bridge diagnosis, the structure heights and the router comparison were not rerun on v0.3.5.
+Most of the evidence here was produced on v0.3.3. v0.3.4 did not change geometry, incline or routing inputs. v0.3.5 was an internal build that was not released. It writes plazas and other pedestrian areas as Pedestrian Zones in place of Edges along their outlines, so it has its own validator result, post-build checks, comparison with v0.3.4 and reachability figures: the files in [`v0.3.5/`](v0.3.5/), which are the internal build's files and which its own README lists. v0.3.6 is the release after v0.3.4. It carries the v0.3.5 changes and corrects node heights, seam grades and the GraphML lengths, and its result files are in [`v0.3.6/`](v0.3.6/) (section 7). The crossing rule check, the bridge diagnosis, the structure heights and the router comparison were not rerun on v0.3.5 or v0.3.6.
 
 This folder holds the evidence behind the claims made for the graph and for the comparison with other routers: protocols, raw ratings, result files and a few example images. Each section below says what was claimed, how it was tested, the result, where the files are and which tracked code produced it. The section after that lists what the evidence does not show.
 
@@ -38,7 +38,7 @@ Claim: how often the wheelchair profile finds a route between pairs of graph nod
 
 ### 5. Bridges
 
-Claim: each of the five bridges that v0.3.2 did not join has a known cause. Test: each bridge followed node by node in the raw extract and in the built graph, by a language-model instance. Result, as corrected on 2026-10-03: two were the test's own anchors. One (145th Street) follows from this graph not reading OSM's `sidewalk=*` tags on the street, where OSM records the sidewalks. One (Broadway) is OSM geometry, a missing crossing way and an unjoined corner, and the missing crossing is unconfirmed. One (the RFK Bronx span) is this pipeline's rule that drops cycleways with no `foot` tag, which is stricter than the United States default. Admitting every untagged cycleway would add 627 ways (`bridges/FINDINGS.md`, `bridges/findings.json`). On the v0.3.3 build 20 of 23 bridges are joined on pedestrian edges and 3 only along the street centreline (`bridges/bridges.json`); v0.3.5 joins the same 20 (`v0.3.5/bridges.json`). No OSM edit was made or proposed upstream.
+Claim: each of the five bridges that v0.3.2 did not join has a known cause. Test: each bridge followed node by node in the raw extract and in the built graph, by a language-model instance. Result, as corrected on 2026-10-03: two were the test's own anchors. One (145th Street) follows from this graph not reading OSM's `sidewalk=*` tags on the street, where OSM records the sidewalks. One (Broadway) is OSM geometry, a missing crossing way and an unjoined corner, and the missing crossing is unconfirmed. One (the RFK Bronx span) is this pipeline's rule that drops cycleways with no `foot` tag, which is stricter than the United States default. Admitting every untagged cycleway would add 627 ways (`bridges/FINDINGS.md`, `bridges/findings.json`). On the v0.3.3 build 20 of 23 bridges are joined on pedestrian edges and 3 only along the street centreline (`bridges/bridges.json`); the internal build v0.3.5 joins the same 20 (`v0.3.5/bridges.json`), and v0.3.6 joins the same 20 with the same walking distances (`v0.3.6/bridges.json`). No OSM edit was made or proposed upstream.
 
 ### 6. Comparison with OpenRouteService, Valhalla and Unweaver
 
@@ -69,9 +69,24 @@ Agreement on the 24 sheets both a primary and the third instance rated: place 0.
 
 Code: `compare/` (`pairs.py`, `run_ours.py`, `run_ors.py`, `run_valhalla.py`, `run_unweaver.py`, `graph.py`, `measures.py`, `analyse.py`, `osm_tags.py`, `ors_tag_probe.py`, `clip_osw.py`), `scripts/osw_to_osm.py`, `scripts/osw_to_unweaver.py`, `tests/test_osw_to_osm.py`, `tests/test_compare_measures.py`.
 
+### 7. Heights, seams and unknown grades in v0.3.6
+
+Claim: v0.3.6 differs from the internal build v0.3.5 only where five fixes touch it. No node takes the terrain service's "no data" value as a height of 0 m, no node inside a tunnel carries the height of the ground above it, no edge that is not steps reads 50% or steeper, an edge whose grade cannot be a slope is marked `ext:incline_unknown` and refused by the wheelchair profile, and every GraphML edge carries `length_m`. Test: the post-build checks on both versions, and every feature of v0.3.5 compared with v0.3.6 by `_id`, each change grouped by the fix that caused it. Result: nodes at exactly 0.0 m fell from 218 to 39, which are real ground that rounds to 0.0; 1,300 tunnel nodes lost their height; nodes without `ext:elevation_m` rose from 50 to 1,532; edges that are not steps at 50% or steeper fell from 1,076 to 0; 2,068 edges carry `ext:incline_unknown`; edges with an incline fell from 2,793,720 to 2,792,346. Incline differs on 1,422 edges and is identical on the other 2,796,116. No geometry, curb ramp field, width or other property differs on any of the 3,986,649 features. Reachability on the same pairs: the wheelchair profile routes 1,694 pairs in Brooklyn, 1,258 in Queens, 1,056 in Manhattan, 872 in the Bronx and 861 on Staten Island (84.7%, 62.9%, 52.8%, 43.6% and 43.1%), against 1,696, 1,259, 1,068, 879 and 861 in the v0.3.5 build. It lost 23 pairs (13 in Manhattan, 7 in the Bronx, 2 in Brooklyn, 1 in Queens) and gained 1 in Manhattan. The lost routes used an edge whose heights are not a slope, which the profile used to walk as level and now refuses. No other profile changed on any pair (`v0.3.6/reach_same_pairs_v0.3.6.json`). One landmark route changed: the wheelchair profile no longer finds a route between the two ends of the High Line, where it used to leave the deck over an edge with no incline (`v0.3.6/reach.json`). Code: `pipeline/stages/assemble.py`, `pipeline/utils/deck.py`, `scripts/osw_to_unweaver.py`, `unweaver-project/cost-wheelchair.py`, `scripts/to_graphml.py`, `tests/test_v036.py`.
+
+| File in `v0.3.6/` | What it is |
+|---|---|
+| `build.json`, `snap_report.json`, `validator.json`, `SHA256SUMS` | The build record, the endpoint snap, the `python-osw-validation` 0.5.0 result and the checksums of the release assets |
+| `checks.json` | The post-build checks on v0.3.6, now with a `heights` block |
+| `checks_v0.3.5.json` | The same checks run on v0.3.5, for the before numbers |
+| `compare_v035.json` | Every feature of v0.3.5 against v0.3.6, each change grouped by the fix that caused it (`code/compare_v035.py`) |
+| `reach_same_pairs_v0.3.6.json` | The pairs in `v0.3.5/pairs_v0.3.4.json` routed on v0.3.6 (`code/reach_same_pairs.py`) |
+| `reach.json`, `bridges.json` | Reachability with the landmark routes, and the 23 bridges end to end |
+| `graphml_lengths.json` | The count of edges with `length_m` in each GraphML file |
+| `README.md` | What the files show |
+
 ### Lessons
 
-`lessons/` holds 40 short notes, one per thing learned. Some quote numbers from the v0.3.2 dry run or make a claim later corrected, and each of those carries a dated note.
+`lessons/` holds 43 short notes, one per thing learned. Some quote numbers from the v0.3.2 dry run or make a claim later corrected, and each of those carries a dated note.
 
 ## Two sets of reachability numbers
 
@@ -93,7 +108,11 @@ Both are correct for their method. `reach.json` starts each trip at the drawn gr
 - Imagery shows where a ramp is and almost never whether it is there: it showed a ramp directly at 9 of 400 crossing ends. The rating tests which crossing a surveyed ramp serves; existence rests on the vehicle-based survey. At 8 of 11 kerb disagreement places a rater could not tell.
 - The imagery check of disagreements confirms the connectivity label only. Raters placed 2 of 12 structure sheets on a structure, incline cannot be judged from above, and the rule cause was not sampled.
 - The landmark route images were drawn over NY State imagery at about 30 cm and rated by a language-model instance. They show that a route lies on sidewalks, crossings and decks, not whether a ramp is there. Those images are not published.
-- The structure routes that fail mostly fail where this pipeline's height estimate jumps across one short edge at the foot of a ramp; on the Manhattan Bridge a 236 m deck edge also reads 11.1% down. The steepness comes from the pipeline's LiDAR heights, not from OSM, and OSM's geometry there is valid. The fix is in the incline method. The High Line entrances read as near-vertical because the pipeline drops OSM node tags: at 30th Street OSM maps the lift as `highway=elevator`, `wheelchair=yes` on node 2823833584 (`reachability/hand_check.md`).
+- About a quarter of attached curb ramps sit on a sidewalk vertex beside the crossing they serve, not on the crossing's end (29 of 100 sampled ramps; city-wide 126,152 of the 181,499 attached ramps are on a Crossing), so that crossing end has no Curb Ramp node. The routing layer's 5 m rule exists for this reason.
+- Some greenways are dropped because OpenStreetMap gives them no `foot` tag: 629 cycleway ways (37.6 km, among them the Jamaica Bay, Bronx River and Marine Park greenways) and 247 tracks (43.7 km) with no `foot` tag are left out.
+- From v0.3.6 a missing incline has two meanings. An edge marked `ext:incline_unknown` has heights that give a grade of 0.5 or more (over 1.0 on steps): something changes level there, and the wheelchair profile refuses it. An edge with no incline and no mark (a tunnel edge, a structure edge with no deck height, an edge at a node with no height) was not measured, and the profile passes it, because refusing those would cut every underpass on no evidence. Up to v0.3.5 an edge whose grade computed over 100% had no incline and no mark, and passed.
+- The node heights beside an edge marked `ext:incline_unknown` may themselves be wrong (terrain under a bridge OSM does not tag). That is not fixed.
+- The structure routes that fail mostly fail where this pipeline's height estimate jumps across one short edge at the foot of a ramp; on the Manhattan Bridge a 236 m deck edge also reads 11.1% down. The steepness comes from the pipeline's LiDAR heights, not from OSM, and OSM's geometry there is valid. The fix is in the incline method. From v0.3.6 an edge of this kind whose grade is 0.5 or more has no incline and is marked `ext:incline_unknown`; the profile still refuses it. The High Line entrances read as near-vertical because the pipeline drops OSM node tags: at 30th Street OSM maps the lift as `highway=elevator`, `wheelchair=yes` on node 2823833584 (`reachability/hand_check.md`).
 - The 2014 comparison covers nodes whose height came from 2017. The 45 nodes on spans over open water have no second survey and were read for plausibility only (the Brooklyn Bridge deck at 41 to 45 m).
 - Structures newer than May 2017 carry the height the survey saw then (LaGuardia, the new Kosciuszko span).
 - The comparison's search is a re-implementation. It was run against Unweaver itself in a container and agreed on all 1,354 requests. City-wide, Unweaver was sampled at 40 pairs per area, since a query takes seconds to minutes.
@@ -116,7 +135,7 @@ Both are correct for their method. `reach.json` starts each trip at the drawn gr
 
 ## Images
 
-All 248 sheets (the 200 crossing sheets and the 48 disagreement sheets) are in `evaluation-sheets.zip` on the release, listed in `SHA256SUMS` from v0.3.5. Anyone can rate the full set again with the two protocol files. The sheets are not ODbL: their imagery is NYC orthoimagery (NYC OTI, 2018 and 2024) under CC BY 4.0, with overlays from OpenStreetMap (ODbL) and NYC DOT ramp positions.
+All 248 sheets (the 200 crossing sheets and the 48 disagreement sheets) are in `evaluation-sheets.zip` on the release, listed in `SHA256SUMS` from v0.3.6. Anyone can rate the full set again with the two protocol files. The sheets are not ODbL: their imagery is NYC orthoimagery (NYC OTI, 2018 and 2024) under CC BY 4.0, with overlays from OpenStreetMap (ODbL) and NYC DOT ramp positions.
 
 `compare/disagreements/sheets/` has 4 of the 48 disagreement sheets as examples, one per kind of cause:
 

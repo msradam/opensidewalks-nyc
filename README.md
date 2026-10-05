@@ -84,7 +84,7 @@ A Pedestrian Zone is a plaza or another surface people walk across in any direct
 
 <a id="fields"></a>
 
-Edges carry `incline`, `width`, `surface`, `name`, `crossing:markings`, `foot` and `ext:structure`. `crossing:markings` comes from OSM's own `crossing:markings` tag, or from `crossing=*` as the schema advises. `foot` is OSM's tag, on 75,314 Edges. An OSM `path`, cycleway or track written as a Footway keeps its origin in `ext:osm_highway`. Curb Ramps carry `tactile_paving`, DOT's raw warning surface value in `ext:dws_condition`, and the survey's slopes. Nodes carry `ext:elevation_m`. A Curb Ramp's `ext:source` is `nyc_dot_ramps`, because its values come from the survey even where its position is an OpenStreetMap vertex. [SCHEMA.md](SCHEMA.md) lists every field.
+Edges carry `incline`, `width`, `surface`, `name`, `crossing:markings`, `foot` and `ext:structure`. `crossing:markings` comes from OSM's own `crossing:markings` tag, or from `crossing=*` as the schema advises. `foot` is OSM's tag, on 75,314 Edges. An OSM `path`, cycleway or track written as a Footway keeps its origin in `ext:osm_highway`. Curb Ramps carry `tactile_paving`, DOT's raw warning surface value in `ext:dws_condition`, and the survey's slopes. Nodes carry `ext:elevation_m`, except 1,532 that have no height: most are inside tunnels, and the others are where the terrain model holds no data or on a structure with no deck height. 2,068 Edges carry `ext:incline_unknown=yes` and no `incline`, because their two end heights give a grade no walkway is built at (0.5 or more, or over 1.0 on Steps). A Curb Ramp's `ext:source` is `nyc_dot_ramps`, because its values come from the survey even where its position is an OpenStreetMap vertex. [SCHEMA.md](SCHEMA.md) lists every field.
 
 ## Network Topology
 
@@ -136,13 +136,13 @@ edges = features[features.geom_type == "LineString"]
 
 <a id="validation"></a>
 
-v0.3.5 passes [`python-osw-validation`](https://pypi.org/project/python-osw-validation/) 0.5.0 with zero errors ([`evaluation/v0.3.5/validator.json`](evaluation/v0.3.5/validator.json), which names the checksum of the ZIP it read). The validator checks form, not the schema's topology rules or whether the data matches the street. [`validators/post_build_checks.py`](validators/post_build_checks.py) does the other checks (elevation, deck heights, connectivity, ramps, widths, zones), with results in [`evaluation/v0.3.5/checks.json`](evaluation/v0.3.5/checks.json) and [`validators/QUALITY_REPORT.md`](validators/QUALITY_REPORT.md).
+v0.3.6 passes [`python-osw-validation`](https://pypi.org/project/python-osw-validation/) 0.5.0 with zero errors ([`evaluation/v0.3.6/validator.json`](evaluation/v0.3.6/validator.json), which names the checksum of the ZIP it read). The validator checks form, not the schema's topology rules or whether the data matches the street. [`validators/post_build_checks.py`](validators/post_build_checks.py) does the other checks (elevation, deck heights, connectivity, ramps, widths, zones), with results in [`evaluation/v0.3.6/checks.json`](evaluation/v0.3.6/checks.json) and [`validators/QUALITY_REPORT.md`](validators/QUALITY_REPORT.md).
 
 # Evaluation
 
 <a id="evaluation"></a>
 
-The protocols, ratings and result files behind every number here are in [`evaluation/`](evaluation/). The result files for v0.3.5 itself (the validator run, the post-build checks, the feature-by-feature comparison with v0.3.4 and the reachability run) are in [`evaluation/v0.3.5/`](evaluation/v0.3.5/). The imagery ratings and the router comparison were run on v0.3.3 and were not repeated. On the same 2,000 node pairs per borough that were drawn on v0.3.4, no pair lost its route under any profile. The wheelchair profile gained 8 pairs in Manhattan and 5 in the Bronx, where a route now crosses a plaza ([`reach_same_pairs_v0.3.5.json`](evaluation/v0.3.5/reach_same_pairs_v0.3.5.json)).
+The protocols, ratings and result files behind every number here are in [`evaluation/`](evaluation/). The result files for v0.3.6 itself (the validator run, the post-build checks, the feature-by-feature comparison with the v0.3.5 build and the reachability run) are in [`evaluation/v0.3.6/`](evaluation/v0.3.6/). v0.3.5 was an internal build that was never released, and its files, among them the comparison with v0.3.4, are in [`evaluation/v0.3.5/`](evaluation/v0.3.5/). The imagery ratings and the router comparison were run on v0.3.3 and were not repeated. On the same 2,000 node pairs per borough that were drawn on v0.3.4, the wheelchair profile routes 1,694 pairs in Brooklyn, 1,258 in Queens, 1,056 in Manhattan, 872 in the Bronx and 861 on Staten Island (84.7%, 62.9%, 52.8%, 43.6% and 43.1%), against 1,696, 1,259, 1,068, 879 and 861 in the v0.3.5 build. It lost 23 pairs (13 in Manhattan, 7 in the Bronx, 2 in Brooklyn, 1 in Queens) and gained 1 in Manhattan. The lost routes used an edge whose heights are not a slope, which the profile used to walk as level and now refuses. No other profile changed on any pair ([`reach_same_pairs_v0.3.6.json`](evaluation/v0.3.6/reach_same_pairs_v0.3.6.json)). In the v0.3.5 build no pair had lost its route under any profile, and the wheelchair profile had gained 8 pairs in Manhattan and 5 in the Bronx, where a route now crosses a plaza ([`reach_same_pairs_v0.3.5.json`](evaluation/v0.3.5/reach_same_pairs_v0.3.5.json)).
 
 ## Comparison with Other Routers
 
@@ -187,7 +187,9 @@ In the second image, red triangles are ramps that DOT's 2020 assessment labeled 
 - The ramp survey shows that a ramp was there when it was captured, not that it is usable today, and DOT says the data does not establish ADA compliance.
 - Where OSM maps sidewalks as `sidewalk=*` tags on the street, a valid OSM scheme, the graph has no sidewalk Edge, because this pipeline does not read those tags. The network is in many pieces, and Staten Island has no pedestrian link to the other boroughs. The graph has no ferry edges, so Governors Island, Liberty Island and Ellis Island are cut off.
 - A Crossing counts as ramped when a surveyed ramp lies within 5 m of each end. Language-model raters checked that rule over imagery of 200 crossings ([evidence](evaluation/crossing_rule/)).
-- Incline is estimated from airborne LiDAR and can understate the steepest part of an Edge. Width is a polygon's mean width, not the clear width.
+- About a quarter of the curb ramps on the graph sit on a sidewalk vertex beside the crossing they serve, not on the crossing's end (29 of 100 sampled ramps; city-wide, 126,152 of the 181,499 attached ramps are on a Crossing). That crossing end has no Curb Ramp Node, which is why the routing layer uses the 5 m rule.
+- Some greenways are missing because OpenStreetMap gives them no `foot` tag, and this pipeline keeps a cycleway or track only when it has one. 629 cycleway ways (37.6 km, among them the Jamaica Bay, Bronx River and Marine Park greenways) and 247 tracks (43.7 km) are left out.
+- Incline is estimated from airborne LiDAR and can understate the steepest part of an Edge. An Edge marked `ext:incline_unknown=yes` has end heights that disagree by more than any walkway climbs; the wheelchair profile refuses it, and the Node heights beside it may themselves be wrong. An Edge with no `incline` and no mark, such as one in a tunnel, was not measured and still passes the wheelchair profile. Width is a polygon's mean width, not the clear width.
 - The wheelchair profile does not read OSM's `surface`, `smoothness` or `wheelchair=no` tags, or a ramp's slope or DOT status.
 
 The full list, with numbers, is in [evaluation/README.md](evaluation/README.md).
@@ -211,7 +213,7 @@ This dataset has not been compared with any of them.
 ```bash
 uv venv --python 3.11 && source .venv/bin/activate
 uv pip install -e .
-python -m pipeline build          # about 54 minutes; peak memory 35 GB, which ran with swap on a 32 GB machine
+python -m pipeline build          # about 52 minutes; peak memory 35 GB, which ran with swap on a 32 GB machine
 python scripts/snap_endpoints.py --input output/nyc-osw.geojson
 ```
 
@@ -241,7 +243,7 @@ Language models drafted most of the code and documentation and did the imagery r
 
 Data is ODbL-1.0 because it is derived from OpenStreetMap ([LICENSE-DATA.md](LICENSE-DATA.md)). Every data file in a release is ODbL, including `nyc-gapfill-sidewalks.geojson`. The one exception is `evaluation-sheets.zip`, the 248 imagery sheets the raters saw: its imagery is NYC orthoimagery (NYC OTI, 2018 and 2024) under CC BY 4.0, not ODbL, and the lines and points drawn on it are © OpenStreetMap contributors (ODbL) and NYC DOT ramp positions. Credit the data as "Pedestrian network from OpenSidewalks NYC, an independent dataset in the OpenSidewalks Schema, ODbL-1.0. Map data © OpenStreetMap contributors (openstreetmap.org/copyright). Also from NYC DOT and NYC OTI data on NYC Open Data, and LiDAR from NYS GIS and NOAA." The copyright page is [openstreetmap.org/copyright](https://www.openstreetmap.org/copyright). Release any derived database under ODbL. Code is Apache-2.0. Cite with [CITATION.cff](CITATION.cff).
 
-The OpenSidewalks Schema and `python-osw-validation` are developed by the [Taskar Center for Accessible Technology](https://sidewalks.washington.edu/) at the University of Washington. The routing setup and the wheelchair cost function (`unweaver-project/cost-wheelchair.py`, marked as modified) are adapted from [Unweaver](https://github.com/nbolten/unweaver) (Nick Bolten, Apache-2.0), the engine behind AccessMap, and the limits of 8.3% up and 10% down are the defaults of its example. This project added refusals for steps and street centerlines.
+The OpenSidewalks Schema and `python-osw-validation` are developed by the [Taskar Center for Accessible Technology](https://sidewalks.washington.edu/) at the University of Washington. The routing setup and the wheelchair cost function (`unweaver-project/cost-wheelchair.py`, marked as modified) are adapted from [Unweaver](https://github.com/nbolten/unweaver) (Nick Bolten, Apache-2.0), the engine behind AccessMap, and the limits of 8.3% up and 10% down are the defaults of its example. This project added refusals for steps and street centerlines, and it reads an Edge marked `incline_unknown` as too steep.
 
 # Versions
 
@@ -249,6 +251,6 @@ The OpenSidewalks Schema and `python-osw-validation` are developed by the [Taska
 
 | Version | Release Date | Link | Notes |
 |---|---|---|---|
-| 0.3.5-nyc.1 | 2026-10-04 | [GitHub](https://github.com/msradam/opensidewalks-nyc/releases/tag/v0.3.5-nyc.1) | Plazas are Pedestrian Zones. `dataTimestamp` is the OpenStreetMap data time. Curb ramp provenance names the survey. OSM `path` keeps its origin. |
+| 0.3.6-nyc.1 | 2026-10-05 | [GitHub](https://github.com/msradam/opensidewalks-nyc/releases/tag/v0.3.6-nyc.1) | Plazas are Pedestrian Zones. `dataTimestamp` is the OpenStreetMap data time. Curb ramp provenance names the survey. OSM `path` keeps its origin. Terrain "no data" and tunnels give no Node height, a jump between two surfaces is marked `ext:incline_unknown` and not written as a slope, and every GraphML edge carries `length_m`. v0.3.5 was an internal build and was not released. |
 | 0.3.4-nyc.1 | 2026-10-04 | [GitHub](https://github.com/msradam/opensidewalks-nyc/releases/tag/v0.3.4-nyc.1) | `crossing:markings` from OSM's tag, Pedestrian Road, `foot` and `ext:dws_condition`. Geometry and incline unchanged from v0.3.3. |
 | 0.3.3-nyc.1 | 2026-10-03 | [GitHub](https://github.com/msradam/opensidewalks-nyc/releases/tag/v0.3.3-nyc.1) | First public release. 0.3.3-nyc.1 is this dataset's own version, and it uses OpenSidewalks Schema v0.3. |

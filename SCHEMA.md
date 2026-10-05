@@ -1,6 +1,6 @@
 # Schema reference
 
-OpenSidewalks NYC v0.3.5-nyc.1 passes `python-osw-validation` 0.5.0 against the **[OpenSidewalks Schema v0.3](https://github.com/OpenSidewalks/OpenSidewalks-Schema)** JSON Schema. That validator checks form, not the schema's topology rules, and the data departs from the schema in the ways listed under [Known deviations from the schema](#known-deviations-from-the-schema). This document is a quick reference for consumers describing the properties actually present in the artifact. Read the upstream spec for the authoritative type definitions.
+OpenSidewalks NYC v0.3.6-nyc.1 passes `python-osw-validation` 0.5.0 against the **[OpenSidewalks Schema v0.3](https://github.com/OpenSidewalks/OpenSidewalks-Schema)** JSON Schema. That validator checks form, not the schema's topology rules, and the data departs from the schema in the ways listed under [Known deviations from the schema](#known-deviations-from-the-schema). This document is a quick reference for consumers describing the properties actually present in the artifact. Read the upstream spec for the authoritative type definitions.
 
 ## Top-level
 
@@ -14,7 +14,7 @@ A single GeoJSON `FeatureCollection` (`output/nyc-osw.geojson`). Root metadata:
 | `pipelineVersion` | The software that made the file: `name` (`opensidewalks-nyc`), `version`, `url` (the repository at the build commit), `gitSHA` and `builtAt`, the UTC time of the build |
 | `region` | MultiPolygon: union of the five NYC borough boundaries |
 
-The validator input is the split form of the same data: `nyc.nodes.geojson`, `nyc.edges.geojson` and, from v0.3.5, `nyc.zones.geojson`, zipped as `nyc-osw-osw-split.zip`.
+The validator input is the split form of the same data: `nyc.nodes.geojson`, `nyc.edges.geojson` and, from v0.3.6 (first built in v0.3.5, an internal build that was not released), `nyc.zones.geojson`, zipped as `nyc-osw-osw-split.zip`.
 
 ## Feature types
 
@@ -31,7 +31,7 @@ The schema infers each entity type from its geometry type and its identifying fi
 | **Steps** | `steps` | (absent) |
 | **Motor vehicle roads and Living Street** | `residential`, `service`, `tertiary`, `secondary`, `primary`, `unclassified`, `living_street` | (absent) |
 
-Steps is its own entity in the schema, identified by `highway=steps`. OSM `path` ways, which have no schema entity, are written as `highway=footway` with `ext:osm_highway=path`. Linear OSM `highway=pedestrian` ways (pedestrian streets) keep `highway=pedestrian` and are the schema's Pedestrian Road. v0.3.5 has 11,402 Pedestrian Road Edges. Plazas and other pedestrian areas are Pedestrian Zones, not Edges (see [Zones](#zones-polygons)). A pedestrian way tagged `footway=sidewalk` or `footway=crossing` stays a Sidewalk or Crossing. The routing layer walks a Pedestrian Road like a Footway. `cycleway` and `track` ways that OSM tags as open to walkers (`foot=yes`, `designated` or `permissive`) are written as `highway=footway` and keep `ext:osm_highway`. `service=*` subtags are not kept, so Driveway, Alley and Parking Aisle appear as Service Road.
+Steps is its own entity in the schema, identified by `highway=steps`. OSM `path` ways, which have no schema entity, are written as `highway=footway` with `ext:osm_highway=path`. Linear OSM `highway=pedestrian` ways (pedestrian streets) keep `highway=pedestrian` and are the schema's Pedestrian Road. v0.3.6 has 11,402 Pedestrian Road Edges. Plazas and other pedestrian areas are Pedestrian Zones, not Edges (see [Zones](#zones-polygons)). A pedestrian way tagged `footway=sidewalk` or `footway=crossing` stays a Sidewalk or Crossing. The routing layer walks a Pedestrian Road like a Footway. `cycleway` and `track` ways that OSM tags as open to walkers (`foot=yes`, `designated` or `permissive`) are written as `highway=footway` and keep `ext:osm_highway`. `service=*` subtags are not kept, so Driveway, Alley and Parking Aisle appear as Service Road.
 
 Every OSW edge is directional. The schema lets a consumer infer reverse edges, but this dataset already stores every segment as two edges, one per direction, each with its own `incline` sign. Do not add reverse edges when you load it. Unweaver adds them anyway, which leaves parallel duplicates that do not change route lengths. Street edges are stored both ways too, because OSM's `oneway` binds vehicles and a person walks along a one-way street either way.
 
@@ -45,7 +45,8 @@ Edge properties:
 | `footway` | enum | Sidewalks and crossings |
 | `surface` | enum | Where OSM tags it. Non-canonical OSM values are mapped to the schema enum (`sett`, `cobblestone`, `stone` and `brick` become `paving_stones`; `wood` and `metal` become `paved`), and the OSM value is not kept. |
 | `width` | float (m) | Sidewalks: from the OSM `width` tag where present, otherwise the mean width of the planimetric polygon (2 × area / perimeter). Other edges: from OSM where tagged. It is the mean width of the whole polygon, not the clear width at that spot. An OSM width of 0 or less is left off.
-| `incline` | float | Where both endpoint heights are known. Signed rise/run in the direction u→v; values outside the OSW range [-1.0, 1.0] are dropped. The heights come from the LiDAR terrain model at 2 m, or on a bridge or elevated way from the LiDAR returns on the deck, and each node's height is averaged with its neighbours' along the path over edges shorter than 5 m before the difference is taken (see METHODOLOGY.md). Tunnel edges, and structure edges whose deck height could not be read, carry none. It is the mean grade between the two endpoints after smoothing, not the steepest point on the edge, and like other DEM-derived incline it can understate it. It is an estimate, not a measurement. It is not OSM's `incline` tag, which this pipeline does not read. Steps edges carry no `climb`.
+| `incline` | float | Where both endpoint heights are known. Signed rise/run in the direction u→v. Where the two heights cannot be a slope along the edge (a grade over 1.0 on Steps, 0.5 or more on every other edge), no incline is written and the edge carries `ext:incline_unknown`. The heights come from the LiDAR terrain model at 2 m, or on a bridge or elevated way from the LiDAR returns on the deck, and each node's height is averaged with its neighbours' along the path over edges shorter than 5 m before the difference is taken (see METHODOLOGY.md). Tunnel edges, structure edges whose deck height could not be read, and edges with an end that has no height carry none, and no mark: nothing measured them. It is the mean grade between the two endpoints after smoothing, not the steepest point on the edge, and like other DEM-derived incline it can understate it. It is an estimate, not a measurement. It is not OSM's `incline` tag, which this pipeline does not read. Steps edges carry no `climb`.
+| `ext:incline_unknown` | `yes` | Edges whose two end heights give a grade of 0.5 or more (a staircase's pitch), or over 1.0 on Steps. The heights are on two surfaces (the ground and a deck, a wall, unmapped steps) or are noise on an edge a few centimetres long, so the edge has no `incline`. Something may change level there; do not read it as level. Absent everywhere else. |
 | `name` | string | Where named in OSM |
 | `crossing:markings` | enum | Crossings. From OSM's own `crossing:markings` tag where present: a value in the schema's enum is kept, a variant the schema does not list (`zebra:skewed`) becomes its base type, and a list of several marking types becomes `yes`. Otherwise from `crossing=*`, as the schema advises: `marked` and `zebra` give `yes`, `unmarked` gives `no`, and other values (`uncontrolled`, `traffic_signals`) give none. |
 | `foot` | enum | Any edge where OSM's `foot` tag has one of the schema's values (`yes`, `no`, `designated`, `permissive`, `private`, `use_sidepath`, `destination`). Other values, such as `customers`, are left off. |
@@ -54,7 +55,7 @@ The schema adds `foot` so applications can warn before routing someone along a r
 
 ### Zones (Polygons)
 
-A Pedestrian Zone is the schema's entity for "an area where pedestrians can travel freely in all directions". This dataset writes one for each OSM closed way tagged `area=yes` with `highway=pedestrian`, `footway` or `path`: a plaza, a square, a paved forecourt. v0.3.5 has 2,201 zones (1,936 from pedestrian areas, 262 from footway areas and 3 from path areas). Up to v0.3.4 the outlines of these areas were Pedestrian Road and Footway Edges.
+A Pedestrian Zone is the schema's entity for "an area where pedestrians can travel freely in all directions". This dataset writes one for each OSM closed way tagged `area=yes` with `highway=pedestrian`, `footway` or `path`: a plaza, a square, a paved forecourt. v0.3.6 has 2,201 zones (1,936 from pedestrian areas, 262 from footway areas and 3 from path areas). Up to v0.3.4 the outlines of these areas were Pedestrian Road and Footway Edges.
 
 | Property | Notes |
 |---|---|
@@ -68,7 +69,7 @@ A Pedestrian Zone is the schema's entity for "an area where pedestrians can trav
 
 A zone has no `_u_id` or `_v_id`, no `width` and no `incline`. In the schema, `_w_id` says that every pair of its Nodes is joined across the area. A consumer that builds a graph must add edges for the zone itself; reading only the LineStrings leaves each plaza as a gap. The Nodes on a ring are ordinary Nodes: some are also the ends of Edges (the zone's entrances) and some are on the ring only.
 
-The GraphML files, the routing JSON and this project's routing layer already hold each zone as edges: the ring, between consecutive `_w_id` Nodes, and a straight chord between every two entrances whose chord stays inside the polygon. Each of those edges is stored in both directions and carries `ext:zone`, the zone's `_id`. `ext:zone` does not appear in the GeoJSON or the FlatGeobuf. The chords are this project's reading of a zone, not part of the schema.
+The GraphML files, the routing JSON and this project's routing layer already hold each zone as edges: the ring, between consecutive `_w_id` Nodes, and a straight chord between every two entrances whose chord stays inside the polygon. Each of those edges is stored in both directions and carries `ext:zone`, the zone's `_id`, its `length_m`, and `incline` or `ext:incline_unknown` by the same rule as an Edge of the file. `ext:zone` does not appear in the GeoJSON or the FlatGeobuf. The chords are this project's reading of a zone, not part of the schema.
 
 An OSM pedestrian area whose way does not close into one valid ring stays Edges along its outline. A pedestrian area tagged `footway=sidewalk` or `footway=crossing` stays a Sidewalk or Crossing.
 
@@ -92,7 +93,7 @@ The slopes are signed, so compare magnitudes. They come from DOT's survey, which
 
 A ramp is attached to the graph when its node is an edge endpoint or a vertex of a zone ring. The schema maps curbs at edge endpoints and expects a Footway between a Sidewalk and a Crossing, with the curb where that Footway meets the Crossing. This dataset follows OSM's geometry, which joins many Crossings directly to Sidewalks (in Manhattan, 52% of the nodes on a Crossing also touch a Sidewalk, measured on v0.3.4), so many ramps sit on that junction or on a Sidewalk vertex. A node holds one ramp's fields, so where several surveyed ramps land on one node the others are kept as separate nodes at their surveyed position, on no edge. 36,180 Curb Ramp nodes are on no edge and no zone ring, either for that reason or because no pedestrian vertex lies within 5 m.
 
-Nodes carry `ext:elevation_m` (metres NAVD88, rounded to 0.1 m): the LiDAR terrain model interpolated between pixel centres of a 2 m tile, or on a bridge or elevated way the height of the deck read from LiDAR returns, in which case `ext:elevation_source` says which survey (`lidar_2017`, `lidar_2014`) or `interpolated` for a covered span. A node on a structure whose deck could not be read has no elevation.
+Nodes carry `ext:elevation_m` (metres NAVD88, rounded to 0.1 m): the LiDAR terrain model interpolated between pixel centres of a 2 m tile, or on a bridge or elevated way the height of the deck read from LiDAR returns, in which case `ext:elevation_source` says which survey (`lidar_2017`, `lidar_2014`) or `interpolated` for a covered span. Four kinds of node have no elevation: a node on a structure whose deck could not be read; a node all of whose edges are tunnel edges, which is underground (the mouth of a tunnel, where a tunnel edge meets an open edge or the outline of a Pedestrian Zone, keeps the terrain height); a node where the terrain model has no data, which is open water under a pier or beyond a shoreline (the service writes it as 0.0, and up to v0.3.5 about 200 nodes carried that as a height); and a node outside every terrain tile. On a shoreline, where some of the four pixels a node is interpolated from have no data, the height comes from the ones that do if they carry at least half the weight.
 
 ## Extensions: `ext:*`
 
@@ -101,12 +102,13 @@ The OSW v0.3 schema allows arbitrary `ext:`-prefixed properties on every feature
 | Extension | On | Why |
 |---|---|---|
 | `ext:source` / `ext:pipeline_version` | every feature | Provenance, required by repo policy |
-| `ext:source_timestamp` | every edge and zone; every Curb Ramp node | Retrieval time of the source. OSM-derived nodes without a ramp do not carry it. A ramp that sits on an edge shares its node with an OSM vertex. From v0.3.5 that node carries `ext:source=nyc_dot_ramps` and the survey's `ext:source_timestamp`, because every value on it except its position comes from the DOT survey. Its position is the OSM vertex, and `ext:ramp_id` traces it to the survey record. Up to v0.3.4 such a node said `ext:source=osm_walk` and had no timestamp. |
+| `ext:source_timestamp` | every edge and zone; every Curb Ramp node | Retrieval time of the source. OSM-derived nodes without a ramp do not carry it. A ramp that sits on an edge shares its node with an OSM vertex. From v0.3.6 that node carries `ext:source=nyc_dot_ramps` and the survey's `ext:source_timestamp`, because every value on it except its position comes from the DOT survey. Its position is the OSM vertex, and `ext:ramp_id` traces it to the survey record. Up to v0.3.4 such a node said `ext:source=osm_walk` and had no timestamp. |
 | `ext:osm_id` | OSM-derived edges and zones | Provenance back to the OSM way (a stringified ID, or list of IDs for merged ways) |
 | `ext:osm_highway` | edges from an OSM `path`, or from a `cycleway` or `track` open to walkers; zones from a `footway` or `path` area | What OSM called the way. The edge itself is `highway=footway`, and the zone is `highway=pedestrian`. In NYC parks a `path` is often an unpaved trail. |
 | `ext:borough` | every feature | `MN` / `BK` / `QN` / `BX` / `SI`, for filtering and per-borough splits. An OSM edge or node carries the borough whose cut of the graph it came from, so a segment on a bridge belongs to one of its two boroughs. |
 | `ext:elevation_m` | nodes | Absolute elevation for accessibility analysis |
 | `ext:elevation_source` | nodes on or beside a structure | `lidar_2017`, `lidar_2014` or `interpolated`: the height is the deck's, not the terrain model's. Absent where the terrain model stands. |
+| `ext:incline_unknown` | edges | `yes` where the heights of the two ends are not a slope the edge could have, so no `incline` is written. See the Edge properties table. New in v0.3.6. |
 | `ext:structure` | edges | `bridge` or `tunnel` from the OSM tags; `elevated` for a way with `layer` above 0 and no bridge tag (a plaza over a road, a deck on a building). Bridge and elevated edges take their incline from deck heights; tunnel edges have none. |
 | `ext:running_slope_pct`, `ext:cross_slope_pct`, `ext:counter_slope_pct` | curb nodes | Surveyed slope from NYC DOT, in percent (DOT's native unit) |
 | `ext:dws_condition` | curb nodes | DOT's raw detectable warning surface condition, kept beside `tactile_paving` because `yes` covers defective and misplaced surfaces |
@@ -122,7 +124,7 @@ The DOT data dictionary does not define `999`, `888`, `777` or `555`. This proje
 - OSM node tags (`kerb`, elevators) are not carried.
 - Both directions of every segment are stored; do not add reverse edges.
 - 36,180 Curb Ramp nodes are on no edge and no zone ring.
-- A Pedestrian Zone has one outer ring and no interior detail. An OSM pedestrian area that does not close into one valid ring would stay Edges along its outline; in v0.3.5 all 2,201 such areas closed.
+- A Pedestrian Zone has one outer ring and no interior detail. An OSM pedestrian area that does not close into one valid ring would stay Edges along its outline; in v0.3.6 all 2,201 such areas closed.
 
 ## Validation
 
