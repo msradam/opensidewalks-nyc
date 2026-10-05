@@ -1,0 +1,2253 @@
+{
+ "input": "output/nyc-osw.geojson",
+ "edges": 2894188,
+ "nodes": 1150730,
+ "pairs_per_borough": 2000,
+ "seed": 20261002,
+ "edges_by_kind": {
+  "sidewalk": 933110,
+  "crossing": 437510,
+  "footway": 557678,
+  "steps": 15470,
+  "street": 950420
+ },
+ "profiles": {
+  "distance (every edge)": {
+   "edges_passing": 2894188,
+   "by_kind": {
+    "sidewalk": 933110,
+    "crossing": 437510,
+    "footway": 557678,
+    "steps": 15470,
+    "street": 950420
+   },
+   "largest_strong_component_nodes": 885676,
+   "reachable": {
+    "BK": {
+     "pairs": 2000,
+     "with_a_route": 1963,
+     "share": 0.9815,
+     "ci95": [
+      0.9746,
+      0.9865
+     ]
+    },
+    "BX": {
+     "pairs": 2000,
+     "with_a_route": 1861,
+     "share": 0.9305,
+     "ci95": [
+      0.9185,
+      0.9408
+     ]
+    },
+    "MN": {
+     "pairs": 2000,
+     "with_a_route": 1594,
+     "share": 0.797,
+     "ci95": [
+      0.7788,
+      0.8141
+     ]
+    },
+    "QN": {
+     "pairs": 2000,
+     "with_a_route": 1866,
+     "share": 0.933,
+     "ci95": [
+      0.9212,
+      0.9431
+     ]
+    },
+    "SI": {
+     "pairs": 2000,
+     "with_a_route": 1875,
+     "share": 0.9375,
+     "ci95": [
+      0.926,
+      0.9473
+     ]
+    },
+    "citywide": {
+     "pairs": 2000,
+     "with_a_route": 1232,
+     "share": 0.616,
+     "ci95": [
+      0.5945,
+      0.6371
+     ]
+    }
+   }
+  },
+  "walk (no street centrelines)": {
+   "edges_passing": 1943768,
+   "by_kind": {
+    "sidewalk": 933110,
+    "crossing": 437510,
+    "footway": 557678,
+    "steps": 15470
+   },
+   "largest_strong_component_nodes": 611968,
+   "reachable": {
+    "BK": {
+     "pairs": 2000,
+     "with_a_route": 1882,
+     "share": 0.941,
+     "ci95": [
+      0.9298,
+      0.9505
+     ]
+    },
+    "BX": {
+     "pairs": 2000,
+     "with_a_route": 1483,
+     "share": 0.7415,
+     "ci95": [
+      0.7219,
+      0.7602
+     ]
+    },
+    "MN": {
+     "pairs": 2000,
+     "with_a_route": 1586,
+     "share": 0.793,
+     "ci95": [
+      0.7747,
+      0.8102
+     ]
+    },
+    "QN": {
+     "pairs": 2000,
+     "with_a_route": 1419,
+     "share": 0.7095,
+     "ci95": [
+      0.6892,
+      0.729
+     ]
+    },
+    "SI": {
+     "pairs": 2000,
+     "with_a_route": 1326,
+     "share": 0.663,
+     "ci95": [
+      0.642,
+      0.6834
+     ]
+    },
+    "citywide": {
+     "pairs": 2000,
+     "with_a_route": 1048,
+     "share": 0.524,
+     "ci95": [
+      0.5021,
+      0.5458
+     ]
+    }
+   }
+  },
+  "wheelchair as shipped in v0.3.1": {
+   "edges_passing": 2795719,
+   "by_kind": {
+    "sidewalk": 925801,
+    "crossing": 386950,
+    "footway": 534260,
+    "steps": 6514,
+    "street": 942194
+   },
+   "largest_strong_component_nodes": 805603,
+   "reachable": {
+    "BK": {
+     "pairs": 2000,
+     "with_a_route": 1859,
+     "share": 0.9295,
+     "ci95": [
+      0.9174,
+      0.9399
+     ]
+    },
+    "BX": {
+     "pairs": 2000,
+     "with_a_route": 1535,
+     "share": 0.7675,
+     "ci95": [
+      0.7485,
+      0.7855
+     ]
+    },
+    "MN": {
+     "pairs": 2000,
+     "with_a_route": 1206,
+     "share": 0.603,
+     "ci95": [
+      0.5814,
+      0.6242
+     ]
+    },
+    "QN": {
+     "pairs": 2000,
+     "with_a_route": 1485,
+     "share": 0.7425,
+     "ci95": [
+      0.7229,
+      0.7612
+     ]
+    },
+    "SI": {
+     "pairs": 2000,
+     "with_a_route": 1426,
+     "share": 0.713,
+     "ci95": [
+      0.6928,
+      0.7324
+     ]
+    },
+    "citywide": {
+     "pairs": 2000,
+     "with_a_route": 1026,
+     "share": 0.513,
+     "ci95": [
+      0.4911,
+      0.5349
+     ]
+    }
+   }
+  },
+  "wheelchair, fixed": {
+   "edges_passing": 1845159,
+   "by_kind": {
+    "sidewalk": 925423,
+    "crossing": 386900,
+    "footway": 532836
+   },
+   "largest_strong_component_nodes": 538568,
+   "reachable": {
+    "BK": {
+     "pairs": 2000,
+     "with_a_route": 1706,
+     "share": 0.853,
+     "ci95": [
+      0.8368,
+      0.8678
+     ]
+    },
+    "BX": {
+     "pairs": 2000,
+     "with_a_route": 872,
+     "share": 0.436,
+     "ci95": [
+      0.4144,
+      0.4578
+     ]
+    },
+    "MN": {
+     "pairs": 2000,
+     "with_a_route": 1056,
+     "share": 0.528,
+     "ci95": [
+      0.5061,
+      0.5498
+     ]
+    },
+    "QN": {
+     "pairs": 2000,
+     "with_a_route": 1211,
+     "share": 0.6055,
+     "ci95": [
+      0.5839,
+      0.6267
+     ]
+    },
+    "SI": {
+     "pairs": 2000,
+     "with_a_route": 861,
+     "share": 0.4305,
+     "ci95": [
+      0.409,
+      0.4523
+     ]
+    },
+    "citywide": {
+     "pairs": 2000,
+     "with_a_route": 803,
+     "share": 0.4015,
+     "ci95": [
+      0.3802,
+      0.4232
+     ]
+    }
+   }
+  },
+  "wheelchair, fixed, no incline limit": {
+   "edges_passing": 1878230,
+   "by_kind": {
+    "sidewalk": 933110,
+    "crossing": 387442,
+    "footway": 557678
+   },
+   "largest_strong_component_nodes": 575589,
+   "reachable": {
+    "BK": {
+     "pairs": 2000,
+     "with_a_route": 1757,
+     "share": 0.8785,
+     "ci95": [
+      0.8635,
+      0.8921
+     ]
+    },
+    "BX": {
+     "pairs": 2000,
+     "with_a_route": 1172,
+     "share": 0.586,
+     "ci95": [
+      0.5643,
+      0.6074
+     ]
+    },
+    "MN": {
+     "pairs": 2000,
+     "with_a_route": 1362,
+     "share": 0.681,
+     "ci95": [
+      0.6602,
+      0.7011
+     ]
+    },
+    "QN": {
+     "pairs": 2000,
+     "with_a_route": 1300,
+     "share": 0.65,
+     "ci95": [
+      0.6288,
+      0.6706
+     ]
+    },
+    "SI": {
+     "pairs": 2000,
+     "with_a_route": 1046,
+     "share": 0.523,
+     "ci95": [
+      0.5011,
+      0.5448
+     ]
+    },
+    "citywide": {
+     "pairs": 2000,
+     "with_a_route": 910,
+     "share": 0.455,
+     "ci95": [
+      0.4333,
+      0.4769
+     ]
+    }
+   }
+  },
+  "no steps, no streets, no curb or incline rule": {
+   "edges_passing": 1928298,
+   "by_kind": {
+    "sidewalk": 933110,
+    "crossing": 437510,
+    "footway": 557678
+   },
+   "largest_strong_component_nodes": 605057,
+   "reachable": {
+    "BK": {
+     "pairs": 2000,
+     "with_a_route": 1871,
+     "share": 0.9355,
+     "ci95": [
+      0.9239,
+      0.9455
+     ]
+    },
+    "BX": {
+     "pairs": 2000,
+     "with_a_route": 1471,
+     "share": 0.7355,
+     "ci95": [
+      0.7157,
+      0.7544
+     ]
+    },
+    "MN": {
+     "pairs": 2000,
+     "with_a_route": 1501,
+     "share": 0.7505,
+     "ci95": [
+      0.7311,
+      0.769
+     ]
+    },
+    "QN": {
+     "pairs": 2000,
+     "with_a_route": 1406,
+     "share": 0.703,
+     "ci95": [
+      0.6826,
+      0.7226
+     ]
+    },
+    "SI": {
+     "pairs": 2000,
+     "with_a_route": 1305,
+     "share": 0.6525,
+     "ci95": [
+      0.6314,
+      0.6731
+     ]
+    },
+    "citywide": {
+     "pairs": 2000,
+     "with_a_route": 1025,
+     "share": 0.5125,
+     "ci95": [
+      0.4906,
+      0.5344
+     ]
+    }
+   }
+  }
+ },
+ "crossings": {
+  "edges": 437510,
+  "with_curb_node_at_an_end": 387442,
+  "share": 0.8856
+ },
+ "incline": {
+  "walkable_edges": 1928298,
+  "with_incline": 1861504,
+  "outside_limits": 31456,
+  "share_outside_limits": 0.0163,
+  "exactly_zero": 15590
+ },
+ "sample_pool_nodes": {
+  "BK": 192322,
+  "BX": 94087,
+  "MN": 135280,
+  "QN": 262184,
+  "SI": 165266,
+  "citywide": 848970
+ },
+ "landmarks": [
+  {
+   "name": "Penn Station",
+   "borough": "MN",
+   "snap_m": {
+    "distance (every edge)": 47.8,
+    "walk (no street centrelines)": 47.8,
+    "wheelchair as shipped in v0.3.1": 47.8,
+    "wheelchair, fixed": 55.7,
+    "wheelchair, fixed, no incline limit": 55.7,
+    "no steps, no streets, no curb or incline rule": 55.7
+   }
+  },
+  {
+   "name": "Grand Central",
+   "borough": "MN",
+   "snap_m": {
+    "distance (every edge)": 4.8,
+    "walk (no street centrelines)": 4.8,
+    "wheelchair as shipped in v0.3.1": 4.8,
+    "wheelchair, fixed": 4.8,
+    "wheelchair, fixed, no incline limit": 4.8,
+    "no steps, no streets, no curb or incline rule": 4.8
+   }
+  },
+  {
+   "name": "Times Square",
+   "borough": "MN",
+   "snap_m": {
+    "distance (every edge)": 4.2,
+    "walk (no street centrelines)": 4.2,
+    "wheelchair as shipped in v0.3.1": 4.2,
+    "wheelchair, fixed": 4.2,
+    "wheelchair, fixed, no incline limit": 4.2,
+    "no steps, no streets, no curb or incline rule": 4.2
+   }
+  },
+  {
+   "name": "Empire State Building",
+   "borough": "MN",
+   "snap_m": {
+    "distance (every edge)": 68.0,
+    "walk (no street centrelines)": 74.5,
+    "wheelchair as shipped in v0.3.1": 68.0,
+    "wheelchair, fixed": 74.5,
+    "wheelchair, fixed, no incline limit": 74.5,
+    "no steps, no streets, no curb or incline rule": 74.5
+   }
+  },
+  {
+   "name": "Union Square",
+   "borough": "MN",
+   "snap_m": {
+    "distance (every edge)": 1.7,
+    "walk (no street centrelines)": 1.7,
+    "wheelchair as shipped in v0.3.1": 1.7,
+    "wheelchair, fixed": 1.7,
+    "wheelchair, fixed, no incline limit": 1.7,
+    "no steps, no streets, no curb or incline rule": 1.7
+   }
+  },
+  {
+   "name": "Washington Sq Park",
+   "borough": "MN",
+   "snap_m": {
+    "distance (every edge)": 5.1,
+    "walk (no street centrelines)": 5.1,
+    "wheelchair as shipped in v0.3.1": 5.1,
+    "wheelchair, fixed": 5.1,
+    "wheelchair, fixed, no incline limit": 5.1,
+    "no steps, no streets, no curb or incline rule": 5.1
+   }
+  },
+  {
+   "name": "Brooklyn Bridge MN",
+   "borough": "MN",
+   "snap_m": {
+    "distance (every edge)": 1.0,
+    "walk (no street centrelines)": 1.0,
+    "wheelchair as shipped in v0.3.1": 1.0,
+    "wheelchair, fixed": 1.0,
+    "wheelchair, fixed, no incline limit": 1.0,
+    "no steps, no streets, no curb or incline rule": 1.0
+   }
+  },
+  {
+   "name": "DUMBO",
+   "borough": "BK",
+   "snap_m": {
+    "distance (every edge)": 7.6,
+    "walk (no street centrelines)": 9.3,
+    "wheelchair as shipped in v0.3.1": 7.6,
+    "wheelchair, fixed": 9.3,
+    "wheelchair, fixed, no incline limit": 9.3,
+    "no steps, no streets, no curb or incline rule": 9.3
+   }
+  },
+  {
+   "name": "Atlantic Av-Barclays",
+   "borough": "BK",
+   "snap_m": {
+    "distance (every edge)": 10.4,
+    "walk (no street centrelines)": 10.4,
+    "wheelchair as shipped in v0.3.1": 10.4,
+    "wheelchair, fixed": 10.4,
+    "wheelchair, fixed, no incline limit": 10.4,
+    "no steps, no streets, no curb or incline rule": 10.4
+   }
+  },
+  {
+   "name": "Prospect Park",
+   "borough": "BK",
+   "snap_m": {
+    "distance (every edge)": 18.8,
+    "walk (no street centrelines)": 18.8,
+    "wheelchair as shipped in v0.3.1": 18.8,
+    "wheelchair, fixed": 18.8,
+    "wheelchair, fixed, no incline limit": 18.8,
+    "no steps, no streets, no curb or incline rule": 18.8
+   }
+  },
+  {
+   "name": "Williamsburg Bridge MN",
+   "borough": "MN",
+   "snap_m": {
+    "distance (every edge)": 18.0,
+    "walk (no street centrelines)": 18.0,
+    "wheelchair as shipped in v0.3.1": 18.0,
+    "wheelchair, fixed": 18.0,
+    "wheelchair, fixed, no incline limit": 18.0,
+    "no steps, no streets, no curb or incline rule": 18.0
+   }
+  },
+  {
+   "name": "Williamsburg Bridge BK",
+   "borough": "BK",
+   "snap_m": {
+    "distance (every edge)": 15.9,
+    "walk (no street centrelines)": 17.8,
+    "wheelchair as shipped in v0.3.1": 15.9,
+    "wheelchair, fixed": 17.8,
+    "wheelchair, fixed, no incline limit": 17.8,
+    "no steps, no streets, no curb or incline rule": 17.8
+   }
+  },
+  {
+   "name": "Court Sq Queens",
+   "borough": "QN",
+   "snap_m": {
+    "distance (every edge)": 48.6,
+    "walk (no street centrelines)": 48.6,
+    "wheelchair as shipped in v0.3.1": 48.6,
+    "wheelchair, fixed": 48.6,
+    "wheelchair, fixed, no incline limit": 48.6,
+    "no steps, no streets, no curb or incline rule": 48.6
+   }
+  },
+  {
+   "name": "LIC Hunters Pt",
+   "borough": "QN",
+   "snap_m": {
+    "distance (every edge)": 21.6,
+    "walk (no street centrelines)": 28.7,
+    "wheelchair as shipped in v0.3.1": 21.6,
+    "wheelchair, fixed": 28.7,
+    "wheelchair, fixed, no incline limit": 28.7,
+    "no steps, no streets, no curb or incline rule": 28.7
+   }
+  },
+  {
+   "name": "Yankee Stadium",
+   "borough": "BX",
+   "snap_m": {
+    "distance (every edge)": 104.9,
+    "walk (no street centrelines)": 109.4,
+    "wheelchair as shipped in v0.3.1": 104.9,
+    "wheelchair, fixed": 109.4,
+    "wheelchair, fixed, no incline limit": 109.4,
+    "no steps, no streets, no curb or incline rule": 109.4
+   }
+  },
+  {
+   "name": "161 St-Yankee Stadium",
+   "borough": "BX",
+   "snap_m": {
+    "distance (every edge)": 7.8,
+    "walk (no street centrelines)": 7.8,
+    "wheelchair as shipped in v0.3.1": 7.8,
+    "wheelchair, fixed": 7.8,
+    "wheelchair, fixed, no incline limit": 7.8,
+    "no steps, no streets, no curb or incline rule": 7.8
+   }
+  },
+  {
+   "name": "Manhattan Bridge MN",
+   "borough": "MN",
+   "snap_m": {
+    "distance (every edge)": 3.3,
+    "walk (no street centrelines)": 3.3,
+    "wheelchair as shipped in v0.3.1": 3.3,
+    "wheelchair, fixed": 3.3,
+    "wheelchair, fixed, no incline limit": 3.3,
+    "no steps, no streets, no curb or incline rule": 3.3
+   }
+  },
+  {
+   "name": "Manhattan Bridge BK",
+   "borough": "BK",
+   "snap_m": {
+    "distance (every edge)": 7.1,
+    "walk (no street centrelines)": 7.1,
+    "wheelchair as shipped in v0.3.1": 7.1,
+    "wheelchair, fixed": 7.1,
+    "wheelchair, fixed, no incline limit": 7.1,
+    "no steps, no streets, no curb or incline rule": 7.1
+   }
+  },
+  {
+   "name": "Queensboro Bridge MN",
+   "borough": "MN",
+   "snap_m": {
+    "distance (every edge)": 33.7,
+    "walk (no street centrelines)": 33.7,
+    "wheelchair as shipped in v0.3.1": 33.7,
+    "wheelchair, fixed": 33.7,
+    "wheelchair, fixed, no incline limit": 33.7,
+    "no steps, no streets, no curb or incline rule": 33.7
+   }
+  },
+  {
+   "name": "Queensboro Bridge QN",
+   "borough": "QN",
+   "snap_m": {
+    "distance (every edge)": 44.0,
+    "walk (no street centrelines)": 52.5,
+    "wheelchair as shipped in v0.3.1": 44.0,
+    "wheelchair, fixed": 52.5,
+    "wheelchair, fixed, no incline limit": 52.5,
+    "no steps, no streets, no curb or incline rule": 52.5
+   }
+  },
+  {
+   "name": "High Line Gansevoort",
+   "borough": "MN",
+   "snap_m": {
+    "distance (every edge)": 1.1,
+    "walk (no street centrelines)": 1.1,
+    "wheelchair as shipped in v0.3.1": 1.1,
+    "wheelchair, fixed": 1.1,
+    "wheelchair, fixed, no incline limit": 1.1,
+    "no steps, no streets, no curb or incline rule": 1.1
+   }
+  },
+  {
+   "name": "High Line 30th St",
+   "borough": "MN",
+   "snap_m": {
+    "distance (every edge)": 1.1,
+    "walk (no street centrelines)": 1.1,
+    "wheelchair as shipped in v0.3.1": 1.1,
+    "wheelchair, fixed": 1.1,
+    "wheelchair, fixed, no incline limit": 1.1,
+    "no steps, no streets, no curb or incline rule": 1.1
+   }
+  },
+  {
+   "name": "Pulaski Bridge BK",
+   "borough": "BK",
+   "snap_m": {
+    "distance (every edge)": 85.1,
+    "walk (no street centrelines)": 95.9,
+    "wheelchair as shipped in v0.3.1": 85.1,
+    "wheelchair, fixed": 95.9,
+    "wheelchair, fixed, no incline limit": 95.9,
+    "no steps, no streets, no curb or incline rule": 95.9
+   }
+  },
+  {
+   "name": "Pulaski Bridge QN",
+   "borough": "QN",
+   "snap_m": {
+    "distance (every edge)": 28.8,
+    "walk (no street centrelines)": 29.5,
+    "wheelchair as shipped in v0.3.1": 28.8,
+    "wheelchair, fixed": 29.5,
+    "wheelchair, fixed, no incline limit": 29.5,
+    "no steps, no streets, no curb or incline rule": 29.5
+   }
+  },
+  {
+   "name": "East 103rd St FDR",
+   "borough": "MN",
+   "snap_m": {
+    "distance (every edge)": 10.7,
+    "walk (no street centrelines)": 10.7,
+    "wheelchair as shipped in v0.3.1": 10.7,
+    "wheelchair, fixed": 10.7,
+    "wheelchair, fixed, no incline limit": 10.7,
+    "no steps, no streets, no curb or incline rule": 10.7
+   }
+  },
+  {
+   "name": "Wards Island",
+   "borough": "MN",
+   "snap_m": {
+    "distance (every edge)": 71.5,
+    "walk (no street centrelines)": 71.5,
+    "wheelchair as shipped in v0.3.1": 71.5,
+    "wheelchair, fixed": 71.5,
+    "wheelchair, fixed, no incline limit": 71.5,
+    "no steps, no streets, no curb or incline rule": 71.5
+   }
+  },
+  {
+   "name": "Macombs Dam Bridge MN",
+   "borough": "MN",
+   "snap_m": {
+    "distance (every edge)": 14.8,
+    "walk (no street centrelines)": 14.8,
+    "wheelchair as shipped in v0.3.1": 14.8,
+    "wheelchair, fixed": 14.8,
+    "wheelchair, fixed, no incline limit": 14.8,
+    "no steps, no streets, no curb or incline rule": 14.8
+   }
+  },
+  {
+   "name": "Macombs Dam Bridge BX",
+   "borough": "BX",
+   "snap_m": {
+    "distance (every edge)": 17.3,
+    "walk (no street centrelines)": 17.3,
+    "wheelchair as shipped in v0.3.1": 17.3,
+    "wheelchair, fixed": 17.3,
+    "wheelchair, fixed, no incline limit": 17.3,
+    "no steps, no streets, no curb or incline rule": 17.3
+   }
+  },
+  {
+   "name": "Riverbank Park south",
+   "borough": "MN",
+   "snap_m": {
+    "distance (every edge)": 73.0,
+    "walk (no street centrelines)": 73.0,
+    "wheelchair as shipped in v0.3.1": 73.0,
+    "wheelchair, fixed": 73.0,
+    "wheelchair, fixed, no incline limit": 73.0,
+    "no steps, no streets, no curb or incline rule": 73.0
+   }
+  },
+  {
+   "name": "Riverbank Park north",
+   "borough": "MN",
+   "snap_m": {
+    "distance (every edge)": 18.5,
+    "walk (no street centrelines)": 18.5,
+    "wheelchair as shipped in v0.3.1": 18.5,
+    "wheelchair, fixed": 18.5,
+    "wheelchair, fixed, no incline limit": 18.5,
+    "no steps, no streets, no curb or incline rule": 18.5
+   }
+  }
+ ],
+ "routes": [
+  {
+   "route": "Penn Station -> Grand Central",
+   "straight_line_m": 1395,
+   "distance (every edge)": {
+    "length_m": 1954,
+    "edges": 106,
+    "snap_m": [
+     47.8,
+     4.8
+    ],
+    "share_by_kind": {
+     "crossing": 0.079,
+     "footway": 0.405,
+     "sidewalk": 0.364,
+     "steps": 0.021,
+     "street": 0.131
+    },
+    "detour_ratio": 1.4
+   },
+   "walk (no street centrelines)": {
+    "length_m": 1958,
+    "edges": 111,
+    "snap_m": [
+     47.8,
+     4.8
+    ],
+    "share_by_kind": {
+     "crossing": 0.101,
+     "footway": 0.406,
+     "sidewalk": 0.473,
+     "steps": 0.021
+    },
+    "detour_ratio": 1.4
+   },
+   "wheelchair as shipped in v0.3.1": {
+    "length_m": 1984,
+    "edges": 84,
+    "snap_m": [
+     47.8,
+     4.8
+    ],
+    "share_by_kind": {
+     "crossing": 0.079,
+     "footway": 0.26,
+     "sidewalk": 0.363,
+     "steps": 0.008,
+     "street": 0.29
+    },
+    "detour_ratio": 1.42
+   },
+   "wheelchair, fixed": {
+    "length_m": 2003,
+    "edges": 94,
+    "snap_m": [
+     55.7,
+     4.8
+    ],
+    "share_by_kind": {
+     "crossing": 0.111,
+     "footway": 0.277,
+     "sidewalk": 0.612
+    },
+    "detour_ratio": 1.44
+   },
+   "wheelchair, fixed, no incline limit": {
+    "length_m": 2002,
+    "edges": 118,
+    "snap_m": [
+     55.7,
+     4.8
+    ],
+    "share_by_kind": {
+     "crossing": 0.106,
+     "footway": 0.315,
+     "sidewalk": 0.579
+    },
+    "detour_ratio": 1.44
+   },
+   "no steps, no streets, no curb or incline rule": {
+    "length_m": 1886,
+    "edges": 118,
+    "snap_m": [
+     55.7,
+     4.8
+    ],
+    "share_by_kind": {
+     "crossing": 0.105,
+     "footway": 0.43,
+     "sidewalk": 0.466
+    },
+    "detour_ratio": 1.35
+   }
+  },
+  {
+   "route": "Times Square -> Empire State Building",
+   "straight_line_m": 1069,
+   "distance (every edge)": {
+    "length_m": 1227,
+    "edges": 97,
+    "snap_m": [
+     4.2,
+     68.0
+    ],
+    "share_by_kind": {
+     "crossing": 0.126,
+     "footway": 0.223,
+     "sidewalk": 0.434,
+     "steps": 0.005,
+     "street": 0.212
+    },
+    "detour_ratio": 1.15
+   },
+   "walk (no street centrelines)": {
+    "length_m": 1317,
+    "edges": 105,
+    "snap_m": [
+     4.2,
+     74.5
+    ],
+    "share_by_kind": {
+     "crossing": 0.123,
+     "footway": 0.271,
+     "sidewalk": 0.601,
+     "steps": 0.005
+    },
+    "detour_ratio": 1.23
+   },
+   "wheelchair as shipped in v0.3.1": {
+    "length_m": 1269,
+    "edges": 74,
+    "snap_m": [
+     4.2,
+     68.0
+    ],
+    "share_by_kind": {
+     "crossing": 0.042,
+     "footway": 0.243,
+     "sidewalk": 0.133,
+     "street": 0.583
+    },
+    "detour_ratio": 1.19
+   },
+   "wheelchair, fixed": {
+    "length_m": 1433,
+    "edges": 87,
+    "snap_m": [
+     4.2,
+     74.5
+    ],
+    "share_by_kind": {
+     "crossing": 0.117,
+     "footway": 0.259,
+     "sidewalk": 0.624
+    },
+    "detour_ratio": 1.34
+   },
+   "wheelchair, fixed, no incline limit": {
+    "length_m": 1433,
+    "edges": 87,
+    "snap_m": [
+     4.2,
+     74.5
+    ],
+    "share_by_kind": {
+     "crossing": 0.117,
+     "footway": 0.259,
+     "sidewalk": 0.624
+    },
+    "detour_ratio": 1.34
+   },
+   "no steps, no streets, no curb or incline rule": {
+    "length_m": 1317,
+    "edges": 105,
+    "snap_m": [
+     4.2,
+     74.5
+    ],
+    "share_by_kind": {
+     "crossing": 0.123,
+     "footway": 0.276,
+     "sidewalk": 0.601
+    },
+    "detour_ratio": 1.23
+   }
+  },
+  {
+   "route": "Union Square -> Washington Sq Park",
+   "straight_line_m": 772,
+   "distance (every edge)": {
+    "length_m": 864,
+    "edges": 64,
+    "snap_m": [
+     1.7,
+     5.1
+    ],
+    "share_by_kind": {
+     "crossing": 0.116,
+     "footway": 0.293,
+     "sidewalk": 0.586,
+     "street": 0.005
+    },
+    "detour_ratio": 1.12
+   },
+   "walk (no street centrelines)": {
+    "length_m": 868,
+    "edges": 67,
+    "snap_m": [
+     1.7,
+     5.1
+    ],
+    "share_by_kind": {
+     "crossing": 0.134,
+     "footway": 0.266,
+     "sidewalk": 0.6
+    },
+    "detour_ratio": 1.12
+   },
+   "wheelchair as shipped in v0.3.1": {
+    "length_m": 869,
+    "edges": 67,
+    "snap_m": [
+     1.7,
+     5.1
+    ],
+    "share_by_kind": {
+     "crossing": 0.052,
+     "footway": 0.273,
+     "sidewalk": 0.228,
+     "street": 0.447
+    },
+    "detour_ratio": 1.13
+   },
+   "wheelchair, fixed": {
+    "length_m": 874,
+    "edges": 66,
+    "snap_m": [
+     1.7,
+     5.1
+    ],
+    "share_by_kind": {
+     "crossing": 0.136,
+     "footway": 0.269,
+     "sidewalk": 0.596
+    },
+    "detour_ratio": 1.13
+   },
+   "wheelchair, fixed, no incline limit": {
+    "length_m": 874,
+    "edges": 66,
+    "snap_m": [
+     1.7,
+     5.1
+    ],
+    "share_by_kind": {
+     "crossing": 0.136,
+     "footway": 0.269,
+     "sidewalk": 0.596
+    },
+    "detour_ratio": 1.13
+   },
+   "no steps, no streets, no curb or incline rule": {
+    "length_m": 868,
+    "edges": 67,
+    "snap_m": [
+     1.7,
+     5.1
+    ],
+    "share_by_kind": {
+     "crossing": 0.134,
+     "footway": 0.266,
+     "sidewalk": 0.6
+    },
+    "detour_ratio": 1.12
+   }
+  },
+  {
+   "route": "Brooklyn Bridge MN -> DUMBO",
+   "straight_line_m": 1493,
+   "distance (every edge)": {
+    "length_m": 2279,
+    "edges": 111,
+    "snap_m": [
+     1.0,
+     7.6
+    ],
+    "share_by_kind": {
+     "crossing": 0.017,
+     "footway": 0.777,
+     "sidewalk": 0.088,
+     "steps": 0.01,
+     "street": 0.108
+    },
+    "detour_ratio": 1.53
+   },
+   "walk (no street centrelines)": {
+    "length_m": 2257,
+    "edges": 112,
+    "snap_m": [
+     1.0,
+     9.3
+    ],
+    "share_by_kind": {
+     "crossing": 0.024,
+     "footway": 0.784,
+     "sidewalk": 0.182,
+     "steps": 0.01
+    },
+    "detour_ratio": 1.51
+   },
+   "wheelchair as shipped in v0.3.1": {
+    "length_m": 2605,
+    "edges": 140,
+    "snap_m": [
+     1.0,
+     7.6
+    ],
+    "share_by_kind": {
+     "crossing": 0.023,
+     "footway": 0.731,
+     "sidewalk": 0.143,
+     "steps": 0.009,
+     "street": 0.094
+    },
+    "detour_ratio": 1.75
+   },
+   "wheelchair, fixed": {
+    "length_m": 3769,
+    "edges": 212,
+    "snap_m": [
+     1.0,
+     9.3
+    ],
+    "share_by_kind": {
+     "crossing": 0.041,
+     "footway": 0.668,
+     "sidewalk": 0.292
+    },
+    "detour_ratio": 2.52
+   },
+   "wheelchair, fixed, no incline limit": {
+    "length_m": 3769,
+    "edges": 212,
+    "snap_m": [
+     1.0,
+     9.3
+    ],
+    "share_by_kind": {
+     "crossing": 0.041,
+     "footway": 0.668,
+     "sidewalk": 0.292
+    },
+    "detour_ratio": 2.52
+   },
+   "no steps, no streets, no curb or incline rule": {
+    "length_m": 3364,
+    "edges": 181,
+    "snap_m": [
+     1.0,
+     9.3
+    ],
+    "share_by_kind": {
+     "crossing": 0.072,
+     "footway": 0.609,
+     "sidewalk": 0.319
+    },
+    "detour_ratio": 2.25
+   }
+  },
+  {
+   "route": "Atlantic Av-Barclays -> Prospect Park",
+   "straight_line_m": 2752,
+   "distance (every edge)": {
+    "length_m": 3033,
+    "edges": 228,
+    "snap_m": [
+     10.4,
+     18.8
+    ],
+    "share_by_kind": {
+     "crossing": 0.039,
+     "footway": 0.52,
+     "sidewalk": 0.229,
+     "street": 0.212
+    },
+    "detour_ratio": 1.1
+   },
+   "walk (no street centrelines)": {
+    "length_m": 3046,
+    "edges": 233,
+    "snap_m": [
+     10.4,
+     18.8
+    ],
+    "share_by_kind": {
+     "crossing": 0.07,
+     "footway": 0.527,
+     "sidewalk": 0.403
+    },
+    "detour_ratio": 1.11
+   },
+   "wheelchair as shipped in v0.3.1": {
+    "length_m": 3060,
+    "edges": 211,
+    "snap_m": [
+     10.4,
+     18.8
+    ],
+    "share_by_kind": {
+     "crossing": 0.005,
+     "footway": 0.516,
+     "sidewalk": 0.005,
+     "street": 0.474
+    },
+    "detour_ratio": 1.11
+   },
+   "wheelchair, fixed": {
+    "length_m": 3410,
+    "edges": 245,
+    "snap_m": [
+     10.4,
+     18.8
+    ],
+    "share_by_kind": {
+     "crossing": 0.063,
+     "footway": 0.509,
+     "sidewalk": 0.428
+    },
+    "detour_ratio": 1.24
+   },
+   "wheelchair, fixed, no incline limit": {
+    "length_m": 3240,
+    "edges": 238,
+    "snap_m": [
+     10.4,
+     18.8
+    ],
+    "share_by_kind": {
+     "crossing": 0.067,
+     "footway": 0.487,
+     "sidewalk": 0.447
+    },
+    "detour_ratio": 1.18
+   },
+   "no steps, no streets, no curb or incline rule": {
+    "length_m": 3046,
+    "edges": 233,
+    "snap_m": [
+     10.4,
+     18.8
+    ],
+    "share_by_kind": {
+     "crossing": 0.07,
+     "footway": 0.527,
+     "sidewalk": 0.403
+    },
+    "detour_ratio": 1.11
+   }
+  },
+  {
+   "route": "Williamsburg Bridge MN -> Williamsburg Bridge BK",
+   "straight_line_m": 1383,
+   "distance (every edge)": {
+    "length_m": 2902,
+    "edges": 57,
+    "snap_m": [
+     18.0,
+     15.9
+    ],
+    "share_by_kind": {
+     "crossing": 0.025,
+     "footway": 0.699,
+     "sidewalk": 0.126,
+     "street": 0.151
+    },
+    "detour_ratio": 2.1
+   },
+   "walk (no street centrelines)": {
+    "length_m": 2917,
+    "edges": 63,
+    "snap_m": [
+     18.0,
+     17.8
+    ],
+    "share_by_kind": {
+     "crossing": 0.047,
+     "footway": 0.696,
+     "sidewalk": 0.257
+    },
+    "detour_ratio": 2.11
+   },
+   "wheelchair as shipped in v0.3.1": {
+    "length_m": 2905,
+    "edges": 56,
+    "snap_m": [
+     18.0,
+     15.9
+    ],
+    "share_by_kind": {
+     "crossing": 0.018,
+     "footway": 0.698,
+     "sidewalk": 0.109,
+     "street": 0.175
+    },
+    "detour_ratio": 2.1
+   },
+   "wheelchair, fixed": {
+    "length_m": 9190,
+    "edges": 465,
+    "snap_m": [
+     18.0,
+     17.8
+    ],
+    "share_by_kind": {
+     "crossing": 0.079,
+     "footway": 0.277,
+     "sidewalk": 0.644
+    },
+    "detour_ratio": 6.64
+   },
+   "wheelchair, fixed, no incline limit": {
+    "length_m": 3029,
+    "edges": 68,
+    "snap_m": [
+     18.0,
+     17.8
+    ],
+    "share_by_kind": {
+     "crossing": 0.05,
+     "footway": 0.67,
+     "sidewalk": 0.28
+    },
+    "detour_ratio": 2.19
+   },
+   "no steps, no streets, no curb or incline rule": {
+    "length_m": 2917,
+    "edges": 63,
+    "snap_m": [
+     18.0,
+     17.8
+    ],
+    "share_by_kind": {
+     "crossing": 0.047,
+     "footway": 0.696,
+     "sidewalk": 0.257
+    },
+    "detour_ratio": 2.11
+   }
+  },
+  {
+   "route": "Court Sq Queens -> LIC Hunters Point",
+   "straight_line_m": 909,
+   "distance (every edge)": {
+    "length_m": 1011,
+    "edges": 65,
+    "snap_m": [
+     48.6,
+     21.6
+    ],
+    "share_by_kind": {
+     "crossing": 0.192,
+     "footway": 0.018,
+     "sidewalk": 0.76,
+     "street": 0.03
+    },
+    "detour_ratio": 1.11
+   },
+   "walk (no street centrelines)": {
+    "length_m": 1008,
+    "edges": 62,
+    "snap_m": [
+     48.6,
+     28.7
+    ],
+    "share_by_kind": {
+     "crossing": 0.188,
+     "footway": 0.018,
+     "sidewalk": 0.795
+    },
+    "detour_ratio": 1.11
+   },
+   "wheelchair as shipped in v0.3.1": {
+    "length_m": 1021,
+    "edges": 49,
+    "snap_m": [
+     48.6,
+     21.6
+    ],
+    "share_by_kind": {
+     "crossing": 0.019,
+     "sidewalk": 0.224,
+     "street": 0.756
+    },
+    "detour_ratio": 1.12
+   },
+   "wheelchair, fixed": {
+    "length_m": 1089,
+    "edges": 60,
+    "snap_m": [
+     48.6,
+     28.7
+    ],
+    "share_by_kind": {
+     "crossing": 0.149,
+     "footway": 0.016,
+     "sidewalk": 0.835
+    },
+    "detour_ratio": 1.2
+   },
+   "wheelchair, fixed, no incline limit": {
+    "length_m": 1089,
+    "edges": 60,
+    "snap_m": [
+     48.6,
+     28.7
+    ],
+    "share_by_kind": {
+     "crossing": 0.149,
+     "footway": 0.016,
+     "sidewalk": 0.835
+    },
+    "detour_ratio": 1.2
+   },
+   "no steps, no streets, no curb or incline rule": {
+    "length_m": 1008,
+    "edges": 62,
+    "snap_m": [
+     48.6,
+     28.7
+    ],
+    "share_by_kind": {
+     "crossing": 0.188,
+     "footway": 0.018,
+     "sidewalk": 0.795
+    },
+    "detour_ratio": 1.11
+   }
+  },
+  {
+   "route": "Yankee Stadium -> 161 St",
+   "straight_line_m": 288,
+   "distance (every edge)": {
+    "length_m": 426,
+    "edges": 31,
+    "snap_m": [
+     104.9,
+     7.8
+    ],
+    "share_by_kind": {
+     "crossing": 0.1,
+     "footway": 0.377,
+     "sidewalk": 0.124,
+     "street": 0.399
+    },
+    "detour_ratio": 1.48
+   },
+   "walk (no street centrelines)": {
+    "length_m": 410,
+    "edges": 32,
+    "snap_m": [
+     109.4,
+     7.8
+    ],
+    "share_by_kind": {
+     "crossing": 0.121,
+     "footway": 0.392,
+     "sidewalk": 0.487
+    },
+    "detour_ratio": 1.42
+   },
+   "wheelchair as shipped in v0.3.1": {
+    "length_m": 429,
+    "edges": 20,
+    "snap_m": [
+     104.9,
+     7.8
+    ],
+    "share_by_kind": {
+     "crossing": 0.023,
+     "footway": 0.333,
+     "sidewalk": 0.106,
+     "street": 0.538
+    },
+    "detour_ratio": 1.49
+   },
+   "wheelchair, fixed": {
+    "length_m": 412,
+    "edges": 30,
+    "snap_m": [
+     109.4,
+     7.8
+    ],
+    "share_by_kind": {
+     "crossing": 0.142,
+     "footway": 0.368,
+     "sidewalk": 0.489
+    },
+    "detour_ratio": 1.43
+   },
+   "wheelchair, fixed, no incline limit": {
+    "length_m": 412,
+    "edges": 30,
+    "snap_m": [
+     109.4,
+     7.8
+    ],
+    "share_by_kind": {
+     "crossing": 0.142,
+     "footway": 0.368,
+     "sidewalk": 0.489
+    },
+    "detour_ratio": 1.43
+   },
+   "no steps, no streets, no curb or incline rule": {
+    "length_m": 410,
+    "edges": 32,
+    "snap_m": [
+     109.4,
+     7.8
+    ],
+    "share_by_kind": {
+     "crossing": 0.121,
+     "footway": 0.392,
+     "sidewalk": 0.487
+    },
+    "detour_ratio": 1.42
+   }
+  },
+  {
+   "route": "Empire State Building -> DUMBO (cross-borough)",
+   "straight_line_m": 5027,
+   "distance (every edge)": {
+    "length_m": 6516,
+    "edges": 338,
+    "snap_m": [
+     68.0,
+     7.6
+    ],
+    "share_by_kind": {
+     "crossing": 0.061,
+     "footway": 0.357,
+     "sidewalk": 0.346,
+     "street": 0.237
+    },
+    "detour_ratio": 1.3
+   },
+   "walk (no street centrelines)": {
+    "length_m": 6425,
+    "edges": 344,
+    "snap_m": [
+     74.5,
+     9.3
+    ],
+    "share_by_kind": {
+     "crossing": 0.098,
+     "footway": 0.354,
+     "sidewalk": 0.547,
+     "steps": 0.001
+    },
+    "detour_ratio": 1.28
+   },
+   "wheelchair as shipped in v0.3.1": {
+    "length_m": 7150,
+    "edges": 450,
+    "snap_m": [
+     68.0,
+     7.6
+    ],
+    "share_by_kind": {
+     "crossing": 0.02,
+     "footway": 0.297,
+     "sidewalk": 0.111,
+     "steps": 0.001,
+     "street": 0.571
+    },
+    "detour_ratio": 1.42
+   },
+   "wheelchair, fixed": {
+    "length_m": 8173,
+    "edges": 445,
+    "snap_m": [
+     74.5,
+     9.3
+    ],
+    "share_by_kind": {
+     "crossing": 0.092,
+     "footway": 0.359,
+     "sidewalk": 0.549
+    },
+    "detour_ratio": 1.63
+   },
+   "wheelchair, fixed, no incline limit": {
+    "length_m": 6938,
+    "edges": 367,
+    "snap_m": [
+     74.5,
+     9.3
+    ],
+    "share_by_kind": {
+     "crossing": 0.11,
+     "footway": 0.348,
+     "sidewalk": 0.542
+    },
+    "detour_ratio": 1.38
+   },
+   "no steps, no streets, no curb or incline rule": {
+    "length_m": 6425,
+    "edges": 345,
+    "snap_m": [
+     74.5,
+     9.3
+    ],
+    "share_by_kind": {
+     "crossing": 0.098,
+     "footway": 0.354,
+     "sidewalk": 0.548
+    },
+    "detour_ratio": 1.28
+   }
+  },
+  {
+   "route": "Grand Central -> Washington Sq Park (long Manhattan)",
+   "straight_line_m": 2970,
+   "distance (every edge)": {
+    "length_m": 3176,
+    "edges": 218,
+    "snap_m": [
+     4.8,
+     5.1
+    ],
+    "share_by_kind": {
+     "crossing": 0.065,
+     "footway": 0.137,
+     "sidewalk": 0.282,
+     "street": 0.516
+    },
+    "detour_ratio": 1.07
+   },
+   "walk (no street centrelines)": {
+    "length_m": 3204,
+    "edges": 218,
+    "snap_m": [
+     4.8,
+     5.1
+    ],
+    "share_by_kind": {
+     "crossing": 0.154,
+     "footway": 0.168,
+     "sidewalk": 0.679
+    },
+    "detour_ratio": 1.08
+   },
+   "wheelchair as shipped in v0.3.1": {
+    "length_m": 3225,
+    "edges": 201,
+    "snap_m": [
+     4.8,
+     5.1
+    ],
+    "share_by_kind": {
+     "crossing": 0.023,
+     "footway": 0.135,
+     "sidewalk": 0.091,
+     "street": 0.751
+    },
+    "detour_ratio": 1.09
+   },
+   "wheelchair, fixed": {
+    "length_m": 3532,
+    "edges": 176,
+    "snap_m": [
+     4.8,
+     5.1
+    ],
+    "share_by_kind": {
+     "crossing": 0.144,
+     "footway": 0.079,
+     "sidewalk": 0.777
+    },
+    "detour_ratio": 1.19
+   },
+   "wheelchair, fixed, no incline limit": {
+    "length_m": 3532,
+    "edges": 176,
+    "snap_m": [
+     4.8,
+     5.1
+    ],
+    "share_by_kind": {
+     "crossing": 0.144,
+     "footway": 0.079,
+     "sidewalk": 0.777
+    },
+    "detour_ratio": 1.19
+   },
+   "no steps, no streets, no curb or incline rule": {
+    "length_m": 3204,
+    "edges": 218,
+    "snap_m": [
+     4.8,
+     5.1
+    ],
+    "share_by_kind": {
+     "crossing": 0.154,
+     "footway": 0.168,
+     "sidewalk": 0.679
+    },
+    "detour_ratio": 1.08
+   }
+  },
+  {
+   "route": "Manhattan Bridge MN -> Manhattan Bridge BK",
+   "straight_line_m": 2004,
+   "distance (every edge)": {
+    "length_m": 2033,
+    "edges": 44,
+    "snap_m": [
+     3.3,
+     7.1
+    ],
+    "share_by_kind": {
+     "crossing": 0.008,
+     "footway": 0.992
+    },
+    "detour_ratio": 1.01
+   },
+   "walk (no street centrelines)": {
+    "length_m": 2033,
+    "edges": 44,
+    "snap_m": [
+     3.3,
+     7.1
+    ],
+    "share_by_kind": {
+     "crossing": 0.008,
+     "footway": 0.992
+    },
+    "detour_ratio": 1.01
+   },
+   "wheelchair as shipped in v0.3.1": "NoPath",
+   "wheelchair, fixed": "NoPath",
+   "wheelchair, fixed, no incline limit": {
+    "length_m": 2252,
+    "edges": 64,
+    "snap_m": [
+     3.3,
+     7.1
+    ],
+    "share_by_kind": {
+     "crossing": 0.019,
+     "footway": 0.887,
+     "sidewalk": 0.093
+    },
+    "detour_ratio": 1.12
+   },
+   "no steps, no streets, no curb or incline rule": {
+    "length_m": 2033,
+    "edges": 44,
+    "snap_m": [
+     3.3,
+     7.1
+    ],
+    "share_by_kind": {
+     "crossing": 0.008,
+     "footway": 0.992
+    },
+    "detour_ratio": 1.01
+   }
+  },
+  {
+   "route": "Queensboro Bridge MN -> Queensboro Bridge QN",
+   "straight_line_m": 2100,
+   "distance (every edge)": {
+    "length_m": 2800,
+    "edges": 55,
+    "snap_m": [
+     33.7,
+     44.0
+    ],
+    "share_by_kind": {
+     "crossing": 0.022,
+     "footway": 0.779,
+     "sidewalk": 0.131,
+     "street": 0.069
+    },
+    "detour_ratio": 1.33
+   },
+   "walk (no street centrelines)": {
+    "length_m": 2808,
+    "edges": 54,
+    "snap_m": [
+     33.7,
+     52.5
+    ],
+    "share_by_kind": {
+     "crossing": 0.023,
+     "footway": 0.776,
+     "sidewalk": 0.2
+    },
+    "detour_ratio": 1.34
+   },
+   "wheelchair as shipped in v0.3.1": {
+    "length_m": 13343,
+    "edges": 592,
+    "snap_m": [
+     33.7,
+     44.0
+    ],
+    "share_by_kind": {
+     "crossing": 0.036,
+     "footway": 0.214,
+     "sidewalk": 0.201,
+     "street": 0.55
+    },
+    "detour_ratio": 6.35
+   },
+   "wheelchair, fixed": {
+    "length_m": 24131,
+    "edges": 1153,
+    "snap_m": [
+     33.7,
+     52.5
+    ],
+    "share_by_kind": {
+     "crossing": 0.107,
+     "footway": 0.122,
+     "sidewalk": 0.771
+    },
+    "detour_ratio": 11.49
+   },
+   "wheelchair, fixed, no incline limit": {
+    "length_m": 2852,
+    "edges": 53,
+    "snap_m": [
+     33.7,
+     52.5
+    ],
+    "share_by_kind": {
+     "crossing": 0.021,
+     "footway": 0.765,
+     "sidewalk": 0.215
+    },
+    "detour_ratio": 1.36
+   },
+   "no steps, no streets, no curb or incline rule": {
+    "length_m": 2808,
+    "edges": 54,
+    "snap_m": [
+     33.7,
+     52.5
+    ],
+    "share_by_kind": {
+     "crossing": 0.023,
+     "footway": 0.776,
+     "sidewalk": 0.2
+    },
+    "detour_ratio": 1.34
+   }
+  },
+  {
+   "route": "High Line Gansevoort -> High Line 30th St",
+   "straight_line_m": 1577,
+   "distance (every edge)": {
+    "length_m": 1684,
+    "edges": 108,
+    "snap_m": [
+     1.1,
+     1.1
+    ],
+    "share_by_kind": {
+     "crossing": 0.148,
+     "footway": 0.225,
+     "sidewalk": 0.627
+    },
+    "detour_ratio": 1.07
+   },
+   "walk (no street centrelines)": {
+    "length_m": 1684,
+    "edges": 108,
+    "snap_m": [
+     1.1,
+     1.1
+    ],
+    "share_by_kind": {
+     "crossing": 0.148,
+     "footway": 0.225,
+     "sidewalk": 0.627
+    },
+    "detour_ratio": 1.07
+   },
+   "wheelchair as shipped in v0.3.1": {
+    "length_m": 1731,
+    "edges": 96,
+    "snap_m": [
+     1.1,
+     1.1
+    ],
+    "share_by_kind": {
+     "crossing": 0.088,
+     "footway": 0.314,
+     "sidewalk": 0.468,
+     "street": 0.129
+    },
+    "detour_ratio": 1.1
+   },
+   "wheelchair, fixed": "NoPath",
+   "wheelchair, fixed, no incline limit": {
+    "length_m": 1780,
+    "edges": 100,
+    "snap_m": [
+     1.1,
+     1.1
+    ],
+    "share_by_kind": {
+     "crossing": 0.135,
+     "footway": 0.165,
+     "sidewalk": 0.7
+    },
+    "detour_ratio": 1.13
+   },
+   "no steps, no streets, no curb or incline rule": {
+    "length_m": 1684,
+    "edges": 108,
+    "snap_m": [
+     1.1,
+     1.1
+    ],
+    "share_by_kind": {
+     "crossing": 0.148,
+     "footway": 0.225,
+     "sidewalk": 0.627
+    },
+    "detour_ratio": 1.07
+   }
+  },
+  {
+   "route": "Pulaski Bridge BK -> Pulaski Bridge QN",
+   "straight_line_m": 1037,
+   "distance (every edge)": {
+    "length_m": 1261,
+    "edges": 48,
+    "snap_m": [
+     85.1,
+     28.8
+    ],
+    "share_by_kind": {
+     "crossing": 0.037,
+     "footway": 0.711,
+     "sidewalk": 0.082,
+     "street": 0.17
+    },
+    "detour_ratio": 1.22
+   },
+   "walk (no street centrelines)": {
+    "length_m": 1141,
+    "edges": 55,
+    "snap_m": [
+     95.9,
+     29.5
+    ],
+    "share_by_kind": {
+     "crossing": 0.066,
+     "footway": 0.796,
+     "sidewalk": 0.138
+    },
+    "detour_ratio": 1.1
+   },
+   "wheelchair as shipped in v0.3.1": {
+    "length_m": 1391,
+    "edges": 61,
+    "snap_m": [
+     85.1,
+     28.8
+    ],
+    "share_by_kind": {
+     "crossing": 0.03,
+     "footway": 0.426,
+     "sidewalk": 0.118,
+     "street": 0.426
+    },
+    "detour_ratio": 1.34
+   },
+   "wheelchair, fixed": {
+    "length_m": 14119,
+    "edges": 667,
+    "snap_m": [
+     95.9,
+     29.5
+    ],
+    "share_by_kind": {
+     "crossing": 0.092,
+     "footway": 0.003,
+     "sidewalk": 0.905
+    },
+    "detour_ratio": 13.62
+   },
+   "wheelchair, fixed, no incline limit": {
+    "length_m": 1171,
+    "edges": 60,
+    "snap_m": [
+     95.9,
+     29.5
+    ],
+    "share_by_kind": {
+     "crossing": 0.058,
+     "footway": 0.724,
+     "sidewalk": 0.218
+    },
+    "detour_ratio": 1.13
+   },
+   "no steps, no streets, no curb or incline rule": {
+    "length_m": 1141,
+    "edges": 55,
+    "snap_m": [
+     95.9,
+     29.5
+    ],
+    "share_by_kind": {
+     "crossing": 0.066,
+     "footway": 0.796,
+     "sidewalk": 0.138
+    },
+    "detour_ratio": 1.1
+   }
+  },
+  {
+   "route": "East 103rd St FDR -> Wards Island (footbridge)",
+   "straight_line_m": 384,
+   "distance (every edge)": {
+    "length_m": 740,
+    "edges": 29,
+    "snap_m": [
+     10.7,
+     71.5
+    ],
+    "share_by_kind": {
+     "footway": 1.0
+    },
+    "detour_ratio": 1.93
+   },
+   "walk (no street centrelines)": {
+    "length_m": 740,
+    "edges": 29,
+    "snap_m": [
+     10.7,
+     71.5
+    ],
+    "share_by_kind": {
+     "footway": 1.0
+    },
+    "detour_ratio": 1.93
+   },
+   "wheelchair as shipped in v0.3.1": {
+    "length_m": 6316,
+    "edges": 341,
+    "snap_m": [
+     10.7,
+     71.5
+    ],
+    "share_by_kind": {
+     "crossing": 0.004,
+     "footway": 0.563,
+     "sidewalk": 0.034,
+     "street": 0.399
+    },
+    "detour_ratio": 16.45
+   },
+   "wheelchair, fixed": "NoPath",
+   "wheelchair, fixed, no incline limit": {
+    "length_m": 740,
+    "edges": 29,
+    "snap_m": [
+     10.7,
+     71.5
+    ],
+    "share_by_kind": {
+     "footway": 1.0
+    },
+    "detour_ratio": 1.93
+   },
+   "no steps, no streets, no curb or incline rule": {
+    "length_m": 740,
+    "edges": 29,
+    "snap_m": [
+     10.7,
+     71.5
+    ],
+    "share_by_kind": {
+     "footway": 1.0
+    },
+    "detour_ratio": 1.93
+   }
+  },
+  {
+   "route": "Macombs Dam Bridge MN -> Macombs Dam Bridge BX",
+   "straight_line_m": 804,
+   "distance (every edge)": {
+    "length_m": 935,
+    "edges": 60,
+    "snap_m": [
+     14.8,
+     17.3
+    ],
+    "share_by_kind": {
+     "crossing": 0.005,
+     "footway": 0.088,
+     "sidewalk": 0.279,
+     "street": 0.628
+    },
+    "detour_ratio": 1.16
+   },
+   "walk (no street centrelines)": {
+    "length_m": 990,
+    "edges": 64,
+    "snap_m": [
+     14.8,
+     17.3
+    ],
+    "share_by_kind": {
+     "crossing": 0.07,
+     "footway": 0.083,
+     "sidewalk": 0.847
+    },
+    "detour_ratio": 1.23
+   },
+   "wheelchair as shipped in v0.3.1": {
+    "length_m": 942,
+    "edges": 54,
+    "snap_m": [
+     14.8,
+     17.3
+    ],
+    "share_by_kind": {
+     "crossing": 0.004,
+     "footway": 0.087,
+     "sidewalk": 0.06,
+     "street": 0.848
+    },
+    "detour_ratio": 1.17
+   },
+   "wheelchair, fixed": {
+    "length_m": 8691,
+    "edges": 426,
+    "snap_m": [
+     14.8,
+     17.3
+    ],
+    "share_by_kind": {
+     "crossing": 0.107,
+     "footway": 0.125,
+     "sidewalk": 0.768
+    },
+    "detour_ratio": 10.81
+   },
+   "wheelchair, fixed, no incline limit": {
+    "length_m": 3293,
+    "edges": 207,
+    "snap_m": [
+     14.8,
+     17.3
+    ],
+    "share_by_kind": {
+     "crossing": 0.047,
+     "footway": 0.177,
+     "sidewalk": 0.776
+    },
+    "detour_ratio": 4.1
+   },
+   "no steps, no streets, no curb or incline rule": {
+    "length_m": 990,
+    "edges": 64,
+    "snap_m": [
+     14.8,
+     17.3
+    ],
+    "share_by_kind": {
+     "crossing": 0.07,
+     "footway": 0.083,
+     "sidewalk": 0.847
+    },
+    "detour_ratio": 1.23
+   }
+  },
+  {
+   "route": "Riverbank Park south -> north (elevated)",
+   "straight_line_m": 790,
+   "distance (every edge)": {
+    "length_m": 826,
+    "edges": 22,
+    "snap_m": [
+     73.0,
+     18.5
+    ],
+    "share_by_kind": {
+     "footway": 1.0
+    },
+    "detour_ratio": 1.05
+   },
+   "walk (no street centrelines)": {
+    "length_m": 826,
+    "edges": 22,
+    "snap_m": [
+     73.0,
+     18.5
+    ],
+    "share_by_kind": {
+     "footway": 1.0
+    },
+    "detour_ratio": 1.05
+   },
+   "wheelchair as shipped in v0.3.1": {
+    "length_m": 826,
+    "edges": 22,
+    "snap_m": [
+     73.0,
+     18.5
+    ],
+    "share_by_kind": {
+     "footway": 1.0
+    },
+    "detour_ratio": 1.05
+   },
+   "wheelchair, fixed": {
+    "length_m": 826,
+    "edges": 22,
+    "snap_m": [
+     73.0,
+     18.5
+    ],
+    "share_by_kind": {
+     "footway": 1.0
+    },
+    "detour_ratio": 1.05
+   },
+   "wheelchair, fixed, no incline limit": {
+    "length_m": 826,
+    "edges": 22,
+    "snap_m": [
+     73.0,
+     18.5
+    ],
+    "share_by_kind": {
+     "footway": 1.0
+    },
+    "detour_ratio": 1.05
+   },
+   "no steps, no streets, no curb or incline rule": {
+    "length_m": 826,
+    "edges": 22,
+    "snap_m": [
+     73.0,
+     18.5
+    ],
+    "share_by_kind": {
+     "footway": 1.0
+    },
+    "detour_ratio": 1.05
+   }
+  }
+ ]
+}

@@ -1,0 +1,494 @@
+{
+ "before_file": "release-assets-v0.3.5/nyc-osw.geojson",
+ "after_file": "output/nyc-osw.geojson",
+ "properties_expected_to_move": [
+  "incline",
+  "ext:elevation_m",
+  "ext:elevation_source",
+  "ext:incline_unknown",
+  "ext:pipeline_version",
+  "ext:source_timestamp"
+ ],
+ "features": {
+  "before": 3986649,
+  "after": 3986649,
+  "shared": 3986649,
+  "only_before": 0,
+  "only_after": 0
+ },
+ "by_kind": {
+  "before": {
+   "bare_node": 969231,
+   "curb_ramp": 217679,
+   "sidewalk": 933110,
+   "crossing": 437510,
+   "footway": 449626,
+   "pedestrian_road": 11402,
+   "steps": 15470,
+   "road": 950420,
+   "pedestrian_zone": 2201
+  },
+  "after": {
+   "bare_node": 969231,
+   "curb_ramp": 217679,
+   "sidewalk": 933110,
+   "crossing": 437510,
+   "footway": 449626,
+   "pedestrian_road": 11402,
+   "steps": 15470,
+   "road": 950420,
+   "pedestrian_zone": 2201
+  }
+ },
+ "geometry_differs": 0,
+ "kind_differs": 0,
+ "other_properties_differ": 0,
+ "nodes": {
+  "elevation_or_its_source_differs": 1497,
+  "by_cause": {
+   "no_data: height changed": 15,
+   "no_data: height removed": 182,
+   "tunnel: height removed": 1300
+  },
+  "examples [id, lon, lat, before, after, source before, source after]": {
+   "no_data: height removed": [
+    [
+     "6457b6c4a88a5825",
+     -73.8359481,
+     40.8950605,
+     0.0,
+     null,
+     null,
+     null
+    ],
+    [
+     "164e008a67441832",
+     -74.0160946,
+     40.7205154,
+     0.0,
+     null,
+     null,
+     null
+    ],
+    [
+     "082895f44cfcf977",
+     -74.0150159,
+     40.7214755,
+     0.0,
+     null,
+     null,
+     null
+    ],
+    [
+     "7740491640c9e068",
+     -73.9421334,
+     40.583154,
+     0.0,
+     null,
+     null,
+     null
+    ],
+    [
+     "3e7f90744dd11341",
+     -73.7965336,
+     40.8053803,
+     0.0,
+     null,
+     null,
+     null
+    ],
+    [
+     "ffb67579b657fb1f",
+     -74.0160634,
+     40.7205794,
+     0.0,
+     null,
+     null,
+     null
+    ],
+    [
+     "ef421782715daebb",
+     -74.0020594,
+     40.6923324,
+     0.0,
+     null,
+     null,
+     null
+    ],
+    [
+     "eeccdab4487e6014",
+     -73.8358483,
+     40.895046,
+     0.0,
+     null,
+     null,
+     null
+    ]
+   ],
+   "tunnel: height removed": [
+    [
+     "64a85bdac4aced32",
+     -73.9903434,
+     40.7565023,
+     13.4,
+     null,
+     null,
+     null
+    ],
+    [
+     "f19a8320ab296201",
+     -73.9784983,
+     40.7944171,
+     4.1,
+     null,
+     null,
+     null
+    ],
+    [
+     "2c34b293fb17b52e",
+     -73.9770004,
+     40.7543491,
+     18.9,
+     null,
+     null,
+     null
+    ],
+    [
+     "ec8114d8bed42c38",
+     -73.9908533,
+     40.7561894,
+     12.6,
+     null,
+     null,
+     null
+    ],
+    [
+     "3497f4e0def36e30",
+     -73.9826988,
+     40.7664888,
+     22.7,
+     null,
+     null,
+     null
+    ],
+    [
+     "6d5dc84298385553",
+     -73.9912936,
+     40.7347663,
+     12.6,
+     null,
+     null,
+     null
+    ],
+    [
+     "37a855ff114d8892",
+     -73.9895247,
+     40.7476424,
+     12.7,
+     null,
+     null,
+     null
+    ],
+    [
+     "656b332fbcb88f8e",
+     -74.0087812,
+     40.7139637,
+     9.3,
+     null,
+     null,
+     null
+    ]
+   ],
+   "no_data: height changed": [
+    [
+     "92faf75863316079",
+     -73.9447445,
+     40.5835335,
+     2.3,
+     2.5,
+     null,
+     null
+    ],
+    [
+     "7798e5f6a9734fcd",
+     -74.0146396,
+     40.7214308,
+     1.1,
+     1.8,
+     null,
+     null
+    ],
+    [
+     "61026be8244031b5",
+     -74.0128675,
+     40.691603,
+     -0.6,
+     -0.9,
+     null,
+     null
+    ],
+    [
+     "f49e508ad9d8d3c9",
+     -73.9468916,
+     40.5835786,
+     1.9,
+     2.2,
+     null,
+     null
+    ],
+    [
+     "33a9c9280ad9e74c",
+     -74.0148151,
+     40.7213819,
+     1.5,
+     1.9,
+     null,
+     null
+    ],
+    [
+     "8734532420ad55f1",
+     -74.0128616,
+     40.6915981,
+     -0.4,
+     -0.9,
+     null,
+     null
+    ],
+    [
+     "81dc734eee24a177",
+     -74.1984914,
+     40.5130348,
+     -0.3,
+     -1.0,
+     null,
+     null
+    ],
+    [
+     "b733dd19a97283b0",
+     -73.9624823,
+     40.8191828,
+     -0.2,
+     -0.3,
+     null,
+     null
+    ]
+   ]
+  },
+  "nodes_only_on_tunnel_edges": 1308,
+  "exactly_zero": {
+   "before": 218,
+   "after": 39
+  },
+  "without_elevation": {
+   "before": 50,
+   "after": 1532
+  }
+ },
+ "edges": {
+  "incline_differs": 1422,
+  "by_cause": {
+   "marked ext:incline_unknown: incline removed (crossing)": 76,
+   "marked ext:incline_unknown: incline removed (footway)": 590,
+   "marked ext:incline_unknown: incline removed (pedestrian_road)": 4,
+   "marked ext:incline_unknown: incline removed (road)": 202,
+   "marked ext:incline_unknown: incline removed (sidewalk)": 202,
+   "near a node whose height differs: incline changed (crossing)": 2,
+   "near a node whose height differs: incline changed (footway)": 20,
+   "near a node whose height differs: incline changed (road)": 2,
+   "near a node whose height differs: incline changed (sidewalk)": 14,
+   "near a node whose height differs: incline changed (steps)": 10,
+   "near a node whose height differs: incline removed (footway)": 198,
+   "near a node whose height differs: incline removed (road)": 64,
+   "near a node whose height differs: incline removed (steps)": 38
+  },
+  "examples [id, before, after]": {
+   "near a node whose height differs: incline removed": [
+    [
+     "809b62e9b52f0b96",
+     -0.3003,
+     null
+    ],
+    [
+     "5993d6737c731101",
+     0.1142,
+     null
+    ],
+    [
+     "1452e86631210799",
+     0.0877,
+     null
+    ],
+    [
+     "cedf9cae1d7445e1",
+     0.0,
+     null
+    ],
+    [
+     "1a84ad0b87e42f26",
+     0.0,
+     null
+    ],
+    [
+     "b3cdc31b296f7aaa",
+     -0.0345,
+     null
+    ],
+    [
+     "f5ba4412b12aeb0e",
+     0.0,
+     null
+    ],
+    [
+     "74d7dad2be7aa562",
+     0.0063,
+     null
+    ]
+   ],
+   "marked ext:incline_unknown: incline removed": [
+    [
+     "2ede764b260e33c6",
+     -0.6652,
+     null
+    ],
+    [
+     "6c31e35812550e14",
+     -0.6538,
+     null
+    ],
+    [
+     "6e956c730b75b4ad",
+     -0.7127,
+     null
+    ],
+    [
+     "9bfed38bb9093abc",
+     0.6462,
+     null
+    ],
+    [
+     "68074becd5626e0c",
+     0.7298,
+     null
+    ],
+    [
+     "cf70c947328ed8ab",
+     -0.806,
+     null
+    ],
+    [
+     "24fb2ec98ecac330",
+     -0.5374,
+     null
+    ],
+    [
+     "387745d5a49d37c7",
+     -0.6081,
+     null
+    ]
+   ],
+   "near a node whose height differs: incline changed": [
+    [
+     "e90558aef8ca0fde",
+     -0.0066,
+     -0.0036
+    ],
+    [
+     "c084e1a2391488cf",
+     0.0091,
+     -0.0012
+    ],
+    [
+     "e6537970ec4b772e",
+     0.0055,
+     0.0006
+    ],
+    [
+     "b7471701a9013d3f",
+     0.1655,
+     -0.0133
+    ],
+    [
+     "66546113ee3373b3",
+     -0.1655,
+     0.0133
+    ],
+    [
+     "c7ace8986bab5049",
+     0.4406,
+     0.6598
+    ],
+    [
+     "b47d7b8ab60e51c0",
+     -0.0055,
+     -0.0006
+    ],
+    [
+     "2213ef1e63bc2854",
+     0.0006,
+     0.0004
+    ]
+   ]
+  },
+  "marked_ext:incline_unknown": {
+   "after": 2068,
+   "by_kind": {
+    "sidewalk": 378,
+    "crossing": 138,
+    "steps": 202,
+    "footway": 1008,
+    "pedestrian_road": 6,
+    "road": 336
+   },
+   "by_structure": {
+    "none": 1728,
+    "bridge": 258,
+    "elevated": 82
+   },
+   "what_v0.3.5_had": {
+    "no incline (over 100%)": 994,
+    "an incline of 50% or more": 1074
+   }
+  },
+  "at_50pct_or_steeper": {
+   "before": 1482,
+   "after": 410
+  },
+  "at_50pct_or_steeper_not_steps_not_on_a_structure": {
+   "before": 926,
+   "after": 0
+  },
+  "at_50pct_or_steeper_not_steps": {
+   "before": 1076,
+   "after": 0
+  },
+  "with_incline": {
+   "before": 2793720,
+   "after": 2792346
+  },
+  "incline_same_on_shared_edges": 2796116,
+  "incline_same_by_kind": {
+   "crossing": 437432,
+   "footway": 448818,
+   "road": 950152,
+   "sidewalk": 932894,
+   "steps": 15422,
+   "pedestrian_road": 11398
+  },
+  "incline_differs_by_kind": {
+   "road": 268,
+   "crossing": 78,
+   "footway": 808,
+   "sidewalk": 216,
+   "steps": 48,
+   "pedestrian_road": 4
+  }
+ },
+ "unchanged": {
+  "curb_ramps": {
+   "before": 217679,
+   "after": 217679,
+   "shared_with_every_other_property_equal": 217679
+  },
+  "note": "width, surface, names, ramp fields and every property not listed in properties_expected_to_move are covered by other_properties_differ; geometry by geometry_differs"
+ }
+}

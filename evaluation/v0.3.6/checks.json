@@ -1,0 +1,806 @@
+{
+ "input": "output/nyc-osw.geojson",
+ "root": {
+  "$schema": "https://sidewalks.washington.edu/opensidewalks/0.3/schema.json",
+  "type": "FeatureCollection",
+  "dataSource": {
+   "name": "OpenStreetMap, NYC DOT Pedestrian Ramp Locations, NYC Planimetric Sidewalks, NYC 2017 LiDAR (terrain model and point clouds)",
+   "url": "https://github.com/msradam/opensidewalks-nyc",
+   "license": "ODbL-1.0",
+   "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
+   "attribution": "Pedestrian network from OpenSidewalks NYC, an independent dataset in the OpenSidewalks Schema, ODbL-1.0. Map data \u00a9 OpenStreetMap contributors (openstreetmap.org/copyright). Also from NYC DOT and NYC OTI data on NYC Open Data, and LiDAR from NYS GIS and NOAA.",
+   "osmExtract": {
+    "url": "https://download.geofabrik.de/north-america/us/new-york-261001.osm.pbf",
+    "sha256": "1214968b2c988e13ee6a6bde6b9c9891337a588475b7fd2ac1939e175073d8b7",
+    "dataTimestamp": "2026-10-01T20:22:06Z"
+   }
+  },
+  "dataTimestamp": "2026-10-01T20:22:06Z",
+  "pipelineVersion": {
+   "name": "opensidewalks-nyc",
+   "version": "0.3.6+nyc.1",
+   "url": "https://github.com/msradam/opensidewalks-nyc/tree/3383c6a",
+   "gitSHA": "3383c6a",
+   "builtAt": "2026-10-05T05:27:23.490784+00:00"
+  }
+ },
+ "counts": {
+  "features": 3986649,
+  "nodes": 1186910,
+  "edges": 2797538,
+  "zones": 2201,
+  "zones_by_osm_highway": {
+   "pedestrian": 1936,
+   "footway": 262,
+   "path": 3
+  },
+  "zones_by_borough": {
+   "MN": 1460,
+   "BK": 398,
+   "QN": 160,
+   "BX": 122,
+   "SI": 61
+  },
+  "zone_ring_vertices": {
+   "sum": 41826,
+   "median": 12.0,
+   "max": 256
+  },
+  "edges_by_kind": {
+   "street": 950420,
+   "sidewalk": 933110,
+   "footway": 461028,
+   "crossing": 437510,
+   "steps": 15470
+  },
+  "edges_by_source": {
+   "osm_walk": 2797538
+  },
+  "edges_by_borough": {
+   "QN": 936810,
+   "BK": 643852,
+   "SI": 524350,
+   "BX": 347890,
+   "MN": 344636
+  },
+  "street_edges_by_highway": {
+   "residential": 418888,
+   "service": 289378,
+   "secondary": 89644,
+   "tertiary": 71658,
+   "primary": 58632,
+   "unclassified": 21042,
+   "living_street": 1178
+  },
+  "pedestrian_road_edges": 11402,
+  "crossing_markings": {
+   "zebra": 227508,
+   "yes": 64992,
+   "no": 57616,
+   "ladder": 44206,
+   "none": 37504,
+   "lines": 3058,
+   "ladder:skewed": 1766,
+   "surface": 732,
+   "zebra:paired": 38,
+   "ladder:paired": 28,
+   "dashes": 24,
+   "pictograms": 22,
+   "dots": 12,
+   "lines:paired": 4
+  },
+  "foot_by_kind": {
+   "crossing": {
+    "none": 435756,
+    "designated": 1132,
+    "yes": 614,
+    "private": 8
+   },
+   "footway": {
+    "none": 401922,
+    "yes": 29572,
+    "designated": 28092,
+    "private": 950,
+    "permissive": 492
+   },
+   "sidewalk": {
+    "none": 931812,
+    "yes": 1150,
+    "designated": 118,
+    "private": 26,
+    "permissive": 4
+   },
+   "steps": {
+    "none": 14976,
+    "yes": 448,
+    "designated": 46
+   },
+   "street": {
+    "none": 937758,
+    "yes": 8988,
+    "use_sidepath": 1714,
+    "designated": 1252,
+    "permissive": 482,
+    "private": 226
+   }
+  },
+  "duplicate_node_ids": 0,
+  "duplicate_edge_ids": 0
+ },
+ "form": {
+  "coordinates_over_7_decimals": 0,
+  "edges_with_unresolved_node": 0,
+  "zones_with_unresolved_node": 0,
+  "zones_whose_ring_vertex_is_off_its_node": 0,
+  "self_loop_edges": 0,
+  "zero_length_edges": 0,
+  "edges_over_500m": 84,
+  "edge_ends_off_their_node": 0
+ },
+ "edge_length_m": {
+  "p01": 0.7,
+  "p05": 1.28,
+  "p50": 7.4,
+  "p95": 92.66,
+  "p99": 203.49,
+  "max": 1134.0
+ },
+ "one_direction_only": {},
+ "provenance": {
+  "edges_with_source": 2797538,
+  "edges_with_timestamp": 2797538,
+  "nodes_with_source": 1186910,
+  "nodes_with_timestamp": 217679,
+  "osm_edges_with_osm_id": 2797538,
+  "osm_edges": 2797538
+ },
+ "nodes_by_borough_polygon": {
+  "QN": 380966,
+  "BK": 247745,
+  "SI": 233976,
+  "MN": 165614,
+  "BX": 158127,
+  "outside": 482
+ },
+ "elevation": {
+  "BK": {
+   "nodes": 247745,
+   "with_elevation": 247521,
+   "exactly_zero": 6,
+   "share_zero": 0.0,
+   "min": -3.3,
+   "max": 62.6,
+   "median": 8.7
+  },
+  "BX": {
+   "nodes": 158127,
+   "with_elevation": 157998,
+   "exactly_zero": 3,
+   "share_zero": 0.0,
+   "min": -1.7,
+   "max": 84.9,
+   "median": 15.8
+  },
+  "MN": {
+   "nodes": 165614,
+   "with_elevation": 164669,
+   "exactly_zero": 22,
+   "share_zero": 0.0001,
+   "min": -10.5,
+   "max": 80.5,
+   "median": 8.5
+  },
+  "QN": {
+   "nodes": 380966,
+   "with_elevation": 380783,
+   "exactly_zero": 8,
+   "share_zero": 0.0,
+   "min": -3.4,
+   "max": 79.4,
+   "median": 14.3
+  },
+  "SI": {
+   "nodes": 233976,
+   "with_elevation": 233932,
+   "exactly_zero": 0,
+   "share_zero": 0.0,
+   "min": -1.5,
+   "max": 122.4,
+   "median": 15.9
+  },
+  "outside": {
+   "nodes": 482,
+   "with_elevation": 475,
+   "exactly_zero": 0,
+   "share_zero": 0.0,
+   "min": 0.9,
+   "max": 82.5,
+   "median": 25.0
+  },
+  "all": {
+   "nodes": 1186910,
+   "with_elevation": 1185378,
+   "exactly_zero": 39,
+   "share_zero": 0.0,
+   "min": -10.5,
+   "max": 122.4,
+   "median": 12.4
+  }
+ },
+ "incline": {
+  "crossing": {
+   "edges": 437510,
+   "with_incline": 437372,
+   "share_with_incline": 0.9997,
+   "exactly_zero": 1224,
+   "share_zero": 0.0028,
+   "p01": -0.0467,
+   "p50_abs": 0.0109,
+   "p99": 0.0467,
+   "share_abs_over_5pct": 0.0154,
+   "share_outside_wheelchair_limits": 0.0017
+  },
+  "footway": {
+   "edges": 461028,
+   "with_incline": 459062,
+   "share_with_incline": 0.9957,
+   "exactly_zero": 2448,
+   "share_zero": 0.0053,
+   "p01": -0.1382,
+   "p50_abs": 0.0127,
+   "p99": 0.1382,
+   "share_abs_over_5pct": 0.1284,
+   "share_outside_wheelchair_limits": 0.0476
+  },
+  "sidewalk": {
+   "edges": 933110,
+   "with_incline": 932560,
+   "share_with_incline": 0.9994,
+   "exactly_zero": 4220,
+   "share_zero": 0.0045,
+   "p01": -0.0664,
+   "p50_abs": 0.0075,
+   "p99": 0.0664,
+   "share_abs_over_5pct": 0.0429,
+   "share_outside_wheelchair_limits": 0.0078
+  },
+  "steps": {
+   "edges": 15470,
+   "with_incline": 14062,
+   "share_with_incline": 0.909,
+   "exactly_zero": 76,
+   "share_zero": 0.0054,
+   "p01": -0.5639,
+   "p50_abs": 0.1427,
+   "p99": 0.5639,
+   "share_abs_over_5pct": 0.7423,
+   "share_outside_wheelchair_limits": 0.6369
+  },
+  "street": {
+   "edges": 950420,
+   "with_incline": 949290,
+   "share_with_incline": 0.9988,
+   "exactly_zero": 3860,
+   "share_zero": 0.0041,
+   "p01": -0.0684,
+   "p50_abs": 0.0091,
+   "p99": 0.0684,
+   "share_abs_over_5pct": 0.0456,
+   "share_outside_wheelchair_limits": 0.0087
+  },
+  "all": {
+   "edges": 2797538,
+   "with_incline": 2792346,
+   "share_with_incline": 0.9981,
+   "exactly_zero": 11828,
+   "share_zero": 0.0042,
+   "p01": -0.0833,
+   "p50_abs": 0.0093,
+   "p99": 0.0833,
+   "share_abs_over_5pct": 0.0571,
+   "share_outside_wheelchair_limits": 0.0169
+  }
+ },
+ "incline_outside_limits_by_edge_length": {
+  "0 to 2 m": {
+   "edges": 295238,
+   "share_outside": 0.0118
+  },
+  "2 to 5 m": {
+   "edges": 493558,
+   "share_outside": 0.0114
+  },
+  "5 to 10 m": {
+   "edges": 442796,
+   "share_outside": 0.023
+  },
+  "10 to 20 m": {
+   "edges": 195064,
+   "share_outside": 0.0308
+  },
+  "20 to 50 m": {
+   "edges": 178142,
+   "share_outside": 0.0191
+  },
+  "50 to inf m": {
+   "edges": 224196,
+   "share_outside": 0.005
+  }
+ },
+ "incline_by_borough": {
+  "BK": {
+   "edges": 443254,
+   "share_with_incline": 0.9988,
+   "share_zero": 0.0049
+  },
+  "BX": {
+   "edges": 204430,
+   "share_with_incline": 0.998,
+   "share_zero": 0.0034
+  },
+  "MN": {
+   "edges": 260782,
+   "share_with_incline": 0.9917,
+   "share_zero": 0.005
+  },
+  "QN": {
+   "edges": 594880,
+   "share_with_incline": 0.9987,
+   "share_zero": 0.0048
+  },
+  "SI": {
+   "edges": 343772,
+   "share_with_incline": 0.9995,
+   "share_zero": 0.0028
+  }
+ },
+ "heights": {
+  "plain_edges_at_stair_pitch_or_steeper": 0,
+  "edges_with_incline_beyond_1": 0,
+  "edges_marked_incline_unknown": 2068,
+  "marked_by_kind": {
+   "footway": 1014,
+   "sidewalk": 378,
+   "street": 336,
+   "steps": 202,
+   "crossing": 138
+  },
+  "marked_by_structure": {
+   "none": 1728,
+   "bridge": 258,
+   "elevated": 82
+  },
+  "marked_edges_that_carry_an_incline": 0,
+  "edges_without_incline": 5192,
+  "edges_without_incline_by_reason": {
+   "tunnel edge": 2762,
+   "marked ext:incline_unknown": 2068,
+   "an end has no height": 362
+  },
+  "nodes_only_on_tunnel_edges": 1308,
+  "of_those_on_a_zone_outline": 8,
+  "nodes_inside_a_tunnel_with_a_height": 0,
+  "nodes_without_a_height": 1532,
+  "terrain_no_data": {
+   "terrain_nodes_checked": 1172508,
+   "nodes_with_a_no_data_pixel_among_their_four": 220,
+   "of_those_with_no_height": 203,
+   "of_those_with_a_height": 17,
+   "heights_that_match_the_blend_with_no_data_zeros": 0,
+   "nodes_in_a_tile_with_no_no_data_pixel_and_no_height": 1327
+  }
+ },
+ "structure": {
+  "edges_by_structure": {
+   "none": 2776454,
+   "bridge": 14604,
+   "elevated": 3718,
+   "tunnel": 2762
+  },
+  "share_with_incline_by_structure": {
+   "bridge": 0.9785,
+   "elevated": 0.9779,
+   "none": 0.9993,
+   "tunnel": 0.0
+  },
+  "nodes_by_elevation_source": {
+   "terrain model or none": 1172510,
+   "lidar_2017": 13940,
+   "interpolated": 415,
+   "lidar_2014": 45
+  },
+  "structure_nodes_without_elevation": 48,
+  "edges_touching_a_deck_node": 33026,
+  "of_those_3m_or_longer_and_steeper_than_15pct_raw": 1582,
+  "deck_elevation_m": {
+   "min": -2.5,
+   "max": 109.7
+  }
+ },
+ "components": {
+  "pedestrian_nodes": 853644,
+  "pedestrian_edges": 1847118,
+  "zone_ring_edges": 41826,
+  "components": 4975,
+  "largest": 611968,
+  "largest_share": 0.7169,
+  "next_five": [
+   136141,
+   16674,
+   11456,
+   5483,
+   4251
+  ],
+  "components_of_10_or_more_nodes": 1110,
+  "by_borough": {
+   "BK": {
+    "pedestrian_nodes": 193426,
+    "in_citywide_largest": 186302,
+    "share_in_citywide_largest": 0.9632,
+    "largest_component_of_this_borough_is_citywide_largest": true,
+    "share_in_own_largest": 0.9632
+   },
+   "BX": {
+    "pedestrian_nodes": 94603,
+    "in_citywide_largest": 81584,
+    "share_in_citywide_largest": 0.8624,
+    "largest_component_of_this_borough_is_citywide_largest": true,
+    "share_in_own_largest": 0.8624
+   },
+   "MN": {
+    "pedestrian_nodes": 137125,
+    "in_citywide_largest": 122809,
+    "share_in_citywide_largest": 0.8956,
+    "largest_component_of_this_borough_is_citywide_largest": true,
+    "share_in_own_largest": 0.8956
+   },
+   "QN": {
+    "pedestrian_nodes": 262685,
+    "in_citywide_largest": 221222,
+    "share_in_citywide_largest": 0.8422,
+    "largest_component_of_this_borough_is_citywide_largest": true,
+    "share_in_own_largest": 0.8422
+   },
+   "SI": {
+    "pedestrian_nodes": 165663,
+    "in_citywide_largest": 0,
+    "share_in_citywide_largest": 0.0,
+    "largest_component_of_this_borough_is_citywide_largest": false,
+    "share_in_own_largest": 0.8218
+   },
+   "outside": {
+    "pedestrian_nodes": 142,
+    "in_citywide_largest": 51,
+    "share_in_citywide_largest": 0.3592,
+    "largest_component_of_this_borough_is_citywide_largest": true,
+    "share_in_own_largest": 0.3592
+   }
+  }
+ },
+ "borough_crossing_pedestrian_edges": {
+  "edges": 352,
+  "by_pair": {
+   "BK and QN": 286,
+   "BX and MN": 52,
+   "BK and MN": 8,
+   "MN and QN": 6
+  },
+  "named_crossings": [
+   {
+    "boroughs": "BK and MN",
+    "name": "(unnamed)",
+    "edges": 4,
+    "in_citywide_largest_component": true,
+    "lon": -73.96159,
+    "lat": 40.73087
+   },
+   {
+    "boroughs": "BK and MN",
+    "name": "Manhattan Bridge Pedestrian Path",
+    "edges": 2,
+    "in_citywide_largest_component": true,
+    "lon": -73.98966,
+    "lat": 40.70505
+   },
+   {
+    "boroughs": "BK and MN",
+    "name": "Williamsburg Bridge Footpath",
+    "edges": 2,
+    "in_citywide_largest_component": true,
+    "lon": -73.96971,
+    "lat": 40.71279
+   },
+   {
+    "boroughs": "BK and QN",
+    "name": "(unnamed)",
+    "edges": 262,
+    "in_citywide_largest_component": true,
+    "lon": -73.89295,
+    "lat": 40.69148
+   },
+   {
+    "boroughs": "BK and QN",
+    "name": "Highland Park Greenway",
+    "edges": 14,
+    "in_citywide_largest_component": true,
+    "lon": -73.88728,
+    "lat": 40.68618
+   },
+   {
+    "boroughs": "BK and QN",
+    "name": "Jamaica Bay Wildlife Refuge - West Pond",
+    "edges": 4,
+    "in_citywide_largest_component": true,
+    "lon": -73.83356,
+    "lat": 40.61749
+   },
+   {
+    "boroughs": "BK and QN",
+    "name": "Jamaica Bay Greenway",
+    "edges": 2,
+    "in_citywide_largest_component": true,
+    "lon": -73.86068,
+    "lat": 40.65444
+   },
+   {
+    "boroughs": "BK and QN",
+    "name": "Kosciuszko Bridge",
+    "edges": 2,
+    "in_citywide_largest_component": true,
+    "lon": -73.92913,
+    "lat": 40.72792
+   },
+   {
+    "boroughs": "BK and QN",
+    "name": "Pulaski Bridge",
+    "edges": 2,
+    "in_citywide_largest_component": true,
+    "lon": -73.95276,
+    "lat": 40.73926
+   },
+   {
+    "boroughs": "BX and MN",
+    "name": "(unnamed)",
+    "edges": 38,
+    "in_citywide_largest_component": true,
+    "lon": -73.91611,
+    "lat": 40.85546
+   },
+   {
+    "boroughs": "BX and MN",
+    "name": "145th Street Bridge",
+    "edges": 4,
+    "in_citywide_largest_component": true,
+    "lon": -73.93311,
+    "lat": 40.81951
+   },
+   {
+    "boroughs": "BX and MN",
+    "name": "3rd Avenue Bridge",
+    "edges": 4,
+    "in_citywide_largest_component": true,
+    "lon": -73.93185,
+    "lat": 40.80785
+   },
+   {
+    "boroughs": "BX and MN",
+    "name": "High Bridge",
+    "edges": 2,
+    "in_citywide_largest_component": true,
+    "lon": -73.93038,
+    "lat": 40.84234
+   },
+   {
+    "boroughs": "BX and MN",
+    "name": "Madison Avenue Bridge",
+    "edges": 2,
+    "in_citywide_largest_component": true,
+    "lon": -73.93316,
+    "lat": 40.81404
+   },
+   {
+    "boroughs": "BX and MN",
+    "name": "Randall's Island Connector",
+    "edges": 2,
+    "in_citywide_largest_component": true,
+    "lon": -73.9163,
+    "lat": 40.79778
+   },
+   {
+    "boroughs": "MN and QN",
+    "name": "(unnamed)",
+    "edges": 4,
+    "in_citywide_largest_component": true,
+    "lon": -73.93533,
+    "lat": 40.77089
+   },
+   {
+    "boroughs": "MN and QN",
+    "name": "Ed Koch Queensboro Bridge Outer Roadway",
+    "edges": 2,
+    "in_citywide_largest_component": true,
+    "lon": -73.95482,
+    "lat": 40.75689
+   }
+  ]
+ },
+ "curb": {
+  "survey_rows": 217679,
+  "curb_nodes": 217679,
+  "distinct_ramp_ids": 217679,
+  "ramp_ids_not_in_survey": 0,
+  "survey_ramps_missing_from_file": 0,
+  "attached_to_any_edge": 181499,
+  "attached_to_pedestrian_edge": 181499,
+  "attached_to_crossing": 126152,
+  "share_attached_to_pedestrian_edge": 0.8338,
+  "tactile_in_file": {
+   "no": 128911,
+   "yes": 88624,
+   "untagged": 144
+  },
+  "survey_dws": {
+   "Missing": 128911,
+   "Good Condition": 86520,
+   "Defective": 2021,
+   "Not Applicable": 144,
+   "Off Ramp - Good": 59,
+   "Off Ramp-Defective": 24
+  },
+  "tactile_agrees_with_survey": 217679,
+  "tactile_disagrees": 0,
+  "nodes_with_sentinel_slope": 0,
+  "counter_slope_over_100_pct": 0,
+  "dws_condition": {
+   "Missing": 128911,
+   "Good Condition": 86520,
+   "Defective": 2021,
+   "Not Applicable": 144,
+   "Off Ramp - Good": 59,
+   "Off Ramp-Defective": 24
+  },
+  "dws_condition_agrees_with_survey": 217679,
+  "with_running_slope": 212194,
+  "running_within_1_in_12": 157199,
+  "cross_within_1_in_48": 140866,
+  "with_cross_slope": 212111,
+  "crossing_edges": 437510,
+  "crossing_edges_with_curb_node": 279222,
+  "by_borough": {
+   "BK": {
+    "curb_nodes": 61367,
+    "attached_to_pedestrian_edge": 57584,
+    "share": 0.9384,
+    "tactile_yes": 21866,
+    "tactile_no": 39478
+   },
+   "BX": {
+    "curb_nodes": 29303,
+    "attached_to_pedestrian_edge": 17721,
+    "share": 0.6048,
+    "tactile_yes": 10252,
+    "tactile_no": 19003
+   },
+   "MN": {
+    "curb_nodes": 23624,
+    "attached_to_pedestrian_edge": 18612,
+    "share": 0.7878,
+    "tactile_yes": 11496,
+    "tactile_no": 12088
+   },
+   "QN": {
+    "curb_nodes": 79957,
+    "attached_to_pedestrian_edge": 65773,
+    "share": 0.8226,
+    "tactile_yes": 32832,
+    "tactile_no": 47098
+   },
+   "SI": {
+    "curb_nodes": 23326,
+    "attached_to_pedestrian_edge": 21795,
+    "share": 0.9344,
+    "tactile_yes": 12118,
+    "tactile_no": 11202
+   },
+   "outside": {
+    "curb_nodes": 102,
+    "attached_to_pedestrian_edge": 14,
+    "share": 0.1373,
+    "tactile_yes": 60,
+    "tactile_no": 42
+   }
+  },
+  "attached_only_through_a_zone_ring": 330,
+  "source_on_attached_ramps": {
+   "nyc_dot_ramps": 181499
+  }
+ },
+ "nodes_not_on_any_edge": 36180,
+ "nodes_not_on_any_edge_by_source": {
+  "nyc_dot_ramps": 36180
+ },
+ "nodes_only_on_a_zone_ring": 32578,
+ "width": {
+  "sidewalk_edges": 933110,
+  "with_width": 818622,
+  "edges_with_width_0_or_less": 0,
+  "median_m": 3.12,
+  "by_borough": {
+   "BK": {
+    "with_width": 204834,
+    "median_m": 3.44
+   },
+   "BX": {
+    "with_width": 81164,
+    "median_m": 3.62
+   },
+   "MN": {
+    "with_width": 73396,
+    "median_m": 4.26
+   },
+   "QN": {
+    "with_width": 267598,
+    "median_m": 3.07
+   },
+   "SI": {
+    "with_width": 191630,
+    "median_m": 2.57
+   }
+  }
+ },
+ "planimetric_polygons": 50863,
+ "width_vs_transect": {
+  "all": {
+   "n": 5805,
+   "median_transect_m": 3.61,
+   "median_width_m": 3.3,
+   "median_abs_error_m": 0.58,
+   "median_ratio": 0.94
+  },
+  "BK": {
+   "n": 1037,
+   "median_transect_m": 4.11,
+   "median_width_m": 3.43,
+   "median_abs_error_m": 0.79,
+   "median_ratio": 0.87
+  },
+  "BX": {
+   "n": 1262,
+   "median_transect_m": 3.95,
+   "median_width_m": 3.58,
+   "median_abs_error_m": 0.7,
+   "median_ratio": 0.92
+  },
+  "MN": {
+   "n": 1163,
+   "median_transect_m": 4.45,
+   "median_width_m": 4.26,
+   "median_abs_error_m": 0.81,
+   "median_ratio": 0.95
+  },
+  "QN": {
+   "n": 1195,
+   "median_transect_m": 3.41,
+   "median_width_m": 3.07,
+   "median_abs_error_m": 0.54,
+   "median_ratio": 0.93
+  },
+  "SI": {
+   "n": 1148,
+   "median_transect_m": 2.59,
+   "median_width_m": 2.55,
+   "median_abs_error_m": 0.3,
+   "median_ratio": 0.98
+  }
+ },
+ "gap_fill": {
+  "edges_in_graph": 0,
+  "segments": 0,
+  "with_reverse": 0,
+  "km_one_direction": 0.0,
+  "by_borough": {},
+  "ends_on_an_osm_node": 0,
+  "sidecar_file": "output/nyc-gapfill-sidewalks.geojson",
+  "sidecar_features": 2348
+ }
+}

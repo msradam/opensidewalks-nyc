@@ -1,0 +1,46 @@
+{
+ "v0.3.5_directed": {
+  "file": "nyc-osw.graphml.gz",
+  "nodes": 1186910,
+  "edges": 2894188,
+  "edges_with_length_m": 96650,
+  "share": 0.0334,
+  "zone_edges": 96650,
+  "zone_edges_with_length_m": 96650,
+  "sum_of_length_m_km": 833.2,
+  "edges_whose_length_m_is_under_the_straight_distance_between_their_nodes": 0
+ },
+ "v0.3.5_undirected": {
+  "file": "nyc-osw-undirected.graphml.gz",
+  "nodes": 1186910,
+  "edges": 1443112,
+  "edges_with_length_m": 44450,
+  "share": 0.0308,
+  "zone_edges": 44450,
+  "zone_edges_with_length_m": 44450,
+  "sum_of_length_m_km": 393.2,
+  "edges_whose_length_m_is_under_the_straight_distance_between_their_nodes": 0
+ },
+ "v0.3.6_directed": {
+  "file": "nyc-osw.graphml.gz",
+  "nodes": 1186910,
+  "edges": 2894188,
+  "edges_with_length_m": 2894188,
+  "share": 1.0,
+  "zone_edges": 96650,
+  "zone_edges_with_length_m": 96650,
+  "sum_of_length_m_km": 62147.7,
+  "edges_whose_length_m_is_under_the_straight_distance_between_their_nodes": 0
+ },
+ "v0.3.6_undirected": {
+  "file": "nyc-osw-undirected.graphml.gz",
+  "nodes": 1186910,
+  "edges": 1443112,
+  "edges_with_length_m": 1443112,
+  "share": 1.0,
+  "zone_edges": 44450,
+  "zone_edges_with_length_m": 44450,
+  "sum_of_length_m_km": 31049.7,
+  "edges_whose_length_m_is_under_the_straight_distance_between_their_nodes": 0
+ }
+}

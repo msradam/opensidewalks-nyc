@@ -1,0 +1,1042 @@
+{
+ "pedestrian_nodes": 853644,
+ "components": 4975,
+ "bridges": [
+  {
+   "bridge": "Brooklyn Bridge",
+   "from": "MN",
+   "to": "BK",
+   "snap_m": [
+    1,
+    27
+   ],
+   "straight_line_m": 1866,
+   "walk_m": 1921,
+   "ratio": 1.03,
+   "walk_with_street_edges_m": 1921,
+   "ratio_with_street_edges": 1.03,
+   "both_ends_in_largest_component": true,
+   "verdict": "joined on pedestrian edges"
+  },
+  {
+   "bridge": "Manhattan Bridge",
+   "from": "MN",
+   "to": "BK",
+   "snap_m": [
+    12,
+    15
+   ],
+   "straight_line_m": 1944,
+   "walk_m": 2312,
+   "ratio": 1.19,
+   "walk_with_street_edges_m": 2308,
+   "ratio_with_street_edges": 1.19,
+   "both_ends_in_largest_component": true,
+   "verdict": "joined on pedestrian edges"
+  },
+  {
+   "bridge": "Williamsburg Bridge",
+   "from": "MN",
+   "to": "BK",
+   "snap_m": [
+    3,
+    17
+   ],
+   "straight_line_m": 2298,
+   "walk_m": 2450,
+   "ratio": 1.07,
+   "walk_with_street_edges_m": 2450,
+   "ratio_with_street_edges": 1.07,
+   "both_ends_in_largest_component": true,
+   "verdict": "joined on pedestrian edges"
+  },
+  {
+   "bridge": "Ed Koch Queensboro Bridge",
+   "from": "MN",
+   "to": "QN",
+   "snap_m": [
+    28,
+    29
+   ],
+   "straight_line_m": 2332,
+   "walk_m": 2532,
+   "ratio": 1.09,
+   "walk_with_street_edges_m": 2515,
+   "ratio_with_street_edges": 1.08,
+   "both_ends_in_largest_component": true,
+   "verdict": "joined on pedestrian edges"
+  },
+  {
+   "bridge": "Roosevelt Island Bridge",
+   "from": "MN",
+   "to": "QN",
+   "snap_m": [
+    6,
+    63
+   ],
+   "straight_line_m": 594,
+   "walk_m": 1034,
+   "ratio": 1.74,
+   "walk_with_street_edges_m": 1034,
+   "ratio_with_street_edges": 1.74,
+   "both_ends_in_largest_component": true,
+   "verdict": "joined on pedestrian edges"
+  },
+  {
+   "bridge": "RFK Triborough Bridge, Queens span",
+   "from": "MN",
+   "to": "QN",
+   "snap_m": [
+    67,
+    11
+   ],
+   "straight_line_m": 1633,
+   "walk_m": 2916,
+   "ratio": 1.79,
+   "walk_with_street_edges_m": 2913,
+   "ratio_with_street_edges": 1.78,
+   "both_ends_in_largest_component": true,
+   "verdict": "joined on pedestrian edges"
+  },
+  {
+   "bridge": "RFK Triborough Bridge, Bronx span",
+   "from": "MN",
+   "to": "BX",
+   "snap_m": [
+    118,
+    19
+   ],
+   "straight_line_m": 597,
+   "walk_m": 2484,
+   "ratio": 4.16,
+   "walk_with_street_edges_m": 1222,
+   "ratio_with_street_edges": 2.05,
+   "both_ends_in_largest_component": true,
+   "verdict": "joined only along the street centreline"
+  },
+  {
+   "bridge": "Randall's Island Connector",
+   "from": "MN",
+   "to": "BX",
+   "snap_m": [
+    5,
+    5
+   ],
+   "straight_line_m": 397,
+   "walk_m": 397,
+   "ratio": 1.0,
+   "walk_with_street_edges_m": 397,
+   "ratio_with_street_edges": 1.0,
+   "both_ends_in_largest_component": true,
+   "verdict": "joined on pedestrian edges"
+  },
+  {
+   "bridge": "Willis Avenue Bridge",
+   "from": "MN",
+   "to": "BX",
+   "snap_m": [
+    7,
+    28
+   ],
+   "straight_line_m": 564,
+   "walk_m": 795,
+   "ratio": 1.41,
+   "walk_with_street_edges_m": 795,
+   "ratio_with_street_edges": 1.41,
+   "both_ends_in_largest_component": true,
+   "verdict": "joined on pedestrian edges"
+  },
+  {
+   "bridge": "Third Avenue Bridge",
+   "from": "MN",
+   "to": "BX",
+   "snap_m": [
+    37,
+    5
+   ],
+   "straight_line_m": 414,
+   "walk_m": 545,
+   "ratio": 1.32,
+   "walk_with_street_edges_m": 545,
+   "ratio_with_street_edges": 1.32,
+   "both_ends_in_largest_component": true,
+   "verdict": "joined on pedestrian edges"
+  },
+  {
+   "bridge": "Madison Avenue Bridge",
+   "from": "MN",
+   "to": "BX",
+   "snap_m": [
+    11,
+    54
+   ],
+   "straight_line_m": 476,
+   "walk_m": 626,
+   "ratio": 1.31,
+   "walk_with_street_edges_m": 623,
+   "ratio_with_street_edges": 1.31,
+   "both_ends_in_largest_component": true,
+   "verdict": "joined on pedestrian edges"
+  },
+  {
+   "bridge": "145th Street Bridge",
+   "from": "MN",
+   "to": "BX",
+   "snap_m": [
+    26,
+    27
+   ],
+   "straight_line_m": 545,
+   "walk_m": 2474,
+   "ratio": 4.54,
+   "walk_with_street_edges_m": 785,
+   "ratio_with_street_edges": 1.44,
+   "both_ends_in_largest_component": true,
+   "verdict": "joined only along the street centreline"
+  },
+  {
+   "bridge": "Macombs Dam Bridge",
+   "from": "MN",
+   "to": "BX",
+   "snap_m": [
+    24,
+    8
+   ],
+   "straight_line_m": 661,
+   "walk_m": 836,
+   "ratio": 1.26,
+   "walk_with_street_edges_m": 780,
+   "ratio_with_street_edges": 1.18,
+   "both_ends_in_largest_component": true,
+   "verdict": "joined on pedestrian edges"
+  },
+  {
+   "bridge": "High Bridge",
+   "from": "MN",
+   "to": "BX",
+   "snap_m": [
+    24,
+    63
+   ],
+   "straight_line_m": 447,
+   "walk_m": 801,
+   "ratio": 1.79,
+   "walk_with_street_edges_m": 801,
+   "ratio_with_street_edges": 1.79,
+   "both_ends_in_largest_component": true,
+   "verdict": "joined on pedestrian edges"
+  },
+  {
+   "bridge": "Washington Bridge",
+   "from": "MN",
+   "to": "BX",
+   "snap_m": [
+    43,
+    14
+   ],
+   "straight_line_m": 706,
+   "walk_m": 1033,
+   "ratio": 1.46,
+   "walk_with_street_edges_m": 1033,
+   "ratio_with_street_edges": 1.46,
+   "both_ends_in_largest_component": true,
+   "verdict": "joined on pedestrian edges"
+  },
+  {
+   "bridge": "University Heights Bridge",
+   "from": "MN",
+   "to": "BX",
+   "snap_m": [
+    34,
+    63
+   ],
+   "straight_line_m": 397,
+   "walk_m": 827,
+   "ratio": 2.08,
+   "walk_with_street_edges_m": 698,
+   "ratio_with_street_edges": 1.76,
+   "both_ends_in_largest_component": true,
+   "verdict": "joined on pedestrian edges"
+  },
+  {
+   "bridge": "Henry Hudson Bridge",
+   "from": "MN",
+   "to": "BX",
+   "snap_m": [
+    6,
+    2
+   ],
+   "straight_line_m": 639,
+   "walk_m": 908,
+   "ratio": 1.42,
+   "walk_with_street_edges_m": 908,
+   "ratio_with_street_edges": 1.42,
+   "both_ends_in_largest_component": true,
+   "verdict": "joined on pedestrian edges"
+  },
+  {
+   "bridge": "Broadway Bridge (Inwood to Marble Hill, both Manhattan)",
+   "from": "MN",
+   "to": "MN",
+   "snap_m": [
+    2,
+    6
+   ],
+   "straight_line_m": 232,
+   "walk_m": 1282,
+   "ratio": 5.53,
+   "walk_with_street_edges_m": 579,
+   "ratio_with_street_edges": 2.5,
+   "both_ends_in_largest_component": true,
+   "verdict": "joined only along the street centreline"
+  },
+  {
+   "bridge": "Pulaski Bridge",
+   "from": "BK",
+   "to": "QN",
+   "snap_m": [
+    44,
+    20
+   ],
+   "straight_line_m": 944,
+   "walk_m": 1108,
+   "ratio": 1.17,
+   "walk_with_street_edges_m": 1108,
+   "ratio_with_street_edges": 1.17,
+   "both_ends_in_largest_component": true,
+   "verdict": "joined on pedestrian edges"
+  },
+  {
+   "bridge": "Greenpoint Avenue Bridge",
+   "from": "BK",
+   "to": "QN",
+   "snap_m": [
+    4,
+    7
+   ],
+   "straight_line_m": 665,
+   "walk_m": 1099,
+   "ratio": 1.65,
+   "walk_with_street_edges_m": 1080,
+   "ratio_with_street_edges": 1.62,
+   "both_ends_in_largest_component": true,
+   "verdict": "joined on pedestrian edges"
+  },
+  {
+   "bridge": "Kosciuszko Bridge",
+   "from": "BK",
+   "to": "QN",
+   "snap_m": [
+    203,
+    40
+   ],
+   "straight_line_m": 958,
+   "walk_m": 1623,
+   "ratio": 1.69,
+   "walk_with_street_edges_m": 1403,
+   "ratio_with_street_edges": 1.46,
+   "both_ends_in_largest_component": true,
+   "verdict": "joined on pedestrian edges"
+  },
+  {
+   "bridge": "Grand Street Bridge",
+   "from": "BK",
+   "to": "QN",
+   "snap_m": [
+    18,
+    50
+   ],
+   "straight_line_m": 395,
+   "walk_m": 754,
+   "ratio": 1.91,
+   "walk_with_street_edges_m": 753,
+   "ratio_with_street_edges": 1.91,
+   "both_ends_in_largest_component": true,
+   "verdict": "joined on pedestrian edges"
+  },
+  {
+   "bridge": "Marine Parkway Bridge",
+   "from": "BK",
+   "to": "QN",
+   "snap_m": [
+    334,
+    88
+   ],
+   "straight_line_m": 2300,
+   "walk_m": 2573,
+   "ratio": 1.12,
+   "walk_with_street_edges_m": 2571,
+   "ratio_with_street_edges": 1.12,
+   "both_ends_in_largest_component": true,
+   "verdict": "joined on pedestrian edges"
+  }
+ ],
+ "verdicts": {
+  "joined on pedestrian edges": 20,
+  "joined only along the street centreline": 3
+ },
+ "bridges_listed": 23,
+ "crossing_clusters": 36,
+ "clusters_by_pair": {
+  "BK and QN": 19,
+  "BX and MN": 11,
+  "BK and MN": 3,
+  "MN and QN": 3
+ },
+ "clusters_not_in_largest_component": [
+  {
+   "boroughs": "BK and QN",
+   "edges": 4,
+   "lon": -73.89969,
+   "lat": 40.68609,
+   "edge_names": [],
+   "in_largest_component": false,
+   "nearest_listed_bridge": "Grand Street Bridge",
+   "distance_to_it_m": 3809
+  }
+ ],
+ "water_crossing_clusters": [
+  {
+   "boroughs": "BK and MN",
+   "edges": 2,
+   "lon": -73.98966,
+   "lat": 40.70505,
+   "edge_names": [
+    "Manhattan Bridge Pedestrian Path"
+   ],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Manhattan Bridge",
+   "distance_to_it_m": 289
+  },
+  {
+   "boroughs": "BK and MN",
+   "edges": 2,
+   "lon": -73.96971,
+   "lat": 40.71279,
+   "edge_names": [
+    "Williamsburg Bridge Footpath"
+   ],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Williamsburg Bridge",
+   "distance_to_it_m": 324
+  },
+  {
+   "boroughs": "BK and MN",
+   "edges": 4,
+   "lon": -73.96159,
+   "lat": 40.73087,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Pulaski Bridge",
+   "distance_to_it_m": 1125
+  },
+  {
+   "boroughs": "BK and QN",
+   "edges": 2,
+   "lon": -73.88497,
+   "lat": 40.57335,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Marine Parkway Bridge",
+   "distance_to_it_m": 573
+  },
+  {
+   "boroughs": "BK and QN",
+   "edges": 8,
+   "lon": -73.92334,
+   "lat": 40.71333,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Grand Street Bridge",
+   "distance_to_it_m": 247
+  },
+  {
+   "boroughs": "BK and QN",
+   "edges": 2,
+   "lon": -73.92269,
+   "lat": 40.71647,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Grand Street Bridge",
+   "distance_to_it_m": 108
+  },
+  {
+   "boroughs": "BK and QN",
+   "edges": 2,
+   "lon": -73.92913,
+   "lat": 40.72792,
+   "edge_names": [
+    "Kosciuszko Bridge"
+   ],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Kosciuszko Bridge",
+   "distance_to_it_m": 186
+  },
+  {
+   "boroughs": "BK and QN",
+   "edges": 4,
+   "lon": -73.94038,
+   "lat": 40.73328,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Greenpoint Avenue Bridge",
+   "distance_to_it_m": 305
+  },
+  {
+   "boroughs": "BK and QN",
+   "edges": 2,
+   "lon": -73.95276,
+   "lat": 40.73926,
+   "edge_names": [
+    "Pulaski Bridge"
+   ],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Pulaski Bridge",
+   "distance_to_it_m": 115
+  },
+  {
+   "boroughs": "BX and MN",
+   "edges": 6,
+   "lon": -73.9182,
+   "lat": 40.7984,
+   "edge_names": [
+    "Randall's Island Connector"
+   ],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Randall's Island Connector",
+   "distance_to_it_m": 281
+  },
+  {
+   "boroughs": "BX and MN",
+   "edges": 2,
+   "lon": -73.92907,
+   "lat": 40.80352,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Willis Avenue Bridge",
+   "distance_to_it_m": 204
+  },
+  {
+   "boroughs": "BX and MN",
+   "edges": 4,
+   "lon": -73.93185,
+   "lat": 40.80785,
+   "edge_names": [
+    "3rd Avenue Bridge"
+   ],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Third Avenue Bridge",
+   "distance_to_it_m": 87
+  },
+  {
+   "boroughs": "BX and MN",
+   "edges": 2,
+   "lon": -73.93316,
+   "lat": 40.81404,
+   "edge_names": [
+    "Madison Avenue Bridge"
+   ],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Madison Avenue Bridge",
+   "distance_to_it_m": 79
+  },
+  {
+   "boroughs": "BX and MN",
+   "edges": 4,
+   "lon": -73.93311,
+   "lat": 40.81951,
+   "edge_names": [
+    "145th Street Bridge"
+   ],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "145th Street Bridge",
+   "distance_to_it_m": 28
+  },
+  {
+   "boroughs": "BX and MN",
+   "edges": 4,
+   "lon": -73.93307,
+   "lat": 40.82816,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Macombs Dam Bridge",
+   "distance_to_it_m": 12
+  },
+  {
+   "boroughs": "BX and MN",
+   "edges": 2,
+   "lon": -73.93038,
+   "lat": 40.84234,
+   "edge_names": [
+    "High Bridge"
+   ],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "High Bridge",
+   "distance_to_it_m": 24
+  },
+  {
+   "boroughs": "BX and MN",
+   "edges": 4,
+   "lon": -73.92692,
+   "lat": 40.84634,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Washington Bridge",
+   "distance_to_it_m": 30
+  },
+  {
+   "boroughs": "BX and MN",
+   "edges": 2,
+   "lon": -73.91473,
+   "lat": 40.86262,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "University Heights Bridge",
+   "distance_to_it_m": 23
+  },
+  {
+   "boroughs": "BX and MN",
+   "edges": 20,
+   "lon": -73.9082,
+   "lat": 40.87631,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Broadway Bridge (Inwood to Marble Hill, both Manhattan)",
+   "distance_to_it_m": 392
+  },
+  {
+   "boroughs": "BX and MN",
+   "edges": 2,
+   "lon": -73.92189,
+   "lat": 40.87804,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Henry Hudson Bridge",
+   "distance_to_it_m": 119
+  },
+  {
+   "boroughs": "MN and QN",
+   "edges": 2,
+   "lon": -73.95482,
+   "lat": 40.75689,
+   "edge_names": [
+    "Ed Koch Queensboro Bridge Outer Roadway"
+   ],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Ed Koch Queensboro Bridge",
+   "distance_to_it_m": 220
+  },
+  {
+   "boroughs": "MN and QN",
+   "edges": 2,
+   "lon": -73.9449,
+   "lat": 40.76305,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Roosevelt Island Bridge",
+   "distance_to_it_m": 57
+  },
+  {
+   "boroughs": "MN and QN",
+   "edges": 2,
+   "lon": -73.92577,
+   "lat": 40.77874,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "RFK Triborough Bridge, Queens span",
+   "distance_to_it_m": 309
+  }
+ ],
+ "all_clusters": [
+  {
+   "boroughs": "BK and MN",
+   "edges": 2,
+   "lon": -73.98966,
+   "lat": 40.70505,
+   "edge_names": [
+    "Manhattan Bridge Pedestrian Path"
+   ],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Manhattan Bridge",
+   "distance_to_it_m": 289
+  },
+  {
+   "boroughs": "BK and MN",
+   "edges": 2,
+   "lon": -73.96971,
+   "lat": 40.71279,
+   "edge_names": [
+    "Williamsburg Bridge Footpath"
+   ],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Williamsburg Bridge",
+   "distance_to_it_m": 324
+  },
+  {
+   "boroughs": "BK and MN",
+   "edges": 4,
+   "lon": -73.96159,
+   "lat": 40.73087,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Pulaski Bridge",
+   "distance_to_it_m": 1125
+  },
+  {
+   "boroughs": "BK and QN",
+   "edges": 2,
+   "lon": -73.88497,
+   "lat": 40.57335,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Marine Parkway Bridge",
+   "distance_to_it_m": 573
+  },
+  {
+   "boroughs": "BK and QN",
+   "edges": 4,
+   "lon": -73.83376,
+   "lat": 40.61529,
+   "edge_names": [
+    "Jamaica Bay Wildlife Refuge - West Pond"
+   ],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Marine Parkway Bridge",
+   "distance_to_it_m": 6642
+  },
+  {
+   "boroughs": "BK and QN",
+   "edges": 2,
+   "lon": -73.83338,
+   "lat": 40.61934,
+   "edge_names": [
+    "Jamaica Bay Wildlife Refuge - West Pond"
+   ],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Marine Parkway Bridge",
+   "distance_to_it_m": 6979
+  },
+  {
+   "boroughs": "BK and QN",
+   "edges": 6,
+   "lon": -73.86036,
+   "lat": 40.65408,
+   "edge_names": [
+    "Jamaica Bay Greenway"
+   ],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Grand Street Bridge",
+   "distance_to_it_m": 8630
+  },
+  {
+   "boroughs": "BK and QN",
+   "edges": 2,
+   "lon": -73.85761,
+   "lat": 40.6602,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Grand Street Bridge",
+   "distance_to_it_m": 8253
+  },
+  {
+   "boroughs": "BK and QN",
+   "edges": 2,
+   "lon": -73.85572,
+   "lat": 40.66393,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Grand Street Bridge",
+   "distance_to_it_m": 8060
+  },
+  {
+   "boroughs": "BK and QN",
+   "edges": 10,
+   "lon": -73.85685,
+   "lat": 40.66852,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Grand Street Bridge",
+   "distance_to_it_m": 7634
+  },
+  {
+   "boroughs": "BK and QN",
+   "edges": 52,
+   "lon": -73.86412,
+   "lat": 40.68085,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Grand Street Bridge",
+   "distance_to_it_m": 6275
+  },
+  {
+   "boroughs": "BK and QN",
+   "edges": 16,
+   "lon": -73.89048,
+   "lat": 40.68484,
+   "edge_names": [
+    "Highland Park Greenway"
+   ],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Grand Street Bridge",
+   "distance_to_it_m": 4367
+  },
+  {
+   "boroughs": "BK and QN",
+   "edges": 4,
+   "lon": -73.89969,
+   "lat": 40.68609,
+   "edge_names": [],
+   "in_largest_component": false,
+   "nearest_listed_bridge": "Grand Street Bridge",
+   "distance_to_it_m": 3809
+  },
+  {
+   "boroughs": "BK and QN",
+   "edges": 46,
+   "lon": -73.8813,
+   "lat": 40.69003,
+   "edge_names": [
+    "Highland Park Greenway"
+   ],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Grand Street Bridge",
+   "distance_to_it_m": 4503
+  },
+  {
+   "boroughs": "BK and QN",
+   "edges": 4,
+   "lon": -73.86807,
+   "lat": 40.69118,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Grand Street Bridge",
+   "distance_to_it_m": 5350
+  },
+  {
+   "boroughs": "BK and QN",
+   "edges": 34,
+   "lon": -73.90306,
+   "lat": 40.6921,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Grand Street Bridge",
+   "distance_to_it_m": 3090
+  },
+  {
+   "boroughs": "BK and QN",
+   "edges": 88,
+   "lon": -73.91437,
+   "lat": 40.70397,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Grand Street Bridge",
+   "distance_to_it_m": 1466
+  },
+  {
+   "boroughs": "BK and QN",
+   "edges": 8,
+   "lon": -73.92334,
+   "lat": 40.71333,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Grand Street Bridge",
+   "distance_to_it_m": 247
+  },
+  {
+   "boroughs": "BK and QN",
+   "edges": 2,
+   "lon": -73.92269,
+   "lat": 40.71647,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Grand Street Bridge",
+   "distance_to_it_m": 108
+  },
+  {
+   "boroughs": "BK and QN",
+   "edges": 2,
+   "lon": -73.92913,
+   "lat": 40.72792,
+   "edge_names": [
+    "Kosciuszko Bridge"
+   ],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Kosciuszko Bridge",
+   "distance_to_it_m": 186
+  },
+  {
+   "boroughs": "BK and QN",
+   "edges": 4,
+   "lon": -73.94038,
+   "lat": 40.73328,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Greenpoint Avenue Bridge",
+   "distance_to_it_m": 305
+  },
+  {
+   "boroughs": "BK and QN",
+   "edges": 2,
+   "lon": -73.95276,
+   "lat": 40.73926,
+   "edge_names": [
+    "Pulaski Bridge"
+   ],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Pulaski Bridge",
+   "distance_to_it_m": 115
+  },
+  {
+   "boroughs": "BX and MN",
+   "edges": 6,
+   "lon": -73.9182,
+   "lat": 40.7984,
+   "edge_names": [
+    "Randall's Island Connector"
+   ],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Randall's Island Connector",
+   "distance_to_it_m": 281
+  },
+  {
+   "boroughs": "BX and MN",
+   "edges": 2,
+   "lon": -73.92907,
+   "lat": 40.80352,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Willis Avenue Bridge",
+   "distance_to_it_m": 204
+  },
+  {
+   "boroughs": "BX and MN",
+   "edges": 4,
+   "lon": -73.93185,
+   "lat": 40.80785,
+   "edge_names": [
+    "3rd Avenue Bridge"
+   ],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Third Avenue Bridge",
+   "distance_to_it_m": 87
+  },
+  {
+   "boroughs": "BX and MN",
+   "edges": 2,
+   "lon": -73.93316,
+   "lat": 40.81404,
+   "edge_names": [
+    "Madison Avenue Bridge"
+   ],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Madison Avenue Bridge",
+   "distance_to_it_m": 79
+  },
+  {
+   "boroughs": "BX and MN",
+   "edges": 4,
+   "lon": -73.93311,
+   "lat": 40.81951,
+   "edge_names": [
+    "145th Street Bridge"
+   ],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "145th Street Bridge",
+   "distance_to_it_m": 28
+  },
+  {
+   "boroughs": "BX and MN",
+   "edges": 4,
+   "lon": -73.93307,
+   "lat": 40.82816,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Macombs Dam Bridge",
+   "distance_to_it_m": 12
+  },
+  {
+   "boroughs": "BX and MN",
+   "edges": 2,
+   "lon": -73.93038,
+   "lat": 40.84234,
+   "edge_names": [
+    "High Bridge"
+   ],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "High Bridge",
+   "distance_to_it_m": 24
+  },
+  {
+   "boroughs": "BX and MN",
+   "edges": 4,
+   "lon": -73.92692,
+   "lat": 40.84634,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Washington Bridge",
+   "distance_to_it_m": 30
+  },
+  {
+   "boroughs": "BX and MN",
+   "edges": 2,
+   "lon": -73.91473,
+   "lat": 40.86262,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "University Heights Bridge",
+   "distance_to_it_m": 23
+  },
+  {
+   "boroughs": "BX and MN",
+   "edges": 20,
+   "lon": -73.9082,
+   "lat": 40.87631,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Broadway Bridge (Inwood to Marble Hill, both Manhattan)",
+   "distance_to_it_m": 392
+  },
+  {
+   "boroughs": "BX and MN",
+   "edges": 2,
+   "lon": -73.92189,
+   "lat": 40.87804,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Henry Hudson Bridge",
+   "distance_to_it_m": 119
+  },
+  {
+   "boroughs": "MN and QN",
+   "edges": 2,
+   "lon": -73.95482,
+   "lat": 40.75689,
+   "edge_names": [
+    "Ed Koch Queensboro Bridge Outer Roadway"
+   ],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Ed Koch Queensboro Bridge",
+   "distance_to_it_m": 220
+  },
+  {
+   "boroughs": "MN and QN",
+   "edges": 2,
+   "lon": -73.9449,
+   "lat": 40.76305,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "Roosevelt Island Bridge",
+   "distance_to_it_m": 57
+  },
+  {
+   "boroughs": "MN and QN",
+   "edges": 2,
+   "lon": -73.92577,
+   "lat": 40.77874,
+   "edge_names": [],
+   "in_largest_component": true,
+   "nearest_listed_bridge": "RFK Triborough Bridge, Queens span",
+   "distance_to_it_m": 309
+  }
+ ]
+}

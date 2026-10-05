@@ -165,6 +165,9 @@ res["incline_by_borough"] = {b: {"edges": len(d), "share_with_incline": round(fl
 zmap0 = N.set_index("id").elev
 tun = E.structure == "tunnel"
 only_tunnel = (set(E.u[tun]) | set(E.v[tun])) - (set(E.u[~tun]) | set(E.v[~tun]))
+# The outline of a Pedestrian Zone is open ground, so a node on one is a
+# tunnel's mouth, not its inside, and keeps its height.
+on_a_zone = {n for w in Z.w for n in w}
 no_inc = E[E.incline.isna()]
 end_missing = zmap0.reindex(no_inc.u.values).isna().values | zmap0.reindex(no_inc.v.values).isna().values
 reason = np.where(no_inc.unknown.notna(), "marked ext:incline_unknown",
@@ -180,7 +183,8 @@ res["heights"] = {
     "edges_without_incline": len(no_inc),
     "edges_without_incline_by_reason": pd.Series(reason).value_counts().to_dict(),
     "nodes_only_on_tunnel_edges": len(only_tunnel),
-    "of_those_with_a_height": int(N[N.id.isin(only_tunnel)].elev.notna().sum()),
+    "of_those_on_a_zone_outline": len(only_tunnel & on_a_zone),
+    "nodes_inside_a_tunnel_with_a_height": int(N[N.id.isin(only_tunnel - on_a_zone)].elev.notna().sum()),
     "nodes_without_a_height": int(N.elev.isna().sum())}
 # Each terrain node against its tile: is any of the four pixels it is
 # interpolated from "no data", and if so, does its height match the blend

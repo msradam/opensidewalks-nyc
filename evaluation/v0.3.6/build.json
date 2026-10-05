@@ -1,0 +1,23 @@
+{
+ "commit": "3383c6a",
+ "command": "python -m pipeline build, once, after python -m pipeline clean",
+ "started": "2026-10-05T04:39:37Z",
+ "finished": "2026-10-05T05:31:51Z",
+ "exit": 0,
+ "wall_seconds": 3134.17,
+ "peak_memory_footprint_bytes": 35073143752,
+ "maximum_resident_set_bytes": 15633367040,
+ "machine": "Apple Silicon, 32 GB",
+ "osm_extract": "new-york-261001.osm.pbf",
+ "osm_extract_sha256_before_clean": "1214968b2c988e13ee6a6bde6b9c9891337a588475b7fd2ac1939e175073d8b7",
+ "osm_extract_sha256_after_clean": "1214968b2c988e13ee6a6bde6b9c9891337a588475b7fd2ac1939e175073d8b7",
+ "extract_during_clean": "moved out of data/ before the clean and back in after it, so Stage 1 read the same file and verified its checksum",
+ "working_tree_at_build": "pipeline/, scripts/, config/, unweaver-project/, tests/ and pyproject.toml as committed in 3383c6a; documents and evaluation/v0.3.6/ had uncommitted edits",
+ "rehearsals": "Before the clean, stages 4 to 6 were run twice on the v0.3.5 build's staged data to test the fixes on the whole city. The first showed 14 deck heights moved by the no-data fix and led to one more change (sea level as the deck rules' floor over water), made before commit 3383c6a. The second printed the same Stage 4 counts as this build.",
+ "stage_4_log": [
+  "Elevations sampled: 1,186,425/1,186,910 nodes",
+  "Structures: 12,132 nodes on tagged edges, 13,986 heights from LiDAR (2,317 on untagged approaches), 415 interpolated, 48 unknown",
+  "Incline set on 2,833,906/2,839,364 edges; 2,276 with heights that are not a slope (these counts include the zone outline rows Stage 4 drops before writing)"
+ ],
+ "exports": "Every release asset was made from this build's snapped output with the code of commit 3383c6a."
+}
