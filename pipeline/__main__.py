@@ -113,7 +113,7 @@ def validate():
     This is not python-osw-validation, the conformance gate.
     """
     sources, build_cfg = _load_config()
-    click.echo("\nRunning OSW validator on existing staged output...")
+    click.echo("\nRunning the Stage 5 pre-check on existing staged output...")
     validate_module = __import__("pipeline.stages.validate", fromlist=["run"])
     validate_module.run(sources=sources, build_cfg=build_cfg, repo_root=REPO_ROOT)
     click.echo("Done. See output/validation_report.md")

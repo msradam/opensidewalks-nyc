@@ -160,7 +160,7 @@ The same random trips, 2,000 per borough, were routed locally on one OpenStreetM
 
 The third and fourth rows apply this project's rules (a surveyed ramp within 5 m of each crossing end, no slope over 8.3% up or 10% down, no steps, no more than 10 m of roadway) using data ORS did not have: the ramp survey and the LiDAR incline. They count routes on measured pairs (pairs where both routers start and end at the same places); the other rows count all pairs. Any route planned without that data scores about the same, as the fourth row shows for this dataset's own walking profile, and this dataset's wheelchair profile scores 0% by construction. The rows measure missing data, not a worse engine, and the last row shows that given the same data ORS mostly agrees. "Roadway" includes street centerlines that OSM tags as having a sidewalk. Agreement in the last row includes pairs neither router finds. In Brooklyn the two disagree on 141 of 2,000 pairs: 52 found only by this dataset and 89 only by ORS.
 
-This graph has no ferry edges. 349 of the 2,000 Manhattan pairs have one end on Governors Island, Liberty Island or Ellis Island and the other elsewhere, and no walking route reaches those islands, so this graph cannot route them. ORS used a ferry on 19% of its Manhattan routes and Valhalla on 35%. With those pairs set apart, this dataset's wheelchair profile finds a route for 78% of Manhattan pairs and ORS for 97% ([tables](evaluation/compare/results/tables.md), "Ferries and pairs across water").
+This graph has no ferry edges. 349 of the 2,000 Manhattan pairs have one end on Governors Island, Liberty Island or Ellis Island and the other end off that island, and no walking route reaches those islands, so this graph cannot route them. ORS used a ferry on 19% of its Manhattan routes and Valhalla on 35%. With those pairs set apart, this dataset's wheelchair profile finds a route for 78% of Manhattan pairs and ORS for 97% ([tables](evaluation/compare/results/tables.md), "Ferries and pairs across water").
 
 A small part of the gap is in how ORS reads OpenStreetMap. On a test fixture, ORS 10.0.1 let a crossing tagged `kerb=raised` pass every kerb limit. This has not been reported to the ORS project. OpenStreetMap tags 4% of the crossing ends that have no surveyed ramp that way. 51% of ORS's Brooklyn routes pass over a node tagged `kerb=raised`, and so do 27% of this dataset's own Brooklyn wheelchair routes and 48% of its walking routes, which follow the ramp survey and do not read OpenStreetMap kerb tags either. ORS also reads a bare `kerb:height` of 0.15 or more as centimeters ([ORS #2293](https://github.com/GIScience/openrouteservice/issues/2293)).
 
@@ -178,7 +178,7 @@ The [demo](https://msradam.github.io/opensidewalks-nyc/) shows Brooklyn Communit
 
 ![A trip routed three ways: this dataset in blue, OpenRouteService wheelchair in orange, OpenRouteService walking in black](docs/img/demo-trip.png)
 
-In the second image, red triangles are ramps that DOT's 2020 assessment labeled Non-Compliant, orange squares are Pending Technical Review, and purple diamonds are corners DOT lists as rebuilt since the survey.
+In the second image, red triangles are ramps that DOT's 2020 assessment labeled Non-Compliant, orange squares are Pending Technical Review, and hollow purple diamonds are corners DOT lists as rebuilt since the survey.
 
 # Limitations
 
