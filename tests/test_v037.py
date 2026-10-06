@@ -164,6 +164,10 @@ def test_osm_kerb_and_elevator_nodes_are_carried():
     m = _merge_node_group(group.assign(kerb=["lowered", "lowered"], tactile_paving=["yes", None]),
                           {"barrier", "kerb", "tactile_paving", "ext:ramp_id"})
     assert m["ext:osm_kerb"] == "lowered" and m["ext:osm_tactile_paving"] == "yes" and pd.isna(m["tactile_paving"])
+    # A ramp on no vertex is a group of one: nothing of OSM's to keep, and
+    # its own kerb value must not be copied as OSM's.
+    m = _merge_node_group(group.iloc[1:], {"barrier", "kerb", "tactile_paving", "ext:ramp_id"})
+    assert m["kerb"] == "lowered" and "ext:osm_kerb" not in m.index and "ext:osm_tactile_paving" not in m.index
     # A ramp on a plain OSM vertex: as before, nothing from OSM to keep.
     m = _merge_node_group(group.assign(kerb=[None, "lowered"], tactile_paving=[None, "yes"], barrier=[None, "kerb"]),
                           {"barrier", "kerb", "tactile_paving", "ext:ramp_id"})

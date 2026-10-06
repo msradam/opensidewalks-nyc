@@ -336,7 +336,7 @@ res["ramp_position"] = {
     "by_borough": {b: {"attached": len(d), "on_a_crossing_end": int(d.id.isin(cr_ends).sum()),
                        "share": round(float(d.id.isin(cr_ends).mean()), 4)}
                    for b, d in att.groupby(att.poly_boro.fillna("outside"))}}
-osm_kerb = curb[curb.ramp.isna()]
+osm_kerb = N[(N.barrier == "kerb") & N.ramp.isna()]
 res["osm_kerbs"] = {
     "curb_nodes_from_osm_only": len(osm_kerb), "by_kerb": osm_kerb.kerb.fillna("none (generic curb)").value_counts().to_dict(),
     "with_tactile_paving": int(osm_kerb.tactile.notna().sum()), "attached_to_any_edge": int(osm_kerb.id.isin(ref).sum()),
@@ -347,7 +347,7 @@ res["osm_kerbs"] = {
     "osm_tactile_where_the_survey_has_a_ramp": surveyed.osm_tactile.fillna("no value").value_counts().to_dict(),
     "of_those_disagreeing_with_the_survey_tactile": int((surveyed.osm_tactile.notna() & surveyed.tactile.notna() & (surveyed.osm_tactile != surveyed.tactile)).sum()),
     "surveyed_ramps_with_osm_tactile_and_no_survey_value": int((surveyed.osm_tactile.notna() & surveyed.tactile.isna()).sum()),
-    "sources_of_curb_nodes": curb.source.fillna("none").value_counts().to_dict()}
+    "sources_of_curb_nodes": N[N.barrier == "kerb"].source.fillna("none").value_counts().to_dict()}
 lift = N[N.osm_highway == "elevator"]
 lift_edges = E[E.u.isin(lift.id) | E.v.isin(lift.id)]
 res["elevators"] = {"nodes": len(lift), "attached": int(lift.id.isin(ref).sum()), "edges_at_an_elevator": len(lift_edges),

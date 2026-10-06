@@ -432,11 +432,15 @@ def _merge_node_group(group: pd.DataFrame, curb_fields: set) -> pd.Series:
     not they agree. Where the survey has no value, none is written.
     """
     merged = group.iloc[0].copy()
-    ramp = group[group["ext:source"] == "nyc_dot_ramps"] if "ext:source" in group.columns else group.iloc[0:0]
+    is_ramp = group["ext:source"] == "nyc_dot_ramps" if "ext:source" in group.columns else pd.Series(False, index=group.index)
+    ramp, osm = group[is_ramp], group[~is_ramp]
     if not ramp.empty:
-        for field in ("kerb", "tactile_paving"):
-            if field in group.columns and pd.notna(merged.get(field)):
-                merged[f"ext:osm_{field}"] = merged[field]
+        # OSM's values come from the OSM vertex's row, never from the ramp's
+        # own row (a ramp on no vertex is a group of one).
+        if not osm.empty:
+            for field in ("kerb", "tactile_paving"):
+                if field in osm.columns and pd.notna(osm.iloc[0][field]):
+                    merged[f"ext:osm_{field}"] = osm.iloc[0][field]
         for field in curb_fields | {"ext:source", "ext:source_timestamp"}:
             if field in ramp.columns:
                 merged[field] = ramp.iloc[0][field]
