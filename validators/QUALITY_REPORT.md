@@ -31,7 +31,7 @@ Four data changes, each measured on the whole graph before and after. [`compare_
 | Edges with `incline` | 2,792,346 of 2,797,538 | 2,800,654 of 2,806,326 |
 | Pedestrian components | 4,975; largest 611,968 nodes (71.7%) | 4,945; largest 615,127 nodes (71.7%) |
 
-Geometry is the same on 2,797,528 of the 2,797,534 edges the two versions share (the other six, four road edges and two footways, follow one endpoint the near-miss merge now joins differently beside a new edge). Incline is the same on 2,795,142 shared edges; it differs on the 492 edges at elevators, on 1,746 edges within three hops of a new edge (the heights are smoothed over short edges, so a new neighbour moves them), and on 10 edges by at most 0.0047 that no change explains. All 2,201 zones, all widths, surfaces, names and crossing markings are unchanged, and all 217,679 ramps carry the same survey fields.
+Geometry is the same on 2,797,528 of the 2,797,534 edges the two versions share (the other six, four road edges and two footways, follow three endpoints the near-miss merge now joins differently, each moved 1.4 to 2.0 m, in Brooklyn, Queens and Lower Manhattan). Incline is the same on 2,795,142 shared edges; it differs on the 492 edges at elevators, on 1,746 edges within three hops of a new edge (the heights are smoothed over short edges, so a new neighbour moves them), and on 10 edges by at most 0.0047 that no change explains. 2,199 of the 2,201 zones are unchanged, and two have one outline vertex moved about 1 m onto a different node at one of those merged endpoints; all widths, surfaces, names and crossing markings are unchanged, and all 217,679 ramps carry the same survey fields.
 
 | Fix | v0.3.5 (internal build) | v0.3.6 |
 |---|---|---|
