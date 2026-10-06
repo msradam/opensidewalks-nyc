@@ -28,7 +28,7 @@
    {
     "title": "Where this graph does worse",
     "items": [
-     "Outside Brownsville it finds far fewer routes. When each trip's start and end are moved to the nearest mapped path, its wheelchair profile completes 91% of random trips in Brooklyn and 51% in the Bronx, where OpenRouteService completes 97% to 99%. A missing route can be a real barrier or a gap in the data, and this page cannot tell which.",
+     "Outside Brownsville it finds far fewer routes. When each trip's start and end are moved to the nearest mapped path, its wheelchair profile completes 91% of random trips in Brooklyn and 51% in the Bronx, where OpenRouteService completes 97% to 99%. A missing route can be a real barrier or a gap in the data, and this page cannot tell which. Judged by this graph's own rules, 91% of OpenRouteService's wheelchair routes on 2,000 random Brooklyn trips use a crossing with no surveyed ramp nearby, a slope over this graph's limits, steps or a stretch of roadway, and so do 91% of this graph's own walking routes. The two figures share a number and mean different things.",
      "It may refuse crossings that have ramps. Across Brooklyn, OpenStreetMap mappers tagged a lowered or flush curb at 1,893 of the 3,394 crossing ends (55.8%) where the survey has no ramp within 16 ft (5 m). Some of those are likely ramps built after the survey.",
      "It does not read what OpenStreetMap records about surface, smoothness or places marked as not usable by wheelchair (wheelchair=no). OpenRouteService does.",
      "Where OpenStreetMap has no separately drawn sidewalk, this graph has no route. OpenRouteService falls back to the roadway, which is a choice a rider may or may not want.",
@@ -113,7 +113,7 @@
    ],
    [
     "The pedestrian graph",
-    "OpenSidewalks NYC v0.3.3-nyc.1 by Adam Munawar Rahman, released 3 October 2026. This page's map, routes and counts all come from that release. The latest release, v0.3.6-nyc.1, writes plazas as Pedestrian Zones and corrects node heights where the terrain model has no data and in tunnels. An edge whose two end heights cannot be a slope has no incline and is marked, and the wheelchair profile refuses it. Every GraphML edge has a length.",
+    "OpenSidewalks NYC v0.3.3-nyc.1 by Adam Munawar Rahman, released 3 October 2026. This page's map, routes and counts all come from that release. The latest release, v0.3.7-nyc.1, carries OpenStreetMap's sidewalk tags on streets and its own kerb and elevator nodes, snaps each surveyed ramp to the end of the crossing it serves, keeps greenways mapped as cycleways with no foot tag, and corrects node heights where the terrain model has no data and in tunnels. An edge whose two end heights cannot be a slope has no incline and is marked, and the wheelchair profile refuses it.",
     "https://github.com/msradam/opensidewalks-nyc/releases/tag/v0.3.3-nyc.1",
     "Data: Open Database License 1.0. Code: Apache License 2.0"
    ],
