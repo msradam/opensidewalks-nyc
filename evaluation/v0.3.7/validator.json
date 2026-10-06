@@ -1,0 +1,9 @@
+{
+ "validator": "python-osw-validation",
+ "version": "0.5.0",
+ "input": "nyc-osw-osw-split.zip",
+ "input_sha256": "984b4cf91eb5836d58b63b3b615a1b87812e23ba26d2189bdb86f7f1ab41cefb",
+ "is_valid": true,
+ "errors": [],
+ "error_count": 0
+}

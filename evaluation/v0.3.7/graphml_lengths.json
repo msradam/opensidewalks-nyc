@@ -1,0 +1,24 @@
+{
+ "v0.3.7 directed": {
+  "file": "nyc-osw.graphml.gz",
+  "nodes": 1187062,
+  "edges": 2903072,
+  "edges_with_length_m": 2903072,
+  "share": 1.0,
+  "zone_edges": 96746,
+  "zone_edges_with_length_m": 96746,
+  "sum_of_length_m_km": 62294.6,
+  "edges_whose_length_m_is_under_the_straight_distance_between_their_nodes": 0
+ },
+ "v0.3.7 undirected": {
+  "file": "nyc-osw-undirected.graphml.gz",
+  "nodes": 1187062,
+  "edges": 1447551,
+  "edges_with_length_m": 1447551,
+  "share": 1.0,
+  "zone_edges": 44497,
+  "zone_edges_with_length_m": 44497,
+  "sum_of_length_m_km": 31123.2,
+  "edges_whose_length_m_is_under_the_straight_distance_between_their_nodes": 0
+ }
+}

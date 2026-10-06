@@ -1,0 +1,574 @@
+{
+ "streets_by_highway": {
+  "primary": 8549,
+  "secondary": 10370,
+  "residential": 34852,
+  "tertiary": 6740,
+  "service": 46255,
+  "unclassified": 1770,
+  "living_street": 167
+ },
+ "sidewalk_values_on_streets": {
+  "None": 104555,
+  "separate": 2519,
+  "both": 1206,
+  "no": 246,
+  "right": 141,
+  "left": 29,
+  "yes": 7
+ },
+ "sidewalk_by_highway": {
+  "('service', None)": 46190,
+  "('residential', None)": 32447,
+  "('secondary', None)": 9702,
+  "('primary', None)": 7985,
+  "('tertiary', None)": 6427,
+  "('unclassified', None)": 1693,
+  "('residential', 'separate')": 1507,
+  "('residential', 'both')": 723,
+  "('secondary', 'separate')": 429,
+  "('primary', 'separate')": 316,
+  "('secondary', 'both')": 185,
+  "('tertiary', 'separate')": 175,
+  "('primary', 'both')": 165,
+  "('living_street', None)": 111,
+  "('residential', 'no')": 108,
+  "('tertiary', 'both')": 98,
+  "('living_street', 'separate')": 53,
+  "('primary', 'no')": 52,
+  "('residential', 'right')": 49,
+  "('secondary', 'right')": 33,
+  "('unclassified', 'separate')": 33,
+  "('primary', 'right')": 31,
+  "('tertiary', 'no')": 28,
+  "('service', 'no')": 23,
+  "('unclassified', 'no')": 20,
+  "('residential', 'left')": 18,
+  "('service', 'both')": 18,
+  "('secondary', 'no')": 15,
+  "('service', 'right')": 15,
+  "('unclassified', 'both')": 14,
+  "('unclassified', 'right')": 9,
+  "('service', 'separate')": 6,
+  "('tertiary', 'yes')": 6,
+  "('secondary', 'left')": 5,
+  "('tertiary', 'right')": 4,
+  "('service', 'left')": 3,
+  "('living_street', 'both')": 3,
+  "('tertiary', 'left')": 2,
+  "('secondary', 'yes')": 1,
+  "('unclassified', 'left')": 1
+ },
+ "sidewalk_side_keys": {
+  "(None, (('sidewalk:both', 'separate'),))": 17766,
+  "(None, (('sidewalk:left', 'no'), ('sidewalk:right', 'separate')))": 6436,
+  "(None, (('sidewalk:both', 'no'),))": 1175,
+  "(None, (('sidewalk:left', 'separate'), ('sidewalk:right', 'no')))": 674,
+  "(None, (('sidewalk:right', 'separate'),))": 454,
+  "(None, (('sidewalk:right', 'yes'),))": 152,
+  "(None, (('sidewalk:left', 'separate'),))": 71,
+  "(None, (('sidewalk:left', 'yes'), ('sidewalk:right', 'separate')))": 45,
+  "(None, (('sidewalk:left', 'separate'), ('sidewalk:right', 'yes')))": 41,
+  "(None, (('sidewalk:both', 'yes'),))": 37,
+  "(None, (('sidewalk:left', 'yes'),))": 15,
+  "(None, (('sidewalk:left', 'separate'), ('sidewalk:right', 'separate')))": 14,
+  "('separate', (('sidewalk:both', 'separate'),))": 13,
+  "(None, (('sidewalk:left', 'no'), ('sidewalk:right', 'yes')))": 13,
+  "('both', (('sidewalk:both', 'separate'),))": 5,
+  "(None, (('sidewalk:left', 'lane'), ('sidewalk:right', 'separate')))": 4,
+  "('separate', (('sidewalk:left', 'no'), ('sidewalk:right', 'separate')))": 3,
+  "(None, (('sidewalk:right', 'separate'), ('sidewalk:both', 'separate')))": 3,
+  "(None, (('sidewalk:left', 'separate;lane'), ('sidewalk:right', 'separate')))": 3,
+  "(None, (('sidewalk:left', 'no'),))": 3,
+  "(None, (('sidewalk:left', 'no'), ('sidewalk:both', 'separate')))": 2,
+  "(None, (('sidewalk:left', 'no'), ('sidewalk:right', 'no')))": 2,
+  "(None, (('sidewalk:right', 'no'),))": 2,
+  "(None, (('sidewalk:left', 'lane'), ('sidewalk:right', 'no')))": 2,
+  "(None, (('sidewalk:left', 'no'), ('sidewalk:right', 'separate'), ('sidewalk:both', 'separate')))": 1,
+  "(None, (('sidewalk:left', 'separate'), ('sidewalk:right', 'no'), ('sidewalk:both', 'separate')))": 1,
+  "('no', (('sidewalk:both', 'no'),))": 1
+ },
+ "cycleway_(foot,oneway,segregated,access)": {
+  "('designated', 'no', 'no', None)": 465,
+  "('designated', 'no', 'yes', None)": 242,
+  "(None, 'no', None, None)": 236,
+  "('designated', None, None, None)": 219,
+  "(None, 'yes', None, None)": 213,
+  "(None, None, None, None)": 142,
+  "('yes', None, None, None)": 121,
+  "('yes', 'no', None, None)": 104,
+  "('designated', None, 'no', None)": 102,
+  "('designated', 'no', None, None)": 81,
+  "('yes', 'no', 'no', None)": 71,
+  "('designated', None, 'yes', None)": 44,
+  "('designated', 'yes', 'yes', None)": 39,
+  "('yes', None, 'no', None)": 21,
+  "('yes', 'no', 'yes', None)": 19,
+  "(None, 'no', 'yes', None)": 13,
+  "('designated', 'yes', None, None)": 13,
+  "('yes', 'yes', None, None)": 12,
+  "(None, 'no', 'no', None)": 10,
+  "(None, None, 'no', None)": 8,
+  "('designated', 'yes', 'no', None)": 8,
+  "('yes', None, 'yes', None)": 6,
+  "('private', None, None, None)": 4,
+  "('yes', 'no', 'no', 'permissive')": 3,
+  "('yes', 'yes', 'no', None)": 3,
+  "(None, 'yes', 'no', None)": 3,
+  "('yes', 'no', 'no', 'no')": 2,
+  "('yes', 'yes', 'yes', None)": 2,
+  "(None, 'yes', 'yes', None)": 2,
+  "('designated', 'no', 'no', 'permissive')": 1,
+  "('designated', None, None, 'no')": 1
+ },
+ "track_(foot,oneway,segregated,access)": {
+  "(None, None, None, None)": 200,
+  "(None, None, None, 'customers')": 43,
+  "('yes', None, None, None)": 30,
+  "('private', None, None, None)": 4,
+  "('designated', None, 'no', None)": 3,
+  "(None, None, None, 'permit')": 2,
+  "('yes', 'no', None, None)": 1,
+  "('yes', None, None, 'no')": 1,
+  "('designated', None, None, None)": 1,
+  "(None, None, None, 'destination')": 1
+ },
+ "cycleway_nofoot_names": {
+  "None": 285,
+  "Hudson River Greenway": 28,
+  "Ocean Parkway Bike Path": 20,
+  "Tillary Street": 11,
+  "Bloomingdale Park Greenway": 10,
+  "East River Esplanade": 10,
+  "Laurelton Greenway": 10,
+  "Broadway": 9,
+  "Pike Street": 9,
+  "East River Greenway": 8,
+  "Madison Avenue Bridge": 6,
+  "Skillman Avenue": 6,
+  "2nd Avenue": 6,
+  "Clinton Street": 5,
+  "Kent Avenue": 5,
+  "Borinquen Place": 5,
+  "Edgewater Road Protected Bike Lane": 5,
+  "Park Circle": 4,
+  "Kissena Park Greenway": 4,
+  "Rosedale Avenue": 4,
+  "Meeker Avenue": 4,
+  "Avenue C": 4,
+  "Mosholu-Pelham Greenway": 4,
+  "Park Row": 4,
+  "Pugsley Creek Greenway": 4,
+  "Harlem River Drive Greenway": 3,
+  "La Tourette Park Greenway": 3,
+  "Old Slip": 3,
+  "Bronx River Greenway": 3,
+  "Flushing Avenue": 3,
+  "Allen Street": 3,
+  "Cadman Plaza East": 3,
+  "broadway": 3,
+  "Hell Gate Greenway Path Connector": 3,
+  "2nd Street": 2,
+  "Marine Park Greenway": 2,
+  "East 138th Street": 2,
+  "Harlem River Pathway": 2,
+  "Prospect Park West Bike Path": 2,
+  "Saint Nicholas Avenue": 2
+ },
+ "pbf_nyc_nodes_kerb": {
+  "('kerb', 'lowered')": 94999,
+  "('kerb', None)": 27995,
+  "('kerb', 'flush')": 5892,
+  "('kerb', 'raised')": 1338,
+  "('kerb', 'yes')": 1288,
+  "(None, 'lowered')": 445,
+  "(None, 'raised')": 266,
+  "('kerb', 'rolled')": 138,
+  "(None, 'no')": 135,
+  "('kerb', 'lowered;flush')": 14,
+  "('kerb', 'no')": 13,
+  "(None, 'flush')": 11,
+  "(None, 'yes')": 9,
+  "('kerb', 'unspecified')": 8,
+  "('kerb', 'crossing')": 6,
+  "('lift_gate', 'lowered')": 2,
+  "('bollard', 'no')": 2,
+  "('gate', 'raised')": 1,
+  "('kerb', 'unknown')": 1
+ },
+ "pbf_nyc_nodes_tactile_on_kerb": {
+  "yes": 65877,
+  "no": 9745,
+  "bad": 1,
+  "yes;no": 1,
+  "incorrect": 3,
+  "primitive": 13,
+  "no;yes": 3
+ },
+ "pbf_nyc_nodes_elevator": 227,
+ "pbf_nyc_node_highway_values": {
+  "crossing": 123197,
+  "stop": 30001,
+  "traffic_signals": 19390,
+  "street_lamp": 14603,
+  "bus_stop": 11942,
+  "turning_circle": 931,
+  "motorway_junction": 761,
+  "give_way": 599,
+  "elevator": 227,
+  "toll_gantry": 123,
+  "speed_camera": 75,
+  "turning_loop": 65,
+  "steps": 11,
+  "traffic_signals;crossing": 4,
+  "priority": 4
+ },
+ "note": "Counted over the pinned extract new-york-261001.osm.pbf: ways from the filtered regional XML Stage 1 writes, nodes from the PBF inside the city's bounding box (-74.26, 40.49, -73.70, 40.92). Made by code/scan_tags.py in the v0.3.7 session.",
+ "cycleway_no_foot_tag_ways_by_oneway": {
+  "yes": 218,
+  "no": 259,
+  "untagged": 150
+ },
+ "cycleway_no_foot_tag_names_by_oneway": {
+  "yes": [
+   [
+    null,
+    107
+   ],
+   [
+    "Broadway",
+    9
+   ],
+   [
+    "Pike Street",
+    9
+   ],
+   [
+    "East River Greenway",
+    6
+   ],
+   [
+    "2nd Avenue",
+    6
+   ],
+   [
+    "Skillman Avenue",
+    5
+   ],
+   [
+    "Rosedale Avenue",
+    4
+   ],
+   [
+    "Avenue C",
+    4
+   ],
+   [
+    "Allen Street",
+    3
+   ],
+   [
+    "Borinquen Place",
+    3
+   ],
+   [
+    "broadway",
+    3
+   ],
+   [
+    "Marine Park Greenway",
+    2
+   ],
+   [
+    "Park Circle",
+    2
+   ],
+   [
+    "Saint Nicholas Avenue",
+    2
+   ],
+   [
+    "Old Slip",
+    2
+   ],
+   [
+    "Sands Street Bike Path",
+    2
+   ],
+   [
+    "City Hall Park Greenway",
+    2
+   ],
+   [
+    "Times Plaza",
+    2
+   ],
+   [
+    "Market Slip",
+    2
+   ],
+   [
+    "Third Avenue Bridge",
+    2
+   ],
+   [
+    "Hell Gate Greenway Path Connector",
+    2
+   ],
+   [
+    "2nd Street",
+    1
+   ],
+   [
+    "11th Street",
+    1
+   ],
+   [
+    "Garfield Place",
+    1
+   ],
+   [
+    "Stanton Street",
+    1
+   ],
+   [
+    "Woodside Avenue",
+    1
+   ],
+   [
+    "Carroll Street",
+    1
+   ],
+   [
+    "1st Street",
+    1
+   ],
+   [
+    "7th Street",
+    1
+   ],
+   [
+    "14th Street",
+    1
+   ]
+  ],
+  "no": [
+   [
+    null,
+    79
+   ],
+   [
+    "Hudson River Greenway",
+    28
+   ],
+   [
+    "Ocean Parkway Bike Path",
+    19
+   ],
+   [
+    "Tillary Street",
+    11
+   ],
+   [
+    "East River Esplanade",
+    10
+   ],
+   [
+    "Madison Avenue Bridge",
+    6
+   ],
+   [
+    "Clinton Street",
+    5
+   ],
+   [
+    "Kent Avenue",
+    5
+   ],
+   [
+    "Edgewater Road Protected Bike Lane",
+    5
+   ],
+   [
+    "Meeker Avenue",
+    4
+   ],
+   [
+    "Harlem River Drive Greenway",
+    3
+   ],
+   [
+    "Flushing Avenue",
+    3
+   ],
+   [
+    "Mosholu-Pelham Greenway",
+    3
+   ],
+   [
+    "Park Row",
+    3
+   ],
+   [
+    "Cadman Plaza East",
+    3
+   ],
+   [
+    "East River Greenway",
+    2
+   ],
+   [
+    "Park Circle",
+    2
+   ],
+   [
+    "Prospect Park West Bike Path",
+    2
+   ],
+   [
+    "New Springville Greenway",
+    2
+   ],
+   [
+    "Bruckner Boulevard",
+    2
+   ],
+   [
+    "South 4th Street",
+    2
+   ],
+   [
+    "Borinquen Place",
+    2
+   ],
+   [
+    "Fort George Hill",
+    2
+   ],
+   [
+    "Cross Bay Boulevard Greenway",
+    2
+   ],
+   [
+    "Battery Bikeway",
+    2
+   ],
+   [
+    "Johnson Street",
+    2
+   ],
+   [
+    "Tech Place",
+    2
+   ],
+   [
+    "Columbia Street Greenway",
+    2
+   ],
+   [
+    "Crotona Park Greenway",
+    2
+   ],
+   [
+    "Eastern Parkway South Mall",
+    2
+   ]
+  ],
+  "None": [
+   [
+    null,
+    99
+   ],
+   [
+    "Bloomingdale Park Greenway",
+    10
+   ],
+   [
+    "Laurelton Greenway",
+    10
+   ],
+   [
+    "Pugsley Creek Greenway",
+    4
+   ],
+   [
+    "La Tourette Park Greenway",
+    3
+   ],
+   [
+    "Bronx River Greenway",
+    3
+   ],
+   [
+    "Kissena Park Greenway",
+    3
+   ],
+   [
+    "Harlem River Pathway",
+    2
+   ],
+   [
+    "Castle Hill Park Greenway",
+    2
+   ],
+   [
+    "Jamaica Bay Greenway",
+    1
+   ],
+   [
+    "West 77th Street",
+    1
+   ],
+   [
+    "Snug Harbor Greenway",
+    1
+   ],
+   [
+    "Randalls Island Greenway",
+    1
+   ],
+   [
+    "East 213th Street",
+    1
+   ],
+   [
+    "Robert F Wagner Senior Place",
+    1
+   ],
+   [
+    "5th Street",
+    1
+   ],
+   [
+    "East 20th Street Cycleway",
+    1
+   ],
+   [
+    "Wolfe's Pond Park Trail",
+    1
+   ],
+   [
+    "Mosholu-Pelham Greenway",
+    1
+   ],
+   [
+    "Ocean Parkway",
+    1
+   ],
+   [
+    "Ocean Parkway Bike Path",
+    1
+   ],
+   [
+    "Park Row",
+    1
+   ],
+   [
+    "Hell Gate Greenway Path Connector",
+    1
+   ]
+  ]
+ },
+ "pbf_nyc_elevator_ways": 57,
+ "pbf_nyc_elevator_ways_note": "Nearly all are closed outlines of five or six nodes tagged indoor=yes, level=* and often tunnel=yes: elevator shafts drawn as areas, not paths."
+}

@@ -143,7 +143,17 @@ for i in shared:
 # --- edges ---------------------------------------------------------------------
 edge_group, edge_examples = Counter(), {}
 lifts = {i for i, r in A.items() if r["pt"] is not None and r["kerb"].get("ext:osm_highway") == "elevator"}
+# An endpoint the near-miss merge now joins differently changes the smoothing
+# around it too, so those ends are found first and their neighbourhood is
+# a cause of its own.
 moved_ends = set()
+for i in shared:
+    b, a = B[i], A[i]
+    if b["u"] and (b["geom"] != a["geom"] or (b["u"], b["v"]) != (a["u"], a["v"])):
+        moved_ends.update((a["u"], a["v"], b["u"], b["v"]))
+near_moved = set(moved_ends)
+for _ in range(3):
+    near_moved |= {m for n in list(near_moved) for m in adj.get(n, ())}
 for i in shared:
     b, a = B[i], A[i]
     if not b["u"]:
@@ -161,49 +171,26 @@ for i in shared:
         diffs.append("incline")
     if not diffs:
         continue
-    if "geometry" in diffs or "endpoints" in diffs:
-        moved_ends.update((a["u"], a["v"], b["u"], b["v"]))
+    incline_only = set(diffs) <= {"incline", "sidewalk tags"}
     cause = ("street sidewalk tag" if set(diffs) <= {"sidewalk tags"}
-             else "elevator at an end" if set(diffs) <= {"incline"} and (a["u"] in lifts or a["v"] in lifts)
-             else "incline beside a new edge" if set(diffs) <= {"incline"} and (a["u"] in near_new or a["v"] in near_new)
+             else "elevator at an end" if incline_only and (a["u"] in lifts or a["v"] in lifts)
+             else "incline beside a new edge" if incline_only and (a["u"] in near_new or a["v"] in near_new)
              else "endpoint merge differs" if "geometry" in diffs or "endpoints" in diffs
+             else "incline beside a merged endpoint" if incline_only and (a["u"] in near_moved or a["v"] in near_moved)
              else "unexplained")
     key = f"{cause}: {', '.join(diffs)} ({a['kind']})"
     edge_group[key] += 1
     edge_examples.setdefault(key, [])
     if len(edge_examples[key]) < 6:
         edge_examples[key].append([i, b["incline"], a["incline"], b["street"], a["street"]])
-# A merged endpoint changes the smoothing around it too: a second pass moves an
-# unexplained incline change within three hops of a moved end into that group.
-near_moved = set(moved_ends)
-for _ in range(3):
-    near_moved |= {m for n in list(near_moved) for m in adj.get(n, ())}
-for i in shared:
-    b, a = B[i], A[i]
-    if not b["u"] or (a["u"] not in near_moved and a["v"] not in near_moved):
-        continue
-    for key in list(edge_group):
-        if key.startswith("unexplained") and "incline" in key:
-            pass
-regrouped = Counter()
-for i in shared:
-    b, a = B[i], A[i]
-    if b["u"] and (b["incline"] != a["incline"] or b["unknown"] != a["unknown"]) and b["geom"] == a["geom"] \
-            and (a["u"], a["v"]) == (b["u"], b["v"]) and b["rest"] == a["rest"] \
-            and not (a["u"] in lifts or a["v"] in lifts) and not (a["u"] in near_new or a["v"] in near_new) \
-            and (a["u"] in near_moved or a["v"] in near_moved):
-        diffs = ["sidewalk tags", "incline"] if b["street"] != a["street"] else ["incline"]
-        old_key = f"unexplained: {', '.join(diffs)} ({a['kind']})"
-        new_key = f"incline beside a merged endpoint: {', '.join(diffs)} ({a['kind']})"
-        if edge_group.get(old_key, 0) > 0:
-            edge_group[old_key] -= 1
-            if edge_group[old_key] == 0:
-                del edge_group[old_key]
-            edge_group[new_key] += 1
-            regrouped[new_key] += 1
-
+unexplained_edges = [i for i in shared if B[i]["u"] and (B[i]["incline"] != A[i]["incline"] or B[i]["unknown"] != A[i]["unknown"])
+                     and B[i]["geom"] == A[i]["geom"] and (A[i]["u"], A[i]["v"]) == (B[i]["u"], B[i]["v"])
+                     and not (A[i]["u"] in lifts or A[i]["v"] in lifts) and not (A[i]["u"] in near_new or A[i]["v"] in near_new)
+                     and not (A[i]["u"] in near_moved or A[i]["v"] in near_moved)]
 res = {
     "before_file": before_path, "after_file": after_path,
+    "unexplained_incline_edges": {"count": len(unexplained_edges), "ids": unexplained_edges[:400],
+                                  "largest_change": max((abs((A[i]["incline"] or 0) - (B[i]["incline"] or 0)) for i in unexplained_edges), default=0)},
     "features": {"before": len(B), "after": len(A), "shared": len(shared),
                  "only_before": len(only_before), "only_after": len(only_after)},
     "by_kind": {"before": dict(Counter(r["kind"] for r in B.values())), "after": dict(Counter(r["kind"] for r in A.values()))},

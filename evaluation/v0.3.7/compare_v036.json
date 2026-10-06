@@ -1,0 +1,2280 @@
+{
+ "before_file": "/private/tmp/claude-501/-Users-msradam-opensidewalks-nyc/4e8ac5a1-7fe4-45d0-a166-56c7a8ad988d/scratchpad/v036.geojson",
+ "after_file": "output/nyc-osw.geojson",
+ "unexplained_incline_edges": {
+  "count": 10,
+  "ids": [
+   "d74c70b8f71ebe94",
+   "3d04fa40375b0772",
+   "7a0a488e12f99f27",
+   "f7b2d6778bee41b8",
+   "4f4ee045394c6238",
+   "456e534e5247ccbc",
+   "3ddc8bac79898e99",
+   "13a0089e32f377bf",
+   "ddbebad379121132",
+   "7b518eee9fb01b31"
+  ],
+  "largest_change": 0.004699999999999999
+ },
+ "features": {
+  "before": 3986649,
+  "after": 3995589,
+  "shared": 3981988,
+  "only_before": 4661,
+  "only_after": 13601
+ },
+ "by_kind": {
+  "before": {
+   "bare_node": 969231,
+   "curb_ramp": 217679,
+   "sidewalk": 933110,
+   "crossing": 437510,
+   "footway": 449626,
+   "pedestrian_road": 11402,
+   "steps": 15470,
+   "road": 950420,
+   "pedestrian_zone": 2201
+  },
+  "after": {
+   "bare_node": 947145,
+   "osm_kerb": 22238,
+   "curb_ramp": 217679,
+   "sidewalk": 933174,
+   "crossing": 437940,
+   "footway": 457924,
+   "pedestrian_road": 11402,
+   "steps": 15470,
+   "road": 950416,
+   "pedestrian_zone": 2201
+  }
+ },
+ "new_features": {
+  "edges": 8792,
+  "of_those_cycleway_or_track": 8792,
+  "new_edges_by_osm_highway": {
+   "track": 5170,
+   "cycleway": 3622
+  },
+  "nodes": 4809,
+  "of_those_on_a_new_edge": 3594,
+  "of_those_surveyed_ramps_at_a_new_node_id": 1240,
+  "nodes_not_on_a_new_edge_and_not_a_ramp": 1
+ },
+ "gone_features": {
+  "count": 4661,
+  "by_kind": {
+   "curb_ramp": 4654,
+   "road": 4,
+   "bare_node": 3
+  },
+  "of_those_surveyed_ramps_whose_node_id_changed": 4654,
+  "examples": [
+   [
+    "6edf62c1aa83b94a",
+    "road",
+    "b14d946901315dae",
+    "970360ecb0084756"
+   ],
+   [
+    "9affc7ccd0771a64",
+    "bare_node",
+    null,
+    null
+   ],
+   [
+    "88be128b3ad3a365",
+    "road",
+    "970360ecb0084756",
+    "b14d946901315dae"
+   ],
+   [
+    "970360ecb0084756",
+    "bare_node",
+    null,
+    null
+   ],
+   [
+    "340f189990687d89",
+    "bare_node",
+    null,
+    null
+   ],
+   [
+    "b36eef72ba85f66f",
+    "road",
+    "b6051875c90077ce",
+    "340f189990687d89"
+   ],
+   [
+    "2f3f355ef5e24da8",
+    "road",
+    "340f189990687d89",
+    "b6051875c90077ce"
+   ]
+  ]
+ },
+ "ramps": {
+  "before": 217679,
+  "after": 217679,
+  "matched_by_survey_id": 217679,
+  "with_every_survey_field_equal": 217679,
+  "node_changed": 48630
+ },
+ "nodes": {
+  "shared_with_a_difference": 172398,
+  "by_cause": {
+   "height beside a new edge: height": 2,
+   "osm kerb kept beside a surveyed ramp: kerb or elevator fields": 63567,
+   "osm kerb or elevator tag carried: kerb or elevator fields": 137,
+   "osm kerb or elevator tag carried: ramp fields, kerb or elevator fields": 19079,
+   "ramp moved off this node: ramp fields": 1475,
+   "ramp moved off this node: ramp fields, kerb or elevator fields": 42501,
+   "ramp moved onto this node: ramp fields, kerb or elevator fields": 45636,
+   "ramp moved onto this node: ramp fields, kerb or elevator fields, height": 1
+  },
+  "examples": {
+   "ramp moved off this node: ramp fields, kerb or elevator fields": [
+    [
+     "e9d6300287f9ddab",
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "no",
+      "ext:source": "nyc_dot_ramps"
+     },
+     {
+      "ext:source": "osm_walk"
+     },
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1095622"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -4.1
+      ]
+     ],
+     [],
+     [
+      46.4,
+      null
+     ],
+     [
+      46.4,
+      null
+     ]
+    ],
+    [
+     "ea88129868f27bc4",
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "no",
+      "ext:source": "nyc_dot_ramps"
+     },
+     {
+      "ext:source": "osm_walk"
+     },
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1103660"
+      ],
+      [
+       "ext:counter_slope_pct",
+       3.4
+      ]
+     ],
+     [],
+     [
+      6.0,
+      null
+     ],
+     [
+      6.0,
+      null
+     ]
+    ],
+    [
+     "41c96a8245306299",
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "yes",
+      "ext:source": "nyc_dot_ramps"
+     },
+     {
+      "ext:source": "osm_walk"
+     },
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1050469"
+      ],
+      [
+       "ext:counter_slope_pct",
+       2.3
+      ]
+     ],
+     [],
+     [
+      10.2,
+      null
+     ],
+     [
+      10.2,
+      null
+     ]
+    ],
+    [
+     "e31217c0eb638803",
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "yes",
+      "ext:source": "nyc_dot_ramps"
+     },
+     {
+      "ext:source": "osm_walk"
+     },
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1059703"
+      ],
+      [
+       "ext:counter_slope_pct",
+       0.8
+      ]
+     ],
+     [],
+     [
+      24.5,
+      null
+     ],
+     [
+      24.5,
+      null
+     ]
+    ],
+    [
+     "49aab0e5b4787f57",
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "yes",
+      "ext:source": "nyc_dot_ramps"
+     },
+     {
+      "ext:source": "osm_walk"
+     },
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1090206"
+      ],
+      [
+       "ext:counter_slope_pct",
+       1.4
+      ]
+     ],
+     [],
+     [
+      11.3,
+      null
+     ],
+     [
+      11.3,
+      null
+     ]
+    ],
+    [
+     "f7f40d4be76f6c37",
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "no",
+      "ext:source": "nyc_dot_ramps"
+     },
+     {
+      "ext:source": "osm_walk"
+     },
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1169965"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -1.4
+      ]
+     ],
+     [],
+     [
+      18.2,
+      "lidar_2017"
+     ],
+     [
+      18.2,
+      "lidar_2017"
+     ]
+    ]
+   ],
+   "osm kerb kept beside a surveyed ramp: kerb or elevator fields": [
+    [
+     "4f7345a2a8a3d2fd",
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "no",
+      "ext:source": "nyc_dot_ramps"
+     },
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "no",
+      "ext:osm_kerb": "lowered",
+      "ext:osm_tactile_paving": "no",
+      "ext:source": "nyc_dot_ramps"
+     },
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1039013"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -2.3
+      ]
+     ],
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1039013"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -2.3
+      ]
+     ],
+     [
+      15.3,
+      null
+     ],
+     [
+      15.3,
+      null
+     ]
+    ],
+    [
+     "eaf9a1c771c7b323",
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "no",
+      "ext:source": "nyc_dot_ramps"
+     },
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "no",
+      "ext:osm_kerb": "lowered",
+      "ext:osm_tactile_paving": "yes",
+      "ext:source": "nyc_dot_ramps"
+     },
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1136737"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -0.2
+      ]
+     ],
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1136737"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -0.2
+      ]
+     ],
+     [
+      5.4,
+      null
+     ],
+     [
+      5.4,
+      null
+     ]
+    ],
+    [
+     "13887f1a66dfdca2",
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "yes",
+      "ext:source": "nyc_dot_ramps"
+     },
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "yes",
+      "ext:osm_kerb": "lowered",
+      "ext:osm_tactile_paving": "yes",
+      "ext:source": "nyc_dot_ramps"
+     },
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1096306"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -4.1
+      ]
+     ],
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1096306"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -4.1
+      ]
+     ],
+     [
+      43.2,
+      null
+     ],
+     [
+      43.2,
+      null
+     ]
+    ],
+    [
+     "8ce8ec0cf22337f2",
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "yes",
+      "ext:source": "nyc_dot_ramps"
+     },
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "yes",
+      "ext:osm_kerb": "lowered",
+      "ext:source": "nyc_dot_ramps"
+     },
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1123402"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -5.1
+      ]
+     ],
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1123402"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -5.1
+      ]
+     ],
+     [
+      6.1,
+      null
+     ],
+     [
+      6.1,
+      null
+     ]
+    ],
+    [
+     "b7a13e8f298f503e",
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "no",
+      "ext:source": "nyc_dot_ramps"
+     },
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "no",
+      "ext:osm_kerb": "lowered",
+      "ext:source": "nyc_dot_ramps"
+     },
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1038852"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -1.1
+      ]
+     ],
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1038852"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -1.1
+      ]
+     ],
+     [
+      4.8,
+      null
+     ],
+     [
+      4.8,
+      null
+     ]
+    ],
+    [
+     "48415e64d90be75f",
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "no",
+      "ext:source": "nyc_dot_ramps"
+     },
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "no",
+      "ext:osm_kerb": "lowered",
+      "ext:osm_tactile_paving": "yes",
+      "ext:source": "nyc_dot_ramps"
+     },
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1113816"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -6.2
+      ]
+     ],
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1113816"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -6.2
+      ]
+     ],
+     [
+      22.1,
+      null
+     ],
+     [
+      22.1,
+      null
+     ]
+    ]
+   ],
+   "ramp moved onto this node: ramp fields, kerb or elevator fields": [
+    [
+     "33b3670291c5a382",
+     {
+      "ext:source": "osm_walk"
+     },
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "no",
+      "ext:osm_kerb": "lowered",
+      "ext:osm_tactile_paving": "yes",
+      "ext:source": "nyc_dot_ramps"
+     },
+     [],
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1107689"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -5.4
+      ]
+     ],
+     [
+      12.9,
+      null
+     ],
+     [
+      12.9,
+      null
+     ]
+    ],
+    [
+     "808e031d43cfe6bc",
+     {
+      "ext:source": "osm_walk"
+     },
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "yes",
+      "ext:osm_kerb": "lowered",
+      "ext:osm_tactile_paving": "yes",
+      "ext:source": "nyc_dot_ramps"
+     },
+     [],
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1034396"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -2.6
+      ]
+     ],
+     [
+      21.7,
+      null
+     ],
+     [
+      21.7,
+      null
+     ]
+    ],
+    [
+     "6e73d3c1255eed11",
+     {
+      "ext:source": "osm_walk"
+     },
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "yes",
+      "ext:osm_kerb": "lowered",
+      "ext:osm_tactile_paving": "yes",
+      "ext:source": "nyc_dot_ramps"
+     },
+     [],
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1112507"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -2.9
+      ]
+     ],
+     [
+      14.8,
+      null
+     ],
+     [
+      14.8,
+      null
+     ]
+    ],
+    [
+     "b0c4af2b1d277228",
+     {
+      "ext:source": "osm_walk"
+     },
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "no",
+      "ext:source": "nyc_dot_ramps"
+     },
+     [],
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1043775"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -3.3
+      ]
+     ],
+     [
+      9.4,
+      null
+     ],
+     [
+      9.4,
+      null
+     ]
+    ],
+    [
+     "14c4c204c30d2ec1",
+     {
+      "ext:source": "osm_walk"
+     },
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "yes",
+      "ext:source": "nyc_dot_ramps"
+     },
+     [],
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1160817"
+      ],
+      [
+       "ext:counter_slope_pct",
+       10.4
+      ]
+     ],
+     [
+      13.8,
+      null
+     ],
+     [
+      13.8,
+      null
+     ]
+    ],
+    [
+     "4b65884664631b62",
+     {
+      "ext:source": "osm_walk"
+     },
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "no",
+      "ext:osm_kerb": "lowered",
+      "ext:osm_tactile_paving": "no",
+      "ext:source": "nyc_dot_ramps"
+     },
+     [],
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1031239"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -3.3
+      ]
+     ],
+     [
+      19.8,
+      null
+     ],
+     [
+      19.8,
+      null
+     ]
+    ]
+   ],
+   "osm kerb or elevator tag carried: ramp fields, kerb or elevator fields": [
+    [
+     "e3f26f574ead5982",
+     {
+      "ext:source": "osm_walk"
+     },
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "yes",
+      "ext:source": "osm_walk"
+     },
+     [],
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "kerb",
+       "lowered"
+      ],
+      [
+       "tactile_paving",
+       "yes"
+      ]
+     ],
+     [
+      25.6,
+      null
+     ],
+     [
+      25.6,
+      null
+     ]
+    ],
+    [
+     "1a06960fb47b44ce",
+     {
+      "ext:source": "osm_walk"
+     },
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "yes",
+      "ext:source": "osm_walk"
+     },
+     [],
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "kerb",
+       "lowered"
+      ],
+      [
+       "tactile_paving",
+       "yes"
+      ]
+     ],
+     [
+      9.5,
+      null
+     ],
+     [
+      9.5,
+      null
+     ]
+    ],
+    [
+     "4a4c9e74408cabf6",
+     {
+      "ext:source": "osm_walk"
+     },
+     {
+      "barrier": "kerb",
+      "kerb": "raised",
+      "ext:source": "osm_walk"
+     },
+     [],
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "kerb",
+       "raised"
+      ]
+     ],
+     [
+      20.9,
+      null
+     ],
+     [
+      20.9,
+      null
+     ]
+    ],
+    [
+     "88674859b7292f4f",
+     {
+      "ext:source": "osm_walk"
+     },
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "ext:source": "osm_walk"
+     },
+     [],
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "kerb",
+       "lowered"
+      ]
+     ],
+     [
+      17.4,
+      null
+     ],
+     [
+      17.4,
+      null
+     ]
+    ],
+    [
+     "347b245a60276009",
+     {
+      "ext:source": "osm_walk"
+     },
+     {
+      "barrier": "kerb",
+      "ext:source": "osm_walk"
+     },
+     [],
+     [
+      [
+       "barrier",
+       "kerb"
+      ]
+     ],
+     [
+      30.4,
+      null
+     ],
+     [
+      30.4,
+      null
+     ]
+    ],
+    [
+     "7eee238a2ba11066",
+     {
+      "ext:source": "osm_walk"
+     },
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "yes",
+      "ext:source": "osm_walk"
+     },
+     [],
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "kerb",
+       "lowered"
+      ],
+      [
+       "tactile_paving",
+       "yes"
+      ]
+     ],
+     [
+      14.3,
+      null
+     ],
+     [
+      14.3,
+      null
+     ]
+    ]
+   ],
+   "ramp moved off this node: ramp fields": [
+    [
+     "fa40d2950355ebef",
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "yes",
+      "ext:source": "nyc_dot_ramps"
+     },
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "yes",
+      "ext:source": "nyc_dot_ramps"
+     },
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1163175"
+      ],
+      [
+       "ext:counter_slope_pct",
+       5.0
+      ]
+     ],
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1163175"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -3.0
+      ]
+     ],
+     [
+      4.3,
+      null
+     ],
+     [
+      4.3,
+      null
+     ]
+    ],
+    [
+     "1689937f28cc8ce6",
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "no",
+      "ext:source": "nyc_dot_ramps"
+     },
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "no",
+      "ext:source": "nyc_dot_ramps"
+     },
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1139031"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -7.1
+      ]
+     ],
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1139031"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -7.7
+      ]
+     ],
+     [
+      11.7,
+      null
+     ],
+     [
+      11.7,
+      null
+     ]
+    ],
+    [
+     "12f610c3759ced5b",
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "yes",
+      "ext:source": "nyc_dot_ramps"
+     },
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "yes",
+      "ext:source": "nyc_dot_ramps"
+     },
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1215298"
+      ],
+      [
+       "ext:counter_slope_pct",
+       1.9
+      ]
+     ],
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1215298"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -1.7
+      ]
+     ],
+     [
+      5.9,
+      null
+     ],
+     [
+      5.9,
+      null
+     ]
+    ],
+    [
+     "078382675e294787",
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "no",
+      "ext:source": "nyc_dot_ramps"
+     },
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "no",
+      "ext:source": "nyc_dot_ramps"
+     },
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1122559"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -6.1
+      ]
+     ],
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1122559"
+      ],
+      [
+       "ext:counter_slope_pct",
+       0.5
+      ]
+     ],
+     [
+      5.0,
+      null
+     ],
+     [
+      5.0,
+      null
+     ]
+    ],
+    [
+     "d0d8ee31f4d13c07",
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "no",
+      "ext:source": "nyc_dot_ramps"
+     },
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "no",
+      "ext:source": "nyc_dot_ramps"
+     },
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1072901"
+      ],
+      [
+       "ext:counter_slope_pct",
+       2.0
+      ]
+     ],
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1072901"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -3.9
+      ]
+     ],
+     [
+      3.4,
+      null
+     ],
+     [
+      3.4,
+      null
+     ]
+    ],
+    [
+     "60da354804c80773",
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "no",
+      "ext:source": "nyc_dot_ramps"
+     },
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "no",
+      "ext:source": "nyc_dot_ramps"
+     },
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1008434"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -6.5
+      ]
+     ],
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1008434"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -12.3
+      ]
+     ],
+     [
+      11.6,
+      null
+     ],
+     [
+      11.6,
+      null
+     ]
+    ]
+   ],
+   "osm kerb or elevator tag carried: kerb or elevator fields": [
+    [
+     "9eac118b47fff285",
+     {
+      "ext:source": "osm_walk"
+     },
+     {
+      "ext:osm_highway": "elevator",
+      "ext:source": "osm_walk"
+     },
+     [],
+     [],
+     [
+      9.4,
+      null
+     ],
+     [
+      9.4,
+      null
+     ]
+    ],
+    [
+     "ae26287a691af17a",
+     {
+      "ext:source": "osm_walk"
+     },
+     {
+      "ext:osm_highway": "elevator",
+      "ext:source": "osm_walk"
+     },
+     [],
+     [],
+     [
+      2.7,
+      null
+     ],
+     [
+      2.7,
+      null
+     ]
+    ],
+    [
+     "d721f241907021e0",
+     {
+      "ext:source": "osm_walk"
+     },
+     {
+      "ext:osm_highway": "elevator",
+      "ext:source": "osm_walk"
+     },
+     [],
+     [],
+     [
+      17.4,
+      null
+     ],
+     [
+      17.4,
+      null
+     ]
+    ],
+    [
+     "9692f013b3357855",
+     {
+      "ext:source": "osm_walk"
+     },
+     {
+      "ext:osm_highway": "elevator",
+      "ext:source": "osm_walk"
+     },
+     [],
+     [],
+     [
+      4.4,
+      null
+     ],
+     [
+      4.4,
+      null
+     ]
+    ],
+    [
+     "9854e7b02ce46c9b",
+     {
+      "ext:source": "osm_walk"
+     },
+     {
+      "ext:osm_highway": "elevator",
+      "ext:source": "osm_walk"
+     },
+     [],
+     [],
+     [
+      12.6,
+      null
+     ],
+     [
+      12.6,
+      null
+     ]
+    ],
+    [
+     "e2c20e288fe42747",
+     {
+      "ext:source": "osm_walk"
+     },
+     {
+      "ext:osm_highway": "elevator",
+      "ext:source": "osm_walk"
+     },
+     [],
+     [],
+     [
+      4.4,
+      null
+     ],
+     [
+      4.4,
+      null
+     ]
+    ]
+   ],
+   "height beside a new edge: height": [
+    [
+     "561a6fca456ed4b6",
+     {
+      "ext:source": "osm_walk"
+     },
+     {
+      "ext:source": "osm_walk"
+     },
+     [],
+     [],
+     [
+      12.8,
+      "lidar_2017"
+     ],
+     [
+      12.1,
+      "lidar_2017"
+     ]
+    ],
+    [
+     "dacf070e5f2d7dc8",
+     {
+      "ext:source": "osm_walk"
+     },
+     {
+      "ext:source": "osm_walk"
+     },
+     [],
+     [],
+     [
+      3.1,
+      null
+     ],
+     [
+      3.4,
+      "lidar_2017"
+     ]
+    ]
+   ],
+   "ramp moved onto this node: ramp fields, kerb or elevator fields, height": [
+    [
+     "1823fce877ef43f3",
+     {
+      "ext:source": "osm_walk"
+     },
+     {
+      "barrier": "kerb",
+      "kerb": "lowered",
+      "tactile_paving": "yes",
+      "ext:source": "nyc_dot_ramps"
+     },
+     [],
+     [
+      [
+       "barrier",
+       "kerb"
+      ],
+      [
+       "ext:corner_id",
+       "1161514"
+      ],
+      [
+       "ext:counter_slope_pct",
+       -4.3
+      ]
+     ],
+     [
+      12.6,
+      null
+     ],
+     [
+      12.6,
+      "lidar_2017"
+     ]
+    ]
+   ]
+  }
+ },
+ "edges": {
+  "shared_with_a_difference": 346996,
+  "by_cause": {
+   "elevator at an end: incline (footway)": 442,
+   "elevator at an end: incline (pedestrian_road)": 2,
+   "elevator at an end: incline (road)": 4,
+   "elevator at an end: incline (sidewalk)": 34,
+   "elevator at an end: incline (steps)": 10,
+   "endpoint merge differs: geometry, endpoints, other, incline (footway)": 2,
+   "endpoint merge differs: geometry, endpoints, other, incline (road)": 4,
+   "incline beside a new edge: incline (crossing)": 416,
+   "incline beside a new edge: incline (footway)": 522,
+   "incline beside a new edge: incline (pedestrian_road)": 20,
+   "incline beside a new edge: incline (road)": 118,
+   "incline beside a new edge: incline (sidewalk)": 670,
+   "incline beside a new edge: sidewalk tags, incline (road)": 138,
+   "street sidewalk tag: sidewalk tags (road)": 344604,
+   "unexplained: incline (crossing)": 2,
+   "unexplained: incline (footway)": 6,
+   "unexplained: incline (sidewalk)": 2
+  },
+  "examples": {
+   "street sidewalk tag: sidewalk tags (road)": [
+    [
+     "654fc9799a06191d",
+     0.016,
+     0.016,
+     {},
+     {
+      "ext:sidewalk": "separate",
+      "ext:sidewalk_left": "separate",
+      "ext:sidewalk_right": "separate"
+     }
+    ],
+    [
+     "8c3198f1b97629ee",
+     0.0461,
+     0.0461,
+     {},
+     {
+      "ext:sidewalk": "separate",
+      "ext:sidewalk_left": "separate",
+      "ext:sidewalk_right": "separate"
+     }
+    ],
+    [
+     "989542b850be9f87",
+     0.0059,
+     0.0059,
+     {},
+     {
+      "ext:sidewalk": "separate",
+      "ext:sidewalk_left": "separate",
+      "ext:sidewalk_right": "separate"
+     }
+    ],
+    [
+     "0a7e1561e9348079",
+     0.0214,
+     0.0214,
+     {},
+     {
+      "ext:sidewalk": "separate",
+      "ext:sidewalk_left": "separate",
+      "ext:sidewalk_right": "separate"
+     }
+    ],
+    [
+     "feda372a1c82e45f",
+     -0.0115,
+     -0.0115,
+     {},
+     {
+      "ext:sidewalk": "separate",
+      "ext:sidewalk_left": "separate",
+      "ext:sidewalk_right": "separate"
+     }
+    ],
+    [
+     "206aa4666d4fc99b",
+     -0.012,
+     -0.012,
+     {},
+     {
+      "ext:sidewalk": "separate",
+      "ext:sidewalk_left": "no",
+      "ext:sidewalk_right": "separate"
+     }
+    ]
+   ],
+   "incline beside a new edge: incline (footway)": [
+    [
+     "3218b5a5e17cbca1",
+     0.0038,
+     0.0022,
+     {},
+     {}
+    ],
+    [
+     "af6e9ac2823c4111",
+     -0.0057,
+     -0.0066,
+     {},
+     {}
+    ],
+    [
+     "d9a596a4f09ac629",
+     -0.0201,
+     -0.0181,
+     {},
+     {}
+    ],
+    [
+     "42cad958b4da83eb",
+     -0.008,
+     -0.0091,
+     {},
+     {}
+    ],
+    [
+     "e1d191ee05ff3791",
+     0.0173,
+     0.0177,
+     {},
+     {}
+    ],
+    [
+     "1cb8404970533009",
+     -0.0474,
+     -0.0473,
+     {},
+     {}
+    ]
+   ],
+   "incline beside a new edge: sidewalk tags, incline (road)": [
+    [
+     "8d1be62a0aa78857",
+     0.0018,
+     0.0034,
+     {},
+     {
+      "ext:sidewalk": "separate",
+      "ext:sidewalk_left": "no",
+      "ext:sidewalk_right": "separate"
+     }
+    ],
+    [
+     "09b53dcd3b4ed662",
+     -0.0144,
+     -0.0145,
+     {},
+     {
+      "ext:sidewalk": "separate",
+      "ext:sidewalk_left": "separate",
+      "ext:sidewalk_right": "separate"
+     }
+    ],
+    [
+     "04d04f2da53cbd07",
+     -0.0117,
+     -0.0146,
+     {},
+     {
+      "ext:sidewalk": "separate",
+      "ext:sidewalk_left": "no",
+      "ext:sidewalk_right": "separate"
+     }
+    ],
+    [
+     "c54c22f3af640588",
+     -0.023,
+     -0.0233,
+     {},
+     {
+      "ext:sidewalk": "separate",
+      "ext:sidewalk_left": "no",
+      "ext:sidewalk_right": "separate"
+     }
+    ],
+    [
+     "59a04e5a421ec942",
+     -0.0168,
+     -0.0147,
+     {},
+     {
+      "ext:sidewalk": "separate",
+      "ext:sidewalk_left": "no",
+      "ext:sidewalk_right": "separate"
+     }
+    ],
+    [
+     "3f8e33a0122a41f9",
+     -0.0038,
+     0.0022,
+     {},
+     {
+      "ext:sidewalk": "separate",
+      "ext:sidewalk_left": "no",
+      "ext:sidewalk_right": "separate"
+     }
+    ]
+   ],
+   "elevator at an end: incline (footway)": [
+    [
+     "0c80cac7b313a088",
+     -0.0023,
+     null,
+     {},
+     {}
+    ],
+    [
+     "79b07552559a4345",
+     -0.0004,
+     null,
+     {},
+     {}
+    ],
+    [
+     "6005fd97a82c029a",
+     0.0465,
+     null,
+     {},
+     {}
+    ],
+    [
+     "cbabd7cff283da7e",
+     0.0221,
+     null,
+     {},
+     {}
+    ],
+    [
+     "70db6a7aa5631dcb",
+     -0.0001,
+     null,
+     {},
+     {}
+    ],
+    [
+     "e3b1a82710e47576",
+     0.0108,
+     null,
+     {},
+     {}
+    ]
+   ],
+   "incline beside a new edge: incline (sidewalk)": [
+    [
+     "0a99a2cfa3b2d747",
+     -0.0042,
+     -0.0049,
+     {},
+     {}
+    ],
+    [
+     "2b38f65789abd6ae",
+     -0.0752,
+     -0.0751,
+     {},
+     {}
+    ],
+    [
+     "01a9a952c21fe0fa",
+     -0.0241,
+     -0.012,
+     {},
+     {}
+    ],
+    [
+     "ee3f501b5386920d",
+     0.0004,
+     0.0002,
+     {},
+     {}
+    ],
+    [
+     "ef5278e1afa89c9e",
+     0.0085,
+     0.0082,
+     {},
+     {}
+    ],
+    [
+     "affe31a30cbb80f6",
+     0.0137,
+     0.0079,
+     {},
+     {}
+    ]
+   ],
+   "incline beside a new edge: incline (crossing)": [
+    [
+     "fca0cf93316af362",
+     -0.0086,
+     -0.0087,
+     {},
+     {}
+    ],
+    [
+     "0ded4b89301d4930",
+     -0.0062,
+     -0.0063,
+     {},
+     {}
+    ],
+    [
+     "706dbd4021f1bd9a",
+     0.0137,
+     0.0148,
+     {},
+     {}
+    ],
+    [
+     "b24fd97694bf8797",
+     -0.007,
+     -0.0031,
+     {},
+     {}
+    ],
+    [
+     "d6fa3e94d3dd5e52",
+     0.0127,
+     0.0166,
+     {},
+     {}
+    ],
+    [
+     "f00fd22f92241d8d",
+     0.0235,
+     0.0231,
+     {},
+     {}
+    ]
+   ],
+   "incline beside a new edge: incline (road)": [
+    [
+     "12bb616c6e2c3786",
+     -0.0013,
+     0.003,
+     {},
+     {}
+    ],
+    [
+     "fea170728b7e56be",
+     -0.0031,
+     -0.0025,
+     {},
+     {}
+    ],
+    [
+     "60a4aa8d079a3ae6",
+     0.0012,
+     0.0014,
+     {},
+     {}
+    ],
+    [
+     "9ce3f81e4cafa7b1",
+     -0.0028,
+     -0.014,
+     {},
+     {}
+    ],
+    [
+     "30b1002ee46ab30a",
+     0.0019,
+     0.0009,
+     {},
+     {}
+    ],
+    [
+     "4ceb17768f9bf89e",
+     0.01,
+     0.0101,
+     {},
+     {}
+    ]
+   ],
+   "elevator at an end: incline (steps)": [
+    [
+     "f1407c419f01d921",
+     -0.4035,
+     null,
+     {},
+     {}
+    ],
+    [
+     "189591f5f122aca1",
+     -0.0056,
+     null,
+     {},
+     {}
+    ],
+    [
+     "df848005aaaa224d",
+     0.0056,
+     null,
+     {},
+     {}
+    ],
+    [
+     "b7bcb0ad1925dda7",
+     -0.0228,
+     null,
+     {},
+     {}
+    ],
+    [
+     "4865968ede826804",
+     -0.5882,
+     null,
+     {},
+     {}
+    ],
+    [
+     "2f41f5a675071964",
+     -0.8008,
+     null,
+     {},
+     {}
+    ]
+   ],
+   "elevator at an end: incline (road)": [
+    [
+     "db73828f3233ff73",
+     0.0193,
+     null,
+     {},
+     {}
+    ],
+    [
+     "1f82721f25076679",
+     0.0082,
+     null,
+     {},
+     {}
+    ],
+    [
+     "845bb7c70ff76637",
+     -0.0193,
+     null,
+     {},
+     {}
+    ],
+    [
+     "98e845e3641e7fc8",
+     -0.0082,
+     null,
+     {},
+     {}
+    ]
+   ],
+   "incline beside a new edge: incline (pedestrian_road)": [
+    [
+     "54ad2f9e8da8b416",
+     -0.0021,
+     0.0042,
+     {},
+     {}
+    ],
+    [
+     "84f5f2ec95bc0bea",
+     0.0036,
+     0.0038,
+     {},
+     {}
+    ],
+    [
+     "480488fd153dd834",
+     0.0021,
+     -0.0042,
+     {},
+     {}
+    ],
+    [
+     "64b2e3d1ea70ee1c",
+     -0.0016,
+     0.0003,
+     {},
+     {}
+    ],
+    [
+     "925dd8c758d4c136",
+     -0.0054,
+     -0.0052,
+     {},
+     {}
+    ],
+    [
+     "c1edb5f7386fd3f8",
+     0.0062,
+     0.0127,
+     {},
+     {}
+    ]
+   ],
+   "elevator at an end: incline (sidewalk)": [
+    [
+     "f8a1deac3e7b3b68",
+     -0.1488,
+     null,
+     {},
+     {}
+    ],
+    [
+     "54941c85cc600c54",
+     -0.0006,
+     null,
+     {},
+     {}
+    ],
+    [
+     "bf4e105ad7f98d96",
+     -0.0146,
+     null,
+     {},
+     {}
+    ],
+    [
+     "910072e1ef99be7f",
+     -0.0008,
+     null,
+     {},
+     {}
+    ],
+    [
+     "3eab82d9329006ed",
+     0.0011,
+     null,
+     {},
+     {}
+    ],
+    [
+     "e17120f13ab8800a",
+     0.0028,
+     null,
+     {},
+     {}
+    ]
+   ],
+   "endpoint merge differs: geometry, endpoints, other, incline (road)": [
+    [
+     "391d5b7975512b95",
+     -0.025,
+     -0.0284,
+     {},
+     {}
+    ],
+    [
+     "2a3efae81319dc15",
+     -0.0758,
+     -0.079,
+     {},
+     {}
+    ],
+    [
+     "2b4193a2745f9564",
+     0.0758,
+     0.079,
+     {},
+     {}
+    ],
+    [
+     "1f5f16a4ef20f676",
+     0.025,
+     0.0284,
+     {},
+     {}
+    ]
+   ],
+   "unexplained: incline (sidewalk)": [
+    [
+     "d74c70b8f71ebe94",
+     -0.0208,
+     -0.0207,
+     {},
+     {}
+    ],
+    [
+     "f7b2d6778bee41b8",
+     0.0208,
+     0.0207,
+     {},
+     {}
+    ]
+   ],
+   "elevator at an end: incline (pedestrian_road)": [
+    [
+     "6101ff09f7b5d868",
+     null,
+     null,
+     {},
+     {}
+    ],
+    [
+     "ee393caf08e2b14f",
+     null,
+     null,
+     {},
+     {}
+    ]
+   ],
+   "unexplained: incline (crossing)": [
+    [
+     "3d04fa40375b0772",
+     0.0221,
+     0.0219,
+     {},
+     {}
+    ],
+    [
+     "4f4ee045394c6238",
+     -0.0221,
+     -0.0219,
+     {},
+     {}
+    ]
+   ],
+   "unexplained: incline (footway)": [
+    [
+     "7a0a488e12f99f27",
+     0.022,
+     0.0261,
+     {},
+     {}
+    ],
+    [
+     "456e534e5247ccbc",
+     -0.0247,
+     -0.0242,
+     {},
+     {}
+    ],
+    [
+     "3ddc8bac79898e99",
+     -0.0272,
+     -0.0225,
+     {},
+     {}
+    ],
+    [
+     "13a0089e32f377bf",
+     -0.022,
+     -0.0261,
+     {},
+     {}
+    ],
+    [
+     "ddbebad379121132",
+     0.0272,
+     0.0225,
+     {},
+     {}
+    ],
+    [
+     "7b518eee9fb01b31",
+     0.0247,
+     0.0242,
+     {},
+     {}
+    ]
+   ],
+   "endpoint merge differs: geometry, endpoints, other, incline (footway)": [
+    [
+     "0cfef1197840c940",
+     0.0388,
+     0.04,
+     {},
+     {}
+    ],
+    [
+     "23046043f92ba02c",
+     -0.0388,
+     -0.04,
+     {},
+     {}
+    ]
+   ]
+  },
+  "geometry_same_on_shared_edges": 2797528,
+  "incline_same_on_shared_edges": 2795142,
+  "street_edges_with_sidewalk_tag": {
+   "before": 0,
+   "after": 344742
+  }
+ },
+ "zones": {
+  "before": 2201,
+  "after": 2201,
+  "shared_and_equal": 2199
+ },
+ "note": "width, surface, names and every property not named in the script are covered by 'other'; ext:pipeline_version and ext:source_timestamp are per build and ignored"
+}

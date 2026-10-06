@@ -1,0 +1,12 @@
+{
+  "input": "output/nyc-osw.geojson",
+  "endpoints_snapped_u": 480,
+  "endpoints_snapped_v": 480,
+  "endpoints_snapped_total": 960,
+  "edges_with_unresolved_node_ref": 0,
+  "degenerate_after_snap": 0,
+  "zone_vertices_snapped": 127,
+  "nodes": 1187062,
+  "edges": 2806326,
+  "zones": 2201
+}
