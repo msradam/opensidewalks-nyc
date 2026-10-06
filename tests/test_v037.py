@@ -159,6 +159,11 @@ def test_osm_kerb_and_elevator_nodes_are_carried():
     m = _merge_node_group(group, {"barrier", "kerb", "tactile_paving", "ext:ramp_id"})
     assert (m["kerb"], m["tactile_paving"], m["ext:source"], m["ext:ramp_id"]) == ("lowered", "yes", "nyc_dot_ramps", "R1")
     assert (m["ext:osm_kerb"], m["ext:osm_tactile_paving"]) == ("raised", "no")
+    # OSM's values are kept even where they agree, and the survey's stand
+    # even where it has none: the node says every value is the survey's.
+    m = _merge_node_group(group.assign(kerb=["lowered", "lowered"], tactile_paving=["yes", None]),
+                          {"barrier", "kerb", "tactile_paving", "ext:ramp_id"})
+    assert m["ext:osm_kerb"] == "lowered" and m["ext:osm_tactile_paving"] == "yes" and pd.isna(m["tactile_paving"])
     # A ramp on a plain OSM vertex: as before, nothing from OSM to keep.
     m = _merge_node_group(group.assign(kerb=[None, "lowered"], tactile_paving=[None, "yes"], barrier=[None, "kerb"]),
                           {"barrier", "kerb", "tactile_paving", "ext:ramp_id"})

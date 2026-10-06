@@ -425,18 +425,20 @@ def _merge_node_group(group: pd.DataFrame, curb_fields: set) -> pd.Series:
     come from the ramp's row, and a node that carries a ramp says so in its
     provenance: `ext:source` and `ext:source_timestamp` are the survey's,
     because every value on it apart from its position comes from the survey.
-    Where the OSM vertex is itself a kerb node, the survey's kerb and
-    tactile_paving win (they are measured), and OSM's own values are kept
-    beside them as ext:osm_kerb and ext:osm_tactile_paving.
+    Where the OSM vertex is itself a kerb node, the node carries the
+    survey's kerb and tactile_paving (they are measured, and the node's
+    provenance says every value is the survey's), and OSM's own values are
+    kept beside them as ext:osm_kerb and ext:osm_tactile_paving, whether or
+    not they agree. Where the survey has no value, none is written.
     """
     merged = group.iloc[0].copy()
     ramp = group[group["ext:source"] == "nyc_dot_ramps"] if "ext:source" in group.columns else group.iloc[0:0]
     if not ramp.empty:
         for field in ("kerb", "tactile_paving"):
-            if field in group.columns and pd.notna(merged.get(field)) and merged[field] != ramp.iloc[0][field]:
+            if field in group.columns and pd.notna(merged.get(field)):
                 merged[f"ext:osm_{field}"] = merged[field]
         for field in curb_fields | {"ext:source", "ext:source_timestamp"}:
-            if field in ramp.columns and pd.notna(ramp.iloc[0][field]):
+            if field in ramp.columns:
                 merged[field] = ramp.iloc[0][field]
         return merged
     for field in curb_fields:

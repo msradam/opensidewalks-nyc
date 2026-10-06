@@ -53,7 +53,7 @@ for f in fc["features"]:
                       p.get("tactile_paving"), p.get("ext:ramp_id"), p.get("ext:borough"), p.get("ext:source"),
                       p.get("ext:running_slope_pct"), p.get("ext:cross_slope_pct"), p.get("ext:counter_slope_pct"),
                       p.get("ext:source_timestamp") is not None, p.get("ext:elevation_source"),
-                      p.get("ext:dws_condition"), p.get("ext:osm_highway"), p.get("ext:osm_kerb")))
+                      p.get("ext:dws_condition"), p.get("ext:osm_highway"), p.get("ext:osm_kerb"), p.get("ext:osm_tactile_paving")))
     else:
         c = g["coordinates"]
         bad_precision += not all(dec_ok(x) for pt in c for x in pt)
@@ -69,7 +69,7 @@ for f in fc["features"]:
                       p.get("ext:incline_unknown"), p.get("ext:sidewalk"), p.get("ext:osm_highway")))
 del fc
 N = pd.DataFrame(nrows, columns=["id", "lon", "lat", "elev", "barrier", "kerb", "tactile", "ramp", "borough", "source",
-                                 "run", "cross", "counter", "has_ts", "elev_source", "dws", "osm_highway", "osm_kerb"])
+                                 "run", "cross", "counter", "has_ts", "elev_source", "dws", "osm_highway", "osm_kerb", "osm_tactile"])
 E = pd.DataFrame(erows, columns=["id", "u", "v", "kind", "highway", "borough", "source", "incline", "width", "length",
                                  "name", "x0", "y0", "x1", "y1", "npts", "surface", "markings", "has_osm_id", "has_ts",
                                  "structure", "foot", "unknown", "sidewalk", "osm_highway"])
@@ -280,7 +280,8 @@ res["borough_crossing_pedestrian_edges"] = {"edges": len(X), "by_pair": X.assign
                                             "named_crossings": sorted(joins, key=lambda r: (r["boroughs"], -r["edges"]))}
 
 # --- curb ramps ------------------------------------------------------------
-curb = N[N.barrier == "kerb"].copy()
+# The survey's ramps. OSM's own kerb nodes (from v0.3.7) are counted below.
+curb = N[(N.barrier == "kerb") & N.ramp.notna()].copy()
 zref = set(ZR.u)
 ref = set(E.u) | set(E.v) | zref; pref = set(P.u) | set(P.v) | zref
 cr = E[E.kind == "crossing"]; xref = set(cr.u) | set(cr.v)
@@ -340,8 +341,12 @@ res["osm_kerbs"] = {
     "curb_nodes_from_osm_only": len(osm_kerb), "by_kerb": osm_kerb.kerb.fillna("none (generic curb)").value_counts().to_dict(),
     "with_tactile_paving": int(osm_kerb.tactile.notna().sum()), "attached_to_any_edge": int(osm_kerb.id.isin(ref).sum()),
     "on_a_crossing_end": int(osm_kerb.id.isin(cr_ends).sum()),
-    "nodes_with_both_a_surveyed_ramp_and_an_osm_kerb": int(surveyed.osm_kerb.notna().sum()),
-    "osm_kerb_where_the_survey_has_a_ramp": surveyed.osm_kerb.dropna().value_counts().to_dict(),
+    "surveyed_ramps_on_an_osm_kerb_node": int((surveyed.osm_kerb.notna() | surveyed.osm_tactile.notna()).sum()),
+    "osm_kerb_where_the_survey_has_a_ramp": surveyed.osm_kerb.fillna("no value").value_counts().to_dict(),
+    "of_those_disagreeing_with_the_survey_kerb": int((surveyed.osm_kerb.notna() & (surveyed.osm_kerb != surveyed.kerb)).sum()),
+    "osm_tactile_where_the_survey_has_a_ramp": surveyed.osm_tactile.fillna("no value").value_counts().to_dict(),
+    "of_those_disagreeing_with_the_survey_tactile": int((surveyed.osm_tactile.notna() & surveyed.tactile.notna() & (surveyed.osm_tactile != surveyed.tactile)).sum()),
+    "surveyed_ramps_with_osm_tactile_and_no_survey_value": int((surveyed.osm_tactile.notna() & surveyed.tactile.isna()).sum()),
     "sources_of_curb_nodes": curb.source.fillna("none").value_counts().to_dict()}
 lift = N[N.osm_highway == "elevator"]
 lift_edges = E[E.u.isin(lift.id) | E.v.isin(lift.id)]

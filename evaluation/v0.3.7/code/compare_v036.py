@@ -127,8 +127,11 @@ for i in shared:
         continue
     # A new edge on or beside a structure grows the region the deck rules
     # read, so a node near one can gain, lose or change a deck height.
+    osm_only = a["kerb"].get("ext:source") == "osm_walk" and not a["ramp"].get("ext:ramp_id")
+    on_ramp = a["ramp"].get("ext:ramp_id") and (a["kerb"].get("ext:osm_kerb") or a["kerb"].get("ext:osm_tactile_paving"))
     cause = ("ramp moved off this node" if i in nodes_losing_ramp else "ramp moved onto this node" if i in nodes_gaining_ramp
-             else "osm kerb or elevator tag carried" if set(diffs) <= {"kerb or elevator fields"} and a["kerb"].get("ext:source") != "nyc_dot_ramps"
+             else "osm kerb or elevator tag carried" if set(diffs) <= {"kerb or elevator fields", "ramp fields"} and osm_only
+             else "osm kerb kept beside a surveyed ramp" if set(diffs) <= {"kerb or elevator fields"} and on_ramp
              else "height beside a new edge" if set(diffs) <= {"height"} and i in near_new
              else "unexplained")
     key = f"{cause}: {', '.join(diffs)}"
