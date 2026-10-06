@@ -1,0 +1,49 @@
+name: Data error
+description: The dataset shows something that is not on the street, or misses something that is.
+title: "[Data] "
+labels: ["data error"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you. Three things make a report usable: where it is, what is wrong, and how you know. What you write here is public.
+        Sidewalks, crossings and plazas come from OpenStreetMap; curb ramps and their slopes come from the NYC DOT survey of 2017 to 2020; incline and width are estimates. CONTRIBUTING.md says which of these the project can change.
+  - type: input
+    id: location
+    attributes:
+      label: Where
+      description: A street corner or address with the borough, or coordinates (latitude, longitude). An OpenStreetMap link or a feature `_id` from the data is even better.
+      placeholder: "Pitkin Avenue and Rockaway Avenue, Brooklyn, northeast corner"
+    validations:
+      required: true
+  - type: textarea
+    id: wrong
+    attributes:
+      label: What is wrong
+      description: What the dataset shows and what is actually there. One place per issue.
+      placeholder: "The crossing on the north side is shown with a curb ramp at both ends. The east end has no ramp, only a full curb."
+    validations:
+      required: true
+  - type: dropdown
+    id: evidence
+    attributes:
+      label: How you know
+      options:
+        - I was there (say roughly when)
+        - I looked at street-level imagery (say which and its date)
+        - I looked at aerial imagery
+        - I compared it with another map or dataset (say which)
+        - Other (explain below)
+    validations:
+      required: true
+  - type: textarea
+    id: detail
+    attributes:
+      label: Details
+      description: When you saw it, what you compared with, a photo if you have one. If the error is in OpenStreetMap and you have fixed it there, say so.
+  - type: input
+    id: version
+    attributes:
+      label: Dataset version
+      description: From the file root (`pipelineVersion.version`) or the release page, if you know it.
+      placeholder: "0.3.7-nyc.1"

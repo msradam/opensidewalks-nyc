@@ -40,3 +40,6 @@ validators/schema-cache/
 
 # Logs
 *.log
+
+# Drafts for the owner to post; not part of the repository
+drafts/

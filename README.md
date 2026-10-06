@@ -1,10 +1,10 @@
 # OpenSidewalks NYC<!-- omit from toc -->
 
-OpenSidewalks NYC is a data file of New York City's sidewalks, street crossings, plazas and curb ramps. It is for researchers who study street access and developers who build routing software. It is not a trip planner, and it does not say which routes are accessible.
+OpenSidewalks NYC is a data file of New York City's sidewalks, street crossings, plazas and curb ramps. It is for researchers who study street access and developers who build routing software. It is experimental: nothing in it has been checked on the ground. It is not a trip planner, and it does not say which routes are accessible.
 
 It is an independent project. It uses the [OpenSidewalks Schema](https://github.com/OpenSidewalks/OpenSidewalks-Schema) v0.3, a shared format for pedestrian networks developed by the Taskar Center for Accessible Technology at the University of Washington. To report a problem, open a [GitHub issue](https://github.com/msradam/opensidewalks-nyc/issues). You need a free GitHub account, and what you write there is public.
 
-[Demo](https://msradam.github.io/opensidewalks-nyc/) · [How it is built](https://msradam.github.io/opensidewalks-nyc/how-it-works.html) · [Download](https://github.com/msradam/opensidewalks-nyc/releases/latest) · [Evidence](evaluation/) · [Disclaimer](#disclaimer)
+[Demo](https://msradam.github.io/opensidewalks-nyc/) · [How it is built](https://msradam.github.io/opensidewalks-nyc/how-it-works.html) · [Download](https://github.com/msradam/opensidewalks-nyc/releases/latest) · [Evidence](evaluation/) · [Contributing](#contributing) · [Disclaimer](#disclaimer)
 
 ![Pedestrian edges in Washington Heights and Inwood, colored by incline](docs/img/incline-washington-heights.png)
 
@@ -27,6 +27,7 @@ It is an independent project. It uses the [OpenSidewalks Schema](https://github.
 - [Limitations](#limitations)
 - [Related Work](#related-work)
 - [Building the Dataset](#building-the-dataset)
+- [Contributing](#contributing)
 - [How This Was Made](#how-this-was-made)
 - [Disclaimer](#disclaimer)
 - [License and Attribution](#license-and-attribution)
@@ -44,7 +45,7 @@ Following the OpenSidewalks approach, this dataset labels no path as wheelchair 
 
 <a id="dataset-contents"></a>
 
-The dataset holds 3,986,649 features: 2,797,538 Edges, 1,186,910 Nodes and 2,201 Zones. Every Edge is directed, with `incline` signed in its direction of travel.
+The dataset holds 3,995,589 features: 2,806,326 Edges, 1,187,062 Nodes and 2,201 Zones. Every Edge is directed, with `incline` signed in its direction of travel.
 
 ![Sidewalk, Crossing, Footway and Steps Edges, Pedestrian Zones and Curb Ramp Nodes in Downtown Brooklyn](docs/img/network-structure.png)
 
@@ -54,12 +55,12 @@ The dataset holds 3,986,649 features: 2,797,538 Edges, 1,186,910 Nodes and 2,201
 
 | Entity | Tags | Count |
 |---|---|---|
-| Sidewalk | `highway=footway`, `footway=sidewalk` | 933,110 |
-| Crossing | `highway=footway`, `footway=crossing` | 437,510 |
-| Footway | `highway=footway` with no `footway` subtag | 449,626 |
+| Sidewalk | `highway=footway`, `footway=sidewalk` | 933,174 |
+| Crossing | `highway=footway`, `footway=crossing` | 437,940 |
+| Footway | `highway=footway` with no `footway` subtag | 457,924 |
 | Pedestrian Road | `highway=pedestrian`, a linear pedestrian street | 11,402 |
 | Steps | `highway=steps` | 15,470 |
-| Motor vehicle roads | `highway=residential`, `service`, `secondary`, `unclassified` and other road classes | 950,420 |
+| Motor vehicle roads | `highway=residential`, `service`, `secondary`, `unclassified` and other road classes, with `ext:sidewalk` where OSM tags the street's sidewalks | 950,416 |
 
 ## Zones
 
@@ -78,26 +79,28 @@ A Pedestrian Zone is a plaza or another surface people walk across in any direct
 | Entity | Tags | Count |
 |---|---|---|
 | Curb Ramp | `barrier=kerb`, `kerb=lowered`, with the NYC DOT survey fields | 217,679 |
-| Bare Node | Edge endpoints and Zone outline vertices with no other entity type | 969,231 |
+| Curb nodes from OpenStreetMap | `barrier=kerb` with `kerb=lowered`, `raised`, `flush` or `rolled`, or alone (a generic curb) | 22,238 |
+| Elevator | a Bare Node with `ext:osm_highway=elevator` | 137 |
+| Bare Node | Edge endpoints and Zone outline vertices with no other entity type | 947,008 |
 
 ## Fields
 
 <a id="fields"></a>
 
-Edges carry `incline`, `width`, `surface`, `name`, `crossing:markings`, `foot` and `ext:structure`. `crossing:markings` comes from OSM's own `crossing:markings` tag, or from `crossing=*` as the schema advises. `foot` is OSM's tag, on 75,314 Edges. An OSM `path`, cycleway or track written as a Footway keeps its origin in `ext:osm_highway`. Curb Ramps carry `tactile_paving`, DOT's raw warning surface value in `ext:dws_condition`, and the survey's slopes. Nodes carry `ext:elevation_m`, except 1,532 that have no height: 1,300 are inside tunnels, 48 are on a structure with no deck height, and 184 are where the terrain model holds no data or outside its tiles. 2,068 Edges carry `ext:incline_unknown=yes` and no `incline`, because their two end heights give a grade no walkway is built at (0.5 or more, or over 1.0 on Steps). The mark means both heights were measured and are not a slope, so something changes level there. An Edge with no `incline` and no mark, such as a tunnel Edge, was not measured. A Curb Ramp's `ext:source` is `nyc_dot_ramps`, because its values come from the survey even where its position is an OpenStreetMap vertex. [SCHEMA.md](SCHEMA.md) lists every field.
+Edges carry `incline`, `width`, `surface`, `name`, `crossing:markings`, `foot` and `ext:structure`. `crossing:markings` comes from OSM's own `crossing:markings` tag, or from `crossing=*` as the schema advises. `foot` is OSM's tag, on 75,314 Edges. An OSM `path`, cycleway or track written as a Footway keeps its origin in `ext:osm_highway`. A street Edge carries what OSM says about the street's sidewalks in `ext:sidewalk` (`both`, `left`, `right`, `yes`, `no` or `separate`), on 344,718 of the 950,416 street Edges; the street stays a street Edge, and the routing layer's wheelchair profile walks one tagged as having a sidewalk. Curb nodes come from the DOT survey and, from v0.3.7, from OSM's own `kerb` nodes (22,238 nodes with `kerb=lowered`, `raised`, `flush` or `rolled`, or `barrier=kerb` alone); where a surveyed ramp sits on an OSM kerb node the survey's values win and OSM's stay in `ext:osm_kerb`. 137 elevator nodes carry `ext:osm_highway=elevator`, and the Edges at one have no `incline`. Curb Ramps carry `tactile_paving`, DOT's raw warning surface value in `ext:dws_condition`, and the survey's slopes. Nodes carry `ext:elevation_m`, except 1,538 that have no height: 1,306 are inside tunnels, 48 are on a structure with no deck height, and 184 are where the terrain model holds no data or outside its tiles. 2,042 Edges carry `ext:incline_unknown=yes` and no `incline`, because their two end heights give a grade no walkway is built at (0.5 or more, or over 1.0 on Steps). The mark means both heights were measured and are not a slope, so something changes level there. An Edge with no `incline` and no mark, such as a tunnel Edge, was not measured. A Curb Ramp's `ext:source` is `nyc_dot_ramps`, because its values come from the survey even where its position is an OpenStreetMap vertex. [SCHEMA.md](SCHEMA.md) lists every field.
 
 ## Network Topology
 
 <a id="network-topology"></a>
 
-The schema puts curb ramps at Edge endpoints and expects a Footway between a Sidewalk and a Crossing. OpenStreetMap's geometry, which this dataset keeps, joins many Crossings directly to Sidewalks: in Manhattan, 52% of the nodes on a Crossing also touch a Sidewalk (measured on v0.3.4). Each surveyed ramp is snapped to the nearest pedestrian Edge endpoint or Zone vertex within 5 m. 181,499 of the 217,679 ramps (83%) sit on one, 126,152 of them on a Crossing. The other 36,180 are on no Edge or Zone, because no vertex lies within 5 m or another ramp took it.
+The schema puts curb ramps at Edge endpoints and expects a Footway between a Sidewalk and a Crossing. OpenStreetMap's geometry, which this dataset keeps, joins many Crossings directly to Sidewalks: in Manhattan, 52% of the nodes on a Crossing also touch a Sidewalk (measured on v0.3.4). Each surveyed ramp is snapped to the end of a Crossing within 5 m when there is one, and otherwise to the nearest pedestrian Edge endpoint or Zone vertex within 5 m. 184,939 of the 217,679 ramps (85.0%) sit on such a vertex, 166,310 of them on a Crossing end (in v0.3.6, which took the nearest vertex, 55,347 of 181,499 attached ramps sat on a Sidewalk vertex beside their Crossing). The other 32,740 are on no Edge or Zone, because no vertex lies within 5 m or another ramp took it.
 
 ## Known Deviations from the Schema
 
 <a id="known-deviations-from-the-schema"></a>
 
-- Many Crossings join Sidewalks directly, with no Footway between them, and 36,180 Curb Ramp Nodes are on no Edge or Zone ([Network Topology](#network-topology)).
-- OSM node tags (`kerb`, elevators) are not carried. Every Curb Ramp comes from the DOT survey.
+- Many Crossings join Sidewalks directly, with no Footway between them, and 32,740 Curb Ramp Nodes are on no Edge or Zone ([Network Topology](#network-topology)).
+- OSM `highway=crossing` nodes are not marked, and a street tagged as having a sidewalk has no Sidewalk Edge: the tag is `ext:sidewalk` on the street.
 - Both directions are stored, so applications must not add reverse Edges.
 - A Pedestrian Zone has one outer ring and no interior detail, so a hole in a plaza (a fountain, a planter) is not written.
 
@@ -136,13 +139,13 @@ edges = features[features.geom_type == "LineString"]
 
 <a id="validation"></a>
 
-v0.3.6 passes [`python-osw-validation`](https://pypi.org/project/python-osw-validation/) 0.5.0 with zero errors ([`evaluation/v0.3.6/validator.json`](evaluation/v0.3.6/validator.json), which names the checksum of the ZIP it read). The validator checks form, not the schema's topology rules or whether the data matches the street. [`validators/post_build_checks.py`](validators/post_build_checks.py) does the other checks (elevation, deck heights, connectivity, ramps, widths, zones), with results in [`evaluation/v0.3.6/checks.json`](evaluation/v0.3.6/checks.json) and [`validators/QUALITY_REPORT.md`](validators/QUALITY_REPORT.md).
+v0.3.7 passes [`python-osw-validation`](https://pypi.org/project/python-osw-validation/) 0.5.0 with zero errors ([`evaluation/v0.3.7/validator.json`](evaluation/v0.3.7/validator.json), which names the checksum of the ZIP it read). The validator checks form, not the schema's topology rules or whether the data matches the street. [`validators/post_build_checks.py`](validators/post_build_checks.py) does the other checks (elevation, deck heights, connectivity, ramps, widths, zones, and from v0.3.7 where each ramp sits, OSM's kerbs, elevators, streets' sidewalk tags and shared paths), with results in [`evaluation/v0.3.7/checks.json`](evaluation/v0.3.7/checks.json) and [`validators/QUALITY_REPORT.md`](validators/QUALITY_REPORT.md).
 
 # Evaluation
 
 <a id="evaluation"></a>
 
-The protocols, ratings and result files behind every number here are in [`evaluation/`](evaluation/). The result files for v0.3.6 itself (the validator run, the post-build checks, the feature-by-feature comparison with the v0.3.5 build and the reachability run) are in [`evaluation/v0.3.6/`](evaluation/v0.3.6/). v0.3.5 was an internal build that was never released, and its files, among them the comparison with v0.3.4, are in [`evaluation/v0.3.5/`](evaluation/v0.3.5/). The imagery ratings and the router comparison were run on v0.3.3 and were not repeated. On the same 2,000 node pairs per borough that were drawn on v0.3.4, the wheelchair profile routes 1,694 pairs in Brooklyn, 1,258 in Queens, 1,056 in Manhattan, 872 in the Bronx and 861 on Staten Island (84.7%, 62.9%, 52.8%, 43.6% and 43.1%), against 1,696, 1,259, 1,068, 879 and 861 in the v0.3.5 build. It lost 23 pairs (13 in Manhattan, 7 in the Bronx, 2 in Brooklyn, 1 in Queens) and gained 1 in Manhattan. On a sixth sample of 2,000 pairs with ends anywhere in the city it routes 803, against 813 (11 lost, 1 gained). The lost routes used an edge whose heights are not a slope, which the profile used to walk as level and now refuses. No other profile changed on any pair ([`reach_same_pairs_v0.3.6.json`](evaluation/v0.3.6/reach_same_pairs_v0.3.6.json)). In the v0.3.5 build no pair had lost its route under any profile, and the wheelchair profile had gained 8 pairs in Manhattan and 5 in the Bronx, where a route now crosses a plaza ([`reach_same_pairs_v0.3.5.json`](evaluation/v0.3.5/reach_same_pairs_v0.3.5.json)).
+The protocols, ratings and result files behind every number here are in [`evaluation/`](evaluation/). The result files for v0.3.7 itself (the validator run, the post-build checks, the feature-by-feature comparison with v0.3.6, the tag counts in the extract and the reachability run) are in [`evaluation/v0.3.7/`](evaluation/v0.3.7/); each earlier release has its own folder. The imagery ratings and the router comparison were run on v0.3.3 and were not repeated. On the same 2,000 node pairs per borough that were drawn on v0.3.4, the wheelchair profile routes 1,760 pairs in Brooklyn, 1,311 in Queens, 1,097 in Manhattan, 933 in the Bronx and 885 on Staten Island (88.0%, 65.6%, 54.9%, 46.7% and 44.3%), against 1,694, 1,258, 1,056, 872 and 861 on v0.3.6. On a sixth sample of 2,000 pairs with ends anywhere in the city it routes 848, against 803. It gained 292 pairs in all and lost 2, both at a crossing whose surveyed ramp moved onto the end of the crossing it serves and out of this one's 5 m reach. The gains come from OpenStreetMap's lowered and flush kerbs, which now count at a crossing end as a surveyed ramp does, from streets tagged as having a sidewalk, which the profile now walks, and from elevators and the cycleways and tracks kept under the United States default ([`reach_same_pairs_v0.3.7.json`](evaluation/v0.3.7/reach_same_pairs_v0.3.7.json)).
 
 ## Comparison with Other Routers
 
@@ -185,10 +188,10 @@ In the second image, red triangles are ramps that DOT's 2020 assessment labeled 
 <a id="limitations"></a>
 
 - The ramp survey shows that a ramp was there when it was captured, not that it is usable today, and DOT says the data does not establish ADA compliance.
-- Where OSM maps sidewalks as `sidewalk=*` tags on the street, a valid OSM scheme, the graph has no sidewalk Edge, because this pipeline does not read those tags. The network is in many pieces, and Staten Island has no pedestrian link to the other boroughs. The graph has no ferry edges, so Governors Island, Liberty Island and Ellis Island are cut off.
+- Much of the Bronx, Queens and Staten Island has streets with no sidewalk mapped in OSM in any form: of the 108,703 street ways in the extract, 104,555 carry no `sidewalk=*` tag (26,938 of those use the per-side keys, almost all saying `separate` or `no`), and about 1,700 say a sidewalk exists only as a tag (v0.3.6's notes blamed the tags; a count of the extract shows otherwise). The tag is now carried and the wheelchair profile walks a street tagged as having a sidewalk, with no kerb check at its intersections, but that reaches few streets. The network is in many pieces, and Staten Island has no pedestrian link to the other boroughs. The graph has no ferry edges, so Governors Island, Liberty Island and Ellis Island are cut off.
 - A Crossing counts as ramped when a surveyed ramp lies within 5 m of each end. Language-model raters checked that rule over imagery of 200 crossings ([evidence](evaluation/crossing_rule/)).
-- About three in ten of the curb ramps on the graph sit on a sidewalk vertex beside the crossing they serve, not on the crossing's end. An independent check of the v0.3.5 build drew 100 ramps at random and found 29 such, and city-wide 55,347 of the 181,499 attached ramps (30%) are on no Crossing. That crossing end has no Curb Ramp Node, which is why the routing layer uses the 5 m rule.
-- Some greenways are missing because this pipeline keeps a cycleway or track only when OpenStreetMap gives it a `foot` tag. That is stricter than OpenStreetMap's default for the United States, which lets people walk on a cycleway unless a tag says otherwise. 629 cycleway ways (37.6 km, among them the Jamaica Bay, Bronx River and Marine Park greenways, and also one-way bike lanes) and 247 tracks (43.7 km) are left out.
+- A surveyed ramp now sits on the end of the crossing it serves where one is within 5 m (89.9% of attached ramps; 30% sat on a sidewalk vertex beside the crossing up to v0.3.6). 16,159 attached ramps are still on no Crossing, because no crossing end is within 5 m of them, and the routing layer keeps its 5 m rule for them.
+- A cycleway or track with no `foot` tag is now kept, as OpenStreetMap's default for the United States says, except a one-way cycleway, which in New York is a bike lane beside the roadway: 218 such ways stay out, a few of them with greenway names, and nobody has checked a sample of them.
 - Incline is estimated from airborne LiDAR and can understate the steepest part of an Edge. An Edge marked `ext:incline_unknown=yes` has end heights that disagree by more than any walkway climbs; the wheelchair profile refuses it, and the Node heights beside it may themselves be wrong. An Edge with no `incline` and no mark, such as one in a tunnel, was not measured and still passes the wheelchair profile. Width is a polygon's mean width, not the clear width.
 - The wheelchair profile does not read OSM's `surface`, `smoothness` or `wheelchair=no` tags, or a ramp's slope or DOT status.
 
@@ -218,6 +221,12 @@ python scripts/snap_endpoints.py --input output/nyc-osw.geojson
 ```
 
 [`notebooks/how-it-works.ipynb`](notebooks/how-it-works.ipynb) follows a few blocks through every stage and runs in under a minute without a build ([rendered](https://msradam.github.io/opensidewalks-nyc/how-it-works.html)). [scripts/README.md](scripts/README.md) turns a build into release files.
+
+# Contributing
+
+<a id="contributing"></a>
+
+To report a data error, open a [data error issue](https://github.com/msradam/opensidewalks-nyc/issues/new?template=data-error.yml): it asks where, what is wrong and how you know. Sidewalks, crossings and plazas come from OpenStreetMap, so the best way to improve them is to improve the map, following OpenStreetMap's own conventions; the pipeline reads separate sidewalk ways, `sidewalk=*` tags on streets, `kerb` and `tactile_paving` nodes, `crossing:markings` and elevators, and nothing needs tagging for this project. [CONTRIBUTING.md](CONTRIBUTING.md) says which values the project can change itself, how to run the pipeline or the notebook, and how code and document changes are made. [CHANGELOG.md](CHANGELOG.md) lists every release.
 
 # How This Was Made
 
@@ -251,6 +260,7 @@ The OpenSidewalks Schema and `python-osw-validation` are developed by the [Taska
 
 | Version | Release Date | Link | Notes |
 |---|---|---|---|
+| 0.3.7-nyc.1 | 2026-10-06 | [GitHub](https://github.com/msradam/opensidewalks-nyc/releases/tag/v0.3.7-nyc.1) | A street carries OSM's sidewalk tags in `ext:sidewalk` and the wheelchair profile walks a street tagged as having one. A surveyed ramp snaps to the end of the crossing it serves. OSM's own kerb and elevator nodes are carried. A cycleway or track with no `foot` tag is kept unless it is a one-way cycleway. CONTRIBUTING, an issue template and a changelog. |
 | 0.3.6-nyc.1 | 2026-10-05 | [GitHub](https://github.com/msradam/opensidewalks-nyc/releases/tag/v0.3.6-nyc.1) | Plazas are Pedestrian Zones. `dataTimestamp` is the OpenStreetMap data time. Curb ramp provenance names the survey. OSM `path` keeps its origin. Terrain "no data" and tunnels give no Node height, a jump between two surfaces is marked `ext:incline_unknown` and not written as a slope, and every GraphML edge carries `length_m`. v0.3.5 was an internal build and was not released. |
 | 0.3.4-nyc.1 | 2026-10-04 | [GitHub](https://github.com/msradam/opensidewalks-nyc/releases/tag/v0.3.4-nyc.1) | `crossing:markings` from OSM's tag, Pedestrian Road, `foot` and `ext:dws_condition`. Geometry and incline unchanged from v0.3.3. |
 | 0.3.3-nyc.1 | 2026-10-03 | [GitHub](https://github.com/msradam/opensidewalks-nyc/releases/tag/v0.3.3-nyc.1) | First public release. 0.3.3-nyc.1 is this dataset's own version, and it uses OpenSidewalks Schema v0.3. |
