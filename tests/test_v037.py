@@ -165,6 +165,24 @@ def test_osm_kerb_and_elevator_nodes_are_carried():
     assert m["kerb"] == "lowered" and "ext:osm_kerb" not in m.index
 
 
+def test_node_dedup_keeps_the_geometry_when_only_some_nodes_disagree():
+    """A ramp on an OSM kerb that disagrees adds keys to its merged row; the
+    rows of other nodes must still line up, or the geometry is lost (the
+    v0.3.7 release build failed here with "Unknown column geometry")."""
+    rows = [
+        {"_id": "n", "barrier": "kerb", "kerb": "raised", "tactile_paving": None, "ext:source": "osm_walk", "ext:ramp_id": None},
+        {"_id": "n", "barrier": "kerb", "kerb": "lowered", "tactile_paving": "yes", "ext:source": "nyc_dot_ramps", "ext:ramp_id": "R1"},
+        {"_id": "m", "barrier": None, "kerb": None, "tactile_paving": None, "ext:source": "osm_walk", "ext:ramp_id": None},
+        {"_id": "o", "barrier": "kerb", "kerb": "flush", "tactile_paving": None, "ext:source": "osm_walk", "ext:ramp_id": None}]
+    nodes = gpd.GeoDataFrame(rows, geometry=[Point(0, 0), Point(0, 0), Point(1, 0), Point(2, 0)], crs="EPSG:4326")
+    out = assemble._dedup_nodes(nodes)
+    assert isinstance(out, gpd.GeoDataFrame) and out.geometry.name == "geometry" and len(out) == 3
+    by = out.set_index("_id")
+    assert by.loc["n", "kerb"] == "lowered" and by.loc["n", "ext:osm_kerb"] == "raised"
+    assert by.loc["o", "kerb"] == "flush" and pd.isna(by.loc["o", "ext:osm_kerb"])
+    assert list(by.loc["m"].geometry.coords) == [(1.0, 0.0)]
+
+
 def test_an_edge_at_an_elevator_has_no_incline_and_no_mark():
     PX = 2e-5
     with tempfile.TemporaryDirectory() as tmp:

@@ -447,6 +447,34 @@ def _merge_node_group(group: pd.DataFrame, curb_fields: set) -> pd.Series:
     return merged
 
 
+CURB_FIELDS = {"barrier", "kerb", "tactile_paving",
+               "ext:ramp_id", "ext:corner_id", "ext:street_1", "ext:street_2",
+               "ext:running_slope_pct", "ext:cross_slope_pct",
+               "ext:counter_slope_pct", "ext:dws_condition"}
+
+
+def _dedup_nodes(all_nodes: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+    """One node per `_id`, merged by _merge_node_group.
+
+    Every merged row must come back with the same keys: pandas builds a
+    DataFrame from groupby().apply() only when every Series it returns has
+    the same index, and otherwise stacks them into one Series, which loses
+    the geometry. The two fields the merge may add are created first.
+    """
+    for col in ("ext:osm_kerb", "ext:osm_tactile_paving"):
+        if col not in all_nodes.columns:
+            all_nodes[col] = None
+    merged = (
+        all_nodes
+        .groupby("_id", sort=False)
+        .apply(_merge_node_group, CURB_FIELDS)
+        # pandas 3 excludes the grouping column from apply() groups, so _id
+        # only survives as the group index; a plain reset_index restores it.
+        .reset_index()
+    )
+    return gpd.GeoDataFrame(merged, geometry="geometry", crs="EPSG:4326")
+
+
 def _load_zones(path: Path) -> gpd.GeoDataFrame:
     """The staged Pedestrian Zones, with `_w_id` parsed back into a list."""
     if not path.exists():
@@ -1128,21 +1156,7 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
     # silently discards DOT ramp data whenever an OSM node lands at the same point.
     if "_id" in all_nodes.columns:
         before = len(all_nodes)
-        curb_fields = {"barrier", "kerb", "tactile_paving",
-                       "ext:ramp_id", "ext:corner_id", "ext:street_1", "ext:street_2",
-                       "ext:running_slope_pct", "ext:cross_slope_pct",
-                       "ext:counter_slope_pct", "ext:dws_condition"}
-
-        all_nodes = (
-            all_nodes
-            .groupby("_id", sort=False)
-            .apply(_merge_node_group, curb_fields)
-            # pandas 3 excludes the grouping column from apply() groups, so _id
-            # only survives as the group index; a plain reset_index restores it.
-            .reset_index()
-        )
-        # Restore GeoDataFrame with correct geometry column.
-        all_nodes = gpd.GeoDataFrame(all_nodes, geometry="geometry", crs="EPSG:4326")
+        all_nodes = _dedup_nodes(all_nodes)
         dropped = before - len(all_nodes)
         n_curb = (all_nodes["kerb"].notna().sum()
                   if "kerb" in all_nodes.columns else 0)
