@@ -100,7 +100,7 @@ Claim: v0.3.7 differs from v0.3.6 only where four changes touch it. A street edg
 
 ### Lessons
 
-`lessons/` holds 43 short notes, one per thing learned. Some quote numbers from the v0.3.2 dry run or make a claim later corrected, and each of those carries a dated note.
+`lessons/` holds 45 short notes, one per thing learned. Some quote numbers from the v0.3.2 dry run or make a claim later corrected, and each of those carries a dated note.
 
 ## Two sets of reachability numbers
 
