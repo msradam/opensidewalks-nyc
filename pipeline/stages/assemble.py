@@ -50,10 +50,33 @@ def _endpoint_coords(gdf: gpd.GeoDataFrame) -> list[tuple[float, float, str, str
     return pts
 
 
+def _crossing_ends(crossings: gpd.GeoDataFrame,
+                   others: gpd.GeoDataFrame) -> list[tuple[float, float]]:
+    """The coordinates of the nodes where a crossing meets the rest of the
+    pedestrian network: an end of a crossing edge that is also an end of a
+    sidewalk, footway or zone ring edge. A crossing's inner vertices (the
+    kerb line, the lanes, a median) are not among them."""
+    walk = set(others["_u_id"]) | set(others["_v_id"]) if len(others) else set()
+    ends = {}
+    for lon, lat, _, _ in _endpoint_coords(crossings):
+        nid = node_id(lon, lat)
+        if nid in walk:
+            ends[nid] = (lon, lat)
+    return list(ends.values())
+
+
 def _snap_curb_nodes(curb_nodes: gpd.GeoDataFrame,
                      edge_endpoints: list[tuple],
-                     snap_tolerance_m: float) -> gpd.GeoDataFrame:
+                     snap_tolerance_m: float,
+                     preferred: list[tuple[float, float]] | None = None) -> gpd.GeoDataFrame:
     """Snap curb nodes to the nearest edge endpoint within snap_tolerance_m.
+
+    A ramp serves a crossing, so where one of the `preferred` points (the
+    crossing ends, see _crossing_ends) is within the tolerance it goes
+    there, nearest ramp first and one ramp per end, even when a sidewalk
+    vertex beside the crossing is nearer. The rest take the nearest endpoint
+    of any kind, as before v0.3.7, when three in ten attached ramps landed
+    on a sidewalk vertex beside the crossing they serve.
 
     Uses a scipy cKDTree for O(n log m) nearest-neighbor lookup instead of
     the O(n×m) brute-force approach, making this tractable for city-scale data.
@@ -84,15 +107,28 @@ def _snap_curb_nodes(curb_nodes: gpd.GeoDataFrame,
 
     # Query KD-tree: nearest endpoint for every curb node.
     dists, indices = tree.query(curb_coords, k=1, workers=-1)
+    target = {i: ep_proj[indices[i]] for i in range(len(curb_nodes)) if dists[i] <= snap_tolerance_m}
+
+    n_at_end = 0
+    if preferred:
+        pref_proj = np.array([to_proj.transform(lon, lat) for lon, lat in preferred])
+        pd_, pi = cKDTree(pref_proj).query(curb_coords, k=1, workers=-1)
+        taken: set[int] = set()
+        for i in np.argsort(pd_, kind="stable"):
+            if pd_[i] > snap_tolerance_m:
+                break
+            if int(pi[i]) not in taken:
+                taken.add(int(pi[i]))
+                target[int(i)] = pref_proj[pi[i]]
+                n_at_end += 1
 
     snapped_geometries = []
     snapped_ids        = []
     snap_count         = 0
 
     for i, (_, curb) in enumerate(curb_nodes.iterrows()):
-        min_dist = float(dists[i])
-        if min_dist <= snap_tolerance_m:
-            ex, ey = ep_proj[indices[i]]
+        if i in target:
+            ex, ey = target[i]
             new_lon, new_lat = to_wgs84.transform(ex, ey)
             snapped_geometries.append(Point(new_lon, new_lat))
             snapped_ids.append(node_id(new_lon, new_lat))
@@ -106,7 +142,7 @@ def _snap_curb_nodes(curb_nodes: gpd.GeoDataFrame,
     result["_id"]   = snapped_ids
 
     click.echo(f"    Snapped {snap_count}/{len(curb_nodes)} curb nodes "
-               f"(tolerance {snap_tolerance_m} m)")
+               f"(tolerance {snap_tolerance_m} m), {n_at_end} of them to a crossing end")
     return result
 
 
@@ -346,26 +382,68 @@ def _inject_missing_nodes(all_edges: gpd.GeoDataFrame,
 # Connected components analysis
 # ---------------------------------------------------------------------------
 
+# The OSW curb entities: barrier=kerb with one of these kerb values, or with
+# none (a generic curb). OSM's other kerb values (yes, no, unknown) say
+# nothing the schema can hold and are dropped.
+_KERB_VALUES = frozenset(["lowered", "raised", "flush", "rolled"])
+_TACTILE_VALUES = frozenset(["yes", "no", "primitive", "contrasted"])
+
+
+def _osm_node_tags(osm_nodes: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+    """The OSM node tags Stage 1 keeps, as the schema's node fields.
+
+    A node tagged barrier=kerb, or kerb=lowered, raised, flush or rolled, is
+    a curb node: barrier=kerb and the kerb value (kerb=* alone means a kerb
+    is there, so barrier=kerb is written for it). tactile_paving is kept on
+    a curb node when its value is one the schema lists. An elevator
+    (highway=elevator) is a bare node with ext:osm_highway=elevator; Stage 4
+    writes no incline on the edges at it. Every other value of these tags,
+    and every other highway value, is dropped.
+    """
+    nodes = osm_nodes.copy()
+    kerb = nodes["kerb"].map(lambda v: str(v).split(";")[0].strip().lower()) if "kerb" in nodes else pd.Series("", index=nodes.index)
+    kerb = kerb.where(kerb.isin(_KERB_VALUES))
+    barrier = nodes["barrier"].astype(str).str.lower() if "barrier" in nodes else pd.Series("", index=nodes.index)
+    is_curb = (barrier == "kerb") | kerb.notna()
+    nodes["barrier"] = np.where(is_curb, "kerb", None)
+    nodes["kerb"] = kerb
+    tactile = nodes["tactile_paving"].astype(str).str.lower() if "tactile_paving" in nodes else pd.Series("", index=nodes.index)
+    nodes["tactile_paving"] = tactile.where(is_curb & tactile.isin(_TACTILE_VALUES))
+    if "highway" in nodes:
+        nodes["ext:osm_highway"] = nodes["highway"].where(nodes["highway"].astype(str).str.lower() == "elevator")
+    click.echo(f"    OSM node tags: {int(is_curb.sum()):,} kerbs "
+               f"({kerb.value_counts().to_dict()}), "
+               f"{int(nodes['tactile_paving'].notna().sum()):,} with tactile_paving, "
+               f"{int(nodes['ext:osm_highway'].notna().sum()) if 'ext:osm_highway' in nodes else 0:,} elevators")
+    return nodes
+
+
 def _merge_node_group(group: pd.DataFrame, curb_fields: set) -> pd.Series:
     """One node from the rows that share an id: an OSM vertex and the ramp on it.
 
     The first row keeps its position (the edge endpoint). The ramp fields
-    come from the row that has them. A node that carries a ramp says so in
-    its provenance: `ext:source` and `ext:source_timestamp` are the survey's,
+    come from the ramp's row, and a node that carries a ramp says so in its
+    provenance: `ext:source` and `ext:source_timestamp` are the survey's,
     because every value on it apart from its position comes from the survey.
+    Where the OSM vertex is itself a kerb node, the survey's kerb and
+    tactile_paving win (they are measured), and OSM's own values are kept
+    beside them as ext:osm_kerb and ext:osm_tactile_paving.
     """
     merged = group.iloc[0].copy()
+    ramp = group[group["ext:source"] == "nyc_dot_ramps"] if "ext:source" in group.columns else group.iloc[0:0]
+    if not ramp.empty:
+        for field in ("kerb", "tactile_paving"):
+            if field in group.columns and pd.notna(merged.get(field)) and merged[field] != ramp.iloc[0][field]:
+                merged[f"ext:osm_{field}"] = merged[field]
+        for field in curb_fields | {"ext:source", "ext:source_timestamp"}:
+            if field in ramp.columns and pd.notna(ramp.iloc[0][field]):
+                merged[field] = ramp.iloc[0][field]
+        return merged
     for field in curb_fields:
         if field in group.columns:
             filled = group[field].dropna()
             if not filled.empty:
                 merged[field] = filled.iloc[0]
-    if "barrier" in group.columns:
-        ramp = group[group["barrier"] == "kerb"]
-        if not ramp.empty:
-            for field in ("ext:source", "ext:source_timestamp"):
-                if field in ramp.columns and pd.notna(ramp.iloc[0][field]):
-                    merged[field] = ramp.iloc[0][field]
     return merged
 
 
@@ -772,6 +850,13 @@ def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
 
         slope_elevs = _smoothed_for_incline(all_edges, node_coords, node_elevs)
 
+        # An elevator joins two levels by machine. The edges at an elevator
+        # node run between its levels, so the difference of their end heights
+        # is not a slope anyone rolls up; they get no incline and no mark.
+        lifts: set[str] = set()
+        if "ext:osm_highway" in all_nodes.columns:
+            lifts = set(all_nodes.loc[all_nodes["ext:osm_highway"] == "elevator", "_id"])
+
         def _length_m(geom) -> float:
             coords = list(geom.coords)
             total = 0.0
@@ -793,8 +878,9 @@ def _compute_edge_inclines(all_edges: gpd.GeoDataFrame,
             # no deck height.
             structure = row.get("ext:structure")
             incline, cannot = None, False
-            if structure == "tunnel" or (structure in ("bridge", "elevated")
-                                         and (uid in no_height or vid in no_height)):
+            if (structure == "tunnel" or (structure in ("bridge", "elevated")
+                                          and (uid in no_height or vid in no_height))
+                    or uid in lifts or vid in lifts):
                 pass
             elif uid in slope_elevs and vid in slope_elevs:
                 # Heights that cannot be a slope along the edge (the ground
@@ -946,8 +1032,11 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
     )
     click.echo(f"    {len(pedestrian_edges):,} pedestrian edge endpoints to index")
     endpoints  = _endpoint_coords(pedestrian_edges)
+    ends       = _crossing_ends(crossings, gpd.GeoDataFrame(
+        pd.concat([sidewalks, footways, rings], ignore_index=True), geometry="geometry", crs="EPSG:4326"))
+    click.echo(f"    {len(ends):,} crossing ends")
     surveyed   = curb_nodes[["_id", "geometry"]].copy()
-    curb_nodes = _snap_curb_nodes(curb_nodes, endpoints, snap_tolerance)
+    curb_nodes = _snap_curb_nodes(curb_nodes, endpoints, snap_tolerance, preferred=ends)
 
     # Close near-miss gaps: dead ends and separate components whose endpoints
     # lie within the tolerance get the same node ID.
@@ -1002,6 +1091,8 @@ def run(sources: dict, build_cfg: dict, repo_root: Path) -> None:
         # ("queens", "bronx_county"); the edges got their codes in Stage 3.
         if "ext:borough" in osm_nodes.columns:
             osm_nodes["ext:borough"] = osm_nodes["ext:borough"].map(borough_code)
+
+        osm_nodes = _osm_node_tags(osm_nodes)
 
         # Strip all non-OSW properties. OSMnx attaches osmid, oneway, reversed,
         # length, junction, ref, etc.. These fail the OSW additionalProperties:false

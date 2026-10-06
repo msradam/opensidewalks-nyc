@@ -35,7 +35,7 @@ import json
 from pathlib import Path
 
 import osmium
-from osw_to_unweaver import RAMP_REACH_M, crossing_ends
+from osw_to_unweaver import PASSABLE_KERBS, RAMP_REACH_M, crossing_ends
 
 # The height written for a kerb with no ramp. A nominal value, not a
 # measurement: ORS 10.0.1 does not read kerb=raised, and reads a bare metre
@@ -53,7 +53,7 @@ def kerb_tags(feats, no_ramp="raised"):
             continue
         p = f["properties"]
         node_xy[p["_id"]] = f["geometry"]["coordinates"][:2]
-        if p.get("barrier") == "kerb" or p.get("kerb") in {"lowered", "raised", "flush"}:
+        if p.get("kerb") in PASSABLE_KERBS:
             curb_ids.add(p["_id"])
     _, ends = crossing_ends(feats, curb_ids, node_xy, RAMP_REACH_M)
     tags = {}
@@ -68,6 +68,8 @@ def kerb_tags(feats, no_ramp="raised"):
 
 def way_tags(p):
     tags = {k: str(p[k]) for k in WAY_TAGS if p.get(k) is not None}
+    if p.get("ext:sidewalk") is not None:      # a street's sidewalk tag, as OSM had it
+        tags["sidewalk"] = str(p["ext:sidewalk"])
     if p.get("width") is not None:
         tags["width"] = f"{float(p['width']):g}"
     if p.get("incline") is not None:

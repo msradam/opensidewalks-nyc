@@ -242,7 +242,13 @@ def _way_passes(tags, tests) -> bool:
 
 def _filter_extract(pbf: Path, out_xml: Path, custom_filter: str,
                     bounds: tuple[float, float, float, float]) -> None:
-    """Write the ways that pass the tag filter, with their nodes, as OSM XML."""
+    """Write the ways that pass the tag filter, with their nodes, as OSM XML.
+
+    Two passes. The first finds the ways that pass and the nodes they use;
+    the second writes those nodes, with their tags, and then the ways.
+    (pyosmium's BackReferenceWriter adds the referenced nodes by itself, but
+    bare, and a kerb or an elevator is a node tag.)
+    """
     import osmium
 
     tests = _parse_filter(custom_filter)
@@ -252,22 +258,38 @@ def _filter_extract(pbf: Path, out_xml: Path, custom_filter: str,
     fp = osmium.FileProcessor(str(pbf)).with_locations()
     if keys:
         fp = fp.with_filter(osmium.filter.KeyFilter(*keys))
-    with osmium.BackReferenceWriter(str(out_xml), ref_src=str(pbf),
-                                    overwrite=True) as writer:
-        for obj in fp:
-            if not obj.is_way() or not _way_passes(obj.tags, tests):
-                continue
-            # A way is written whole if any of its nodes is in the region, so
-            # every edge with one end inside is there for the truncation.
-            if any(n.location.valid() and west <= n.lon <= east
-                   and south <= n.lat <= north for n in obj.nodes):
+    ways: set[int] = set()
+    nodes: set[int] = set()
+    for obj in fp:
+        if not obj.is_way() or not _way_passes(obj.tags, tests):
+            continue
+        # A way is written whole if any of its nodes is in the region, so
+        # every edge with one end inside is there for the truncation.
+        if any(n.location.valid() and west <= n.lon <= east
+               and south <= n.lat <= north for n in obj.nodes):
+            ways.add(obj.id)
+            nodes.update(n.ref for n in obj.nodes)
+    out_xml.unlink(missing_ok=True)
+    writer = osmium.SimpleWriter(str(out_xml))
+    try:
+        for obj in osmium.FileProcessor(str(pbf), osmium.osm.NODE | osmium.osm.WAY):
+            if obj.is_node() and obj.id in nodes:
+                writer.add_node(obj)
+            elif obj.is_way() and obj.id in ways:
                 writer.add_way(obj)
+    finally:
+        writer.close()
 
 
 # OSM way tags kept beyond OSMnx's default useful_tags_way: the pedestrian
-# sub-tags Stage 3 reads.
+# sub-tags Stage 3 reads. A street's sidewalks are tagged either sidewalk=*
+# or per side (sidewalk:left, sidewalk:right, sidewalk:both).
 EXTRA_WAY_TAGS = ["footway", "crossing", "crossing:markings", "surface", "sidewalk",
+                  "sidewalk:left", "sidewalk:right", "sidewalk:both",
                   "tactile_paving", "kerb", "foot", "wheelchair", "layer"]
+# OSM node tags kept beyond OSMnx's default (ref, highway): a kerb mapped on
+# a crossing's end, and highway=elevator, which OSMnx's default already keeps.
+EXTRA_NODE_TAGS = ["barrier", "kerb", "tactile_paving"]
 
 
 def acquire_osm(source_cfg: dict, boroughs_file: Path, out_dir: Path,
@@ -289,6 +311,9 @@ def acquire_osm(source_cfg: dict, boroughs_file: Path, out_dir: Path,
 
     ox.settings.useful_tags_way = list(
         dict.fromkeys(ox.settings.useful_tags_way + EXTRA_WAY_TAGS)
+    )
+    ox.settings.useful_tags_node = list(
+        dict.fromkeys(ox.settings.useful_tags_node + EXTRA_NODE_TAGS)
     )
 
     nodes_file = out_dir / "osm_nodes.geojson"

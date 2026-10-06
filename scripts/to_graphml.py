@@ -27,6 +27,7 @@ Usage:
 from __future__ import annotations
 
 import itertools
+import json
 import sys
 from decimal import Decimal
 from pathlib import Path
@@ -62,7 +63,8 @@ def main(in_path: Path, out_path: Path, undirected: bool = False) -> None:
     with in_path.open("rb") as f:
         source = next(ijson.items(f, "dataSource"), None) or {}
     for k, v in source.items():
-        G.graph[k] = v if isinstance(v, PRIMITIVE) else str(v)
+        # GraphML holds primitives only; osmExtract (a dict) goes in as JSON.
+        G.graph[k] = v if isinstance(v, PRIMITIVE) else json.dumps(v)
 
     n_edges = 0
     n_nodes = 0

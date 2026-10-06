@@ -53,7 +53,7 @@ for f in fc["features"]:
                       p.get("tactile_paving"), p.get("ext:ramp_id"), p.get("ext:borough"), p.get("ext:source"),
                       p.get("ext:running_slope_pct"), p.get("ext:cross_slope_pct"), p.get("ext:counter_slope_pct"),
                       p.get("ext:source_timestamp") is not None, p.get("ext:elevation_source"),
-                      p.get("ext:dws_condition")))
+                      p.get("ext:dws_condition"), p.get("ext:osm_highway"), p.get("ext:osm_kerb")))
     else:
         c = g["coordinates"]
         bad_precision += not all(dec_ok(x) for pt in c for x in pt)
@@ -66,13 +66,13 @@ for f in fc["features"]:
                       p.get("incline"), p.get("width"), L, p.get("name"), c[0][0], c[0][1], c[-1][0], c[-1][1], len(c),
                       p.get("surface"), p.get("crossing:markings"), p.get("ext:osm_id") is not None,
                       p.get("ext:source_timestamp") is not None, p.get("ext:structure"), p.get("foot"),
-                      p.get("ext:incline_unknown")))
+                      p.get("ext:incline_unknown"), p.get("ext:sidewalk"), p.get("ext:osm_highway")))
 del fc
 N = pd.DataFrame(nrows, columns=["id", "lon", "lat", "elev", "barrier", "kerb", "tactile", "ramp", "borough", "source",
-                                 "run", "cross", "counter", "has_ts", "elev_source", "dws"])
+                                 "run", "cross", "counter", "has_ts", "elev_source", "dws", "osm_highway", "osm_kerb"])
 E = pd.DataFrame(erows, columns=["id", "u", "v", "kind", "highway", "borough", "source", "incline", "width", "length",
                                  "name", "x0", "y0", "x1", "y1", "npts", "surface", "markings", "has_osm_id", "has_ts",
-                                 "structure", "foot", "unknown"])
+                                 "structure", "foot", "unknown", "sidewalk", "osm_highway"])
 Z = pd.DataFrame(zrows, columns=["id", "w", "highway", "borough", "osm_highway", "source", "nvert", "ring"])
 del nrows, erows, zrows
 
@@ -318,6 +318,45 @@ res["nodes_not_on_any_edge_by_source"] = N[~N.id.isin(ref)].source.fillna("none"
 res["nodes_only_on_a_zone_ring"] = int((N.id.isin(zref) & ~N.id.isin(set(E.u) | set(E.v))).sum())
 res["curb"]["attached_only_through_a_zone_ring"] = int((curb.id.isin(zref) & ~curb.id.isin(set(E.u) | set(E.v))).sum())
 res["curb"]["source_on_attached_ramps"] = curb[curb.id.isin(ref)].source.fillna("none").value_counts().to_dict()
+
+# --- v0.3.7: where a ramp sits, OSM's kerbs and elevators, streets' sidewalks, shared paths
+# A crossing's ends are the nodes where it meets a sidewalk, footway or zone
+# ring. A surveyed ramp should sit on one; up to v0.3.6 three in ten attached
+# ramps sat on a sidewalk vertex beside the crossing instead.
+walk_nodes = set(P[P.kind != "crossing"].u) | set(P[P.kind != "crossing"].v) | zref
+cr_ends = xref & walk_nodes
+surveyed = curb[curb.ramp.notna()]
+att = surveyed[surveyed.id.isin(ref)]
+res["ramp_position"] = {
+    "surveyed_ramps_attached": len(att), "on_a_crossing_node": int(att.id.isin(xref).sum()),
+    "on_a_crossing_end": int(att.id.isin(cr_ends).sum()), "on_no_crossing": int((~att.id.isin(xref)).sum()),
+    "share_on_a_crossing_end": round(float(att.id.isin(cr_ends).mean()), 4) if len(att) else None,
+    "crossing_ends": len(cr_ends), "crossing_ends_with_a_surveyed_ramp": int(pd.Index(list(cr_ends)).isin(att.id).sum()),
+    "by_borough": {b: {"attached": len(d), "on_a_crossing_end": int(d.id.isin(cr_ends).sum()),
+                       "share": round(float(d.id.isin(cr_ends).mean()), 4)}
+                   for b, d in att.groupby(att.poly_boro.fillna("outside"))}}
+osm_kerb = curb[curb.ramp.isna()]
+res["osm_kerbs"] = {
+    "curb_nodes_from_osm_only": len(osm_kerb), "by_kerb": osm_kerb.kerb.fillna("none (generic curb)").value_counts().to_dict(),
+    "with_tactile_paving": int(osm_kerb.tactile.notna().sum()), "attached_to_any_edge": int(osm_kerb.id.isin(ref).sum()),
+    "on_a_crossing_end": int(osm_kerb.id.isin(cr_ends).sum()),
+    "nodes_with_both_a_surveyed_ramp_and_an_osm_kerb": int(surveyed.osm_kerb.notna().sum()),
+    "osm_kerb_where_the_survey_has_a_ramp": surveyed.osm_kerb.dropna().value_counts().to_dict(),
+    "sources_of_curb_nodes": curb.source.fillna("none").value_counts().to_dict()}
+lift = N[N.osm_highway == "elevator"]
+lift_edges = E[E.u.isin(lift.id) | E.v.isin(lift.id)]
+res["elevators"] = {"nodes": len(lift), "attached": int(lift.id.isin(ref).sum()), "edges_at_an_elevator": len(lift_edges),
+                    "of_those_with_an_incline": int(lift_edges.incline.notna().sum()),
+                    "of_those_marked_unknown": int(lift_edges.unknown.notna().sum())}
+st = E[E.kind == "street"]
+res["street_sidewalk_tags"] = {
+    "street_edges": len(st), "by_value": st.sidewalk.fillna("untagged").value_counts().to_dict(),
+    "share_tagged": round(float(st.sidewalk.notna().mean()), 4),
+    "walkable_for_the_wheelchair_profile": int(st.sidewalk.isin(["both", "left", "right", "yes"]).sum()),
+    "by_borough": {b: d.sidewalk.fillna("untagged").value_counts().to_dict() for b, d in st.groupby(st.borough.fillna("none"))}}
+sp = E[E.osm_highway.isin(["cycleway", "track"])]
+res["shared_paths"] = {"edges": len(sp), "by_osm_highway_and_foot": {f"{h}|{f}": n for (h, f), n in sp.groupby([sp.osm_highway, sp.foot.fillna("no tag")]).size().items()},
+                       "km_one_direction_with_no_foot_tag": round(float(sp[sp.foot.isna()].length.sum() / 2000), 1)}
 
 # --- widths ----------------------------------------------------------------
 sw = E[(E.kind == "sidewalk")]

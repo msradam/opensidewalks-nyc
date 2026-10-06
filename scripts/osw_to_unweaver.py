@@ -5,10 +5,14 @@ Unweaver schema (per nbolten/unweaver example/layers/uw.geojson):
   Feature.properties:
     footway         str    "sidewalk" | "crossing" | etc. (or absent for streets)
     subclass        str    "footway" | "street" | ...
-    curbramps       bool   On a crossing: True if a surveyed ramp lies within
-                           5 m of each end of the whole crossing (see the
-                           comment in main). Elsewhere: True if either
-                           endpoint has a Curb Node.
+    curbramps       bool   On a crossing: True if a lowered or flush kerb lies
+                           within 5 m of each end of the whole crossing (see
+                           the comment in main). Elsewhere: True if either
+                           endpoint has one.
+    sidewalk        int    On a street: 1 where OSM says the street has a
+                           sidewalk along it (ext:sidewalk both, left, right
+                           or yes), 0 otherwise. The wheelchair profile walks
+                           a street edge only where it is 1.
     incline         float  signed grade (rise/run)
     incline_unknown int    1 where the file says ext:incline_unknown: the
                            heights of the two ends are not a slope the edge
@@ -49,6 +53,15 @@ from pipeline.utils.zones import zone_edges
 # strict test (ramp on the crossing's own nodes) finds 56% of them. See
 # METHODOLOGY.md for the limits of that check.
 RAMP_REACH_M = 5.0
+
+# The kerb values a wheelchair can take at a crossing's end.
+PASSABLE_KERBS = frozenset(["lowered", "flush"])
+
+# ext:sidewalk values that say the street has a sidewalk along it. A street
+# tagged separate has its sidewalk as its own edge; one tagged no has none;
+# one with no tag is unknown. The wheelchair profile walks a street edge
+# only with one of these values (see unweaver-project/cost-wheelchair.py).
+STREET_HAS_SIDEWALK = frozenset(["both", "left", "right", "yes"])
 
 
 # ----- length helpers ------------------------------------------------------
@@ -188,12 +201,14 @@ def main():
         node_xy[p.get("_id")] = tuple(f["geometry"]["coordinates"][:2])
         if p.get("ext:elevation_m") is not None:
             node_z[p.get("_id")] = float(p["ext:elevation_m"])
-        if (p.get("barrier") == "kerb"
-                or p.get("kerb") in {"lowered", "raised", "flush"}):
+        # A kerb a wheelchair can take: a curb ramp (the survey's, or one
+        # OSM maps) or a flush kerb. A raised kerb, or a kerb with no value,
+        # is not one. Before v0.3.7 every barrier=kerb node was a ramp.
+        if p.get("kerb") in PASSABLE_KERBS:
             nid = p.get("_id")
             if nid:
                 curb_ids.add(nid)
-    print(f"[curb] curb-annotated nodes: {len(curb_ids):,}")
+    print(f"[curb] nodes with a lowered or flush kerb: {len(curb_ids):,}")
 
     # A Pedestrian Zone (a plaza) is a Polygon. A person walks it in any
     # direction, so the layer gets its ring and a straight chord between
@@ -262,6 +277,7 @@ def main():
                 "subclass":    subclass,
                 "footway":     footway_val,
                 "curbramps":   1 if curbramps else 0,
+                "sidewalk":    1 if p.get("ext:sidewalk") in STREET_HAS_SIDEWALK else 0,
                 "incline":     incline,
                 "incline_unknown": 1 if p.get("ext:incline_unknown") else 0,
                 "length":      length_m,

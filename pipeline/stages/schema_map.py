@@ -96,16 +96,25 @@ _DWS_PRESENT = frozenset([
     "good condition", "defective", "off ramp - good", "off ramp-defective",
 ])
 
-# OSM highway tags that map to OSW footway/sidewalk edges.
+# OSM highway tags that map to OSW footway/sidewalk edges. (highway=elevator
+# ways are not read: in New York they are the closed outlines of elevator
+# shafts, not paths. Elevators reach the graph as node tags, in Stage 4.)
 FOOTWAY_TYPES = frozenset(["footway", "path", "pedestrian", "steps"])
 
-# OSM highway tags that are walkable only where OSM says so: a cycleway or a
-# track becomes a footway edge when it carries foot=yes, designated or
-# permissive, and is dropped otherwise. Many bridge paths and greenways are
-# mapped this way (the Williamsburg, Third Avenue and Kosciuszko bridge paths
-# among them); dropping them all cut those bridges.
+# OSM highway tags shared with other users. OpenStreetMap's access defaults
+# for the United States give foot=yes on a cycleway and on a track, so one
+# is a footway edge unless its tags say otherwise: foot=no (dropped by the
+# Stage 1 filter) or, on a cycleway, oneway=yes with no foot tag. A one-way
+# cycleway with no foot tag in New York is a bike lane beside the roadway,
+# which runs through intersections with no crossing and has the sidewalk
+# beside it; a two-way one is a shared path or a greenway. Up to v0.3.6 a
+# cycleway or track was kept only with foot=yes, designated or permissive,
+# which left out 627 cycleways and 247 tracks.
 SHARED_TYPES = frozenset(["cycleway", "track"])
 FOOT_ALLOWED = frozenset(["yes", "designated", "permissive"])
+
+# The values of OSM's sidewalk=* tag on a street, carried as ext:sidewalk.
+SIDEWALK_VALUES = frozenset(["both", "left", "right", "no", "separate", "yes"])
 
 # OSM highway tags that map to OSW street edges (not sidewalk-class).
 STREET_TYPES = frozenset([
@@ -244,6 +253,62 @@ def _osm_foot(osm_foot: str | None) -> str | None:
     return f if f in FOOT_ENUM else None
 
 
+def _shared_path_walkable(row: pd.Series) -> bool:
+    """Whether a cycleway or track row is walked: see SHARED_TYPES."""
+    foot = _tag(row.get("foot")).split("|")[0]
+    if foot:
+        return foot in FOOT_ALLOWED
+    highway = _tag(row.get("highway")).split("|")[0]
+    return not (highway == "cycleway" and _tag(row.get("oneway")).split("|")[0] in ("yes", "true", "1", "-1"))
+
+
+def _sw(value) -> str:
+    """A sidewalk tag value, lower case, '' when absent. Unlike _tag, keeps
+    the OSM value "none", which means no sidewalk."""
+    v = "" if value is None else str(value).strip().lower().split("|")[0]
+    return "" if v == "nan" else v
+
+
+def _side(value) -> str | None:
+    """yes, no or separate for one side's sidewalk:* value, else None."""
+    v = _sw(value).split(";")[0]
+    if v in ("yes", "left", "right", "both", "lane"):
+        return "yes"
+    if v in ("no", "none"):
+        return "no"
+    return v if v == "separate" else None
+
+
+def _sidewalk_tags(row: pd.Series) -> dict:
+    """What OSM says about a street's sidewalks, as ext: fields.
+
+    sidewalk=* is carried as it is (none is written as no). The per-side
+    form is folded into one value the same way, both sides first, and the
+    raw side values are kept beside it: yes on both sides is both, yes on
+    one side and no on the other is left or right, separate on both sides
+    (or on one side with no on the other) is separate, and yes beside
+    separate names the side that has one on the street. Nothing is written
+    for a street with neither form.
+    """
+    v = _sw(row.get("sidewalk"))
+    if v == "none":
+        v = "no"
+    if v in SIDEWALK_VALUES:
+        return {"ext:sidewalk": v}
+    both = _sw(row.get("sidewalk:both"))
+    raw = {"left": both or _sw(row.get("sidewalk:left")),
+           "right": both or _sw(row.get("sidewalk:right"))}
+    left, right = _side(raw["left"]), _side(raw["right"])
+    folded = {("yes", "yes"): "both", ("yes", "no"): "left", ("no", "yes"): "right", ("no", "no"): "no",
+              ("separate", "separate"): "separate", ("separate", "no"): "separate", ("no", "separate"): "separate",
+              ("yes", "separate"): "left", ("separate", "yes"): "right",
+              ("yes", None): "left", (None, "yes"): "right", ("separate", None): "separate", (None, "separate"): "separate"
+              }.get((left, right))
+    out = {"ext:sidewalk": folded} if folded else {}
+    out.update({f"ext:sidewalk_{side}": value for side, value in raw.items() if value})
+    return out
+
+
 def _classify_osm_edge(row: pd.Series) -> str | None:
     """Return the OSW feature type for an OSM edge row, or None to skip.
 
@@ -265,8 +330,7 @@ def _classify_osm_edge(row: pd.Series) -> str | None:
     crossing_raw = row.get("crossing")
     has_crossing = crossing_raw is not None and str(crossing_raw) not in ("nan", "None", "no", "")
 
-    foot = str(row.get("foot", "")).lower().strip()
-    if highway in FOOTWAY_TYPES or (highway in SHARED_TYPES and foot in FOOT_ALLOWED):
+    if highway in FOOTWAY_TYPES or (highway in SHARED_TYPES and _shared_path_walkable(row)):
         if footway == "crossing" or has_crossing:
             return "crossing"
         elif footway == "sidewalk":
@@ -406,6 +470,12 @@ def _osm_edges_to_osw(edges_gdf: gpd.GeoDataFrame, pipeline_version: str,
         highway_osm = str(row.get("highway", "")).split("|")[0]
         if (highway_osm in SHARED_TYPES or highway_osm == "path") and edge_type != "street":
             props["ext:osm_highway"] = highway_osm
+
+        # What OSM says about a street's sidewalks. The street stays a street
+        # edge; a router that walks it on the strength of this field walks
+        # the centreline of a street that has a sidewalk, not the sidewalk.
+        if edge_type == "street":
+            props.update(_sidewalk_tags(row))
 
         # The edges of a pedestrian area become one Pedestrian Zone below,
         # with the tags of the way; the first row of the way supplies them.

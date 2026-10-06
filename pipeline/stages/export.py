@@ -238,7 +238,8 @@ def export_routing_json(fc: dict, output_dir: Path) -> Path:
             "n_nodes":           len(nodes_out),
             "n_edges":           len(edges_out),
             "description": (
-                "Routing-friendly export of the NYC OpenSidewalks pedestrian graph. "
+                "Routing-friendly export of OpenSidewalks NYC, an independent pedestrian "
+                "graph of New York City in the OpenSidewalks Schema. "
                 "Use nodes dict + edges list to build a routing graph. Each "
                 "Pedestrian Zone (a plaza) appears as the edges a person can walk "
                 "across it: its ring and the chords between its entrances, with "

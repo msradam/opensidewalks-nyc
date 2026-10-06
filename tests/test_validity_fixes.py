@@ -140,7 +140,11 @@ def test_shared_paths_are_walkable_only_where_osm_says_so():
     assert _classify_osm_edge({"highway": "cycleway", "foot": "designated"}) == "footway"
     assert _classify_osm_edge({"highway": "cycleway", "foot": "yes", "footway": "crossing"}) == "crossing"
     assert _classify_osm_edge({"highway": "track", "foot": "permissive"}) == "footway"
-    assert _classify_osm_edge({"highway": "cycleway"}) is None
+    # OSM's US default is foot=yes on a cycleway and a track (v0.3.7), so one
+    # with no foot tag is walked unless it is a one-way cycleway: a bike lane.
+    assert _classify_osm_edge({"highway": "cycleway"}) == "footway"
+    assert _classify_osm_edge({"highway": "track"}) == "footway"
+    assert _classify_osm_edge({"highway": "cycleway", "oneway": "yes"}) is None
     assert _classify_osm_edge({"highway": "cycleway", "foot": "use_sidepath"}) is None
 
 
